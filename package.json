@@ -2,6 +2,10 @@
   "name": "tree-sitter-fortran",
   "version": "0.0.1",
   "description": "Fortran grammar for node-tree-sitter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stadelmanma/tree-sitter-fortran"
+  },
   "main": "index.js",
   "keywords": [
     "parser",
