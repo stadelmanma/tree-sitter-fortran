@@ -7,10 +7,10 @@ const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
   LOGICAL_XOR: 5,
-  LOGICAL_EQUIV: 5
+  LOGICAL_EQUIV: 5,
   LOGICAL_OR: 10,
   LOGICAL_AND: 20,
-  LOGICAL_NOT: 30
+  LOGICAL_NOT: 30,
   RELATIONAL: 40,
   ADDITIVE: 50,
   MULTIPLICATIVE: 60,
@@ -21,12 +21,53 @@ module.exports = grammar({
   name: 'fortran',
 
   extras: $ => [
-    /\s/
-  ]
+    /\s/,
+    $.comment
+  ],
+
+  // I'll need to figure out how best to add support for statement labels
+  // since the parser doesn't support the ^ regex token, a using a seq
+  // might work as long as the label is optional.
+
+  rules: {
+    translation_unit: $ => repeat($._top_level_item),
+
+    _top_level_item: $ => choice(
+      $.program_statement
+    ),
+
+    program_statement: $ => seq(
+      prec.right(seq(
+        /program|PROGRAM/,
+        $.identifier
+      )),
+      '\n',
+      repeat($._top_level_item),
+      block_structure_ending($, 'program')
+    ),
+
+    identifier: $ => /[a-zA-Z_]\w*/,
+
+    end_statement: $ => /end|END/,
+
+    comment: $ => token(seq('!', /.*/))
+  }
 });
 
 module.exports.PREC = PREC
 
 function preprocessor (command) {
-  return alias(new RegExp('#[ \t]*' + command), '#' + command)
+  return alias(new RegExp('#[ \t]*' + command), '#' + command);
+}
+
+function block_structure_ending ($, struct_type) {
+  var obj = prec.right(seq(
+    $.end_statement,
+    optional(seq(
+      new RegExp(struct_type + '|' + struct_type.toUpperCase()),
+      optional($.identifier)
+    ))
+  ));
+  //
+  return obj;
 }
