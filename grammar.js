@@ -3,6 +3,9 @@
 // that provided in: https://software.intel.com/en-us/fortran-compiler-18.0-developer-guide-and-reference-summary-of-operator-precedence
 // and in http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0067.htm
 // my final settings will be based on gfortran test cases
+// Additional ref info: https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
+//  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/dflrm.htm#book-toc
+//
 const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
@@ -22,8 +25,14 @@ module.exports = grammar({
   name: 'fortran',
 
   extras: $ => [
-    /[ \t]/,
+    /\s/,
     $.comment
+  ],
+
+  conflicts: $ => [
+    // I don't think this should be a conflict but I can't figure out
+    // how to resolve it
+    [$.type_qualifier, $.parenthesized_expression]
   ],
 
   // I'll need to figure out how best to add support for statement labels
@@ -35,7 +44,10 @@ module.exports = grammar({
 
     _top_level_item: $ => choice(
       $.program_block,
-      $.subroutine_block
+      //$.module_block,
+      //$.interface_block,
+      //$.subroutine_block
+      //$.functon_block,
     ),
 
     // Block level structures
@@ -46,28 +58,136 @@ module.exports = grammar({
         $.identifier
       )),
       '\n',
-      repeat($._top_level_item), // the program block can contain anything i think?
+      //repeat($.use_statement),
+      //repeat($.implicit_statement),
+      repeat(choice(seq($.variable_declaration, '\n'), $.type_block)),
+      //repeat($._statement),
       block_structure_ending($, 'program')
     ),
 
-    subroutine_block: $ => seq(
-      prec.right(seq(
-        caseInsensitive('subroutine'),
-        $.identifier,
-        optional($.parameters)
-      )),
-      '\n',
-      // the contents of the subroutine (which can include functions as well as any inline statement)
-      block_structure_ending($, 'subroutine')
+    // subroutine_block: $ => seq(
+    //   prec.right(seq(
+    //     caseInsensitive('subroutine'),
+    //     $.identifier,
+    //     optional($.parameters)
+    //   )),
+    //   '\n',
+    //   //repeat($.use_statement),
+    //   //repeat($.implicit_statement),
+    //   repeat(choice(seq($.variable_declaration, '\n'), $.type_block)),
+    //   //repeat($._statement),
+    //   block_structure_ending($, 'subroutine')
+    // ),
+
+    // function_block: $ => seq(
+    //   optional(choice($.intrinsic_type, $.custom_type)),
+    //   prec.right(seq(
+    //     caseInsensitive('function'),
+    //     $.identifier,
+    //     choice($.parameters, /\(\s*\)/)
+    //   )),
+    //   optional(seq(caseInsensitive('result'), '(', $.identifier ,')')),
+    //   '\n',
+    //   repeat(choice($.variable_declaration, $.type_block)),
+    //   repeat($._statement),
+    //   block_structure_ending($, 'function')
+    // ),
+
+    parameters: $ => seq(
+      '(',
+      commaSep1($.identifier),
+      ')'
     ),
 
-    end_statement: $ => caseInsensitive('end'),
+    // Variable Declaration Expressions
+
+    type_block: $ => seq(
+      prec.right(seq(
+        caseInsensitive('type'),
+        optional(
+          seq(',', choice(caseInsensitive('public'), caseInsensitive('private')))
+        ),
+        optional('::'),
+        $.identifier
+      )),
+      '\n',
+      repeat($.variable_declaration),
+      block_structure_ending($, 'type')
+    ),
+
+    variable_declaration: $ => prec.right(seq(
+      choice($.intrinsic_type, $.custom_type),
+      optional(seq(',', commaSep($.type_qualifier))),
+      optional('::'),
+      commaSep1(seq($.identifier, optional($.parenthesized_expression)))
+    )),
+
+    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
+    intrinsic_type: $ => token(
+      seq(
+        choice(
+          caseInsensitive('external'), // http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
+          caseInsensitive('integer'),
+          caseInsensitive('intrinsic'), // http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
+          caseInsensitive('private'), // http://w3.pppl.gov/~hammett/comp/f90tut/f90.tut7.html
+          caseInsensitive('public'),
+          caseInsensitive('real'),
+          caseInsensitive('double precision'),
+          caseInsensitive('complex'),
+          caseInsensitive('double complex'),
+          caseInsensitive('byte'),
+          caseInsensitive('logical'),
+          caseInsensitive('character'),
+          caseInsensitive('integer'),
+          caseInsensitive('optional')
+        ),
+        optional(choice(
+          seq('(', /.+/, ')'),
+          seq('*', /\d+/)
+        ))
+      )
+    ),
+
+    custom_type: $ => seq(
+      caseInsensitive('type'),
+      '(',
+      $.identifier,
+      ')'
+    ),
+
+    type_qualifier: $ => choice(
+      caseInsensitive('allocatable'),
+      caseInsensitive('automatic'),
+      seq(
+        caseInsensitive('dimension'),
+        choice(
+          $.parenthesized_expression,
+          seq('(', commaSep1(choice($._expression, '*')), ')')
+        )
+      ),
+      caseInsensitive('external'),
+      seq(
+        caseInsensitive('intent'),
+        '(',
+        choice(caseInsensitive('in'), caseInsensitive('out'), caseInsensitive('inout'),),
+        ')'
+      ),
+      caseInsensitive('intrinsic'),
+      caseInsensitive('optional'),
+      caseInsensitive('parameter'), // I need to figure out how to handle
+      caseInsensitive('pointer'),   // standalone parameter statements
+      caseInsensitive('private'),
+      caseInsensitive('public'),
+      caseInsensitive('save'),
+      caseInsensitive('static'),
+      caseInsensitive('target'),
+      caseInsensitive('volatile')
+    ),
 
     // Statements
 
     _statement: $ => choice(
       $.expression_statement,
-      $.variable_declaration
       //$.if_statement,
       //$.select_statement,
       //$.do_statement,
@@ -78,98 +198,48 @@ module.exports = grammar({
       //$.goto_statement,
       //$.stop_statement,
       //$.use_statement,
-      //$.implicit_statement,
-      //$.parameter_statment
-      //
+      //$.data_statement
     ),
 
     expression_statement: $ => seq(
-      optional(choice(
-        $._expression,
-        $.comma_expression
-      )),
-      choice(';', '\n')
-    ),
-
-    // Variable declaration expressions
-
-    type_block: $ => seq(
-      prec.right(seq(
-        caseInsensitive('type'),
-        $.identifier
-      )),
-      '\n',
-      repeat($.variable_declaration),
-      block_structure_ending($, 'type')
-    ),
-
-    variable_declaration: $ => seq(
-      choice($._intrinsic_type, $._custom_type),
-      // more stuff like dimensions, intent, etc..
-      '::',
-      commaSep1(seq($.identifier, optional(/\(.+?\)/)))
-    ),
-
-    _intrinsic_type: $ => token(
-      seq(
-        choice(
-          caseInsensitive('integer'),
-          caseInsensitive('real'),
-          caseInsensitive('complex'),
-          caseInsensitive('logical'),
-          caseInsensitive('character'),
-          caseInsensitive('integer')
-        ),
-        /\(.+?\)/
-      )
-    ),
-
-    _custom_type: $ => seq(
-      caseInsensitive('type'),
-      '(',
-      $.identifier,
-      ')'
+      sep1($._expression, ';'),
+      '\n'
     ),
 
     // Expressions
 
     _expression: $ => choice(
-      $.identifier,
+      //$.identifier, // I need this but it causes memory use to blow up and crash parser
       $.number_literal,
       $.string_literal,
       $.true,
       $.false,
-      $.call_expression
+      //$.call_expression,
+      $.parenthesized_expression
     ),
 
-    comma_expression: $ => seq(
-      $._expression,
-      ',',
-      choice($._expression, $.comma_expression)
-    ),
-
-    // This should also work for subrooutines, add an optional 'CALL'
-    call_expression: $ => prec(
-      PREC.CALL, seq($._expression, $.argument_list)
-    ),
-
-    argument_list: $ => prec.dynamic(1, seq('(', commaSep1($._expression), ')')),
-
-    // Fortran allows named parameters (i.e. OPEN), this doesn't work
-    // with those
-    parameters: $ => seq(
+    parenthesized_expression: $ => seq(
       '(',
-      commaSep1($.identifier),
+      commaSep(choice($._expression, $.array_slice)),
       ')'
     ),
 
     array_slice: $ => seq(
-      '(',
-      commaSep1($._array_slice),
-      ')'
+      optional($._expression),
+      ':',
+      optional($._expression),
+      optional(seq(':', $._expression))
     ),
 
-    _array_slice: $ => /\d*:?\d*/,
+    // This should also work for subrooutines, add an optional 'CALL'
+    // call_expression: $ => prec(
+    //   PREC.CALL, seq($._expression, $.argument_list)
+    // ),
+    //
+    // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
+    // sure this works with them, misclassifcation as an assignment_expression
+    // might be bad. Python uses the same syntax for function calls
+    // argument_list: $ => prec.dynamic(1, seq('(', commaSep1($._expression), ')')),
 
     number_literal: $ => token(
       choice(
@@ -197,9 +267,12 @@ module.exports = grammar({
     true: $ => token(prec(1, caseInsensitive('.true.'))),
     false: $ => token(prec(1, caseInsensitive('.false.'))),
 
+    end_statement: $ => caseInsensitive('end'),
+
     identifier: $ => /[a-zA-Z_]\w*/,
 
     comment: $ => token(seq('!', /.*/))
+
   }
 });
 
@@ -215,6 +288,10 @@ function caseInsensitive (keyword) {
 
 function preprocessor (command) {
   return alias(new RegExp('#[ \t]*' + command), '#' + command);
+}
+
+function commaSep (rule) {
+  return optional(commaSep1(rule))
 }
 
 function commaSep1 (rule) {
