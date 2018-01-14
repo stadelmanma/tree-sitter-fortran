@@ -115,6 +115,7 @@ module.exports = grammar({
       block_structure_ending($, 'type')
     ),
 
+    // automatic arrays don't seem to work (i.e. name(*) or DIMENSION(*, *))
     variable_declaration: $ => prec.right(seq(
       choice($.intrinsic_type, $.custom_type),
       optional(seq(',', commaSep($.type_qualifier))),
@@ -123,8 +124,7 @@ module.exports = grammar({
     )),
 
     // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
-    intrinsic_type: $ => token(
-      seq(
+    intrinsic_type: $ =>   seq(
         choice(
           caseInsensitive('external'), // http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
           caseInsensitive('integer'),
@@ -142,11 +142,10 @@ module.exports = grammar({
           caseInsensitive('optional')
         ),
         optional(choice(
-          seq('(', /.+/, ')'),
+          seq('(', $._expression, ')'),
           seq('*', /\d+/)
         ))
-      )
-    ),
+      ),
 
     custom_type: $ => seq(
       caseInsensitive('type'),
@@ -209,7 +208,7 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      //$.identifier, // I need this but it causes memory use to blow up and crash parser
+      $.identifier,
       $.number_literal,
       $.string_literal,
       $.true,

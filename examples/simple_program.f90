@@ -14,10 +14,10 @@ PROGRAM TEST_PROGRAM !Testing comment after program
     CHARACTER :: name(20)
   END TYPE myStruct
   !
-  TYPE(myStruct), DIMENSION(:), ALLOCATABLE :: mst
-  !REAL (szt), DIMENSION(szt) :: f
+  TYPE(myStruct), DIMENSION(:, :, :), ALLOCATABLE :: mst
+  REAL(szt), DIMENSION(0:100, szt) :: f
   REAL*8 r
-  !DOUBLE PRECISION :: g
+  DOUBLE PRECISION :: g
   !CHARACTER(LEN=20) :: line
   !CHARACTER*(5) line1
   !CHARACTER(LEN=:), POINTER :: line2
