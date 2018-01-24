@@ -10,6 +10,8 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !INTEGER, PARAMETER :: szt = 4
   INTEGER i, j, k, l(9), n(0:szt)
   INTEGER, DIMENSION(:), ALLOCATABLE :: m
+  INTEGER, POINTER :: N
+  INTEGER, TARGET :: M
   TYPE, PUBLIC :: myStruct
     PRIVATE
     SEQUENCE
@@ -28,6 +30,11 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !CHARACTER(*) :: line4
 
   r = 5.678
+  i = 0;
+  j = 1; k = 2
+
+  M = 14
+  N => M ! N is associated with M
 
   ! do i = 1,100
   !   n(i) = i

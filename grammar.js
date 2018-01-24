@@ -205,7 +205,7 @@ module.exports = grammar({
 
     expression_statement: $ => seq(
       sep1($._expression, ';'),
-      //$._expression,
+      //$._expression, I don't think these bits are needed
       //'\n'
     ),
 
@@ -246,10 +246,10 @@ module.exports = grammar({
     pointer_assignment_expression: $ => prec.right(seq(
       $.identifier,
       '=>',
-      $.identifier
+      $._expression
     )),
 
-    // This should also work for subrooutines, add an optional 'CALL'
+    // This should also work for subroutines, add an optional 'CALL'
     // call_expression: $ => prec(
     //   PREC.CALL, seq($._expression, $.argument_list)
     // ),
