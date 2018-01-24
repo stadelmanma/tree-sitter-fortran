@@ -61,7 +61,7 @@ module.exports = grammar({
       //repeat($.use_statement),
       //repeat($.implicit_statement),
       repeat(choice(seq($.variable_declaration, '\n'), $.type_block)),
-      //repeat($._statement),
+      repeat($._statement),
       block_structure_ending($, 'program')
     ),
 
@@ -111,6 +111,7 @@ module.exports = grammar({
         $.identifier
       )),
       '\n',
+      optional(repeat($.type_qualifier)),
       repeat($.variable_declaration),
       block_structure_ending($, 'type')
     ),
@@ -178,6 +179,7 @@ module.exports = grammar({
       caseInsensitive('private'),
       caseInsensitive('public'),
       caseInsensitive('save'),
+      caseInsensitive('sequence'),
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('volatile')
@@ -198,11 +200,13 @@ module.exports = grammar({
       //$.stop_statement,
       //$.use_statement,
       //$.data_statement
+      //$.equivalence_statement
     ),
 
     expression_statement: $ => seq(
       sep1($._expression, ';'),
-      '\n'
+      //$._expression,
+      //'\n'
     ),
 
     // Expressions
@@ -214,6 +218,9 @@ module.exports = grammar({
       $.true,
       $.false,
       //$.call_expression,
+      $.assignment_expression,
+      $.pointer_assignment_expression,
+      //
       $.parenthesized_expression
     ),
 
@@ -229,6 +236,18 @@ module.exports = grammar({
       optional($._expression),
       optional(seq(':', $._expression))
     ),
+
+    assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
+      $._expression,
+      '=',
+      $._expression
+    )),
+
+    pointer_assignment_expression: $ => prec.right(seq(
+      $.identifier,
+      '=>',
+      $.identifier
+    )),
 
     // This should also work for subrooutines, add an optional 'CALL'
     // call_expression: $ => prec(

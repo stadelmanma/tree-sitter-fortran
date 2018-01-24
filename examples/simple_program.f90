@@ -5,11 +5,14 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !
   !
   ! USE ISO_C_BINDING
+  ! USE ISO_FORTRAN_ENV, ONLY: ERROR_UNIT
   !IMPLICIT NONE
   !INTEGER, PARAMETER :: szt = 4
   INTEGER i, j, k, l(9), n(0:szt)
   INTEGER, DIMENSION(:), ALLOCATABLE :: m
-  TYPE :: myStruct
+  TYPE, PUBLIC :: myStruct
+    PRIVATE
+    SEQUENCE
     REAL(8) :: value
     CHARACTER :: name(20)
   END TYPE myStruct
@@ -23,6 +26,8 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !CHARACTER(LEN=:), POINTER :: line2
   !CHARACTER(LEN=*) :: line3
   !CHARACTER(*) :: line4
+
+  r = 5.678
 
   ! do i = 1,100
   !   n(i) = i

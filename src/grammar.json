@@ -67,6 +67,13 @@
           }
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
           "type": "PREC_RIGHT",
           "value": 0,
           "content": {
@@ -213,6 +220,21 @@
         {
           "type": "STRING",
           "value": "\n"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "type_qualifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "REPEAT",
@@ -691,6 +713,10 @@
         },
         {
           "type": "PATTERN",
+          "value": "[sS][eE][qQ][uU][eE][nN][cC][eE]"
+        },
+        {
+          "type": "PATTERN",
           "value": "[sS][tT][aA][tT][iI][cC]"
         },
         {
@@ -739,10 +765,6 @@
               }
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": "\n"
         }
       ]
     },
@@ -768,6 +790,14 @@
         {
           "type": "SYMBOL",
           "name": "false"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assignment_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "pointer_assignment_expression"
         },
         {
           "type": "SYMBOL",
@@ -892,6 +922,48 @@
           ]
         }
       ]
+    },
+    "assignment_expression": {
+      "type": "PREC_RIGHT",
+      "value": -10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "="
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "pointer_assignment_expression": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          {
+            "type": "STRING",
+            "value": "=>"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        ]
+      }
     },
     "number_literal": {
       "type": "TOKEN",
