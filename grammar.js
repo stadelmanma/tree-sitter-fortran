@@ -18,7 +18,8 @@ const PREC = {
   ADDITIVE: 50,
   MULTIPLICATIVE: 60,
   EXPONENT: 70,
-  CALL: 80
+  CALL: 80,
+  UNARY: 100
 };
 
 module.exports = grammar({
@@ -220,6 +221,7 @@ module.exports = grammar({
       //$.call_expression,
       $.assignment_expression,
       $.pointer_assignment_expression,
+      $.math_expression,
       //
       $.parenthesized_expression
     ),
@@ -243,11 +245,23 @@ module.exports = grammar({
       $._expression
     )),
 
+    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0079.htm#pointer_assign
     pointer_assignment_expression: $ => prec.right(seq(
-      $.identifier,
+      $.identifier, // this needs to support structs i.e. mytype%attr
       '=>',
       $._expression
     )),
+
+
+    math_expression: $ => choice(
+      prec.left(PREC.ADDITIVE, seq($._expression, '+', $._expression)),
+      prec.left(PREC.ADDITIVE, seq($._expression, '-', $._expression)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '*', $._expression)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '/', $._expression)),
+      prec.left(PREC.EXPONENT, seq($._expression, '**', $._expression)),
+      prec.right(PREC.UNARY, seq('-', $._expression)),
+      prec.right(PREC.UNARY, seq('+', $._expression))
+    ),
 
     // This should also work for subroutines, add an optional 'CALL'
     // call_expression: $ => prec(

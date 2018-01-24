@@ -8,13 +8,11 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   ! USE ISO_FORTRAN_ENV, ONLY: ERROR_UNIT
   !IMPLICIT NONE
   !INTEGER, PARAMETER :: szt = 4
-  INTEGER i, j, k, l(9), n(0:szt)
-  INTEGER, DIMENSION(:), ALLOCATABLE :: m
+  INTEGER i, j, k, l(9), x(0:szt)
+  INTEGER, DIMENSION(:), ALLOCATABLE :: y
   INTEGER, POINTER :: N
   INTEGER, TARGET :: M
-  TYPE, PUBLIC :: myStruct
-    PRIVATE
-    SEQUENCE
+  TYPE :: myStruct
     REAL(8) :: value
     CHARACTER :: name(20)
   END TYPE myStruct
@@ -29,11 +27,14 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !CHARACTER(LEN=*) :: line3
   !CHARACTER(*) :: line4
 
-  r = 5.678
-  i = 0;
-  j = 1; k = 2
+  r = +5.678
+  i = -0;
+  j = 1; k = -2
+  r = -r
+  r = +r
 
-  M = 14
+  g = r**j / k**2 * 7
+  M = 14 + (i - j)**3
   N => M ! N is associated with M
 
   ! do i = 1,100
