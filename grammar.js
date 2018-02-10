@@ -122,32 +122,37 @@ module.exports = grammar({
       choice($.intrinsic_type, $.custom_type),
       optional(seq(',', commaSep($.type_qualifier))),
       optional('::'),
+      // this works but doesn't allow expressions during declaration
       commaSep1(seq($.identifier, optional($.parenthesized_expression)))
+      // this is what I probably need but it causes conflicts I can't figure out how to resolve
+      //commaSep1($.assignment_expression)
     )),
 
     // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
-    intrinsic_type: $ =>   seq(
-        choice(
-          caseInsensitive('external'), // http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
-          caseInsensitive('integer'),
-          caseInsensitive('intrinsic'), // http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
-          caseInsensitive('private'), // http://w3.pppl.gov/~hammett/comp/f90tut/f90.tut7.html
-          caseInsensitive('public'),
-          caseInsensitive('real'),
-          caseInsensitive('double precision'),
-          caseInsensitive('complex'),
-          caseInsensitive('double complex'),
-          caseInsensitive('byte'),
-          caseInsensitive('logical'),
-          caseInsensitive('character'),
-          caseInsensitive('integer'),
-          caseInsensitive('optional')
-        ),
-        optional(choice(
-          seq('(', $._expression, ')'),
-          seq('*', /\d+/)
-        ))
+    intrinsic_type: $ => seq(
+      choice(
+        caseInsensitive('external'), // http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
+        caseInsensitive('integer'),
+        caseInsensitive('intrinsic'), // http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
+        caseInsensitive('private'), // http://w3.pppl.gov/~hammett/comp/f90tut/f90.tut7.html
+        caseInsensitive('public'),
+        caseInsensitive('real'),
+        caseInsensitive('double precision'),
+        caseInsensitive('complex'),
+        caseInsensitive('double complex'),
+        caseInsensitive('byte'),
+        caseInsensitive('logical'),
+        caseInsensitive('character'),
+        caseInsensitive('integer'),
+        caseInsensitive('optional')
       ),
+      optional(choice(
+        seq('(', $._expression, ')'),
+        seq(choice('*', /\d+/)) // this might be why automatic arrays don't work
+      ))
+      // I think this is what I need but it causes the memory to blow up
+      // optional(seq('(',   choice('*', $._expression), ')'))
+    ),
 
     custom_type: $ => seq(
       caseInsensitive('type'),
@@ -226,6 +231,7 @@ module.exports = grammar({
       $.parenthesized_expression
     ),
 
+    // Not sure if the array slice should be included here
     parenthesized_expression: $ => seq(
       '(',
       commaSep(choice($._expression, $.array_slice)),

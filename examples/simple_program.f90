@@ -25,13 +25,30 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !CHARACTER*(5) line1
   !CHARACTER(LEN=:), POINTER :: line2
   !CHARACTER(LEN=*) :: line3
+  CHARACTER(*) :: line4
+
+  !REAL (szt), DIMENSION(szt) :: f
+  !REAL*8 r
+  !DOUBLE PRECISION :: g
+  !CHARACTER(LEN=20) :: line
+  !CHARACTER*(5) line1
+  !CHARACTER(LEN=:) :: line2
+  !CHARACTER(LEN=*) :: line3
   !CHARACTER(*) :: line4
+  ! !
+  ! REAL(8) :: x, test
+  ! COMPLEX :: xc
+  ! INTEGER :: data(10) = (/ 1,2,3,4,5,6,7,8,9,10 /)
 
   r = +5.678
   i = -0;
   j = 1; k = -2
   r = -r
   r = +r
+
+  l(:) = 3
+  l(1) = 1
+  l(2:3) = 4 ! this doesn't seem to be parsed corrected
 
   g = r**j / k**2 * 7
   M = 14 + (i - j)**3
@@ -45,19 +62,6 @@ PROGRAM TEST_PROGRAM !Testing comment after program
 
   !PRINT *, n(40:40)
   !PRINT *, n(40:)
-
-  ! REAL (szt), DIMENSION(szt) :: f
-  ! REAL*8 r
-  ! DOUBLE PRECISION :: g
-  ! CHARACTER(LEN=20) :: line
-  ! CHARACTER*(5) line1
-  !CHARACTER(LEN=:) :: line2
-  !CHARACTER(LEN=*) :: line3
-  !CHARACTER(*) :: line4
-  ! !
-  ! REAL(8) :: x, test
-  ! COMPLEX :: xc
-  ! INTEGER :: data(10) = (/ 1,2,3,4,5,6,7,8,9,10 /)
   ! PRINT *, data(5			:       9)
   ! data(1) = 4
   ! !
