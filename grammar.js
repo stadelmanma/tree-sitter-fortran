@@ -147,7 +147,7 @@ module.exports = grammar({
     _expression: $ => choice(
       $.assignment_expression,
       $.pointer_assignment_expression,
-      //$.math_expression,
+      $.math_expression,
       //$.parenthesized_expression
     ),
 

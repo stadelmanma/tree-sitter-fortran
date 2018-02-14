@@ -277,6 +277,10 @@
         {
           "type": "SYMBOL",
           "name": "pointer_assignment_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "math_expression"
         }
       ]
     },

@@ -8,14 +8,14 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   i = -0;
   j = 1; k = -2
   j = k
-  !r = -r
-  !r = +r
+  r = -r
+  r = +r
   !
   ! l(:) = 3
   ! l(1) = 1
   ! l(2:3) = 4 ! this doesn't seem to be parsed corrected
   !
-  ! g = r**j / k**2 * 7
+  g = r**j / k**2 * 7
   ! M = 14 + (i - j)**3
   N => M ! N is associated with M
 
@@ -30,15 +30,15 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   ! PRINT *, data(5			:       9)
   ! data(1) = 4
   ! !
-  ! x = -1D9
+  x = -1D9
   ! PRINT *, x
-  ! x = .134E5
+  x = .134E5
   ! PRINT *, x
-  ! x = 5.e5
+  x = 5.e5
   ! PRINT *, x
-  ! x = 1.566e+5
+  x = 1.566e+5
   ! PRINT *, x
-  ! x = 1.566d-5
+  x = 1.566d-5
   ! xc = (1.0D0, -.14)
   ! PRINT *, xc
   ! !
