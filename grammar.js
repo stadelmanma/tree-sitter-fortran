@@ -20,21 +20,17 @@ const PREC = {
   EXPONENT: 70,
   CALL: 80,
   UNARY: 100
-};
+}
 
 module.exports = grammar({
   name: 'fortran',
 
   extras: $ => [
-    /\s/,
+    /[ \t\n]/,
     $.comment
   ],
 
-  conflicts: $ => [
-    // I don't think this should be a conflict but I can't figure out
-    // how to resolve it
-    [$.type_qualifier, $.parenthesized_expression]
-  ],
+  conflicts: $ => [],
 
   // I'll need to figure out how best to add support for statement labels
   // since the parser doesn't support the ^ regex token, a using a seq
@@ -58,10 +54,11 @@ module.exports = grammar({
         caseInsensitive('program'),
         $.identifier
       )),
-      '\n',
+      optional($.comment),
+      $._newline,
       //repeat($.use_statement),
       //repeat($.implicit_statement),
-      repeat(choice(seq($.variable_declaration, '\n'), $.type_block)),
+      //repeat(choice(seq($.variable_declaration, $._newline), $.type_block)),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -72,11 +69,8 @@ module.exports = grammar({
     //     $.identifier,
     //     optional($.parameters)
     //   )),
-    //   '\n',
-    //   //repeat($.use_statement),
-    //   //repeat($.implicit_statement),
-    //   repeat(choice(seq($.variable_declaration, '\n'), $.type_block)),
-    //   //repeat($._statement),
+    //   $._newline,
+    //   repeat($._statement),
     //   block_structure_ending($, 'subroutine')
     // ),
 
@@ -102,8 +96,121 @@ module.exports = grammar({
 
     /* Variable declarations will go here */
 
+    // Statements
 
-    /* Expressions and statements will go here */
+    _statement: $ => choice(
+      $._simple_statements,
+      $._compound_statement
+    ),
+
+    _simple_statements: $ => seq(
+      $._simple_statement,
+      optional(repeat(seq($._semicolon, $._simple_statement))),
+      optional($._semicolon),
+      $._newline
+    ),
+
+    _simple_statement: $ => choice(
+      $._expression,
+      //$.return_statement,
+      //$.continue_statement,
+      //$.goto_statement,
+      //$.stop_statement,
+      //$.data_statement,
+      //$.call_statement,
+      //$.inline_if_statment,
+      //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+    ),
+
+    _compound_statement: $ => choice(
+      //$.if_statement,
+      //$.select_statement,
+      //$.do_statement,
+    ),
+
+    // only appears inside DO loops
+    cycle_statement: $ => seq(
+      caseInsensitive('cycle'),
+      optional($.identifier)
+    ),
+
+    exit_statement: $ => seq(
+      caseInsensitive('exit'),
+      optional($.identifier)
+    ),
+
+    // only appears at the end of blocks
+    end_statement: $ => caseInsensitive('end'),
+
+    // Expressions
+
+    _expression: $ => choice(
+      $.assignment_expression,
+      //$.pointer_assignment_expression,
+      //$.math_expression,
+      //$.parenthesized_expression
+    ),
+
+    _expression_component: $ => choice(
+      $._literals,
+      $._expression
+    ),
+
+    // Not sure if the array slice should be included here
+    // parenthesized_expression: $ => seq(
+    //   '(',
+    //   commaSep(choice($._expression, $.array_slice)),
+    //   ')'
+    // ),
+    //
+    // array_slice: $ => seq(
+    //   optional($._expression),
+    //   ':',
+    //   optional($._expression),
+    //   optional(seq(':', $._expression))
+    // ),
+
+    assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
+      $._expression_component,
+      '=',
+      $._expression_component
+    )),
+
+    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0079.htm#pointer_assign
+    pointer_assignment_expression: $ => prec.right(seq(
+      $.identifier, // this needs to support structs i.e. mytype%attr
+      '=>',
+      $._expression_component
+    )),
+
+
+    math_expression: $ => choice(
+      prec.left(PREC.ADDITIVE, seq($._expression_component, '+', $._expression_component)),
+      prec.left(PREC.ADDITIVE, seq($._expression_component, '-', $._expression_component)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression_component, '*', $._expression_component)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '/', $._expression_component)),
+      prec.left(PREC.EXPONENT, seq($._expression_component, '**', $._expression_component)),
+      prec.right(PREC.UNARY, seq('-', $._expression_component)),
+      prec.right(PREC.UNARY, seq('+', $._expression_component))
+    ),
+
+    // This should also work for subroutines, add an optional 'CALL'
+    // call_expression: $ => prec(
+    //   PREC.CALL, seq($._expression, $.argument_list)
+    // ),
+    //
+    // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
+    // sure this works with them, misclassifcation as an assignment_expression
+    // might be bad. Python uses the same syntax for function calls
+    // argument_list: $ => prec.dynamic(1, seq('(', commaSep1($._expression), ')')),
+
+    // bare literals cannot appear in valid fortran programs
+    _literals: $ => choice(
+      $.number_literal,
+      //$.string_literal,
+      $.boolean_literal,
+      $.identifier
+    ),
 
     number_literal: $ => token(
       choice(
@@ -119,26 +226,31 @@ module.exports = grammar({
         /[zZ]?[0-9a-fA-F]+[zZ]?/
     )),
 
-    // trying to use this in the literal rule causes an invalid token error
-    //_simple_number: $ => /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/,
+    // this is completely wrong but I'll tinker with it later since in
+    // relatity I'll need to check for the unescaped quote used to start
+    // the string. Otherwise keep matching until a newline
+    // string_literal: $ => token(seq(
+    //   choice('"', "'"),
+    //   repeat(choice(/[^\\"\n]/, /\\./)),
+    //   choice('"', "'")
+    // )),
 
-    string_literal: $ => token(seq(
-      choice('"', "'"),
-      repeat(choice(/[^\\"\n]/, /\\./)),
-      choice('"', "'")
-    )),
-
-    true: $ => token(prec(1, caseInsensitive('.true.'))),
-    false: $ => token(prec(1, caseInsensitive('.false.'))),
-
-    end_statement: $ => caseInsensitive('end'),
+    boolean_literal: $ => token(
+      choice(
+        `.${caseInsensitive('true')}.`,
+        `.${caseInsensitive('false')}.`
+      )
+    ),
 
     identifier: $ => /[a-zA-Z_]\w*/,
 
-    comment: $ => token(seq('!', /.*/))
+    comment: $ => token(seq('!', /.*/)),
 
+    _semicolon: $ => ';',
+
+    _newline: $ => '\n'
   }
-});
+})
 
 module.exports.PREC = PREC
 
@@ -151,7 +263,7 @@ function caseInsensitive (keyword) {
 }
 
 function preprocessor (command) {
-  return alias(new RegExp('#[ \t]*' + command), '#' + command);
+  return alias(new RegExp('#[ \t]*' + command), '#' + command)
 }
 
 function commaSep (rule) {
@@ -172,8 +284,9 @@ function block_structure_ending ($, struct_type) {
     optional(seq(
       caseInsensitive(struct_type),
       optional($.identifier)
-    ))
-  ));
+    )),
+    $._newline
+  ))
   //
-  return obj;
+  return obj
 }

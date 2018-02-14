@@ -7,16 +7,17 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   r = +5.678
   i = -0;
   j = 1; k = -2
-  r = -r
-  r = +r
-
-  l(:) = 3
-  l(1) = 1
-  l(2:3) = 4 ! this doesn't seem to be parsed corrected
-
-  g = r**j / k**2 * 7
-  M = 14 + (i - j)**3
-  N => M ! N is associated with M
+  j = k
+  !r = -r
+  !r = +r
+  !
+  ! l(:) = 3
+  ! l(1) = 1
+  ! l(2:3) = 4 ! this doesn't seem to be parsed corrected
+  !
+  ! g = r**j / k**2 * 7
+  ! M = 14 + (i - j)**3
+  ! N => M ! N is associated with M
 
   ! do i = 1,100
   !   n(i) = i
