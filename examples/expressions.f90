@@ -17,7 +17,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !
   ! g = r**j / k**2 * 7
   ! M = 14 + (i - j)**3
-  ! N => M ! N is associated with M
+  N => M ! N is associated with M
 
   ! do i = 1,100
   !   n(i) = i
