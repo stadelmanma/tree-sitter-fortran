@@ -206,6 +206,7 @@ module.exports = grammar({
     // bare literals cannot appear in valid fortran programs
     _literals: $ => choice(
       $.number_literal,
+      $.complex_literal,
       //$.string_literal,
       $.boolean_literal,
       $.identifier
@@ -215,8 +216,6 @@ module.exports = grammar({
       choice(
         // integer, real with and without exponential notation
         /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/,
-        // complex number (hopefully this doesn't conflict with parameter lists)
-        seq('(', /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/, ',' , /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/, ')'),
         // binary literal
         /[bB]?[01]+[bB]?/,
         // octal literal
@@ -225,8 +224,16 @@ module.exports = grammar({
         /[zZ]?[0-9a-fA-F]+[zZ]?/
     )),
 
+    complex_literal: $ => seq(
+      '(',
+      $.number_literal,
+      ',',
+      $.number_literal,
+      ')'
+    ),
+
     // this is completely wrong but I'll tinker with it later since in
-    // relatity I'll need to check for the unescaped quote used to start
+    // reality I'll need to check for the unescaped quote used to start
     // the string. Otherwise keep matching until a newline
     // string_literal: $ => token(seq(
     //   choice('"', "'"),
