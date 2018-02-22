@@ -139,7 +139,7 @@ module.exports = grammar({
       $.assignment_expression,
       $.pointer_assignment_expression,
       $.math_expression,
-      //$.parenthesized_expression
+      $.parenthesized_expression
     ),
 
     _expression_component: $ => choice(
@@ -147,12 +147,11 @@ module.exports = grammar({
       $._expression
     ),
 
-    // Not sure if the array slice should be included here
-    // parenthesized_expression: $ => seq(
-    //   '(',
-    //   commaSep(choice($._expression, $.array_slice)),
-    //   ')'
-    // ),
+    parenthesized_expression: $ => seq(
+      '(',
+      $._expression,
+      ')'
+    ),
 
     assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
       $._expression_component,
