@@ -6,6 +6,14 @@
 // Additional ref info: https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
 //  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/dflrm.htm#book-toc
 //
+// Semicolons are treated exactly like newlines and can end any statement
+// or be used to chain multiple ones together with the exception of using
+// an ampersand to continue a line and comments.
+//
+// I'll need to figure out how best to add support for statement labels
+// since the parser doesn't support the ^ regex token, a using a seq
+// might work as long as the label is optional.
+//
 const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
@@ -28,6 +36,11 @@ module.exports = grammar({
   extras: $ => [
     /[ \t\n]/,
     $.comment
+  ],
+
+  inline: $ => [
+    $._top_level_item,
+    $._statement
   ],
 
   conflicts: $ => [],

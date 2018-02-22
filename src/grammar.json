@@ -553,7 +553,10 @@
   ],
   "conflicts": [],
   "externals": [],
-  "inline": [],
+  "inline": [
+    "_top_level_item",
+    "_statement"
+  ],
   "PREC": {
     "ASSIGNMENT": -10,
     "DEFAULT": 0,
