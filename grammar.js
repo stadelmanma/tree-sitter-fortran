@@ -99,19 +99,7 @@ module.exports = grammar({
     // Statements
 
     _statement: $ => choice(
-      $._simple_statements,
-      $._compound_statement
-    ),
-
-    _simple_statements: $ => seq(
-      $._simple_statement,
-      optional(repeat(seq($._semicolon, $._simple_statement))),
-      optional($._semicolon),
-      $._newline
-    ),
-
-    _simple_statement: $ => choice(
-      $._expression,
+      $._expression_statement,
       //$.return_statement,
       //$.continue_statement,
       //$.goto_statement,
@@ -119,13 +107,15 @@ module.exports = grammar({
       //$.data_statement,
       //$.call_statement,
       //$.inline_if_statment,
-      //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
-    ),
-
-    _compound_statement: $ => choice(
       //$.if_statement,
       //$.select_statement,
       //$.do_statement,
+      //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+    ),
+
+    _expression_statement: $ => seq(
+      $._expression,
+      $._end_of_statement
     ),
 
     // only appears inside DO loops
@@ -134,6 +124,7 @@ module.exports = grammar({
       optional($.identifier)
     ),
 
+    // only appears inside DO loops
     exit_statement: $ => seq(
       caseInsensitive('exit'),
       optional($.identifier)
