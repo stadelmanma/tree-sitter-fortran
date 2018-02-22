@@ -424,6 +424,18 @@
         "type": "SEQ",
         "members": [
           {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "subroutine_call"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
             "type": "SYMBOL",
             "name": "identifier"
           },
@@ -433,6 +445,10 @@
           }
         ]
       }
+    },
+    "subroutine_call": {
+      "type": "PATTERN",
+      "value": "[cC][aA][lL][lL]"
     },
     "argument_list": {
       "type": "PREC_DYNAMIC",

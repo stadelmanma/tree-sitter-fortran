@@ -190,8 +190,13 @@ module.exports = grammar({
       prec.right(PREC.UNARY, seq('+', $._expression_component))
     ),
 
-    // This should also work for subroutines, add an optional 'CALL'
-    call_expression: $ => prec(PREC.CALL, seq($.identifier, $.argument_list)),
+    call_expression: $ => prec(
+      PREC.CALL,
+      seq(optional($.subroutine_call), $.identifier, $.argument_list)
+    ),
+
+    subroutine_call: $ => caseInsensitive('call'),
+
     //
     // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
     // sure this works with them, misclassifcation as an assignment_expression
