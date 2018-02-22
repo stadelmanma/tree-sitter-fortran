@@ -109,24 +109,37 @@
       ]
     },
     "_statement": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_expression_statement"
-        }
-      ]
-    },
-    "_expression_statement": {
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_expression"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "subroutine_call"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
           "name": "_end_of_statement"
+        }
+      ]
+    },
+    "subroutine_call": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[cC][aA][lL][lL]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
         }
       ]
     },
@@ -424,18 +437,6 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "subroutine_call"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
             "type": "SYMBOL",
             "name": "identifier"
           },
@@ -445,10 +446,6 @@
           }
         ]
       }
-    },
-    "subroutine_call": {
-      "type": "PATTERN",
-      "value": "[cC][aA][lL][lL]"
     },
     "argument_list": {
       "type": "PREC_DYNAMIC",

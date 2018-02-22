@@ -111,24 +111,28 @@ module.exports = grammar({
 
     // Statements
 
-    _statement: $ => choice(
-      $._expression_statement,
-      //$.return_statement,
-      //$.continue_statement,
-      //$.goto_statement,
-      //$.stop_statement,
-      //$.data_statement,
-      //$.call_statement,
-      //$.inline_if_statment,
-      //$.if_statement,
-      //$.select_statement,
-      //$.do_statement,
-      //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+    _statement: $ => seq(
+      choice(
+        $._expression,
+        $.subroutine_call
+        //$.return_statement,
+        //$.continue_statement,
+        //$.goto_statement,
+        //$.stop_statement,
+        //$.data_statement,
+        //$.call_statement,
+        //$.inline_if_statment,
+        //$.if_statement,
+        //$.select_statement,
+        //$.do_statement,
+        //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+      ),
+      $._end_of_statement
     ),
 
-    _expression_statement: $ => seq(
-      $._expression,
-      $._end_of_statement
+    subroutine_call: $ => seq(
+      caseInsensitive('call'),
+      $.call_expression
     ),
 
     // only appears inside DO loops
@@ -192,10 +196,8 @@ module.exports = grammar({
 
     call_expression: $ => prec(
       PREC.CALL,
-      seq(optional($.subroutine_call), $.identifier, $.argument_list)
+      seq($.identifier, $.argument_list)
     ),
-
-    subroutine_call: $ => caseInsensitive('call'),
 
     //
     // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
