@@ -152,7 +152,8 @@ module.exports = grammar({
       $.assignment_expression,
       $.pointer_assignment_expression,
       $.math_expression,
-      $.parenthesized_expression
+      $.parenthesized_expression,
+      $.call_expression
     ),
 
     _expression_component: $ => choice(
@@ -190,14 +191,23 @@ module.exports = grammar({
     ),
 
     // This should also work for subroutines, add an optional 'CALL'
-    // call_expression: $ => prec(
-    //   PREC.CALL, seq($._expression, $.argument_list)
-    // ),
+    call_expression: $ => prec(PREC.CALL, seq($.identifier, $.argument_list)),
     //
     // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
     // sure this works with them, misclassifcation as an assignment_expression
-    // might be bad. Python uses the same syntax for function calls
-    // argument_list: $ => prec.dynamic(1, seq('(', commaSep1($._expression), ')')),
+    // might be bad. Python uses the same syntax for function calls so I can
+    // look there although this might be a case where a conflict rule is needed.
+    argument_list: $ => prec.dynamic(
+      1,
+      seq('(', commaSep1(choice($.keyword_argument, $._expression_component)), ')')
+    ),
+
+    // precedence is used to prevent conflict with assignment expression
+    keyword_argument: $ => prec(1, seq(
+      $.identifier,
+      '=',
+      $._expression_component
+    )),
 
     // array_slice: $ => seq(
     //   optional($._expression),
