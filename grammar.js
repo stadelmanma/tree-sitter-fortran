@@ -55,7 +55,7 @@ module.exports = grammar({
         $.identifier
       )),
       optional($.comment),
-      $._newline,
+      $._end_of_statement,
       //repeat($.use_statement),
       //repeat($.implicit_statement),
       //repeat(choice(seq($.variable_declaration, $._newline), $.type_block)),
@@ -88,11 +88,11 @@ module.exports = grammar({
     //   block_structure_ending($, 'function')
     // ),
 
-    parameters: $ => seq(
-      '(',
-      commaSep1($.identifier),
-      ')'
-    ),
+    // parameters: $ => seq(
+    //   '(',
+    //   commaSep1($.identifier),
+    //   ')'
+    // ),
 
     /* Variable declarations will go here */
 
@@ -162,13 +162,6 @@ module.exports = grammar({
     //   commaSep(choice($._expression, $.array_slice)),
     //   ')'
     // ),
-    //
-    // array_slice: $ => seq(
-    //   optional($._expression),
-    //   ':',
-    //   optional($._expression),
-    //   optional(seq(':', $._expression))
-    // ),
 
     assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
       $._expression_component,
@@ -182,7 +175,6 @@ module.exports = grammar({
       '=>',
       $._expression_component
     )),
-
 
     math_expression: $ => choice(
       prec.left(PREC.ADDITIVE, seq($._expression_component, '+', $._expression_component)),
@@ -203,6 +195,13 @@ module.exports = grammar({
     // sure this works with them, misclassifcation as an assignment_expression
     // might be bad. Python uses the same syntax for function calls
     // argument_list: $ => prec.dynamic(1, seq('(', commaSep1($._expression), ')')),
+
+    // array_slice: $ => seq(
+    //   optional($._expression),
+    //   ':',
+    //   optional($._expression),
+    //   optional(seq(':', $._expression))
+    // ),
 
     // bare literals cannot appear in valid fortran programs
     _literals: $ => choice(
@@ -248,7 +247,9 @@ module.exports = grammar({
 
     _semicolon: $ => ';',
 
-    _newline: $ => '\n'
+    _newline: $ => '\n',
+
+    _end_of_statement: $ => choice($._semicolon, $._newline)
   }
 })
 
