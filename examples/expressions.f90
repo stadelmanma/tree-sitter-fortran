@@ -4,10 +4,10 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   ! I'll get some more complex formal examples in here
   !
   !
+  !INTEGER :: l(300), M(200, 200, 200)
+  !DIMENSION :: rr(1:15), f(1:15)
 
-  OPEN(UNIT=7)
-
-
+  ! various types of simple assignment
   r = +5.678
   i = -0
   j = 1
@@ -15,19 +15,38 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   j = k; j =k
   r = -r
   r = +r
-  !
-  ! l(:) = 3
-  ! l(1) = 1
-  ! l(2:3) = 4 ! this doesn't seem to be parsed corrected
-  !
+  x = -1D9
+  x = .134E5
+  x = 5.e5
+  x = 1.566e+5
+  x = 1.566d-5
+  xc = (   1.0D0   ,   -.14   )
+
+  ! pointer assignment
+  N => M
+
+  ! complex math
   g = r**j / k**2 * 7
   M = 14 + (i - j)**3
-  N => M ! N is associated with M
+
+  ! array slices
+  l(:) = 4
+  l(:4:l(2:2)) = 5
+  l(1:4:2) = 6
+  l(::3) = 3
+  l(1) = 1
+  l(INT(x):j:1*j) = 8
+  M(1, j, INT(SIN(r))) = 5
+  l(INT(r/3.0):j) = 4
+
 
   ! call expressions
-  r = SIN(i + j/k)
-  r = CEILING(SIN(i + j/k) * 100) / 2.0
+  nargs = command_argument_count()
+  r = SIN(1.0 + i + j/k)
+  r = CEILING(SIN(1.0 + i + j/k) * 100) / 2.0
   CALL get_command_argument(i, arg)
+  OPEN(UNIT=7)
+  f = SIN(rr(1:i))
 
   !IF (g == 0) THEN; f = 0; ELSE; IF (M > 5) y = 0; END IF
 
@@ -44,16 +63,6 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   ! PRINT *, data(5			:       9)
   ! data(1) = 4
   ! !
-  x = -1D9
-  ! PRINT *, x
-  x = .134E5
-  ! PRINT *, x
-  x = 5.e5
-  ! PRINT *, x
-  x = 1.566e+5
-  ! PRINT *, x
-  x = 1.566d-5
-  xc = (   1.0D0   ,   -.14   )
   ! PRINT *, xc
   ! !
   !x = TEST

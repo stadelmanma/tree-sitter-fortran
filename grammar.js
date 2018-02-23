@@ -155,14 +155,14 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
+      $.number_literal,
+      $.complex_literal,
+      //$.string_literal,
+      $.boolean_literal,
+      $.identifier,
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
-    ),
-
-    _expression_component: $ => choice(
-      $._literals,
-      $._expression
     ),
 
     parenthesized_expression: $ => seq(
@@ -172,26 +172,26 @@ module.exports = grammar({
     ),
 
     assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
-      $._expression_component,
+      $._expression,
       '=',
-      $._expression_component
+      $._expression
     )),
 
     // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0079.htm#pointer_assign
     pointer_assignment_expression: $ => prec.right(seq(
       $.identifier, // this needs to support structs i.e. mytype%attr
       '=>',
-      $._expression_component
+      $._expression
     )),
 
     math_expression: $ => choice(
-      prec.left(PREC.ADDITIVE, seq($._expression_component, '+', $._expression_component)),
-      prec.left(PREC.ADDITIVE, seq($._expression_component, '-', $._expression_component)),
-      prec.left(PREC.MULTIPLICATIVE, seq($._expression_component, '*', $._expression_component)),
-      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '/', $._expression_component)),
-      prec.left(PREC.EXPONENT, seq($._expression_component, '**', $._expression_component)),
-      prec.right(PREC.UNARY, seq('-', $._expression_component)),
-      prec.right(PREC.UNARY, seq('+', $._expression_component))
+      prec.left(PREC.ADDITIVE, seq($._expression, '+', $._expression)),
+      prec.left(PREC.ADDITIVE, seq($._expression, '-', $._expression)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '*', $._expression)),
+      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '/', $._expression)),
+      prec.left(PREC.EXPONENT, seq($._expression, '**', $._expression)),
+      prec.right(PREC.UNARY, seq('-', $._expression)),
+      prec.right(PREC.UNARY, seq('+', $._expression))
     ),
 
     // Due to the fact Fortran uses parentheses for both function calls and
@@ -209,7 +209,7 @@ module.exports = grammar({
       1,
       seq(
         '(',
-        commaSep(choice($.keyword_argument, $.array_slice, $._expression_component)),
+        commaSep(choice($.keyword_argument, $.array_slice, $._expression)),
          ')'
        )
     ),
@@ -218,23 +218,14 @@ module.exports = grammar({
     keyword_argument: $ => prec(1, seq(
       $.identifier,
       '=',
-      $._expression_component
+      $._expression
     )),
 
     array_slice: $ => seq(
-      optional($._expression_component), // start
+      optional($._expression), // start
       ':',
-      optional($._expression_component), // stop
-      optional(seq(':', $._expression_component)) // stride
-    ),
-
-    // bare literals cannot appear in valid fortran programs
-    _literals: $ => choice(
-      $.number_literal,
-      $.complex_literal,
-      //$.string_literal,
-      $.boolean_literal,
-      $.identifier
+      optional($._expression), // stop
+      optional(seq(':', $._expression)) // stride
     ),
 
     number_literal: $ => token(
