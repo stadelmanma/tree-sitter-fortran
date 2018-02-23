@@ -113,8 +113,10 @@ module.exports = grammar({
 
     _statement: $ => seq(
       choice(
-        $._expression,
-        $.subroutine_call
+        $.assignment_expression,
+        $.pointer_assignment_expression,
+        $.call_expression,
+        $.subroutine_call,
         //$.return_statement,
         //$.continue_statement,
         //$.goto_statement,
@@ -153,8 +155,6 @@ module.exports = grammar({
     // Expressions
 
     _expression: $ => choice(
-      $.assignment_expression,
-      $.pointer_assignment_expression,
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
@@ -194,19 +194,24 @@ module.exports = grammar({
       prec.right(PREC.UNARY, seq('+', $._expression_component))
     ),
 
+    // Due to the fact Fortran uses parentheses for both function calls and
+    // array access there is no way to differentiate the two except for the
+    // isolated case of assignment, since you can't assign to a function call.
+    // Because the difference is context specific it is better to consistently
+    // use the call expression for all cases instead of adding a few odd
+    // corner cases when the two can be differentiated.
     call_expression: $ => prec(
       PREC.CALL,
       seq($.identifier, $.argument_list)
     ),
 
-    //
-    // Fortran allows named parameters (i.e. OPEN(FILE=name)), I need to make
-    // sure this works with them, misclassifcation as an assignment_expression
-    // might be bad. Python uses the same syntax for function calls so I can
-    // look there although this might be a case where a conflict rule is needed.
     argument_list: $ => prec.dynamic(
       1,
-      seq('(', commaSep1(choice($.keyword_argument, $._expression_component)), ')')
+      seq(
+        '(',
+        commaSep(choice($.keyword_argument, $.array_slice, $._expression_component)),
+         ')'
+       )
     ),
 
     // precedence is used to prevent conflict with assignment expression
@@ -216,12 +221,12 @@ module.exports = grammar({
       $._expression_component
     )),
 
-    // array_slice: $ => seq(
-    //   optional($._expression),
-    //   ':',
-    //   optional($._expression),
-    //   optional(seq(':', $._expression))
-    // ),
+    array_slice: $ => seq(
+      optional($._expression_component), // start
+      ':',
+      optional($._expression_component), // stop
+      optional(seq(':', $._expression_component)) // stride
+    ),
 
     // bare literals cannot appear in valid fortran programs
     _literals: $ => choice(
