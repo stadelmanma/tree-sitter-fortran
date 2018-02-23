@@ -14,6 +14,14 @@
 // since the parser doesn't support the ^ regex token, a using a seq
 // might work as long as the label is optional.
 //
+// The best route to handle line continuation in fortran might be using
+// an external scanner. Basically the scanner would create the "end_of_statement"
+// tokens, as well as newline tokens and if an ampersand was encounted prior to
+// a newline the EOS token would get skipped. The same scanner would then be
+// used as needed to support fixed form fortran although line truncation at
+// 72 characters would not be supported because it can be configured at
+// compile time.
+//
 const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
@@ -157,7 +165,7 @@ module.exports = grammar({
     _expression: $ => choice(
       $.number_literal,
       $.complex_literal,
-      //$.string_literal,
+      $.string_literal,
       $.boolean_literal,
       $.identifier,
       $.math_expression,
@@ -248,14 +256,22 @@ module.exports = grammar({
       ')'
     ),
 
-    // this is completely wrong but I'll tinker with it later since in
-    // reality I'll need to check for the unescaped quote used to start
-    // the string. Otherwise keep matching until a newline
-    // string_literal: $ => token(seq(
-    //   choice('"', "'"),
-    //   repeat(choice(/[^\\"\n]/, /\\./)),
-    //   choice('"', "'")
-    // )),
+    string_literal: $ => choice(
+      $._double_quoted_string,
+      $._single_quoted_string
+    ),
+
+    _double_quoted_string: $ => token(seq(
+      '"',
+      repeat(choice(/[^"\n]/, /""./)),
+      '"')
+    ),
+
+    _single_quoted_string: $ => token(seq(
+      "'",
+      repeat(choice(/[^'\n]/, /''./)),
+      "'")
+    ),
 
     boolean_literal: $ => token(
       choice(

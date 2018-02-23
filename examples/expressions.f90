@@ -5,6 +5,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !
   !
   !INTEGER :: l(300), M(200, 200, 200)
+  !CHARACTER(LEN=255) :: arg
   !DIMENSION :: rr(1:15), f(1:15)
 
   ! various types of simple assignment
@@ -21,6 +22,10 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   x = 1.566e+5
   x = 1.566d-5
   xc = (   1.0D0   ,   -.14   )
+  arg = "rtt''eq\efqe\fqete""qqrqe\efqfqgrerrqerqrq"
+  arg = 'efa"gwg\ffqf2551c^2531efefef''fafaefa"%^@2 rgwgqrfefef'
+  arg = ""
+  arg = ''
 
   ! pointer assignment
   N => M
