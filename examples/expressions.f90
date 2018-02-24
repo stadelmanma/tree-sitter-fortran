@@ -35,7 +35,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   M = 14 + (i - j)**3
 
   ! array slices
-  l(:) = 4
+  l (:) = 4
   l(:4:l(2:2)) = 5
   l(1:4:2) = 6
   l(::3) = 3
@@ -44,14 +44,21 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   M(1, j, INT(SIN(r))) = 5
   l(INT(r/3.0):j) = 4
 
-
   ! call expressions
   nargs = command_argument_count()
-  r = SIN(1.0 + i + j/k)
+  r = SIN (1.0 + i + j/k)
   r = CEILING(SIN(1.0 + i + j/k) * 100) / 2.0
-  CALL get_command_argument(i, arg)
-  OPEN(UNIT=7)
+  CALL get_command_argument (i, arg)
+  OPEN (UNIT=7)
   f = SIN(rr(1:i))
+
+  ! derived type member access
+  r = one%two
+  r = one%two%three
+  l(1:10) = one%two(141)
+  one%four => one%two
+  r = INT(one%three) + one%two(5)
+  rr(5:10) = -zz(5:10)%five
 
   !IF (g == 0) THEN; f = 0; ELSE; IF (M > 5) y = 0; END IF
 

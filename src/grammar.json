@@ -222,6 +222,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "derived_type_member_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "math_expression"
         },
         {
@@ -280,11 +284,32 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "_expression"
           },
           {
             "type": "STRING",
             "value": "=>"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "derived_type_member_expression": {
+      "type": "PREC_RIGHT",
+      "value": 100,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "%"
           },
           {
             "type": "SYMBOL",
@@ -403,7 +428,7 @@
         },
         {
           "type": "PREC_RIGHT",
-          "value": 100,
+          "value": 90,
           "content": {
             "type": "SEQ",
             "members": [
@@ -420,7 +445,7 @@
         },
         {
           "type": "PREC_RIGHT",
-          "value": 100,
+          "value": 90,
           "content": {
             "type": "SEQ",
             "members": [
@@ -818,6 +843,7 @@
     "MULTIPLICATIVE": 60,
     "EXPONENT": 70,
     "CALL": 80,
-    "UNARY": 100
+    "UNARY": 90,
+    "MEMBER": 100
   }
 }

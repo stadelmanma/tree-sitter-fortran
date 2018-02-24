@@ -35,7 +35,8 @@ const PREC = {
   MULTIPLICATIVE: 60,
   EXPONENT: 70,
   CALL: 80,
-  UNARY: 100
+  UNARY: 90,
+  TYPE_MEMBER: 100
 }
 
 module.exports = grammar({
@@ -52,10 +53,6 @@ module.exports = grammar({
   ],
 
   conflicts: $ => [],
-
-  // I'll need to figure out how best to add support for statement labels
-  // since the parser doesn't support the ^ regex token, a using a seq
-  // might work as long as the label is optional.
 
   rules: {
     translation_unit: $ => repeat($._top_level_item),
@@ -168,6 +165,7 @@ module.exports = grammar({
       $.string_literal,
       $.boolean_literal,
       $.identifier,
+      $.derived_type_member_expression,
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
@@ -187,8 +185,14 @@ module.exports = grammar({
 
     // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0079.htm#pointer_assign
     pointer_assignment_expression: $ => prec.right(seq(
-      $.identifier, // this needs to support structs i.e. mytype%attr
+      $._expression, // this needs to support structs i.e. mytype%attr
       '=>',
+      $._expression
+    )),
+
+    derived_type_member_expression: $ => prec.right(PREC.TYPE_MEMBER, seq(
+      $._expression,
+      '%',
       $._expression
     )),
 
