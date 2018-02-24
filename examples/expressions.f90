@@ -4,9 +4,9 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   ! I'll get some more complex formal examples in here
   !
   !
-  !INTEGER :: l(300), M(200, 200, 200)
-  !CHARACTER(LEN=255) :: arg
-  !DIMENSION :: rr(1:15), f(1:15)
+  INTEGER :: l(300), M(200, 200, 200)
+  CHARACTER(LEN=255) :: arg
+  DIMENSION :: rr(1:15), f(1:15)
 
   ! various types of simple assignment
   r = +5.678
@@ -25,7 +25,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   arg = "rtt''eq\efqe\fqete""qqrqe\efqfqgrerrqerqrq"
   arg = 'efa"gwg\ffqf2551c^2531efefef''fafaefa"%^@2 rgwgqrfefef'
   arg = ""
-  arg = ''
+12  arg = ''
 
   ! pointer assignment
   N => M
@@ -53,12 +53,15 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   f = SIN(rr(1:i))
 
   ! derived type member access
-  r = one%two
-  r = one%two%three
-  l(1:10) = one%two(141)
-  one%four => one%two
-  r = INT(one%three) + one%two(5)
-  rr(5:10) = -zz(5:10)%five
+  ! r = one%two
+  ! r = one%two%three
+  ! l(1:10) = one%two(141)
+  ! one%four => one%two
+  ! r = INT(one%three) + one%two(5)
+  ! rr(5:10) = -zz(5:10)%five
+
+  ! Conditional statements
+
 
   !IF (g == 0) THEN; f = 0; ELSE; IF (M > 5) y = 0; END IF
 

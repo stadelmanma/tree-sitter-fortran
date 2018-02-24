@@ -116,6 +116,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "statement_label"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "assignment_expression"
             },
             {
@@ -137,6 +149,10 @@
           "name": "_end_of_statement"
         }
       ]
+    },
+    "statement_label": {
+      "type": "PATTERN",
+      "value": "\\d+"
     },
     "subroutine_call": {
       "type": "SEQ",
@@ -844,6 +860,6 @@
     "EXPONENT": 70,
     "CALL": 80,
     "UNARY": 90,
-    "MEMBER": 100
+    "TYPE_MEMBER": 100
   }
 }

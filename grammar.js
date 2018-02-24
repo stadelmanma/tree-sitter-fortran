@@ -117,6 +117,7 @@ module.exports = grammar({
     // Statements
 
     _statement: $ => seq(
+      optional($.statement_label),
       choice(
         $.assignment_expression,
         $.pointer_assignment_expression,
@@ -132,23 +133,26 @@ module.exports = grammar({
         //$.if_statement,
         //$.select_statement,
         //$.do_statement,
+        //$.print_statement,
+        //$.write_statement,
+        //$.format_statement,
         //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
       ),
       $._end_of_statement
     ),
+
+    statement_label: $ => /\d+/,
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
       $.call_expression
     ),
 
-    // only appears inside DO loops
     cycle_statement: $ => seq(
       caseInsensitive('cycle'),
       optional($.identifier)
     ),
 
-    // only appears inside DO loops
     exit_statement: $ => seq(
       caseInsensitive('exit'),
       optional($.identifier)
