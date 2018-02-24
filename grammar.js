@@ -305,7 +305,7 @@ module.exports.PREC = PREC
 function caseInsensitive (keyword) {
   return new RegExp(keyword
     .split('')
-    .map(letter => `[${letter}${letter.toUpperCase()}]`)
+    .map(l => l != l.toUpperCase() ? `[${l}${l.toUpperCase()}]` : l)
     .join('')
   )
 }
