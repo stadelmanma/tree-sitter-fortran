@@ -941,12 +941,12 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "STRING",
-            "value": "./[tT][rR][uU][eE]/."
+            "type": "PATTERN",
+            "value": ".[tT][rR][uU][eE]."
           },
           {
-            "type": "STRING",
-            "value": "./[fF][aA][lL][sS][eE]/."
+            "type": "PATTERN",
+            "value": ".[fF][aA][lL][sS][eE]."
           }
         ]
       }

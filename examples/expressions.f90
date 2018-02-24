@@ -24,6 +24,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   x = 1.566d-5
   xc = (   1.0D0   ,   -.14   )
   y = 5
+  check = (.TRUE. .neqv. .FALSE.)
   check = (.NOT. x == y)
   check = (0 > 1 .AND. (2 > 1) .EQV. 2 .LT. 3)
   arg = "rtt''eq\efqe\fqete""qqrqe\efqfqgrerrqerqrq"

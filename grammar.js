@@ -304,8 +304,8 @@ module.exports = grammar({
 
     boolean_literal: $ => token(
       choice(
-        `.${caseInsensitive('true')}.`,
-        `.${caseInsensitive('false')}.`
+        caseInsensitive('.true.'),
+        caseInsensitive('.false.')
       )
     ),
 
