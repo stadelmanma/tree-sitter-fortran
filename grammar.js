@@ -25,7 +25,6 @@
 const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
-  LOGICAL_XOR: 5,
   LOGICAL_EQUIV: 5,
   LOGICAL_OR: 10,
   LOGICAL_AND: 20,
@@ -128,7 +127,6 @@ module.exports = grammar({
         //$.goto_statement,
         //$.stop_statement,
         //$.data_statement,
-        //$.call_statement,
         //$.inline_if_statment,
         //$.if_statement,
         //$.select_statement,
@@ -148,19 +146,6 @@ module.exports = grammar({
       $.call_expression
     ),
 
-    cycle_statement: $ => seq(
-      caseInsensitive('cycle'),
-      optional($.identifier)
-    ),
-
-    exit_statement: $ => seq(
-      caseInsensitive('exit'),
-      optional($.identifier)
-    ),
-
-    // only appears at the end of blocks
-    end_statement: $ => caseInsensitive('end'),
-
     // Expressions
 
     _expression: $ => choice(
@@ -170,6 +155,8 @@ module.exports = grammar({
       $.boolean_literal,
       $.identifier,
       $.derived_type_member_expression,
+      $.logical_expression,
+      $.relational_expression,
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
@@ -197,6 +184,33 @@ module.exports = grammar({
     derived_type_member_expression: $ => prec.right(PREC.TYPE_MEMBER, seq(
       $._expression,
       '%',
+      $._expression
+    )),
+
+    logical_expression: $ => choice(
+      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('.or.'), $._expression)),
+      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('.and.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.eqv.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.neqv.'), $._expression)),
+      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('.not.'), $._expression))
+    ),
+
+    relational_expression: $ => prec.left(PREC.RELATIONAL, seq(
+      $._expression,
+      choice(
+        '<',
+        caseInsensitive('.lt.'),
+        '>',
+        caseInsensitive('.gt.'),
+        '<=',
+        caseInsensitive('.le.'),
+        '>=',
+        caseInsensitive('.ge.'),
+        '==',
+        caseInsensitive('.eq.'),
+        '/=',
+        caseInsensitive('.ne.'),
+      ),
       $._expression
     )),
 
@@ -328,12 +342,12 @@ function sep1 (rule, separator) {
 
 function block_structure_ending ($, struct_type) {
   var obj = prec.right(seq(
-    $.end_statement,
+    caseInsensitive('end'),
     optional(seq(
       caseInsensitive(struct_type),
       optional($.identifier)
     )),
-    $._newline
+    $._end_of_statement
   ))
   //
   return obj

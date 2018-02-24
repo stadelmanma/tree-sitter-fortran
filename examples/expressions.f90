@@ -5,6 +5,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   !
   !
   INTEGER :: l(300), M(200, 200, 200)
+  LOGICAL :: check
   CHARACTER(LEN=255) :: arg
   DIMENSION :: rr(1:15), f(1:15)
 
@@ -22,10 +23,13 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   x = 1.566e+5
   x = 1.566d-5
   xc = (   1.0D0   ,   -.14   )
+  y = 5
+  check = (.NOT. x == y)
+  check = (0 > 1 .AND. (2 > 1) .EQV. 2 .LT. 3)
   arg = "rtt''eq\efqe\fqete""qqrqe\efqfqgrerrqerqrq"
   arg = 'efa"gwg\ffqf2551c^2531efefef''fafaefa"%^@2 rgwgqrfefef'
   arg = ""
-12  arg = ''
+1 arg = ''
 
   ! pointer assignment
   N => M
@@ -36,7 +40,6 @@ PROGRAM TEST_PROGRAM !Testing comment after program
 
   ! array slices
   l (:) = 4
-  l(:4:l(2:2)) = 5
   l(1:4:2) = 6
   l(::3) = 3
   l(1) = 1
@@ -53,15 +56,41 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   f = SIN(rr(1:i))
 
   ! derived type member access
-  ! r = one%two
-  ! r = one%two%three
-  ! l(1:10) = one%two(141)
-  ! one%four => one%two
-  ! r = INT(one%three) + one%two(5)
-  ! rr(5:10) = -zz(5:10)%five
+  r = one%two
+  r = one%two%three
+  l(1:10) = one%two(141)
+  one%four => one%two
+  r = INT(one%three) + one%two(5)
+  rr(5:10) = -zz(5:10)%five
 
   ! Conditional statements
-
+  ! IF (x < 7) y = 9
+  !
+  ! IF (SIN(x) .GT. r) THEN
+  !   r = 0
+  ! ENDIF
+  !
+  ! IF (arg(1:1) == ADJUSTL(' r')) THEN
+  !   r = 0
+  ! ELSE
+  !   n = 0
+  ! ENDIF
+  !
+  ! IF (arg(1:1) == ADJUSTL(' r')) THEN
+  !   r = 0
+  ! ELSEIF (arg(1:1) .NE. CHAR(l(1))) THEN
+  !   l = 67
+  ! ELSE
+  !   n = 0
+  ! ENDIF
+  !
+  ! test: IF (y < 0) THEN
+  !    y = 9
+  !  ELSE  IF (x > 0) THEN test
+  !    r = 9
+  !  ELSE test
+  !   y = 10
+  !  END IF test
 
   !IF (g == 0) THEN; f = 0; ELSE; IF (M > 5) y = 0; END IF
 
