@@ -175,7 +175,6 @@ module.exports = grammar({
       $._expression
     )),
 
-    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0079.htm#pointer_assign
     pointer_assignment_expression: $ => prec.right(seq(
       $._expression, // this needs to support structs i.e. mytype%attr
       '=>',
@@ -279,9 +278,9 @@ module.exports = grammar({
 
     complex_literal: $ => seq(
       '(',
-      $.number_literal,
+      choice($.number_literal, $.identifier),
       ',',
-      $.number_literal,
+      choice($.number_literal, $.identifier),
       ')'
     ),
 
