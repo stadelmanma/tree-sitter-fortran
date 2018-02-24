@@ -204,6 +204,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "concatenation_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "math_expression"
         },
         {
@@ -464,6 +468,27 @@
                 "value": ".[nN][eE]."
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "concatenation_expression": {
+      "type": "PREC_RIGHT",
+      "value": 50,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "//"
           },
           {
             "type": "SYMBOL",

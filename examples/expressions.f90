@@ -27,7 +27,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   check = (.NOT. x == y)
   check = (0 > 1 .AND. (2 > 1) .EQV. 2 .LT. 3)
   arg = "rtt''eq\efqe\fqete""qqrqe\efqfqgrerrqerqrq"
-  arg = 'efa"gwg\ffqf2551c^2531efefef''fafaefa"%^@2 rgwgqrfefef'
+  arg = 'efa"gwg\ffqf2551c^2531efefef''fafaefa"%^@2 rgwgqrfefef'//'dd'//arg
   arg = ""
 1 arg = ''
 

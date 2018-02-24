@@ -157,6 +157,7 @@ module.exports = grammar({
       $.derived_type_member_expression,
       $.logical_expression,
       $.relational_expression,
+      $.concatenation_expression,
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
@@ -211,6 +212,12 @@ module.exports = grammar({
         '/=',
         caseInsensitive('.ne.'),
       ),
+      $._expression
+    )),
+
+    concatenation_expression: $ => prec.right(PREC.ADDITIVE, seq(
+      $._expression,
+      '//',
       $._expression
     )),
 
