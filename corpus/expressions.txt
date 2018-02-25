@@ -65,6 +65,8 @@ PROGRAM TEST
     sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
     dble_qt = ""
     dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+
+    val = "one"//'two'//sngl_qt//dble_qt
 END PROGRAM
 
 ----
@@ -74,7 +76,11 @@ END PROGRAM
     (assignment_expression (identifier) (string_literal))
     (assignment_expression (identifier) (string_literal))
     (assignment_expression (identifier) (string_literal))
-    (assignment_expression (identifier) (string_literal))))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier)
+      (concatenation_expression (string_literal)
+        (concatenation_expression (string_literal)
+          (concatenation_expression (identifier) (identifier)))))))
 
 ============================================
 Boolean literals
@@ -91,3 +97,127 @@ END PROGRAM
   (program_block (identifier)
     (assignment_expression (identifier) (boolean_literal))
     (assignment_expression (identifier) (boolean_literal))))
+
+============================================
+Mathematical expressions
+============================================
+
+PROGRAM TEST
+    val = x + 1
+    val = x - 1
+    val = x * y
+    val = x / y
+    val = x**y
+    val = -x
+    val = +x
+    val = r**j / k**(-2) * 7
+    val = 14 + (i - j)**3
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (math_expression (identifier) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier)))
+    (assignment_expression (identifier)
+      (math_expression
+        (math_expression
+          (math_expression (identifier) (identifier))
+          (math_expression (identifier)
+            (parenthesized_expression (number_literal)))) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (number_literal)
+        (math_expression
+          (parenthesized_expression
+            (math_expression (identifier) (identifier))) (number_literal))))))
+
+============================================
+Logical expressions
+============================================
+
+PROGRAM TEST
+    val = x < y
+    val = x .LT. y
+    val = x > y
+    val = x .gt. y
+    val = x <= y
+    val = x .LE. y
+    val = x >= y
+    val = x .ge. y
+    val = x == y
+    val = x .EQ. y
+    val = x /= y
+    val = x .NE. y
+    val = x .EQV. y
+    val = x .NEQV. y
+    val = x .AND. y
+    val = x .or. y
+    val = .NOT. x
+    val = (.NOT. x == y)
+    val = ((x > y) .AND. (y <= z)) .eqv. .true.
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier)))
+    (assignment_expression (identifier)
+      (parenthesized_expression
+        (logical_expression
+          (relational_expression (identifier) (identifier)))))
+    (assignment_expression (identifier)
+      (logical_expression
+        (parenthesized_expression
+          (logical_expression
+            (parenthesized_expression
+              (relational_expression (identifier) (identifier)))
+            (parenthesized_expression
+              (relational_expression (identifier) (identifier)))))
+        (boolean_literal)))))
