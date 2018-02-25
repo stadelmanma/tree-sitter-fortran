@@ -99,6 +99,70 @@ END PROGRAM
     (assignment_expression (identifier) (boolean_literal))))
 
 ============================================
+Array Slicing
+============================================
+
+PROGRAM TEST
+    arr(1) = 1
+    arr(:) = 2
+    arr(1:10) = 3
+    arr(1:10:2) = 4
+    arr(::2) = 5
+    arr(INT(x):3*j:j) = 6
+    arr(1, j, INT(SIN(r))) = 5
+    arr(INT(r/3.0):j) = 4
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression
+      (call_expression (identifier) (argument_list (number_literal)))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier) (argument_list (array_slice)))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list (array_slice (number_literal) (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice (number_literal) (number_literal) (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list (array_slice (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice
+            (call_expression (identifier) (argument_list (identifier)))
+            (math_expression (number_literal) (identifier))
+            (identifier))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (number_literal)
+          (identifier)
+          (call_expression (identifier)
+            (argument_list
+              (call_expression (identifier) (argument_list (identifier)))))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice
+            (call_expression (identifier)
+              (argument_list (math_expression (identifier) (number_literal))))
+            (identifier))))
+      (number_literal))))
+
+============================================
 Pointer Assignment
 ============================================
 
