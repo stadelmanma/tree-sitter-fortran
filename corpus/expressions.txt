@@ -1,0 +1,385 @@
+============================================
+Number Literals
+============================================
+
+PROGRAM TEST
+    int_val = +1
+    int_val = -1
+    int_val =  1
+    flt_val = +1.0
+    flt_val = -1.0
+    flt_val =  1.0
+    flt_val = -1.23E+4
+    flt_val = -1.23E-4
+    flt_val = -1.23E4
+    dbl_val = -1.23D+4
+    dbl_val = -1.23D-4
+    dbl_val = -1.23D4
+    bin_val = -B'1011'
+    bin_val = +B'1011'
+    bin_val =  B'1011'
+    oct_val = -O'0158'
+    oct_val = +O'0158'
+    oct_val =  O'0158'
+    hex_val = -Z'09AF'
+    hex_val = +Z'09AF'
+    hex_val =  Z'09AF'
+    cpx_val = (1.0, 2.0)
+    cpx_val = (dbl_val, dbl_val)
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (complex_literal (number_literal) (number_literal)))
+    (assignment_expression (identifier) (complex_literal (identifier) (identifier)))))
+
+============================================
+String Literals
+============================================
+
+PROGRAM TEST
+    sngl_qt = ''
+    sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
+    dble_qt = ""
+    dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+
+    val = "one"//'two'//sngl_qt//dble_qt
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier)
+      (concatenation_expression (string_literal)
+        (concatenation_expression (string_literal)
+          (concatenation_expression (identifier) (identifier)))))))
+
+============================================
+Boolean Literals
+============================================
+
+PROGRAM TEST
+    bool_val = .TRUE.
+    bool_val = .FALSE.
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (boolean_literal))
+    (assignment_expression (identifier) (boolean_literal))))
+
+============================================
+Array Slicing
+============================================
+
+PROGRAM TEST
+    arr(1) = 1
+    arr(:) = 2
+    arr(1:10) = 3
+    arr(1:10:2) = 4
+    arr(::2) = 5
+    arr(INT(x):3*j:j) = 6
+    arr(1, j, INT(SIN(r))) = 5
+    arr(INT(r/3.0):j) = 4
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression
+      (call_expression (identifier) (argument_list (number_literal)))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier) (argument_list (array_slice)))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list (array_slice (number_literal) (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice (number_literal) (number_literal) (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list (array_slice (number_literal))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice
+            (call_expression (identifier) (argument_list (identifier)))
+            (math_expression (number_literal) (identifier))
+            (identifier))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (number_literal)
+          (identifier)
+          (call_expression (identifier)
+            (argument_list
+              (call_expression (identifier) (argument_list (identifier)))))))
+      (number_literal))
+    (assignment_expression
+      (call_expression (identifier)
+        (argument_list
+          (array_slice
+            (call_expression (identifier)
+              (argument_list (math_expression (identifier) (number_literal))))
+            (identifier))))
+      (number_literal))))
+
+============================================
+Pointer Assignment
+============================================
+
+PROGRAM TEST
+    val => x
+    val(1) => x
+    val%attr => x
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (pointer_assignment_expression (identifier) (identifier))
+    (pointer_assignment_expression
+      (call_expression (identifier) (argument_list (number_literal)))
+      (identifier))
+    (pointer_assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (identifier))))
+
+============================================
+Derived Type Member Access
+============================================
+
+PROGRAM TEST
+  val%attr = x
+  x = val%attr
+  val%attr(1:4) = x
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (identifier))
+    (assignment_expression (identifier)
+      (derived_type_member_expression (identifier) (identifier)))
+    (assignment_expression
+      (derived_type_member_expression (identifier)
+        (call_expression (identifier)
+          (argument_list (array_slice  (number_literal) (number_literal)))))
+      (identifier))))
+
+============================================
+Mathematical Expressions
+============================================
+
+PROGRAM TEST
+    val = x + 1
+    val = x - 1
+    val = x * y
+    val = x / y
+    val = x**y
+    val = -x
+    val = +x
+    val = r**j / k**(-2) * 7
+    val = 14 + (i - j)**3
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (math_expression (identifier) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier)))
+    (assignment_expression (identifier)
+      (math_expression (identifier)))
+    (assignment_expression (identifier)
+      (math_expression
+        (math_expression
+          (math_expression (identifier) (identifier))
+          (math_expression (identifier)
+            (parenthesized_expression (number_literal)))) (number_literal)))
+    (assignment_expression (identifier)
+      (math_expression (number_literal)
+        (math_expression
+          (parenthesized_expression
+            (math_expression (identifier) (identifier))) (number_literal))))))
+
+============================================
+Logical Expressions
+============================================
+
+PROGRAM TEST
+    val = x < y
+    val = x .LT. y
+    val = x > y
+    val = x .gt. y
+    val = x <= y
+    val = x .LE. y
+    val = x >= y
+    val = x .ge. y
+    val = x == y
+    val = x .EQ. y
+    val = x /= y
+    val = x .NE. y
+    val = x .EQV. y
+    val = x .NEQV. y
+    val = x .AND. y
+    val = x .or. y
+    val = .NOT. x
+    val = (.NOT. x == y)
+    val = ((x > y) .AND. (y <= z)) .eqv. .true.
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (relational_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier) (identifier)))
+    (assignment_expression (identifier)
+      (logical_expression (identifier)))
+    (assignment_expression (identifier)
+      (parenthesized_expression
+        (logical_expression
+          (relational_expression (identifier) (identifier)))))
+    (assignment_expression (identifier)
+      (logical_expression
+        (parenthesized_expression
+          (logical_expression
+            (parenthesized_expression
+              (relational_expression (identifier) (identifier)))
+            (parenthesized_expression
+              (relational_expression (identifier) (identifier)))))
+        (boolean_literal)))))
+
+============================================
+Function and Subroutine Call Expressions
+============================================
+
+PROGRAM TEST
+    nargs = command_argument_count()
+    x = SIN(1.0 + i + j/k)
+    x = SIN(REAL(j**k, 8) * 100) / 2.0
+    CALL get_command_argument(i, arg)
+    OPEN(7, FILE="output.txt")
+    obj%attr = SIN(rr(1:i))
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (call_expression (identifier) (argument_list)))
+    (assignment_expression (identifier)
+      (call_expression (identifier)
+        (argument_list
+          (math_expression
+            (math_expression (number_literal) (identifier))
+            (math_expression (identifier) (identifier))))))
+    (assignment_expression (identifier)
+      (math_expression
+        (call_expression (identifier)
+          (argument_list
+            (math_expression
+              (call_expression (identifier)
+                (argument_list
+                  (math_expression (identifier) (identifier))
+                  (number_literal)))
+              (number_literal))))
+        (number_literal)))
+    (subroutine_call
+      (call_expression (identifier)
+        (argument_list (identifier) (identifier))))
+    (call_expression (identifier)
+      (argument_list
+        (number_literal)
+        (keyword_argument (identifier) (string_literal))))
+    (assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (call_expression (identifier)
+        (argument_list
+          (call_expression (identifier)
+            (argument_list
+              (array_slice (number_literal) (identifier)))))))))
