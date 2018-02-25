@@ -1,0 +1,93 @@
+============================================
+Number literals
+============================================
+
+PROGRAM TEST
+    int_val = +1
+    int_val = -1
+    int_val =  1
+    flt_val = +1.0
+    flt_val = -1.0
+    flt_val =  1.0
+    flt_val = -1.23E+4
+    flt_val = -1.23E-4
+    flt_val = -1.23E4
+    dbl_val = -1.23D+4
+    dbl_val = -1.23D-4
+    dbl_val = -1.23D4
+    bin_val = -B'1011'
+    bin_val = +B'1011'
+    bin_val =  B'1011'
+    oct_val = -O'0158'
+    oct_val = +O'0158'
+    oct_val =  O'0158'
+    hex_val = -Z'09AF'
+    hex_val = +Z'09AF'
+    hex_val =  Z'09AF'
+    cpx_val = (1.0, 2.0)
+    cpx_val = (dbl_val, dbl_val)
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (number_literal))
+    (assignment_expression (identifier) (complex_literal (number_literal) (number_literal)))
+    (assignment_expression (identifier) (complex_literal (identifier) (identifier)))))
+
+============================================
+String literals
+============================================
+
+PROGRAM TEST
+    sngl_qt = ''
+    sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
+    dble_qt = ""
+    dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))
+    (assignment_expression (identifier) (string_literal))))
+
+============================================
+Boolean literals
+============================================
+
+PROGRAM TEST
+    bool_val = .TRUE.
+    bool_val = .FALSE.
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier) (boolean_literal))
+    (assignment_expression (identifier) (boolean_literal))))
