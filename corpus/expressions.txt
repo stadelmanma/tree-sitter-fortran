@@ -1,5 +1,5 @@
 ============================================
-Number literals
+Number Literals
 ============================================
 
 PROGRAM TEST
@@ -57,7 +57,7 @@ END PROGRAM
     (assignment_expression (identifier) (complex_literal (identifier) (identifier)))))
 
 ============================================
-String literals
+String Literals
 ============================================
 
 PROGRAM TEST
@@ -83,7 +83,7 @@ END PROGRAM
           (concatenation_expression (identifier) (identifier)))))))
 
 ============================================
-Boolean literals
+Boolean Literals
 ============================================
 
 PROGRAM TEST
@@ -99,7 +99,54 @@ END PROGRAM
     (assignment_expression (identifier) (boolean_literal))))
 
 ============================================
-Mathematical expressions
+Pointer Assignment
+============================================
+
+PROGRAM TEST
+    val => x
+    val(1) => x
+    val%attr => x
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (pointer_assignment_expression (identifier) (identifier))
+    (pointer_assignment_expression
+      (call_expression (identifier) (argument_list (number_literal)))
+      (identifier))
+    (pointer_assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (identifier))))
+
+============================================
+Derived Type Member Access
+============================================
+
+PROGRAM TEST
+  val%attr = x
+  x = val%attr
+  val%attr(1:4) = x
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (identifier))
+    (assignment_expression (identifier)
+      (derived_type_member_expression (identifier) (identifier)))
+    (assignment_expression
+      (derived_type_member_expression (identifier)
+        (call_expression (identifier)
+          (argument_list (array_slice  (number_literal) (number_literal)))))
+      (identifier))))
+
+============================================
+Mathematical Expressions
 ============================================
 
 PROGRAM TEST
@@ -145,7 +192,7 @@ END PROGRAM
             (math_expression (identifier) (identifier))) (number_literal))))))
 
 ============================================
-Logical expressions
+Logical Expressions
 ============================================
 
 PROGRAM TEST
@@ -221,3 +268,54 @@ END PROGRAM
             (parenthesized_expression
               (relational_expression (identifier) (identifier)))))
         (boolean_literal)))))
+
+============================================
+Function and Subroutine Call Expressions
+============================================
+
+PROGRAM TEST
+    nargs = command_argument_count()
+    x = SIN(1.0 + i + j/k)
+    x = SIN(REAL(j**k, 8) * 100) / 2.0
+    CALL get_command_argument(i, arg)
+    OPEN(7, FILE="output.txt")
+    obj%attr = SIN(rr(1:i))
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (assignment_expression (identifier)
+      (call_expression (identifier) (argument_list)))
+    (assignment_expression (identifier)
+      (call_expression (identifier)
+        (argument_list
+          (math_expression
+            (math_expression (number_literal) (identifier))
+            (math_expression (identifier) (identifier))))))
+    (assignment_expression (identifier)
+      (math_expression
+        (call_expression (identifier)
+          (argument_list
+            (math_expression
+              (call_expression (identifier)
+                (argument_list
+                  (math_expression (identifier) (identifier))
+                  (number_literal)))
+              (number_literal))))
+        (number_literal)))
+    (subroutine_call
+      (call_expression (identifier)
+        (argument_list (identifier) (identifier))))
+    (call_expression (identifier)
+      (argument_list
+        (number_literal)
+        (keyword_argument (identifier) (string_literal))))
+    (assignment_expression
+      (derived_type_member_expression (identifier) (identifier))
+      (call_expression (identifier)
+        (argument_list
+          (call_expression (identifier)
+            (argument_list
+              (array_slice (number_literal) (identifier)))))))))
