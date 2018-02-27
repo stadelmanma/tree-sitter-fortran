@@ -124,8 +124,7 @@ module.exports = grammar({
         $.subroutine_call,
         $.keyword_statement,
         //$.data_statement,
-        //$.inline_if_statment,
-        //$.if_statement,
+        $.if_statement,
         //$.select_statement,
         $.do_loop_statement,
         //$.print_statement,
@@ -160,6 +159,17 @@ module.exports = grammar({
       caseInsensitive('end[ \t]*do'),
       optional($._block_label_closing_expression)
     ),
+
+    if_statement: $ => choice(
+      $._inline_if_statement,
+      //$._block_if_statement
+    ),
+
+    _inline_if_statement: $ => prec.right(seq(
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      $._statement
+    )),
 
     // Expressions
 
