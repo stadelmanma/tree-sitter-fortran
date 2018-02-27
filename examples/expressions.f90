@@ -33,7 +33,7 @@ PROGRAM TEST_PROGRAM !Testing comment after program
 1 arg = ''
 
   ! pointer assignment
-  N => M
+  ! N => M
 
   ! complex math
   g = r**j / k**2 * 7
@@ -57,12 +57,12 @@ PROGRAM TEST_PROGRAM !Testing comment after program
   f = SIN(rr(1:i))
 
   ! derived type member access
-  r = one%two
-  r = one%two%three
-  l(1:10) = one%two(141)
-  one%four => one%two
-  r = INT(one%three) + one%two(5)
-  rr(5:10) = -zz(5:10)%five
+  ! r = one%two
+  ! r = one%two%three
+  ! l(1:10) = one%two(141)
+  ! one%four => one%two
+  ! r = INT(one%three) + one%two(5)
+  ! rr(5:10) = -zz(5:10)%five
 
   ! Conditional statements
   ! IF (x < 7) y = 9
@@ -95,20 +95,17 @@ PROGRAM TEST_PROGRAM !Testing comment after program
 
   !IF (g == 0) THEN; f = 0; ELSE; IF (M > 5) y = 0; END IF
 
-  !;;;;
+  ! Do loops
+  DO i = 1, 10
+    x = 6**x
+    OPEN(i, FILE="qwerty")
+    CALL MYSUB(i, TEST=.TRUE.)
+  END                                       DO
 
-  ! do i = 1,100
-  !   n(i) = i
-  ! enddo
-  ! k = 5
-  ! PRINT *, n(1:10:k)
+  DO i = 1, 10, 1
+    !
+  ENDDO
 
-  !PRINT *, n(40:40)
-  !PRINT *, n(40:)
-  ! PRINT *, data(5			:       9)
-  ! data(1) = 4
-  ! !
-  ! PRINT *, xc
-  ! !
-  !x = TEST
+  out44: DO i = 1,INT(SIN(9.0*i))
+  END DO out44
 END PROGRAM TEST_PROGRAM
