@@ -122,10 +122,7 @@ module.exports = grammar({
         $.pointer_assignment_expression,
         $.call_expression,
         $.subroutine_call,
-        //$.return_statement,
-        //$.continue_statement,
-        //$.goto_statement,
-        //$.stop_statement,
+        $.keyword_statement,
         //$.data_statement,
         //$.inline_if_statment,
         //$.if_statement,
@@ -144,6 +141,14 @@ module.exports = grammar({
     subroutine_call: $ => seq(
       caseInsensitive('call'),
       $.call_expression
+    ),
+
+    keyword_statement: $ => choice(
+      caseInsensitive('continue'),
+      seq(caseInsensitive('cycle'), $.identifier),
+      seq(caseInsensitive('go[ \t]*to'), $.statement_label),
+      caseInsensitive('return'),
+      seq(caseInsensitive('stop'), optional($._expression)),
     ),
 
     do_loop_statement: $ => seq(

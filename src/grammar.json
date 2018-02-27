@@ -144,6 +144,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "keyword_statement"
+            },
+            {
+              "type": "SYMBOL",
               "name": "do_loop_statement"
             }
           ]
@@ -168,6 +172,66 @@
         {
           "type": "SYMBOL",
           "name": "call_expression"
+        }
+      ]
+    },
+    "keyword_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[cC][oO][nN][tT][iI][nN][uU][eE]"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[cC][yY][cC][lL][eE]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[gG][oO][ \t]*[tT][oO]"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "statement_label"
+            }
+          ]
+        },
+        {
+          "type": "PATTERN",
+          "value": "[rR][eE][tT][uU][rR][nN]"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[sS][tT][oO][pP]"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
