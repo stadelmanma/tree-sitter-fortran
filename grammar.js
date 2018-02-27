@@ -122,15 +122,12 @@ module.exports = grammar({
         $.pointer_assignment_expression,
         $.call_expression,
         $.subroutine_call,
-        //$.return_statement,
-        //$.continue_statement,
-        //$.goto_statement,
-        //$.stop_statement,
+        $.keyword_statement,
         //$.data_statement,
         //$.inline_if_statment,
         //$.if_statement,
         //$.select_statement,
-        //$.do_statement,
+        $.do_loop_statement,
         //$.print_statement,
         //$.write_statement,
         //$.format_statement,
@@ -144,6 +141,24 @@ module.exports = grammar({
     subroutine_call: $ => seq(
       caseInsensitive('call'),
       $.call_expression
+    ),
+
+    keyword_statement: $ => choice(
+      caseInsensitive('continue'),
+      seq(caseInsensitive('cycle'), $.identifier),
+      seq(caseInsensitive('go[ \t]*to'), $.statement_label),
+      caseInsensitive('return'),
+      seq(caseInsensitive('stop'), optional($._expression)),
+    ),
+
+    do_loop_statement: $ => seq(
+      optional($.block_label_expression),
+      caseInsensitive('do'),
+      optional($.loop_control_expression),
+      $._end_of_statement,
+      repeat($._statement),
+      caseInsensitive('end[ \t]*do'),
+      optional($._block_label_closing_expression)
     ),
 
     // Expressions
@@ -262,6 +277,19 @@ module.exports = grammar({
       ':',
       optional($._expression), // stop
       optional(seq(':', $._expression)) // stride
+    ),
+
+    block_label_expression: $ => /[a-zA-Z_]\w*:/,
+
+    _block_label_closing_expression: $ => alias($.identifier, $.block_label_closing_expression),
+
+    loop_control_expression: $ => seq(
+      $.identifier,
+      '=',
+      $._expression,
+      ',',
+      $._expression,
+      optional(seq(',', $._expression))
     ),
 
     number_literal: $ => token(

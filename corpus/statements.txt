@@ -1,0 +1,68 @@
+============================================
+Do Loops
+============================================
+
+PROGRAM TEST
+    DO i = 1, 10
+      x = 6**x
+      OPEN(i, FILE="qwerty")
+      CALL MYSUB(i, TEST=.TRUE.)
+    END DO
+
+    DO i = 1, UBOUND(arr), step
+      CONTINUE
+      GOTO 44
+    ENDDO
+
+    out44: DO i = 1,INT(SIN(9.0*i))
+      DO j = 1, 100, -1
+        CYCLE out44
+      END DO
+    END DO out44
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (do_loop_statement
+      (loop_control_expression (identifier) (number_literal) (number_literal))
+      (assignment_expression
+        (identifier)
+        (math_expression (number_literal) (identifier)))
+      (call_expression (identifier)
+        (argument_list
+          (identifier)
+          (keyword_argument (identifier) (string_literal))))
+      (subroutine_call
+        (call_expression (identifier)
+          (argument_list
+            (identifier)
+            (keyword_argument (identifier) (boolean_literal))))))
+    (do_loop_statement
+      (loop_control_expression
+        (identifier)
+        (number_literal)
+        (call_expression (identifier) (argument_list (identifier)))
+        (identifier))
+      (keyword_statement)
+      (keyword_statement (statement_label)))
+    (do_loop_statement
+      (block_label_expression)
+      (loop_control_expression
+        (identifier)
+        (number_literal)
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression (identifier)
+              (argument_list
+                (math_expression (number_literal) (identifier)))))))
+      (do_loop_statement
+        (loop_control_expression
+          (identifier)
+          (number_literal)
+          (number_literal)
+          (number_literal))
+        (keyword_statement (identifier)))
+      (block_label_closing_expression))))
