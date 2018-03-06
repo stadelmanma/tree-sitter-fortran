@@ -66,3 +66,89 @@ END PROGRAM
           (number_literal))
         (keyword_statement (identifier)))
       (block_label))))
+
+============================================
+If Statements
+============================================
+
+PROGRAM TEST
+  IF (x<7) y = 9
+
+  IF (arg(1:1) == ADJUSTL(' r')) THEN
+    r = 0
+  ELSE IF (arg(1:1) .NE. CHAR(l(1))) THEN
+    l = 67
+  ELSE IF (arg(1:1) .NE. CHAR(m(1))) THEN
+  ELSE
+    n = 0
+  ENDIF
+
+  cond1: IF (y < 0) THEN
+     y = 9
+  ELSE  IF (x > 0) THEN cond1
+   r = 9
+   IF (arg(1:1)) THEN
+     r = 0
+   ELSE
+     n = 0
+   END IF
+  ELSE cond1
+    y = 10
+  END IF cond1
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (if_statement
+      (parenthesized_expression (relational_expression (identifier) (number_literal)))
+      (assignment_expression (identifier) (number_literal)))
+    (if_statement
+      (parenthesized_expression
+        (relational_expression
+          (call_expression (identifier)
+            (argument_list (array_slice (number_literal) (number_literal))))
+          (call_expression (identifier)
+            (argument_list (string_literal)))))
+      (assignment_expression (identifier) (number_literal))
+      (elseif_clause
+        (parenthesized_expression
+          (relational_expression
+            (call_expression (identifier)
+              (argument_list (array_slice (number_literal) (number_literal))))
+            (call_expression (identifier)
+              (argument_list
+                (call_expression (identifier)
+                  (argument_list (number_literal)))))))
+        (assignment_expression (identifier) (number_literal)))
+      (elseif_clause
+        (parenthesized_expression
+          (relational_expression
+            (call_expression (identifier)
+              (argument_list (array_slice (number_literal) (number_literal))))
+            (call_expression (identifier)
+              (argument_list
+                (call_expression (identifier) (argument_list (number_literal))))))))
+      (else_clause
+        (assignment_expression (identifier) (number_literal))))
+    (if_statement
+      (block_label_start_expression)
+      (parenthesized_expression
+        (relational_expression (identifier) (number_literal)))
+      (assignment_expression (identifier) (number_literal))
+      (elseif_clause
+        (parenthesized_expression
+          (relational_expression (identifier) (number_literal)))
+        (block_label)
+        (assignment_expression (identifier) (number_literal))
+        (if_statement
+          (parenthesized_expression
+            (call_expression (identifier)
+              (argument_list (array_slice (number_literal) (number_literal)))))
+          (assignment_expression (identifier) (number_literal))
+          (else_clause
+            (assignment_expression (identifier) (number_literal)))))
+      (else_clause (block_label)
+        (assignment_expression (identifier) (number_literal)))
+      (block_label))))
