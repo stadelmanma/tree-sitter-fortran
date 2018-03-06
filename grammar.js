@@ -8,6 +8,7 @@
 //  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/dflrm.htm#book-toc
 //  http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
 //  http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
+//  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
 //
 // Semicolons are treated exactly like newlines and can end any statement
 // or be used to chain multiple ones together with the exception of using
@@ -120,13 +121,11 @@ module.exports = grammar({
       $.intrinsic_type,
       //optional(seq(',', commaSep($.type_qualifier))),
       optional('::'),
-      // this works but doesn't allow expressions during declaration
       commaSep1(choice($.identifier, $.call_expression, $.assignment_expression)),
       $._end_of_statement
     ),
 
-    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
-    intrinsic_type: $ => seq(
+    intrinsic_type: $ => prec.right(seq(
       choice(
         caseInsensitive('byte'),
         caseInsensitive('integer'),
@@ -137,13 +136,11 @@ module.exports = grammar({
         caseInsensitive('logical'),
         caseInsensitive('character'),
       ),
-      // optional(choice(
-      //   seq('(', $._expression, ')'),
-      //   seq(choice('*', /\d+/)) // this might be why automatic arrays don't work
-      // ))
-      // I think this is what I need but it causes the memory to blow up
-      // optional(seq('(',   choice('*', $._expression), ')'))
-    ),
+      optional(choice(
+        $.argument_list,
+        seq('*', choice(/\d+/, $.parenthesized_expression))
+      ))
+    )),
 
     // Statements
 
@@ -335,7 +332,7 @@ module.exports = grammar({
         commaSep(choice(
           $.keyword_argument,
           $.array_slice,
-          $.assumed_size_dimension,
+          $.assumed_size,
           $._expression
         )),
         ')'
@@ -346,7 +343,7 @@ module.exports = grammar({
     keyword_argument: $ => prec(1, seq(
       $.identifier,
       '=',
-      $._expression
+      choice($._expression, $.assumed_size, $.assumed_shape)
     )),
 
     array_slice: $ => seq(
@@ -356,7 +353,9 @@ module.exports = grammar({
       optional(seq(':', $._expression)) // stride
     ),
 
-    assumed_size_dimension: $ => '*',
+    assumed_size: $ => '*',
+
+    assumed_shape: $ => ':',
 
     block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
     _block_label: $ => alias($.identifier, $.block_label),
