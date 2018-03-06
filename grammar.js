@@ -176,6 +176,7 @@ module.exports = grammar({
       caseInsensitive('if'),
       $.parenthesized_expression,
       caseInsensitive('then'),
+      optional($._block_label),
       $._end_of_statement,
       repeat($._statement),
       repeat($.elseif_clause),
@@ -188,12 +189,14 @@ module.exports = grammar({
       caseInsensitive('else[ \t]*if'),
       $.parenthesized_expression,
       caseInsensitive('then'),
+      optional($._block_label),
       $._end_of_statement,
       repeat($._statement),
     ),
 
     else_clause: $ => seq(
       caseInsensitive('else'),
+      optional($._block_label),
       $._end_of_statement,
       repeat($._statement),
     ),
