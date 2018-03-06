@@ -79,7 +79,7 @@ module.exports = grammar({
       $._end_of_statement,
       //repeat($.use_statement),
       //repeat($.implicit_statement),
-      repeat($.variable_declaration),
+      repeat($._variable_declaration_statement),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -117,12 +117,16 @@ module.exports = grammar({
 
     // Variable Declarations
 
+    _variable_declaration_statement: $ => seq(
+      $.variable_declaration,
+      $._end_of_statement
+    ),
+
     variable_declaration: $ => seq(
       $.intrinsic_type,
-      //optional(seq(',', commaSep($.type_qualifier))),
+      optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       commaSep1(choice($.identifier, $.call_expression, $.assignment_expression)),
-      $._end_of_statement
     ),
 
     intrinsic_type: $ => prec.right(seq(
@@ -141,6 +145,33 @@ module.exports = grammar({
         seq('*', choice(/\d+/, $.parenthesized_expression))
       ))
     )),
+
+    type_qualifier: $ => choice(
+      caseInsensitive('allocatable'),
+      caseInsensitive('automatic'),
+      seq(
+        caseInsensitive('dimension'),
+        $.argument_list
+      ),
+      caseInsensitive('external'),
+      seq(
+        caseInsensitive('intent'),
+        '(',
+        choice(caseInsensitive('in'), caseInsensitive('out'), caseInsensitive('in[ \t]*out'),),
+        ')'
+      ),
+      caseInsensitive('intrinsic'),
+      caseInsensitive('optional'),
+      caseInsensitive('parameter'),
+      caseInsensitive('pointer'),
+      caseInsensitive('private'),
+      caseInsensitive('public'),
+      caseInsensitive('save'),
+      caseInsensitive('sequence'),
+      caseInsensitive('static'),
+      caseInsensitive('target'),
+      caseInsensitive('volatile')
+    ),
 
     // Statements
 
