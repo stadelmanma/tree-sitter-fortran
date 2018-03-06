@@ -162,7 +162,7 @@ module.exports = grammar({
 
     if_statement: $ => choice(
       $._inline_if_statement,
-      //$._block_if_statement
+      $._block_if_statement
     ),
 
     _inline_if_statement: $ => prec.right(seq(
@@ -170,6 +170,33 @@ module.exports = grammar({
       $.parenthesized_expression,
       $._statement
     )),
+
+    _block_if_statement: $ => seq(
+      optional($.block_label_expression),
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      caseInsensitive('then'),
+      $._end_of_statement,
+      repeat($._statement),
+      repeat($.elseif_clause),
+      optional($.else_clause),
+      caseInsensitive('end[ \t]*if'),
+      optional($._block_label_closing_expression)
+    ),
+
+    elseif_clause: $ => seq(
+      caseInsensitive('else[ \t]*if'),
+      $.parenthesized_expression,
+      caseInsensitive('then'),
+      $._end_of_statement,
+      repeat($._statement),
+    ),
+
+    else_clause: $ => seq(
+      caseInsensitive('else'),
+      $._end_of_statement,
+      repeat($._statement),
+    ),
 
     // Expressions
 
