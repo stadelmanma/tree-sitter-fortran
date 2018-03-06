@@ -138,8 +138,21 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "call_expression"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "assignment_expression"
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -151,8 +164,21 @@
                     "value": ","
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "identifier"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "call_expression"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "assignment_expression"
+                      }
+                    ]
                   }
                 ]
               }
@@ -1111,6 +1137,10 @@
                       },
                       {
                         "type": "SYMBOL",
+                        "name": "assumed_size_dimension"
+                      },
+                      {
+                        "type": "SYMBOL",
                         "name": "_expression"
                       }
                     ]
@@ -1134,6 +1164,10 @@
                             {
                               "type": "SYMBOL",
                               "name": "array_slice"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "assumed_size_dimension"
                             },
                             {
                               "type": "SYMBOL",
@@ -1232,6 +1266,10 @@
           ]
         }
       ]
+    },
+    "assumed_size_dimension": {
+      "type": "STRING",
+      "value": "*"
     },
     "block_label_start_expression": {
       "type": "PATTERN",

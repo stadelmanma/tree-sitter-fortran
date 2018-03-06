@@ -121,7 +121,7 @@ module.exports = grammar({
       //optional(seq(',', commaSep($.type_qualifier))),
       optional('::'),
       // this works but doesn't allow expressions during declaration
-      commaSep1($.identifier),
+      commaSep1(choice($.identifier, $.call_expression, $.assignment_expression)),
       $._end_of_statement
     ),
 
@@ -332,9 +332,14 @@ module.exports = grammar({
       1,
       seq(
         '(',
-        commaSep(choice($.keyword_argument, $.array_slice, $._expression)),
-         ')'
-       )
+        commaSep(choice(
+          $.keyword_argument,
+          $.array_slice,
+          $.assumed_size_dimension,
+          $._expression
+        )),
+        ')'
+      )
     ),
 
     // precedence is used to prevent conflict with assignment expression
@@ -350,6 +355,8 @@ module.exports = grammar({
       optional($._expression), // stop
       optional(seq(':', $._expression)) // stride
     ),
+
+    assumed_size_dimension: $ => '*',
 
     block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
     _block_label: $ => alias($.identifier, $.block_label),
