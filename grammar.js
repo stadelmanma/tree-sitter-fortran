@@ -151,13 +151,13 @@ module.exports = grammar({
     ),
 
     do_loop_statement: $ => seq(
-      optional($.block_label_expression),
+      optional($.block_label_start_expression),
       caseInsensitive('do'),
       optional($.loop_control_expression),
       $._end_of_statement,
       repeat($._statement),
       caseInsensitive('end[ \t]*do'),
-      optional($._block_label_closing_expression)
+      optional($._block_label)
     ),
 
     if_statement: $ => choice(
@@ -172,7 +172,7 @@ module.exports = grammar({
     )),
 
     _block_if_statement: $ => seq(
-      optional($.block_label_expression),
+      optional($.block_label_start_expression),
       caseInsensitive('if'),
       $.parenthesized_expression,
       caseInsensitive('then'),
@@ -181,7 +181,7 @@ module.exports = grammar({
       repeat($.elseif_clause),
       optional($.else_clause),
       caseInsensitive('end[ \t]*if'),
-      optional($._block_label_closing_expression)
+      optional($._block_label)
     ),
 
     elseif_clause: $ => seq(
@@ -316,9 +316,8 @@ module.exports = grammar({
       optional(seq(':', $._expression)) // stride
     ),
 
-    block_label_expression: $ => /[a-zA-Z_]\w*:/,
-
-    _block_label_closing_expression: $ => alias($.identifier, $.block_label_closing_expression),
+    block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
+    _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(
       $.identifier,

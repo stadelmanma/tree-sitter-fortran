@@ -48,7 +48,7 @@ END PROGRAM
       (keyword_statement)
       (keyword_statement (statement_label)))
     (do_loop_statement
-      (block_label_expression)
+      (block_label_start_expression)
       (loop_control_expression
         (identifier)
         (number_literal)
@@ -65,4 +65,4 @@ END PROGRAM
           (number_literal)
           (number_literal))
         (keyword_statement (identifier)))
-      (block_label_closing_expression))))
+      (block_label))))

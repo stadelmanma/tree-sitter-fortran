@@ -247,7 +247,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "block_label_expression"
+              "name": "block_label_start_expression"
             },
             {
               "type": "BLANK"
@@ -290,7 +290,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_block_label_closing_expression"
+              "name": "_block_label"
             },
             {
               "type": "BLANK"
@@ -341,7 +341,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "block_label_expression"
+              "name": "block_label_start_expression"
             },
             {
               "type": "BLANK"
@@ -399,7 +399,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_block_label_closing_expression"
+              "name": "_block_label"
             },
             {
               "type": "BLANK"
@@ -1098,18 +1098,18 @@
         }
       ]
     },
-    "block_label_expression": {
+    "block_label_start_expression": {
       "type": "PATTERN",
       "value": "[a-zA-Z_]\\w*:"
     },
-    "_block_label_closing_expression": {
+    "_block_label": {
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
         "name": "identifier"
       },
       "named": true,
-      "value": "block_label_closing_expression"
+      "value": "block_label"
     },
     "loop_control_expression": {
       "type": "SEQ",
