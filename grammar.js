@@ -124,8 +124,7 @@ module.exports = grammar({
         $.subroutine_call,
         $.keyword_statement,
         //$.data_statement,
-        //$.inline_if_statment,
-        //$.if_statement,
+        $.if_statement,
         //$.select_statement,
         $.do_loop_statement,
         //$.print_statement,
@@ -152,13 +151,54 @@ module.exports = grammar({
     ),
 
     do_loop_statement: $ => seq(
-      optional($.block_label_expression),
+      optional($.block_label_start_expression),
       caseInsensitive('do'),
       optional($.loop_control_expression),
       $._end_of_statement,
       repeat($._statement),
       caseInsensitive('end[ \t]*do'),
-      optional($._block_label_closing_expression)
+      optional($._block_label)
+    ),
+
+    if_statement: $ => choice(
+      $._inline_if_statement,
+      $._block_if_statement
+    ),
+
+    _inline_if_statement: $ => prec.right(seq(
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      $._statement
+    )),
+
+    _block_if_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      caseInsensitive('then'),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement),
+      repeat($.elseif_clause),
+      optional($.else_clause),
+      caseInsensitive('end[ \t]*if'),
+      optional($._block_label)
+    ),
+
+    elseif_clause: $ => seq(
+      caseInsensitive('else[ \t]*if'),
+      $.parenthesized_expression,
+      caseInsensitive('then'),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement),
+    ),
+
+    else_clause: $ => seq(
+      caseInsensitive('else'),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement),
     ),
 
     // Expressions
@@ -279,9 +319,8 @@ module.exports = grammar({
       optional(seq(':', $._expression)) // stride
     ),
 
-    block_label_expression: $ => /[a-zA-Z_]\w*:/,
-
-    _block_label_closing_expression: $ => alias($.identifier, $.block_label_closing_expression),
+    block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
+    _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(
       $.identifier,
