@@ -3,8 +3,11 @@
 // that provided in: https://software.intel.com/en-us/fortran-compiler-18.0-developer-guide-and-reference-summary-of-operator-precedence
 // and in http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0067.htm
 // my final settings will be based on gfortran test cases
-// Additional ref info: https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
+// Additional ref info:
+//  https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
 //  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/dflrm.htm#book-toc
+//  http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
+//  http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
 //
 // Semicolons are treated exactly like newlines and can end any statement
 // or be used to chain multiple ones together with the exception of using
@@ -75,7 +78,7 @@ module.exports = grammar({
       $._end_of_statement,
       //repeat($.use_statement),
       //repeat($.implicit_statement),
-      //repeat(choice(seq($.variable_declaration, $._newline), $.type_block)),
+      repeat($.variable_declaration),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -111,7 +114,36 @@ module.exports = grammar({
     //   ')'
     // ),
 
-    /* Variable declarations will go here */
+    // Variable Declarations
+
+    variable_declaration: $ => seq(
+      $.intrinsic_type,
+      //optional(seq(',', commaSep($.type_qualifier))),
+      optional('::'),
+      // this works but doesn't allow expressions during declaration
+      commaSep1($.identifier),
+      $._end_of_statement
+    ),
+
+    // http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
+    intrinsic_type: $ => seq(
+      choice(
+        caseInsensitive('byte'),
+        caseInsensitive('integer'),
+        caseInsensitive('real'),
+        caseInsensitive('double[ \t]*precision'),
+        caseInsensitive('complex'),
+        caseInsensitive('double[ \t]*complex'),
+        caseInsensitive('logical'),
+        caseInsensitive('character'),
+      ),
+      // optional(choice(
+      //   seq('(', $._expression, ')'),
+      //   seq(choice('*', /\d+/)) // this might be why automatic arrays don't work
+      // ))
+      // I think this is what I need but it causes the memory to blow up
+      // optional(seq('(',   choice('*', $._expression), ')'))
+    ),
 
     // Statements
 
