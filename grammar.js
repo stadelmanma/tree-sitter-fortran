@@ -79,7 +79,9 @@ module.exports = grammar({
       $._end_of_statement,
       //repeat($.use_statement),
       //repeat($.implicit_statement),
-      repeat($._variable_declaration_statement),
+      repeat(choice(
+        $._variable_declaration_statement, $._variable_modification_statment
+      )),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -126,8 +128,25 @@ module.exports = grammar({
       $.intrinsic_type,
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
-      commaSep1(choice($.identifier, $.call_expression, $.assignment_expression)),
+      $._declaration_targets
     ),
+
+    _variable_modification_statment: $ => seq(
+      $.variable_modification,
+      $._end_of_statement
+    ),
+
+    variable_modification: $ => seq(
+      $.type_qualifier,
+      optional('::'),
+      $._declaration_targets
+      // this needs to support PARAMETER, EQUIVALENCE and any other
+      // statements that don't match the syntax above
+    ),
+
+    _declaration_targets: $ => commaSep1(choice(
+      $.identifier, $.call_expression, $.assignment_expression
+    )),
 
     intrinsic_type: $ => prec.right(seq(
       choice(
@@ -149,10 +168,10 @@ module.exports = grammar({
     type_qualifier: $ => choice(
       caseInsensitive('allocatable'),
       caseInsensitive('automatic'),
-      seq(
+      prec.right(seq(
         caseInsensitive('dimension'),
-        $.argument_list
-      ),
+        optional($.argument_list)
+      )),
       caseInsensitive('external'),
       seq(
         caseInsensitive('intent'),
