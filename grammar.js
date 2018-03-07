@@ -121,8 +121,8 @@ module.exports = grammar({
       //$.implicit_statement,
       $._variable_declaration_statement,
       $._variable_modification_statment,
-      //$.parameter_statement,
-      //$.equivlance_statment,
+      $.parameter_statement,
+      $.equivalence_statement,
       //$.format_statement,
     ),
 
@@ -197,6 +197,29 @@ module.exports = grammar({
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('volatile')
+    ),
+
+    parameter_statement: $ => prec(1, seq(
+      caseInsensitive('parameter'),
+      '(',
+      commaSep1($.parameter_assignment),
+      ')',
+      $._end_of_statement
+    )),
+
+    parameter_assignment: $ => seq($.identifier, '=', $._expression),
+
+    equivalence_statement: $ => seq(
+      caseInsensitive('equivalence'),
+      commaSep1($.equivalence_set)
+    ),
+
+    equivalence_set: $ => seq(
+      '(',
+      choice($.identifier, $.call_expression),
+      ',',
+      commaSep1(choice($.identifier, $.call_expression)),
+      ')'
     ),
 
     // Statements
