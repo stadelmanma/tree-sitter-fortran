@@ -147,8 +147,6 @@ module.exports = grammar({
       $.type_qualifier,
       optional('::'),
       $._declaration_targets
-      // this needs to support PARAMETER, EQUIVALENCE and any other
-      // statements that don't match the syntax above
     ),
 
     _declaration_targets: $ => commaSep1(choice(
