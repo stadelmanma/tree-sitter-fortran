@@ -77,11 +77,7 @@ module.exports = grammar({
       )),
       optional($.comment),
       $._end_of_statement,
-      //repeat($.use_statement),
-      //repeat($.implicit_statement),
-      repeat(choice(
-        $._variable_declaration_statement, $._variable_modification_statment
-      )),
+      repeat($._specification_part),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -118,6 +114,17 @@ module.exports = grammar({
     // ),
 
     // Variable Declarations
+
+    _specification_part: $ => choice(
+      //$.include_statement,
+      //$.use_statement,
+      //$.implicit_statement,
+      $._variable_declaration_statement,
+      $._variable_modification_statment,
+      //$.parameter_statement,
+      //$.equivlance_statment,
+      //$.format_statement,
+    ),
 
     _variable_declaration_statement: $ => seq(
       $.variable_declaration,

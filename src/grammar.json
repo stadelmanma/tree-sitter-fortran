@@ -56,17 +56,8 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_variable_declaration_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_variable_modification_statment"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_specification_part"
           }
         },
         {
@@ -121,6 +112,19 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "_specification_part": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_variable_declaration_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_variable_modification_statment"
         }
       ]
     },
