@@ -1,4 +1,59 @@
 ============================================
+Intrinsic Variable Declarations
+============================================
+
+PROGRAM TEST
+  INTEGER, PARAMETER :: N = 100, MXLN = 255
+  INTEGER :: i, j, k, l(*)
+  REAL(16) :: data(0:N**2), rhs(N)
+  REAL*8, TARGET :: tmp
+  REAL(KIND=8), POINTER :: nxt => tmp
+  LOGICAL, DIMENSION(:), ALLOCATABLE :: mask
+  CHARACTER(LEN=:) :: message
+  CHARACTER(LEN=*) :: options
+  CHARACTER*(MXLN) :: errflag
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration (intrinsic_type) (type_qualifier)
+      (assignment_expression (identifier) (number_literal))
+      (assignment_expression (identifier) (number_literal)))
+    (variable_declaration (intrinsic_type)
+      (identifier)
+      (identifier)
+      (identifier)
+      (call_expression (identifier) (argument_list (assumed_size))))
+    (variable_declaration (intrinsic_type (argument_list (number_literal)))
+      (call_expression (identifier)
+        (argument_list
+          (array_slice (number_literal) (math_expression (identifier) (number_literal)))))
+      (call_expression (identifier) (argument_list (identifier))))
+    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (variable_declaration
+      (intrinsic_type (argument_list (keyword_argument (identifier) (number_literal))))
+      (type_qualifier)
+      (pointer_assignment_expression (identifier) (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier (argument_list (array_slice)))
+      (type_qualifier) (identifier))
+    (variable_declaration
+      (intrinsic_type
+        (argument_list (keyword_argument (identifier) (assumed_shape))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type
+        (argument_list
+          (keyword_argument (identifier) (assumed_size))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type (parenthesized_expression (identifier)))
+      (identifier))))
+
+============================================
 Do Loops
 ============================================
 
