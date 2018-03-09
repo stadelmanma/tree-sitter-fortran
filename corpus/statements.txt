@@ -1,4 +1,94 @@
 ============================================
+Intrinsic Variable Declarations
+============================================
+
+PROGRAM TEST
+  INTEGER, PARAMETER :: N = 100, MXLN = 255
+  INTEGER :: i, j, k, l(*)
+  REAL(16) :: data(0:N**2), rhs(N)
+  REAL*8, TARGET :: tmp
+  REAL(KIND=8), POINTER :: nxt => tmp
+  LOGICAL, DIMENSION(:), ALLOCATABLE :: mask
+  CHARACTER(LEN=:) :: message
+  CHARACTER(LEN=*) :: options
+  CHARACTER*(MXLN) :: errflag
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration (intrinsic_type) (type_qualifier)
+      (assignment_expression (identifier) (number_literal))
+      (assignment_expression (identifier) (number_literal)))
+    (variable_declaration (intrinsic_type)
+      (identifier)
+      (identifier)
+      (identifier)
+      (call_expression (identifier) (argument_list (assumed_size))))
+    (variable_declaration (intrinsic_type (argument_list (number_literal)))
+      (call_expression (identifier)
+        (argument_list
+          (array_slice (number_literal) (math_expression (identifier) (number_literal)))))
+      (call_expression (identifier) (argument_list (identifier))))
+    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (variable_declaration
+      (intrinsic_type (argument_list (keyword_argument (identifier) (number_literal))))
+      (type_qualifier)
+      (pointer_assignment_expression (identifier) (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier (argument_list (array_slice)))
+      (type_qualifier) (identifier))
+    (variable_declaration
+      (intrinsic_type
+        (argument_list (keyword_argument (identifier) (assumed_shape))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type
+        (argument_list
+          (keyword_argument (identifier) (assumed_size))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type (parenthesized_expression (identifier)))
+      (identifier))))
+
+============================================
+Variable Modification Statements
+============================================
+
+PROGRAM TEST
+  ALLOCATABLE :: i
+  DIMENSION i(:, :), r(10)
+  TARGET :: i
+  PARAMETER (MAXLEN = 255, PI = 3.1415, SCALE_FACTOR = SIN(2 * PI))
+  EQUIVALENCE (a, b, c), (d, e, f, r(1))
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_modification (type_qualifier) (identifier))
+    (variable_modification (type_qualifier)
+      (call_expression (identifier) (argument_list (array_slice) (array_slice)))
+      (call_expression (identifier) (argument_list (number_literal))))
+    (variable_modification (type_qualifier) (identifier))
+    (parameter_statement
+      (parameter_assignment (identifier) (number_literal))
+      (parameter_assignment (identifier) (number_literal))
+      (parameter_assignment (identifier)
+        (call_expression (identifier)
+          (argument_list (math_expression (number_literal) (identifier))))))
+    (equivalence_statement
+      (equivalence_set (identifier) (identifier) (identifier))
+      (equivalence_set
+        (identifier)
+        (identifier)
+        (identifier)
+        (call_expression (identifier) (argument_list (number_literal)))))))
+
+============================================
 Do Loops
 ============================================
 

@@ -3,8 +3,12 @@
 // that provided in: https://software.intel.com/en-us/fortran-compiler-18.0-developer-guide-and-reference-summary-of-operator-precedence
 // and in http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0067.htm
 // my final settings will be based on gfortran test cases
-// Additional ref info: https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
+// Additional ref info:
+//  https://userpage.physik.fu-berlin.de/~tburnus/gcc-trunk/FortranRef/fQuickRef1.pdf
 //  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/dflrm.htm#book-toc
+//  http://www.lahey.com/docs/lfprohelp/F95AREXTERNALStmt.htm
+//  http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
+//  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
 //
 // Semicolons are treated exactly like newlines and can end any statement
 // or be used to chain multiple ones together with the exception of using
@@ -73,9 +77,7 @@ module.exports = grammar({
       )),
       optional($.comment),
       $._end_of_statement,
-      //repeat($.use_statement),
-      //repeat($.implicit_statement),
-      //repeat(choice(seq($.variable_declaration, $._newline), $.type_block)),
+      repeat($._specification_part),
       repeat($._statement),
       block_structure_ending($, 'program')
     ),
@@ -111,7 +113,115 @@ module.exports = grammar({
     //   ')'
     // ),
 
-    /* Variable declarations will go here */
+    // Variable Declarations
+
+    _specification_part: $ => choice(
+      //$.include_statement,
+      //$.use_statement,
+      //$.implicit_statement,
+      $._variable_declaration_statement,
+      $._variable_modification_statment,
+      $.parameter_statement,
+      $.equivalence_statement,
+      //$.format_statement,
+    ),
+
+    _variable_declaration_statement: $ => seq(
+      $.variable_declaration,
+      $._end_of_statement
+    ),
+
+    variable_declaration: $ => seq(
+      $.intrinsic_type,
+      optional(seq(',', commaSep1($.type_qualifier))),
+      optional('::'),
+      $._declaration_targets
+    ),
+
+    _variable_modification_statment: $ => seq(
+      $.variable_modification,
+      $._end_of_statement
+    ),
+
+    variable_modification: $ => seq(
+      $.type_qualifier,
+      optional('::'),
+      $._declaration_targets
+    ),
+
+    _declaration_targets: $ => commaSep1(choice(
+      $.identifier,
+      $.call_expression,
+      $.assignment_expression,
+      $.pointer_assignment_expression
+    )),
+
+    intrinsic_type: $ => prec.right(seq(
+      choice(
+        caseInsensitive('byte'),
+        caseInsensitive('integer'),
+        caseInsensitive('real'),
+        caseInsensitive('double[ \t]*precision'),
+        caseInsensitive('complex'),
+        caseInsensitive('double[ \t]*complex'),
+        caseInsensitive('logical'),
+        caseInsensitive('character'),
+      ),
+      optional(choice(
+        $.argument_list,
+        seq('*', choice(/\d+/, $.parenthesized_expression))
+      ))
+    )),
+
+    type_qualifier: $ => choice(
+      caseInsensitive('allocatable'),
+      caseInsensitive('automatic'),
+      prec.right(seq(
+        caseInsensitive('dimension'),
+        optional($.argument_list)
+      )),
+      caseInsensitive('external'),
+      seq(
+        caseInsensitive('intent'),
+        '(',
+        choice(caseInsensitive('in'), caseInsensitive('out'), caseInsensitive('in[ \t]*out'),),
+        ')'
+      ),
+      caseInsensitive('intrinsic'),
+      caseInsensitive('optional'),
+      caseInsensitive('parameter'),
+      caseInsensitive('pointer'),
+      caseInsensitive('private'),
+      caseInsensitive('public'),
+      caseInsensitive('save'),
+      caseInsensitive('sequence'),
+      caseInsensitive('static'),
+      caseInsensitive('target'),
+      caseInsensitive('volatile')
+    ),
+
+    parameter_statement: $ => prec(1, seq(
+      caseInsensitive('parameter'),
+      '(',
+      commaSep1($.parameter_assignment),
+      ')',
+      $._end_of_statement
+    )),
+
+    parameter_assignment: $ => seq($.identifier, '=', $._expression),
+
+    equivalence_statement: $ => seq(
+      caseInsensitive('equivalence'),
+      commaSep1($.equivalence_set)
+    ),
+
+    equivalence_set: $ => seq(
+      '(',
+      choice($.identifier, $.call_expression),
+      ',',
+      commaSep1(choice($.identifier, $.call_expression)),
+      ')'
+    ),
 
     // Statements
 
@@ -300,16 +410,21 @@ module.exports = grammar({
       1,
       seq(
         '(',
-        commaSep(choice($.keyword_argument, $.array_slice, $._expression)),
-         ')'
-       )
+        commaSep(choice(
+          $.keyword_argument,
+          $.array_slice,
+          $.assumed_size,
+          $._expression
+        )),
+        ')'
+      )
     ),
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(
       $.identifier,
       '=',
-      $._expression
+      choice($._expression, $.assumed_size, $.assumed_shape)
     )),
 
     array_slice: $ => seq(
@@ -318,6 +433,10 @@ module.exports = grammar({
       optional($._expression), // stop
       optional(seq(':', $._expression)) // stride
     ),
+
+    assumed_size: $ => '*',
+
+    assumed_shape: $ => ':',
 
     block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
     _block_label: $ => alias($.identifier, $.block_label),
