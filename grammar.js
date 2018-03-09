@@ -150,7 +150,10 @@ module.exports = grammar({
     ),
 
     _declaration_targets: $ => commaSep1(choice(
-      $.identifier, $.call_expression, $.assignment_expression
+      $.identifier,
+      $.call_expression,
+      $.assignment_expression,
+      $.pointer_assignment_expression
     )),
 
     intrinsic_type: $ => prec.right(seq(
