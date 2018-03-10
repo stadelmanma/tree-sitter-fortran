@@ -117,13 +117,26 @@ module.exports = grammar({
 
     _specification_part: $ => choice(
       prec(1, seq($.include_statement, $._end_of_statement)),
-      //$._use_statement,
+      seq($.use_statement, $._end_of_statement),
       //$.implicit_statement,
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
       seq($.equivalence_statement, $._end_of_statement),
       //$.format_statement,
+    ),
+
+    use_statement: $ => seq(
+      caseInsensitive('use'),
+      alias($.identifier, $.module_name),
+      optional($.included_items)
+    ),
+
+    included_items: $ => seq(
+      ',',
+      caseInsensitive('only'),
+      ':',
+      commaSep1($.identifier)
     ),
 
     variable_declaration: $ => seq(

@@ -17,6 +17,26 @@ END PROGRAM
     (include_statement (filename))))
 
 ============================================
+Use Statements
+============================================
+
+PROGRAM TEST
+  USE ISO_C_BINDING
+  USE ISO_FORTRAN_ENV, ONLY : ERROR_UNIT, OUTPUT_UNIT
+  USE MY_MODULE, ONLY:FUNC1
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (use_statement (module_name))
+    (use_statement (module_name)
+      (included_items (identifier) (identifier)))
+    (use_statement (module_name)
+      (included_items (identifier)))))
+
+============================================
 Intrinsic Variable Declarations
 ============================================
 
