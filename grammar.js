@@ -116,26 +116,14 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => choice(
-      $._include_statement,
-      //$.use_statement,
+      prec(1, seq($.include_statement, $._end_of_statement)),
+      //$._use_statement,
       //$.implicit_statement,
-      $._variable_declaration_statement,
-      $._variable_modification_statment,
-      $.parameter_statement,
-      $.equivalence_statement,
+      seq($.variable_declaration, $._end_of_statement),
+      seq($.variable_modification, $._end_of_statement),
+      seq($.parameter_statement, $._end_of_statement),
+      seq($.equivalence_statement, $._end_of_statement),
       //$.format_statement,
-    ),
-
-    // precedence is used here so include statements in the specification
-    // part overrule those in the executable part
-    _include_statement: $ => prec(1, seq(
-      $.include_statement,
-      $._end_of_statement
-    )),
-
-    _variable_declaration_statement: $ => seq(
-      $.variable_declaration,
-      $._end_of_statement
     ),
 
     variable_declaration: $ => seq(
@@ -143,11 +131,6 @@ module.exports = grammar({
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
-    ),
-
-    _variable_modification_statment: $ => seq(
-      $.variable_modification,
-      $._end_of_statement
     ),
 
     variable_modification: $ => seq(
@@ -212,7 +195,6 @@ module.exports = grammar({
       '(',
       commaSep1($.parameter_assignment),
       ')',
-      $._end_of_statement
     )),
 
     parameter_assignment: $ => seq($.identifier, '=', $._expression),
