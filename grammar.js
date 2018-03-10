@@ -116,7 +116,7 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => choice(
-      //$.include_statement,
+      $._include_statement,
       //$.use_statement,
       //$.implicit_statement,
       $._variable_declaration_statement,
@@ -125,6 +125,13 @@ module.exports = grammar({
       $.equivalence_statement,
       //$.format_statement,
     ),
+
+    // precedence is used here so include statements in the specification
+    // part overrule those in the executable part
+    _include_statement: $ => prec(1, seq(
+      $.include_statement,
+      $._end_of_statement
+    )),
 
     _variable_declaration_statement: $ => seq(
       $.variable_declaration,
@@ -233,6 +240,7 @@ module.exports = grammar({
         $.call_expression,
         $.subroutine_call,
         $.keyword_statement,
+        $.include_statement,
         //$.data_statement,
         $.if_statement,
         //$.select_statement,
@@ -258,6 +266,11 @@ module.exports = grammar({
       seq(caseInsensitive('go[ \t]*to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression)),
+    ),
+
+    include_statement: $ => seq(
+      caseInsensitive('include'),
+      alias($.string_literal, $.filename)
     ),
 
     do_loop_statement: $ => seq(

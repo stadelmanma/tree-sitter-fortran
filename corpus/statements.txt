@@ -1,4 +1,22 @@
 ============================================
+Include Statements
+============================================
+
+PROGRAM TEST
+  INCLUDE 'fftw.f03'
+  a = 1.0
+  INCLUDE 'debug_point.f03'
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (include_statement (filename))
+    (assignment_expression (identifier) (number_literal))
+    (include_statement (filename))))
+
+============================================
 Intrinsic Variable Declarations
 ============================================
 

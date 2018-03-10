@@ -120,6 +120,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "_include_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "_variable_declaration_statement"
         },
         {
@@ -135,6 +139,23 @@
           "name": "equivalence_statement"
         }
       ]
+    },
+    "_include_statement": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "include_statement"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_end_of_statement"
+          }
+        ]
+      }
     },
     "_variable_declaration_statement": {
       "type": "SEQ",
@@ -732,6 +753,10 @@
             },
             {
               "type": "SYMBOL",
+              "name": "include_statement"
+            },
+            {
+              "type": "SYMBOL",
               "name": "if_statement"
             },
             {
@@ -820,6 +845,24 @@
               ]
             }
           ]
+        }
+      ]
+    },
+    "include_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[iI][nN][cC][lL][uU][dD][eE]"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_literal"
+          },
+          "named": true,
+          "value": "filename"
         }
       ]
     },
