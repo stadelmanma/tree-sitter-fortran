@@ -64,14 +64,14 @@ END PROGRAM
       (identifier)
       (identifier)
       (call_expression (identifier) (argument_list (assumed_size))))
-    (variable_declaration (intrinsic_type (argument_list (number_literal)))
+    (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
       (call_expression (identifier)
         (argument_list
           (array_slice (number_literal) (math_expression (identifier) (number_literal)))))
       (call_expression (identifier) (argument_list (identifier))))
-    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (variable_declaration (intrinsic_type) (size) (type_qualifier) (identifier))
     (variable_declaration
-      (intrinsic_type (argument_list (keyword_argument (identifier) (number_literal))))
+      (intrinsic_type) (size (argument_list (keyword_argument (identifier) (number_literal))))
       (type_qualifier)
       (pointer_assignment_expression (identifier) (identifier)))
     (variable_declaration
@@ -79,16 +79,15 @@ END PROGRAM
       (type_qualifier (argument_list (array_slice)))
       (type_qualifier) (identifier))
     (variable_declaration
-      (intrinsic_type
-        (argument_list (keyword_argument (identifier) (assumed_shape))))
+      (intrinsic_type)
+        (size (argument_list (keyword_argument (identifier) (assumed_shape))))
       (identifier))
     (variable_declaration
-      (intrinsic_type
-        (argument_list
-          (keyword_argument (identifier) (assumed_size))))
+      (intrinsic_type)
+      (size (argument_list (keyword_argument (identifier) (assumed_size))))
       (identifier))
     (variable_declaration
-      (intrinsic_type (parenthesized_expression (identifier)))
+      (intrinsic_type) (size (parenthesized_expression (identifier)))
       (identifier))))
 
 ============================================

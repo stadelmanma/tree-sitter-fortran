@@ -140,7 +140,7 @@ module.exports = grammar({
     ),
 
     variable_declaration: $ => seq(
-      $.intrinsic_type,
+      $._intrinsic_type,
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
@@ -159,22 +159,26 @@ module.exports = grammar({
       $.pointer_assignment_expression
     )),
 
-    intrinsic_type: $ => prec.right(seq(
-      choice(
-        caseInsensitive('byte'),
-        caseInsensitive('integer'),
-        caseInsensitive('real'),
-        caseInsensitive('double[ \t]*precision'),
-        caseInsensitive('complex'),
-        caseInsensitive('double[ \t]*complex'),
-        caseInsensitive('logical'),
-        caseInsensitive('character'),
-      ),
-      optional(choice(
-        $.argument_list,
-        seq('*', choice(/\d+/, $.parenthesized_expression))
-      ))
+    _intrinsic_type: $ => prec.right(seq(
+      $.intrinsic_type,
+      optional($.size)
     )),
+
+    intrinsic_type: $ => choice(
+      caseInsensitive('byte'),
+      caseInsensitive('integer'),
+      caseInsensitive('real'),
+      caseInsensitive('double[ \t]*precision'),
+      caseInsensitive('complex'),
+      caseInsensitive('double[ \t]*complex'),
+      caseInsensitive('logical'),
+      caseInsensitive('character')
+    ),
+
+    size: $ => choice(
+      $.argument_list,
+      seq('*', choice(/\d+/, $.parenthesized_expression))
+    ),
 
     type_qualifier: $ => choice(
       caseInsensitive('allocatable'),
