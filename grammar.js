@@ -116,31 +116,53 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => choice(
-      //$.include_statement,
-      //$.use_statement,
-      //$.implicit_statement,
-      $._variable_declaration_statement,
-      $._variable_modification_statment,
-      $.parameter_statement,
-      $.equivalence_statement,
+      prec(1, seq($.include_statement, $._end_of_statement)),
+      seq($.use_statement, $._end_of_statement),
+      seq($.implicit_statement, $._end_of_statement),
+      seq($.variable_declaration, $._end_of_statement),
+      seq($.variable_modification, $._end_of_statement),
+      seq($.parameter_statement, $._end_of_statement),
+      seq($.equivalence_statement, $._end_of_statement),
       //$.format_statement,
     ),
 
-    _variable_declaration_statement: $ => seq(
-      $.variable_declaration,
-      $._end_of_statement
+    use_statement: $ => seq(
+      caseInsensitive('use'),
+      alias($.identifier, $.module_name),
+      optional($.included_items)
+    ),
+
+    included_items: $ => seq(
+      ',',
+      caseInsensitive('only'),
+      ':',
+      commaSep1($.identifier)
+    ),
+
+    implicit_statement: $ => seq(
+      caseInsensitive('implicit'),
+      choice(
+        commaSep1(seq(
+          $.intrinsic_type,
+          optional($.size),
+          '(',
+          commaSep1($.implicit_range),
+          ')'
+        )),
+        alias(caseInsensitive('none'), $.none)
+      )
+    ),
+
+    implicit_range: $ => seq(
+      /[a-zA-Z]/,
+      optional(seq('-', /[a-zA-Z]/)),
     ),
 
     variable_declaration: $ => seq(
-      $.intrinsic_type,
+      $._intrinsic_type,
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
-    ),
-
-    _variable_modification_statment: $ => seq(
-      $.variable_modification,
-      $._end_of_statement
     ),
 
     variable_modification: $ => seq(
@@ -156,22 +178,26 @@ module.exports = grammar({
       $.pointer_assignment_expression
     )),
 
-    intrinsic_type: $ => prec.right(seq(
-      choice(
-        caseInsensitive('byte'),
-        caseInsensitive('integer'),
-        caseInsensitive('real'),
-        caseInsensitive('double[ \t]*precision'),
-        caseInsensitive('complex'),
-        caseInsensitive('double[ \t]*complex'),
-        caseInsensitive('logical'),
-        caseInsensitive('character'),
-      ),
-      optional(choice(
-        $.argument_list,
-        seq('*', choice(/\d+/, $.parenthesized_expression))
-      ))
+    _intrinsic_type: $ => prec.right(seq(
+      $.intrinsic_type,
+      optional($.size)
     )),
+
+    intrinsic_type: $ => choice(
+      caseInsensitive('byte'),
+      caseInsensitive('integer'),
+      caseInsensitive('real'),
+      caseInsensitive('double[ \t]*precision'),
+      caseInsensitive('complex'),
+      caseInsensitive('double[ \t]*complex'),
+      caseInsensitive('logical'),
+      caseInsensitive('character')
+    ),
+
+    size: $ => choice(
+      $.argument_list,
+      seq('*', choice(/\d+/, $.parenthesized_expression))
+    ),
 
     type_qualifier: $ => choice(
       caseInsensitive('allocatable'),
@@ -205,7 +231,6 @@ module.exports = grammar({
       '(',
       commaSep1($.parameter_assignment),
       ')',
-      $._end_of_statement
     )),
 
     parameter_assignment: $ => seq($.identifier, '=', $._expression),
@@ -233,6 +258,7 @@ module.exports = grammar({
         $.call_expression,
         $.subroutine_call,
         $.keyword_statement,
+        $.include_statement,
         //$.data_statement,
         $.if_statement,
         //$.select_statement,
@@ -258,6 +284,11 @@ module.exports = grammar({
       seq(caseInsensitive('go[ \t]*to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression)),
+    ),
+
+    include_statement: $ => seq(
+      caseInsensitive('include'),
+      alias($.string_literal, $.filename)
     ),
 
     do_loop_statement: $ => seq(
