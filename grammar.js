@@ -118,7 +118,7 @@ module.exports = grammar({
     _specification_part: $ => choice(
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
-      //$.implicit_statement,
+      seq($.implicit_statement, $._end_of_statement),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -137,6 +137,25 @@ module.exports = grammar({
       caseInsensitive('only'),
       ':',
       commaSep1($.identifier)
+    ),
+
+    implicit_statement: $ => seq(
+      caseInsensitive('implicit'),
+      choice(
+        commaSep1(seq(
+          $.intrinsic_type,
+          optional($.size),
+          '(',
+          commaSep1($.implicit_range),
+          ')'
+        )),
+        alias(caseInsensitive('none'), $.none)
+      )
+    ),
+
+    implicit_range: $ => seq(
+      /[a-zA-Z]/,
+      optional(seq('-', /[a-zA-Z]/)),
     ),
 
     variable_declaration: $ => seq(

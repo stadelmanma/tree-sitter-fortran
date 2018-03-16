@@ -37,6 +37,25 @@ END PROGRAM
       (included_items (identifier)))))
 
 ============================================
+Implicit Statements
+============================================
+
+PROGRAM TEST
+  IMPLICIT INTEGER(i - n), REAL(8)(r-z),  COMPLEX*8(a - c, d, e-h)
+  IMPLICIT NONE
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (implicit_statement
+      (intrinsic_type) (implicit_range)
+      (intrinsic_type) (size (argument_list (number_literal))) (implicit_range)
+      (intrinsic_type) (size) (implicit_range) (implicit_range) (implicit_range))
+    (implicit_statement (none))))
+
+============================================
 Intrinsic Variable Declarations
 ============================================
 
