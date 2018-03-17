@@ -24,7 +24,9 @@
 // a newline the EOS token would get skipped. The same scanner would then be
 // used as needed to support fixed form fortran although line truncation at
 // 72 characters would not be supported because it can be configured at
-// compile time.
+// compile time. Additionally, I can make the line continuation token an
+// extra so it gets ignored, for free form a trailing "&" would get labeled
+// as the token, for fixed form it would be anything in column 6.
 //
 const PREC = {
   ASSIGNMENT: -10,
@@ -122,8 +124,8 @@ module.exports = grammar({
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
-      seq($.equivalence_statement, $._end_of_statement)
-      // $.format_statement,
+      seq($.equivalence_statement, $._end_of_statement),
+      prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
     ),
 
     use_statement: $ => seq(
@@ -267,7 +269,7 @@ module.exports = grammar({
         $.if_statement,
         // $.select_statement,
         $.do_loop_statement,
-        // $.format_statement,
+        $.format_statement,
         $.print_statement,
         $.write_statement,
         $.read_statement
@@ -359,6 +361,21 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement)
     ),
+
+    format_statement: $ => seq(
+      caseInsensitive('format'),
+      '(',
+      alias($._transfer_items, $.transfer_items),
+      ')'
+    ),
+
+    _transfer_items: $ => commaSep1(choice(
+      $.string_literal,
+      $.edit_descriptor,
+      seq(optional($.edit_descriptor), '(', $._transfer_items, ')')
+    )),
+
+    edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
 
     read_statement: $ => choice(
       $._simple_read_statement,
