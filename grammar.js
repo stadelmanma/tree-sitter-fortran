@@ -174,8 +174,8 @@ module.exports = grammar({
     _declaration_targets: $ => commaSep1(choice(
       $.identifier,
       $.call_expression,
-      $.assignment_expression,
-      $.pointer_assignment_expression
+      $.assignment_statement,
+      $.pointer_association_statement
     )),
 
     _intrinsic_type: $ => prec.right(seq(
@@ -257,8 +257,8 @@ module.exports = grammar({
     _statement: $ => seq(
       optional($.statement_label),
       choice(
-        $.assignment_expression,
-        $.pointer_assignment_expression,
+        $.assignment_statement,
+        $.pointer_association_statement,
         $.call_expression,
         $.subroutine_call,
         $.keyword_statement,
@@ -276,6 +276,18 @@ module.exports = grammar({
     ),
 
     statement_label: $ => /\d+/,
+
+    assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
+      $._expression,
+      '=',
+      $._expression
+    )),
+
+    pointer_association_statement: $ => prec.right(seq(
+      $._expression, // this needs to support structs i.e. mytype%attr
+      '=>',
+      $._expression
+    )),
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
@@ -368,18 +380,6 @@ module.exports = grammar({
       $._expression,
       ')'
     ),
-
-    assignment_expression: $ => prec.right(PREC.ASSIGNMENT, seq(
-      $._expression,
-      '=',
-      $._expression
-    )),
-
-    pointer_assignment_expression: $ => prec.right(seq(
-      $._expression, // this needs to support structs i.e. mytype%attr
-      '=>',
-      $._expression
-    )),
 
     derived_type_member_expression: $ => prec.right(PREC.TYPE_MEMBER, seq(
       $._expression,

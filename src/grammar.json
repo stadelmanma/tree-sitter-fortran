@@ -573,11 +573,11 @@
             },
             {
               "type": "SYMBOL",
-              "name": "assignment_expression"
+              "name": "assignment_statement"
             },
             {
               "type": "SYMBOL",
-              "name": "pointer_assignment_expression"
+              "name": "pointer_association_statement"
             }
           ]
         },
@@ -603,11 +603,11 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "assignment_expression"
+                    "name": "assignment_statement"
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "pointer_assignment_expression"
+                    "name": "pointer_association_statement"
                   }
                 ]
               }
@@ -1019,11 +1019,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "assignment_expression"
+              "name": "assignment_statement"
             },
             {
               "type": "SYMBOL",
-              "name": "pointer_assignment_expression"
+              "name": "pointer_association_statement"
             },
             {
               "type": "SYMBOL",
@@ -1060,6 +1060,48 @@
     "statement_label": {
       "type": "PATTERN",
       "value": "\\d+"
+    },
+    "assignment_statement": {
+      "type": "PREC_RIGHT",
+      "value": -10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "="
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
+    },
+    "pointer_association_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "=>"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          }
+        ]
+      }
     },
     "subroutine_call": {
       "type": "SEQ",
@@ -1474,48 +1516,6 @@
           "value": ")"
         }
       ]
-    },
-    "assignment_expression": {
-      "type": "PREC_RIGHT",
-      "value": -10,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          },
-          {
-            "type": "STRING",
-            "value": "="
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        ]
-      }
-    },
-    "pointer_assignment_expression": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          },
-          {
-            "type": "STRING",
-            "value": "=>"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        ]
-      }
     },
     "derived_type_member_expression": {
       "type": "PREC_RIGHT",

@@ -32,29 +32,29 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (number_literal))
-    (assignment_expression (identifier) (complex_literal (number_literal) (number_literal)))
-    (assignment_expression (identifier) (complex_literal (identifier) (identifier)))))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (complex_literal (number_literal) (number_literal)))
+    (assignment_statement (identifier) (complex_literal (identifier) (identifier)))))
 
 ============================================
 String Literals
@@ -73,11 +73,11 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier) (string_literal))
-    (assignment_expression (identifier) (string_literal))
-    (assignment_expression (identifier) (string_literal))
-    (assignment_expression (identifier) (string_literal))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier)
       (concatenation_expression (string_literal)
         (concatenation_expression (string_literal)
           (concatenation_expression (identifier) (identifier)))))))
@@ -95,8 +95,8 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier) (boolean_literal))
-    (assignment_expression (identifier) (boolean_literal))))
+    (assignment_statement (identifier) (boolean_literal))
+    (assignment_statement (identifier) (boolean_literal))))
 
 ============================================
 Array Slicing
@@ -117,26 +117,26 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier) (argument_list (number_literal)))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier) (argument_list (array_slice)))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list (array_slice (number_literal) (number_literal))))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list
           (array_slice (number_literal) (number_literal) (number_literal))))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list (array_slice (number_literal))))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list
           (array_slice
@@ -144,7 +144,7 @@ END PROGRAM
             (math_expression (number_literal) (identifier))
             (identifier))))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list
           (number_literal)
@@ -153,7 +153,7 @@ END PROGRAM
             (argument_list
               (call_expression (identifier) (argument_list (identifier)))))))
       (number_literal))
-    (assignment_expression
+    (assignment_statement
       (call_expression (identifier)
         (argument_list
           (array_slice
@@ -176,11 +176,11 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (pointer_assignment_expression (identifier) (identifier))
-    (pointer_assignment_expression
+    (pointer_association_statement (identifier) (identifier))
+    (pointer_association_statement
       (call_expression (identifier) (argument_list (number_literal)))
       (identifier))
-    (pointer_assignment_expression
+    (pointer_association_statement
       (derived_type_member_expression (identifier) (identifier))
       (identifier))))
 
@@ -198,12 +198,12 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression
+    (assignment_statement
       (derived_type_member_expression (identifier) (identifier))
       (identifier))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (derived_type_member_expression (identifier) (identifier)))
-    (assignment_expression
+    (assignment_statement
       (derived_type_member_expression (identifier)
         (call_expression (identifier)
           (argument_list (array_slice  (number_literal) (number_literal)))))
@@ -229,27 +229,27 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier) (number_literal)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier) (number_literal)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression
         (math_expression
           (math_expression (identifier) (identifier))
           (math_expression (identifier)
             (parenthesized_expression (number_literal)))) (number_literal)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression (number_literal)
         (math_expression
           (parenthesized_expression
@@ -285,45 +285,45 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (relational_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression (identifier) (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression (identifier)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (parenthesized_expression
         (logical_expression
           (relational_expression (identifier) (identifier)))))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (logical_expression
         (parenthesized_expression
           (logical_expression
@@ -350,15 +350,15 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (call_expression (identifier) (argument_list)))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (call_expression (identifier)
         (argument_list
           (math_expression
             (math_expression (number_literal) (identifier))
             (math_expression (identifier) (identifier))))))
-    (assignment_expression (identifier)
+    (assignment_statement (identifier)
       (math_expression
         (call_expression (identifier)
           (argument_list
@@ -376,7 +376,7 @@ END PROGRAM
       (argument_list
         (number_literal)
         (keyword_argument (identifier) (string_literal))))
-    (assignment_expression
+    (assignment_statement
       (derived_type_member_expression (identifier) (identifier))
       (call_expression (identifier)
         (argument_list
