@@ -266,16 +266,18 @@ module.exports = grammar({
         // $.data_statement,
         $.if_statement,
         // $.select_statement,
-        $.do_loop_statement
-        // $.print_statement,
-        // $.write_statement,
+        $.do_loop_statement,
         // $.format_statement,
-        // $.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+        $.print_statement,
+        // $.write_statement,
+        // $.read_statement,
       ),
       $._end_of_statement
     ),
 
     statement_label: $ => /\d+/,
+
+    _statement_label_reference: $ => alias($.statement_label, $.statement_label_reference),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
       $._expression,
@@ -358,6 +360,20 @@ module.exports = grammar({
       repeat($._statement)
     ),
 
+    print_statement: $ => seq(
+      caseInsensitive('print'),
+      $.format_identifier,
+      optional(seq(',', $.output_item_list))
+    ),
+
+    format_identifier: $ => choice(
+      '*',
+      $._statement_label_reference,
+      $._expression
+    ),
+
+    output_item_list: $ => prec.right(commaSep1($._expression)),
+
     // Expressions
 
     _expression: $ => choice(
@@ -373,6 +389,7 @@ module.exports = grammar({
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
+      // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
     ),
 
     parenthesized_expression: $ => seq(

@@ -1048,6 +1048,10 @@
             {
               "type": "SYMBOL",
               "name": "do_loop_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "print_statement"
             }
           ]
         },
@@ -1060,6 +1064,15 @@
     "statement_label": {
       "type": "PATTERN",
       "value": "\\d+"
+    },
+    "_statement_label_reference": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "statement_label"
+      },
+      "named": true,
+      "value": "statement_label_reference"
     },
     "assignment_statement": {
       "type": "PREC_RIGHT",
@@ -1446,6 +1459,86 @@
           }
         }
       ]
+    },
+    "print_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[pP][rR][iI][nN][tT]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "format_identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "output_item_list"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "format_identifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_statement_label_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_expression"
+        }
+      ]
+    },
+    "output_item_list": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              ]
+            }
+          }
+        ]
+      }
     },
     "_expression": {
       "type": "CHOICE",
