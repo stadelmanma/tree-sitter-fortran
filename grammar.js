@@ -270,7 +270,7 @@ module.exports = grammar({
         // $.format_statement,
         $.print_statement,
         $.write_statement,
-        // $.read_statement,
+        $.read_statement
       ),
       $._end_of_statement
     ),
@@ -360,6 +360,30 @@ module.exports = grammar({
       repeat($._statement)
     ),
 
+    read_statement: $ => choice(
+      $._simple_read_statement,
+      $._parameterized_read_statement
+    ),
+
+    _simple_read_statement: $ => seq(
+      caseInsensitive('read'),
+      $.format_identifier,
+      optional(seq(',', $.input_item_list))
+    ),
+
+    _parameterized_read_statement: $ => seq(
+      caseInsensitive('read'),
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+      optional($.input_item_list)
+    ),
+
     print_statement: $ => seq(
       caseInsensitive('print'),
       $.format_identifier,
@@ -379,16 +403,31 @@ module.exports = grammar({
       optional($.output_item_list)
     ),
 
-    unit_identifier: $ => choice(
-      '*',
-      $._expression
-    ),
+    // precedence is used to override a conflict with the complex literal
+    unit_identifier: $ => prec(1, choice(
+      $.number_literal,
+      $._io_expressions
+    )),
 
     format_identifier: $ => choice(
-      '*',
       $._statement_label_reference,
-      $._expression
+      $._io_expressions
     ),
+
+    // This is a limited set of expressions that can be used in IO statements
+    // precedence is used to override a conflict with the complex literal
+    _io_expressions: $ => prec(1, choice(
+      '*',
+      $.string_literal,
+      $.identifier,
+      $.derived_type_member_expression,
+      $.concatenation_expression,
+      $.math_expression,
+      $.parenthesized_expression,
+      $.call_expression
+    )),
+
+    input_item_list: $ => prec.right(commaSep1($._expression)),
 
     output_item_list: $ => prec.right(commaSep1($._expression)),
 
