@@ -298,3 +298,99 @@ END PROGRAM
       (else_clause (block_label)
         (assignment_statement (identifier) (number_literal)))
       (block_label))))
+
+============================================
+Read Statements
+============================================
+
+PROGRAM TEST
+  READ *, x
+  READ 9, x
+  READ(*)
+  READ(*, *)
+  READ(10, 100) x, y, z
+  READ(IOUNIT, FMT="(FORMAT STRING)") flags(:)
+  READ(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (read_statement (format_identifier) (input_item_list (identifier)))
+    (read_statement
+      (format_identifier (statement_label_reference))
+      (input_item_list (identifier)))
+    (read_statement (unit_identifier))
+    (read_statement (unit_identifier) (format_identifier))
+    (read_statement
+      (unit_identifier (number_literal))
+      (format_identifier (statement_label_reference))
+      (input_item_list (identifier) (identifier) (identifier)))
+    (read_statement
+      (unit_identifier (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (input_item_list (call_expression (identifier) (argument_list (array_slice)))))
+    (read_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (input_item_list (identifier)))))
+
+============================================
+Print Statements
+============================================
+
+PROGRAM TEST
+  PRINT *
+  PRINT *, 'test'
+  PRINT IUNIT, x, y, z
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (print_statement (format_identifier))
+    (print_statement (format_identifier) (output_item_list (string_literal)))
+    (print_statement
+      (format_identifier (identifier))
+      (output_item_list (identifier) (identifier) (identifier)))))
+
+============================================
+Write Statements
+============================================
+
+PROGRAM TEST
+  WRITE(*)
+  WRITE(*, *) ''
+  WRITE(10, 100) x, y, z
+  WRITE(IOUNIT, FMT="(FORMAT STRING)") flags(:)
+  WRITE(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (write_statement (unit_identifier))
+    (write_statement
+      (unit_identifier)
+      (format_identifier)
+      (output_item_list (string_literal)))
+    (write_statement
+      (unit_identifier (number_literal))
+      (format_identifier (statement_label_reference))
+      (output_item_list (identifier) (identifier) (identifier)))
+    (write_statement
+      (unit_identifier (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (output_item_list
+        (call_expression (identifier) (argument_list (array_slice)))))
+    (write_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal))
+      (output_item_list (identifier)))))
