@@ -269,7 +269,7 @@ module.exports = grammar({
         $.do_loop_statement,
         // $.format_statement,
         $.print_statement,
-        // $.write_statement,
+        $.write_statement,
         // $.read_statement,
       ),
       $._end_of_statement
@@ -364,6 +364,24 @@ module.exports = grammar({
       caseInsensitive('print'),
       $.format_identifier,
       optional(seq(',', $.output_item_list))
+    ),
+
+    write_statement: $ => seq(
+      caseInsensitive('write'),
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+      optional($.output_item_list)
+    ),
+
+    unit_identifier: $ => choice(
+      '*',
+      $._expression
     ),
 
     format_identifier: $ => choice(
