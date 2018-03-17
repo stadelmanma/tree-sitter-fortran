@@ -1,0 +1,12 @@
+extends: standard
+
+globals:
+  alias: false
+  choice: false
+  grammar: false
+  optional: false
+  prec: false
+  repeat: false
+  repeat1: false
+  seq: false
+  token: false

@@ -61,11 +61,11 @@ module.exports = grammar({
     translation_unit: $ => repeat($._top_level_item),
 
     _top_level_item: $ => choice(
-      $.program_block,
-      //$.module_block,
-      //$.interface_block,
-      //$.subroutine_block
-      //$.functon_block,
+      $.program_block
+      // $.module_block,
+      // $.interface_block,
+      // $.subroutine_block
+      // $.functon_block,
     ),
 
     // Block level structures
@@ -79,7 +79,7 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._specification_part),
       repeat($._statement),
-      block_structure_ending($, 'program')
+      blockStructureEnding($, 'program')
     ),
 
     // subroutine_block: $ => seq(
@@ -90,7 +90,7 @@ module.exports = grammar({
     //   )),
     //   $._newline,
     //   repeat($._statement),
-    //   block_structure_ending($, 'subroutine')
+    //   blockStructureEnding($, 'subroutine')
     // ),
 
     // function_block: $ => seq(
@@ -104,7 +104,7 @@ module.exports = grammar({
     //   '\n',
     //   repeat(choice($.variable_declaration, $.type_block)),
     //   repeat($._statement),
-    //   block_structure_ending($, 'function')
+    //   blockStructureEnding($, 'function')
     // ),
 
     // parameters: $ => seq(
@@ -122,8 +122,8 @@ module.exports = grammar({
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
-      seq($.equivalence_statement, $._end_of_statement),
-      //$.format_statement,
+      seq($.equivalence_statement, $._end_of_statement)
+      // $.format_statement,
     ),
 
     use_statement: $ => seq(
@@ -155,7 +155,7 @@ module.exports = grammar({
 
     implicit_range: $ => seq(
       /[a-zA-Z]/,
-      optional(seq('-', /[a-zA-Z]/)),
+      optional(seq('-', /[a-zA-Z]/))
     ),
 
     variable_declaration: $ => seq(
@@ -210,7 +210,11 @@ module.exports = grammar({
       seq(
         caseInsensitive('intent'),
         '(',
-        choice(caseInsensitive('in'), caseInsensitive('out'), caseInsensitive('in[ \t]*out'),),
+        choice(
+          caseInsensitive('in'),
+          caseInsensitive('out'),
+          caseInsensitive('in[ \t]*out')
+        ),
         ')'
       ),
       caseInsensitive('intrinsic'),
@@ -230,7 +234,7 @@ module.exports = grammar({
       caseInsensitive('parameter'),
       '(',
       commaSep1($.parameter_assignment),
-      ')',
+      ')'
     )),
 
     parameter_assignment: $ => seq($.identifier, '=', $._expression),
@@ -259,14 +263,14 @@ module.exports = grammar({
         $.subroutine_call,
         $.keyword_statement,
         $.include_statement,
-        //$.data_statement,
+        // $.data_statement,
         $.if_statement,
-        //$.select_statement,
-        $.do_loop_statement,
-        //$.print_statement,
-        //$.write_statement,
-        //$.format_statement,
-        //$.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+        // $.select_statement,
+        $.do_loop_statement
+        // $.print_statement,
+        // $.write_statement,
+        // $.format_statement,
+        // $.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
       ),
       $._end_of_statement
     ),
@@ -283,7 +287,7 @@ module.exports = grammar({
       seq(caseInsensitive('cycle'), $.identifier),
       seq(caseInsensitive('go[ \t]*to'), $.statement_label),
       caseInsensitive('return'),
-      seq(caseInsensitive('stop'), optional($._expression)),
+      seq(caseInsensitive('stop'), optional($._expression))
     ),
 
     include_statement: $ => seq(
@@ -332,14 +336,14 @@ module.exports = grammar({
       caseInsensitive('then'),
       optional($._block_label),
       $._end_of_statement,
-      repeat($._statement),
+      repeat($._statement)
     ),
 
     else_clause: $ => seq(
       caseInsensitive('else'),
       optional($._block_label),
       $._end_of_statement,
-      repeat($._statement),
+      repeat($._statement)
     ),
 
     // Expressions
@@ -405,7 +409,7 @@ module.exports = grammar({
         '==',
         caseInsensitive('.eq.'),
         '/=',
-        caseInsensitive('.ne.'),
+        caseInsensitive('.ne.')
       ),
       $._expression
     )),
@@ -491,7 +495,7 @@ module.exports = grammar({
         /[-+]?[oO]?'[0-8]+'[oO]?/,
         // hexcadecimal
         /[-+]?[zZ]?'[0-9a-fA-F]+'[zZ]?/
-    )),
+      )),
 
     complex_literal: $ => seq(
       '(',
@@ -542,7 +546,7 @@ module.exports.PREC = PREC
 function caseInsensitive (keyword) {
   return new RegExp(keyword
     .split('')
-    .map(l => l != l.toUpperCase() ? `[${l}${l.toUpperCase()}]` : l)
+    .map(l => l !== l.toUpperCase() ? `[${l}${l.toUpperCase()}]` : l)
     .join('')
   )
 }
@@ -563,11 +567,11 @@ function sep1 (rule, separator) {
   return seq(rule, repeat(seq(separator, rule)))
 }
 
-function block_structure_ending ($, struct_type) {
-  var obj = prec.right(seq(
+function blockStructureEnding ($, structType) {
+  const obj = prec.right(seq(
     caseInsensitive('end'),
     optional(seq(
-      caseInsensitive(struct_type),
+      caseInsensitive(structType),
       optional($.identifier)
     )),
     $._end_of_statement
