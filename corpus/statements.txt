@@ -13,7 +13,7 @@ END PROGRAM
 (translation_unit
   (program_block (identifier)
     (include_statement (filename))
-    (assignment_expression (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
     (include_statement (filename))))
 
 ============================================
@@ -76,8 +76,8 @@ END PROGRAM
 (translation_unit
   (program_block (identifier)
     (variable_declaration (intrinsic_type) (type_qualifier)
-      (assignment_expression (identifier) (number_literal))
-      (assignment_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (number_literal))
+      (assignment_statement (identifier) (number_literal)))
     (variable_declaration (intrinsic_type)
       (identifier)
       (identifier)
@@ -92,7 +92,7 @@ END PROGRAM
     (variable_declaration
       (intrinsic_type) (size (argument_list (keyword_argument (identifier) (number_literal))))
       (type_qualifier)
-      (pointer_assignment_expression (identifier) (identifier)))
+      (pointer_association_statement (identifier) (identifier)))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier (argument_list (array_slice)))
@@ -173,7 +173,7 @@ END PROGRAM
   (program_block (identifier)
     (do_loop_statement
       (loop_control_expression (identifier) (number_literal) (number_literal))
-      (assignment_expression
+      (assignment_statement
         (identifier)
         (math_expression (number_literal) (identifier)))
       (call_expression (identifier)
@@ -249,7 +249,7 @@ END PROGRAM
   (program_block (identifier)
     (if_statement
       (parenthesized_expression (relational_expression (identifier) (number_literal)))
-      (assignment_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (number_literal)))
     (if_statement
       (parenthesized_expression
         (relational_expression
@@ -257,7 +257,7 @@ END PROGRAM
             (argument_list (array_slice (number_literal) (number_literal))))
           (call_expression (identifier)
             (argument_list (string_literal)))))
-      (assignment_expression (identifier) (number_literal))
+      (assignment_statement (identifier) (number_literal))
       (elseif_clause
         (parenthesized_expression
           (relational_expression
@@ -267,7 +267,7 @@ END PROGRAM
               (argument_list
                 (call_expression (identifier)
                   (argument_list (number_literal)))))))
-        (assignment_expression (identifier) (number_literal)))
+        (assignment_statement (identifier) (number_literal)))
       (elseif_clause
         (parenthesized_expression
           (relational_expression
@@ -277,24 +277,24 @@ END PROGRAM
               (argument_list
                 (call_expression (identifier) (argument_list (number_literal))))))))
       (else_clause
-        (assignment_expression (identifier) (number_literal))))
+        (assignment_statement (identifier) (number_literal))))
     (if_statement
       (block_label_start_expression)
       (parenthesized_expression
         (relational_expression (identifier) (number_literal)))
-      (assignment_expression (identifier) (number_literal))
+      (assignment_statement (identifier) (number_literal))
       (elseif_clause
         (parenthesized_expression
           (relational_expression (identifier) (number_literal)))
         (block_label)
-        (assignment_expression (identifier) (number_literal))
+        (assignment_statement (identifier) (number_literal))
         (if_statement
           (parenthesized_expression
             (call_expression (identifier)
               (argument_list (array_slice (number_literal) (number_literal)))))
-          (assignment_expression (identifier) (number_literal))
+          (assignment_statement (identifier) (number_literal))
           (else_clause
-            (assignment_expression (identifier) (number_literal)))))
+            (assignment_statement (identifier) (number_literal)))))
       (else_clause (block_label)
-        (assignment_expression (identifier) (number_literal)))
+        (assignment_statement (identifier) (number_literal)))
       (block_label))))
