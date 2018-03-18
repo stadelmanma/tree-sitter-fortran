@@ -2544,7 +2544,7 @@
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "array_slice"
+                        "name": "extent_specifier"
                       },
                       {
                         "type": "SYMBOL",
@@ -2574,7 +2574,7 @@
                             },
                             {
                               "type": "SYMBOL",
-                              "name": "array_slice"
+                              "name": "extent_specifier"
                             },
                             {
                               "type": "SYMBOL",
@@ -2637,7 +2637,7 @@
         ]
       }
     },
-    "array_slice": {
+    "extent_specifier": {
       "type": "SEQ",
       "members": [
         {

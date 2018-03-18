@@ -267,7 +267,7 @@ module.exports = grammar({
         $.include_statement,
         // $.data_statement,
         $.if_statement,
-        // $.select_statement,
+        //$.select_case_statement,
         $.do_loop_statement,
         $.format_statement,
         $.print_statement,
@@ -361,6 +361,10 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement)
     ),
+
+    // select_case_statement: $ => seq(
+    //
+    // ),
 
     format_statement: $ => seq(
       caseInsensitive('format'),
@@ -538,7 +542,7 @@ module.exports = grammar({
         '(',
         commaSep(choice(
           $.keyword_argument,
-          $.array_slice,
+          $.extent_specifier,
           $.assumed_size,
           $._expression
         )),
@@ -553,7 +557,7 @@ module.exports = grammar({
       choice($._expression, $.assumed_size, $.assumed_shape)
     )),
 
-    array_slice: $ => seq(
+    extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
       optional($._expression), // stop
