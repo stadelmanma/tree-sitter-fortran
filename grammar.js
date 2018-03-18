@@ -24,7 +24,9 @@
 // a newline the EOS token would get skipped. The same scanner would then be
 // used as needed to support fixed form fortran although line truncation at
 // 72 characters would not be supported because it can be configured at
-// compile time.
+// compile time. Additionally, I can make the line continuation token an
+// extra so it gets ignored, for free form a trailing "&" would get labeled
+// as the token, for fixed form it would be anything in column 6.
 //
 const PREC = {
   ASSIGNMENT: -10,
@@ -122,8 +124,8 @@ module.exports = grammar({
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
-      seq($.equivalence_statement, $._end_of_statement)
-      // $.format_statement,
+      seq($.equivalence_statement, $._end_of_statement),
+      prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
     ),
 
     use_statement: $ => seq(
@@ -266,16 +268,18 @@ module.exports = grammar({
         // $.data_statement,
         $.if_statement,
         // $.select_statement,
-        $.do_loop_statement
-        // $.print_statement,
-        // $.write_statement,
-        // $.format_statement,
-        // $.implied_do_loop  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+        $.do_loop_statement,
+        $.format_statement,
+        $.print_statement,
+        $.write_statement,
+        $.read_statement
       ),
       $._end_of_statement
     ),
 
     statement_label: $ => /\d+/,
+
+    _statement_label_reference: $ => alias($.statement_label, $.statement_label_reference),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
       $._expression,
@@ -358,6 +362,92 @@ module.exports = grammar({
       repeat($._statement)
     ),
 
+    format_statement: $ => seq(
+      caseInsensitive('format'),
+      '(',
+      alias($._transfer_items, $.transfer_items),
+      ')'
+    ),
+
+    _transfer_items: $ => commaSep1(choice(
+      $.string_literal,
+      $.edit_descriptor,
+      seq(optional($.edit_descriptor), '(', $._transfer_items, ')')
+    )),
+
+    edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
+
+    read_statement: $ => choice(
+      $._simple_read_statement,
+      $._parameterized_read_statement
+    ),
+
+    _simple_read_statement: $ => seq(
+      caseInsensitive('read'),
+      $.format_identifier,
+      optional(seq(',', $.input_item_list))
+    ),
+
+    _parameterized_read_statement: $ => seq(
+      caseInsensitive('read'),
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+      optional($.input_item_list)
+    ),
+
+    print_statement: $ => seq(
+      caseInsensitive('print'),
+      $.format_identifier,
+      optional(seq(',', $.output_item_list))
+    ),
+
+    write_statement: $ => seq(
+      caseInsensitive('write'),
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+      optional($.output_item_list)
+    ),
+
+    // precedence is used to override a conflict with the complex literal
+    unit_identifier: $ => prec(1, choice(
+      $.number_literal,
+      $._io_expressions
+    )),
+
+    format_identifier: $ => choice(
+      $._statement_label_reference,
+      $._io_expressions
+    ),
+
+    // This is a limited set of expressions that can be used in IO statements
+    // precedence is used to override a conflict with the complex literal
+    _io_expressions: $ => prec(1, choice(
+      '*',
+      $.string_literal,
+      $.identifier,
+      $.derived_type_member_expression,
+      $.concatenation_expression,
+      $.math_expression,
+      $.parenthesized_expression,
+      $.call_expression
+    )),
+
+    input_item_list: $ => prec.right(commaSep1($._expression)),
+
+    output_item_list: $ => prec.right(commaSep1($._expression)),
+
     // Expressions
 
     _expression: $ => choice(
@@ -373,6 +463,7 @@ module.exports = grammar({
       $.math_expression,
       $.parenthesized_expression,
       $.call_expression
+      // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
     ),
 
     parenthesized_expression: $ => seq(
