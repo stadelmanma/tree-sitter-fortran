@@ -300,6 +300,47 @@ END PROGRAM
       (block_label))))
 
 ============================================
+Format Statements
+============================================
+
+PROGRAM TEST
+1 FORMAT('1234', a5, a5a5)
+2 FORMAT(2F8.3, F6.2, //, :)
+3 FORMAT(I0, A(2X, I3), 'test')
+4 FORMAT(*(G15.8,:,','))
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (statement_label)
+    (format_statement
+      (transfer_items (string_literal) (edit_descriptor) (edit_descriptor)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)
+        (string_literal)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)
+        (string_literal)))))
+
+============================================
 Read Statements
 ============================================
 
