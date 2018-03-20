@@ -610,11 +610,20 @@ module.exports = grammar({
         // integer, real with and without exponential notation
         /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/,
         // binary literal
-        /[-+]?[bB]?'[01]+'[bB]?/,
+        /[-+]?[bB]'[01]+'/,
+        /[-+]?'[01]+'[bB]/,
+        /[-+]?[bB]"[01]+"/,
+        /[-+]?"[01]+"[bB]/,
         // octal literal
-        /[-+]?[oO]?'[0-8]+'[oO]?/,
+        /[-+]?[oO]'[0-8]+'/,
+        /[-+]?'[0-8]+'[oO]/,
+        /[-+]?[oO]"[0-8]+"/,
+        /[-+]?"[0-8]+"[oO]/,
         // hexcadecimal
-        /[-+]?[zZ]?'[0-9a-fA-F]+'[zZ]?/
+        /[-+]?[zZ]'[0-9a-fA-F]+'/,
+        /[-+]?'[0-9a-fA-F]+'[zZ]/,
+        /[-+]?[zZ]"[0-9a-fA-F]+"/,
+        /[-+]?"[0-9a-fA-F]+"[zZ]/
       )),
 
     complex_literal: $ => seq(

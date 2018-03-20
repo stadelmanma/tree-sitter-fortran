@@ -2966,15 +2966,51 @@
           },
           {
             "type": "PATTERN",
-            "value": "[-+]?[bB]?'[01]+'[bB]?"
+            "value": "[-+]?[bB]'[01]+'"
           },
           {
             "type": "PATTERN",
-            "value": "[-+]?[oO]?'[0-8]+'[oO]?"
+            "value": "[-+]?'[01]+'[bB]"
           },
           {
             "type": "PATTERN",
-            "value": "[-+]?[zZ]?'[0-9a-fA-F]+'[zZ]?"
+            "value": "[-+]?[bB]\"[01]+\""
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?\"[01]+\"[bB]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?[oO]'[0-8]+'"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?'[0-8]+'[oO]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?[oO]\"[0-8]+\""
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?\"[0-8]+\"[oO]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?[zZ]'[0-9a-fA-F]+'"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?'[0-9a-fA-F]+'[zZ]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?[zZ]\"[0-9a-fA-F]+\""
+          },
+          {
+            "type": "PATTERN",
+            "value": "[-+]?\"[0-9a-fA-F]+\"[zZ]"
           }
         ]
       }
