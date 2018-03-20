@@ -267,7 +267,7 @@ module.exports = grammar({
         $.include_statement,
         // $.data_statement,
         $.if_statement,
-        // $.select_statement,
+        $.select_case_statement,
         $.do_loop_statement,
         $.format_statement,
         $.print_statement,
@@ -361,6 +361,35 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement)
     ),
+
+    select_case_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('select[ \t]*case'),
+      $.selector,
+      $._end_of_statement,
+      repeat1($.case_statement),
+      caseInsensitive('end[ \t]*select'),
+      optional($._block_label)
+    ),
+
+    selector: $ => seq('(', $._expression, ')'),
+
+    case_statement: $ => seq(
+      caseInsensitive('case'),
+      choice(
+        seq('(', $.case_value_range_list, ')'),
+        alias(caseInsensitive('default'), $.default)
+      ),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
+
+    case_value_range_list: $ => commaSep1(choice(
+      $._expression,
+      $.extent_specifier,
+      alias(caseInsensitive('default'), $.default)
+    )),
 
     format_statement: $ => seq(
       caseInsensitive('format'),
@@ -538,7 +567,7 @@ module.exports = grammar({
         '(',
         commaSep(choice(
           $.keyword_argument,
-          $.array_slice,
+          $.extent_specifier,
           $.assumed_size,
           $._expression
         )),
@@ -553,7 +582,7 @@ module.exports = grammar({
       choice($._expression, $.assumed_size, $.assumed_shape)
     )),
 
-    array_slice: $ => seq(
+    extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
       optional($._expression), // stop
@@ -581,11 +610,20 @@ module.exports = grammar({
         // integer, real with and without exponential notation
         /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/,
         // binary literal
-        /[-+]?[bB]?'[01]+'[bB]?/,
+        /[-+]?[bB]'[01]+'/,
+        /[-+]?'[01]+'[bB]/,
+        /[-+]?[bB]"[01]+"/,
+        /[-+]?"[01]+"[bB]/,
         // octal literal
-        /[-+]?[oO]?'[0-8]+'[oO]?/,
+        /[-+]?[oO]'[0-8]+'/,
+        /[-+]?'[0-8]+'[oO]/,
+        /[-+]?[oO]"[0-8]+"/,
+        /[-+]?"[0-8]+"[oO]/,
         // hexcadecimal
-        /[-+]?[zZ]?'[0-9a-fA-F]+'[zZ]?/
+        /[-+]?[zZ]'[0-9a-fA-F]+'/,
+        /[-+]?'[0-9a-fA-F]+'[zZ]/,
+        /[-+]?[zZ]"[0-9a-fA-F]+"/,
+        /[-+]?"[0-9a-fA-F]+"[zZ]/
       )),
 
     complex_literal: $ => seq(

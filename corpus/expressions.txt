@@ -121,25 +121,25 @@ END PROGRAM
       (call_expression (identifier) (argument_list (number_literal)))
       (number_literal))
     (assignment_statement
-      (call_expression (identifier) (argument_list (array_slice)))
+      (call_expression (identifier) (argument_list (extent_specifier)))
       (number_literal))
     (assignment_statement
       (call_expression (identifier)
-        (argument_list (array_slice (number_literal) (number_literal))))
-      (number_literal))
-    (assignment_statement
-      (call_expression (identifier)
-        (argument_list
-          (array_slice (number_literal) (number_literal) (number_literal))))
-      (number_literal))
-    (assignment_statement
-      (call_expression (identifier)
-        (argument_list (array_slice (number_literal))))
+        (argument_list (extent_specifier (number_literal) (number_literal))))
       (number_literal))
     (assignment_statement
       (call_expression (identifier)
         (argument_list
-          (array_slice
+          (extent_specifier (number_literal) (number_literal) (number_literal))))
+      (number_literal))
+    (assignment_statement
+      (call_expression (identifier)
+        (argument_list (extent_specifier (number_literal))))
+      (number_literal))
+    (assignment_statement
+      (call_expression (identifier)
+        (argument_list
+          (extent_specifier
             (call_expression (identifier) (argument_list (identifier)))
             (math_expression (number_literal) (identifier))
             (identifier))))
@@ -156,7 +156,7 @@ END PROGRAM
     (assignment_statement
       (call_expression (identifier)
         (argument_list
-          (array_slice
+          (extent_specifier
             (call_expression (identifier)
               (argument_list (math_expression (identifier) (number_literal))))
             (identifier))))
@@ -206,7 +206,7 @@ END PROGRAM
     (assignment_statement
       (derived_type_member_expression (identifier)
         (call_expression (identifier)
-          (argument_list (array_slice  (number_literal) (number_literal)))))
+          (argument_list (extent_specifier  (number_literal) (number_literal)))))
       (identifier))))
 
 ============================================
@@ -382,4 +382,4 @@ END PROGRAM
         (argument_list
           (call_expression (identifier)
             (argument_list
-              (array_slice (number_literal) (identifier)))))))))
+              (extent_specifier (number_literal) (identifier)))))))))

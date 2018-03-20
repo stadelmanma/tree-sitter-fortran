@@ -86,7 +86,7 @@ END PROGRAM
     (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
       (call_expression (identifier)
         (argument_list
-          (array_slice (number_literal) (math_expression (identifier) (number_literal)))))
+          (extent_specifier (number_literal) (math_expression (identifier) (number_literal)))))
       (call_expression (identifier) (argument_list (identifier))))
     (variable_declaration (intrinsic_type) (size) (type_qualifier) (identifier))
     (variable_declaration
@@ -95,7 +95,7 @@ END PROGRAM
       (pointer_association_statement (identifier) (identifier)))
     (variable_declaration
       (intrinsic_type)
-      (type_qualifier (argument_list (array_slice)))
+      (type_qualifier (argument_list (extent_specifier)))
       (type_qualifier) (identifier))
     (variable_declaration
       (intrinsic_type)
@@ -127,7 +127,7 @@ END PROGRAM
   (program_block (identifier)
     (variable_modification (type_qualifier) (identifier))
     (variable_modification (type_qualifier)
-      (call_expression (identifier) (argument_list (array_slice) (array_slice)))
+      (call_expression (identifier) (argument_list (extent_specifier) (extent_specifier)))
       (call_expression (identifier) (argument_list (number_literal))))
     (variable_modification (type_qualifier) (identifier))
     (parameter_statement
@@ -254,7 +254,7 @@ END PROGRAM
       (parenthesized_expression
         (relational_expression
           (call_expression (identifier)
-            (argument_list (array_slice (number_literal) (number_literal))))
+            (argument_list (extent_specifier (number_literal) (number_literal))))
           (call_expression (identifier)
             (argument_list (string_literal)))))
       (assignment_statement (identifier) (number_literal))
@@ -262,7 +262,7 @@ END PROGRAM
         (parenthesized_expression
           (relational_expression
             (call_expression (identifier)
-              (argument_list (array_slice (number_literal) (number_literal))))
+              (argument_list (extent_specifier (number_literal) (number_literal))))
             (call_expression (identifier)
               (argument_list
                 (call_expression (identifier)
@@ -272,7 +272,7 @@ END PROGRAM
         (parenthesized_expression
           (relational_expression
             (call_expression (identifier)
-              (argument_list (array_slice (number_literal) (number_literal))))
+              (argument_list (extent_specifier (number_literal) (number_literal))))
             (call_expression (identifier)
               (argument_list
                 (call_expression (identifier) (argument_list (number_literal))))))))
@@ -291,13 +291,80 @@ END PROGRAM
         (if_statement
           (parenthesized_expression
             (call_expression (identifier)
-              (argument_list (array_slice (number_literal) (number_literal)))))
+              (argument_list (extent_specifier (number_literal) (number_literal)))))
           (assignment_statement (identifier) (number_literal))
           (else_clause
             (assignment_statement (identifier) (number_literal)))))
       (else_clause (block_label)
         (assignment_statement (identifier) (number_literal)))
       (block_label))))
+
+============================================
+Select Case Statements
+============================================
+
+PROGRAM TEST
+  sign_case: SELECT CASE (number)
+  CASE (: -1) sign_case
+    sign = -1
+  CASE (0) sign_case
+    sign = 0
+  CASE (1 :) sign_case
+    sign = 1
+  END SELECT sign_case
+
+  SELECT CASE (c)
+  CASE ('a' : 'm', 'n' : 'z')
+    WRITE(*,*) 'lowercase letter'
+  CASE ('A' : 'Z')
+    WRITE(*,*) 'uppercase letter'
+  CASE (WILDCARD_CHAR)
+    WRITE(*,*) 'wildcard letter'
+  CASE DEFAULT
+    WRITE(*,*)  'Other characters, which may not be letters'
+  END SELECT
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (select_case_statement (block_label_start_expression) (selector (identifier))
+      (case_statement (case_value_range_list (extent_specifier (number_literal)))
+        (block_label)
+        (assignment_statement (identifier) (number_literal)))
+      (case_statement (case_value_range_list (number_literal))
+        (block_label)
+        (assignment_statement (identifier) (number_literal)))
+      (case_statement (case_value_range_list (extent_specifier (number_literal)))
+        (block_label)
+        (assignment_statement (identifier) (number_literal)))
+      (block_label))
+    (select_case_statement (selector (identifier))
+      (case_statement
+        (case_value_range_list
+          (extent_specifier (string_literal) (string_literal))
+          (extent_specifier (string_literal) (string_literal)))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (case_statement
+        (case_value_range_list (extent_specifier (string_literal) (string_literal)))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (case_statement (case_value_range_list (identifier))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (case_statement (default)
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal)))))))
 
 ============================================
 Format Statements
@@ -371,7 +438,7 @@ END PROGRAM
     (read_statement
       (unit_identifier (identifier))
       (keyword_argument (identifier) (string_literal))
-      (input_item_list (call_expression (identifier) (argument_list (array_slice)))))
+      (input_item_list (call_expression (identifier) (argument_list (extent_specifier)))))
     (read_statement
       (keyword_argument (identifier) (identifier))
       (keyword_argument (identifier) (string_literal))
@@ -428,7 +495,7 @@ END PROGRAM
       (unit_identifier (identifier))
       (keyword_argument (identifier) (string_literal))
       (output_item_list
-        (call_expression (identifier) (argument_list (array_slice)))))
+        (call_expression (identifier) (argument_list (extent_specifier)))))
     (write_statement
       (keyword_argument (identifier) (identifier))
       (keyword_argument (identifier) (string_literal))
