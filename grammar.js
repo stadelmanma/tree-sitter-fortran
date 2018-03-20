@@ -267,7 +267,7 @@ module.exports = grammar({
         $.include_statement,
         // $.data_statement,
         $.if_statement,
-        //$.select_case_statement,
+        $.select_case_statement,
         $.do_loop_statement,
         $.format_statement,
         $.print_statement,
@@ -362,9 +362,34 @@ module.exports = grammar({
       repeat($._statement)
     ),
 
-    // select_case_statement: $ => seq(
-    //
-    // ),
+    select_case_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('select[ \t]*case'),
+      $.selector,
+      $._end_of_statement,
+      repeat1($.case_statement),
+      caseInsensitive('end[ \t]*select'),
+      optional($._block_label)
+    ),
+
+    selector: $ => seq('(', $._expression, ')'),
+
+    case_statement: $ => seq(
+      caseInsensitive('case'),
+      choice(
+        seq('(', $.case_value_range_list, ')'),
+        alias(caseInsensitive('default'), $.default)
+      ),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
+
+    case_value_range_list: $ => commaSep1(choice(
+      $._expression,
+      $.extent_specifier,
+      alias(caseInsensitive('default'), $.default)
+    )),
 
     format_statement: $ => seq(
       caseInsensitive('format'),
