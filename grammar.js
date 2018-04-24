@@ -539,28 +539,28 @@ module.exports = grammar({
     )),
 
     logical_expression: $ => choice(
-      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('.or.'), $._expression)),
-      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('.and.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.eqv.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.neqv.'), $._expression)),
-      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('.not.'), $._expression))
+      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('\\.or\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('\\.and\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.eqv\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.neqv\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('\\.not\\.'), $._expression))
     ),
 
     relational_expression: $ => prec.left(PREC.RELATIONAL, seq(
       $._expression,
       choice(
         '<',
-        caseInsensitive('.lt.'),
+        caseInsensitive('\\.lt\\.'),
         '>',
-        caseInsensitive('.gt.'),
+        caseInsensitive('\\.gt\\.'),
         '<=',
-        caseInsensitive('.le.'),
+        caseInsensitive('\\.le\\.'),
         '>=',
-        caseInsensitive('.ge.'),
+        caseInsensitive('\\.ge\\.'),
         '==',
-        caseInsensitive('.eq.'),
+        caseInsensitive('\\.eq\\.'),
         '/=',
-        caseInsensitive('.ne.')
+        caseInsensitive('\\.ne\\.')
       ),
       $._expression
     )),
@@ -684,8 +684,8 @@ module.exports = grammar({
 
     boolean_literal: $ => token(
       choice(
-        caseInsensitive('.true.'),
-        caseInsensitive('.false.')
+        caseInsensitive('\\.true\\.'),
+        caseInsensitive('\\.false\\.')
       )
     ),
 

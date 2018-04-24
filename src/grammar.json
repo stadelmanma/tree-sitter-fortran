@@ -2560,7 +2560,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[oO][rR]."
+                "value": "\\.[oO][rR]\\."
               },
               {
                 "type": "SYMBOL",
@@ -2581,7 +2581,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[aA][nN][dD]."
+                "value": "\\.[aA][nN][dD]\\."
               },
               {
                 "type": "SYMBOL",
@@ -2602,7 +2602,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[eE][qQ][vV]."
+                "value": "\\.[eE][qQ][vV]\\."
               },
               {
                 "type": "SYMBOL",
@@ -2623,7 +2623,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[nN][eE][qQ][vV]."
+                "value": "\\.[nN][eE][qQ][vV]\\."
               },
               {
                 "type": "SYMBOL",
@@ -2640,7 +2640,7 @@
             "members": [
               {
                 "type": "PATTERN",
-                "value": ".[nN][oO][tT]."
+                "value": "\\.[nN][oO][tT]\\."
               },
               {
                 "type": "SYMBOL",
@@ -2670,7 +2670,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[lL][tT]."
+                "value": "\\.[lL][tT]\\."
               },
               {
                 "type": "STRING",
@@ -2678,7 +2678,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[gG][tT]."
+                "value": "\\.[gG][tT]\\."
               },
               {
                 "type": "STRING",
@@ -2686,7 +2686,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[lL][eE]."
+                "value": "\\.[lL][eE]\\."
               },
               {
                 "type": "STRING",
@@ -2694,7 +2694,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[gG][eE]."
+                "value": "\\.[gG][eE]\\."
               },
               {
                 "type": "STRING",
@@ -2702,7 +2702,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[eE][qQ]."
+                "value": "\\.[eE][qQ]\\."
               },
               {
                 "type": "STRING",
@@ -2710,7 +2710,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": ".[nN][eE]."
+                "value": "\\.[nN][eE]\\."
               }
             ]
           },
@@ -3329,11 +3329,11 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": ".[tT][rR][uU][eE]."
+            "value": "\\.[tT][rR][uU][eE]\\."
           },
           {
             "type": "PATTERN",
-            "value": ".[fF][aA][lL][sS][eE]."
+            "value": "\\.[fF][aA][lL][sS][eE]\\."
           }
         ]
       }
