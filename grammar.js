@@ -192,7 +192,7 @@ module.exports = grammar({
     _type_name: $ => alias($.identifier, $.type_name),
 
     variable_declaration: $ => seq(
-      $._intrinsic_type,
+      choice($._intrinsic_type, $.derived_type),
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
@@ -225,6 +225,13 @@ module.exports = grammar({
       caseInsensitive('double[ \t]*complex'),
       caseInsensitive('logical'),
       caseInsensitive('character')
+    ),
+
+    derived_type: $ => seq(
+      caseInsensitive('type'),
+      '(',
+      $._type_name,
+      ')'
     ),
 
     size: $ => choice(
