@@ -26,7 +26,10 @@
 // 72 characters would not be supported because it can be configured at
 // compile time. Additionally, I can make the line continuation token an
 // extra so it gets ignored, for free form a trailing "&" would get labeled
-// as the token, for fixed form it would be anything in column 6.
+// as the token, for fixed form it would be anything in column 6. Additionally,
+// when using the scanner perhaps I could define statement labels as extras
+// since they can exist almost anywhere and are only required in a small
+// subset of cases.
 //
 const PREC = {
   ASSIGNMENT: -10,
@@ -121,6 +124,7 @@ module.exports = grammar({
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
+      $.derived_type_definition,
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -159,6 +163,33 @@ module.exports = grammar({
       /[a-zA-Z]/,
       optional(seq('-', /[a-zA-Z]/))
     ),
+
+    derived_type_definition: $ => seq(
+      $.derived_type_statement,
+      optional(
+        seq(
+          alias(caseInsensitive('sequence'), $.sequence_statement),
+          $._end_of_statement
+        )
+      ),
+      repeat(seq(
+        choice($.include_statement, $.variable_declaration),
+        $._end_of_statement)),
+      blockStructureEnding($, 'type')
+    ),
+
+    derived_type_statement: $ => seq(
+      optional($.statement_label),
+      caseInsensitive('type'),
+      choice(
+        $._type_name,
+        seq('::', $._type_name),
+        seq(',', $.type_qualifier, '::', $._type_name)
+      ),
+      $._end_of_statement
+    ),
+
+    _type_name: $ => alias($.identifier, $.type_name),
 
     variable_declaration: $ => seq(
       $._intrinsic_type,
