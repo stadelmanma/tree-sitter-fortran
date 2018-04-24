@@ -3149,7 +3149,7 @@
         "members": [
           {
             "type": "PATTERN",
-            "value": "[-+]?\\d*(\\.\\d*)?([eEdD][-+]?\\d+)?"
+            "value": "[-+]?\\d*(\\.\\d*)?([eEdD][-+]?\\d+)?(_\\w+)?"
           },
           {
             "type": "PATTERN",
