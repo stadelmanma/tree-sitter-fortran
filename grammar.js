@@ -51,7 +51,7 @@ module.exports = grammar({
   name: 'fortran',
 
   extras: $ => [
-    /[ \t\n]/,
+    /[ \t\r\n]/,
     $.comment
   ],
 

@@ -3413,7 +3413,7 @@
   "extras": [
     {
       "type": "PATTERN",
-      "value": "[ \\t\\n]"
+      "value": "[ \\t\\r\\n]"
     },
     {
       "type": "SYMBOL",
