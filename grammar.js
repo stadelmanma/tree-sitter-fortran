@@ -26,7 +26,10 @@
 // 72 characters would not be supported because it can be configured at
 // compile time. Additionally, I can make the line continuation token an
 // extra so it gets ignored, for free form a trailing "&" would get labeled
-// as the token, for fixed form it would be anything in column 6.
+// as the token, for fixed form it would be anything in column 6. Additionally,
+// when using the scanner perhaps I could define statement labels as extras
+// since they can exist almost anywhere and are only required in a small
+// subset of cases.
 //
 const PREC = {
   ASSIGNMENT: -10,
@@ -121,6 +124,7 @@ module.exports = grammar({
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
+      $.derived_type_definition,
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -160,8 +164,35 @@ module.exports = grammar({
       optional(seq('-', /[a-zA-Z]/))
     ),
 
+    derived_type_definition: $ => seq(
+      $.derived_type_statement,
+      optional(
+        seq(
+          alias(caseInsensitive('sequence'), $.sequence_statement),
+          $._end_of_statement
+        )
+      ),
+      repeat(seq(
+        choice($.include_statement, $.variable_declaration),
+        $._end_of_statement)),
+      blockStructureEnding($, 'type')
+    ),
+
+    derived_type_statement: $ => seq(
+      optional($.statement_label),
+      caseInsensitive('type'),
+      choice(
+        $._type_name,
+        seq('::', $._type_name),
+        seq(',', $.type_qualifier, '::', $._type_name)
+      ),
+      $._end_of_statement
+    ),
+
+    _type_name: $ => alias($.identifier, $.type_name),
+
     variable_declaration: $ => seq(
-      $._intrinsic_type,
+      choice($._intrinsic_type, $.derived_type),
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
@@ -194,6 +225,13 @@ module.exports = grammar({
       caseInsensitive('double[ \t]*complex'),
       caseInsensitive('logical'),
       caseInsensitive('character')
+    ),
+
+    derived_type: $ => seq(
+      caseInsensitive('type'),
+      '(',
+      $._type_name,
+      ')'
     ),
 
     size: $ => choice(
@@ -508,28 +546,28 @@ module.exports = grammar({
     )),
 
     logical_expression: $ => choice(
-      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('.or.'), $._expression)),
-      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('.and.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.eqv.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('.neqv.'), $._expression)),
-      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('.not.'), $._expression))
+      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('\\.or\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('\\.and\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.eqv\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.neqv\\.'), $._expression)),
+      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('\\.not\\.'), $._expression))
     ),
 
     relational_expression: $ => prec.left(PREC.RELATIONAL, seq(
       $._expression,
       choice(
         '<',
-        caseInsensitive('.lt.'),
+        caseInsensitive('\\.lt\\.'),
         '>',
-        caseInsensitive('.gt.'),
+        caseInsensitive('\\.gt\\.'),
         '<=',
-        caseInsensitive('.le.'),
+        caseInsensitive('\\.le\\.'),
         '>=',
-        caseInsensitive('.ge.'),
+        caseInsensitive('\\.ge\\.'),
         '==',
-        caseInsensitive('.eq.'),
+        caseInsensitive('\\.eq\\.'),
         '/=',
-        caseInsensitive('.ne.')
+        caseInsensitive('\\.ne\\.')
       ),
       $._expression
     )),
@@ -608,7 +646,7 @@ module.exports = grammar({
     number_literal: $ => token(
       choice(
         // integer, real with and without exponential notation
-        /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?/,
+        /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?(_\w+)?/,
         // binary literal
         /[-+]?[bB]'[01]+'/,
         /[-+]?'[01]+'[bB]/,
@@ -653,8 +691,8 @@ module.exports = grammar({
 
     boolean_literal: $ => token(
       choice(
-        caseInsensitive('.true.'),
-        caseInsensitive('.false.')
+        caseInsensitive('\\.true\\.'),
+        caseInsensitive('\\.false\\.')
       )
     ),
 

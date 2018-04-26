@@ -6,9 +6,11 @@ PROGRAM TEST
     int_val = +1
     int_val = -1
     int_val =  1
+    int_val =  1_SZ
     flt_val = +1.0
     flt_val = -1.0
     flt_val =  1.0
+    flt_val =  1.0_SZ
     flt_val = -1.23E+4
     flt_val = -1.23E-4
     flt_val = -1.23E4
@@ -32,6 +34,8 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
