@@ -66,10 +66,10 @@ module.exports = grammar({
     translation_unit: $ => repeat($._top_level_item),
 
     _top_level_item: $ => choice(
-      $.program_block
+      $.program_block,
       // $.module_block,
       // $.interface_block,
-      // $.subroutine_block
+      $.subroutine
       // $.functon_block,
     ),
 
@@ -87,16 +87,21 @@ module.exports = grammar({
       blockStructureEnding($, 'program')
     ),
 
-    // subroutine_block: $ => seq(
-    //   prec.right(seq(
-    //     caseInsensitive('subroutine'),
-    //     $.identifier,
-    //     optional($.parameters)
-    //   )),
-    //   $._newline,
-    //   repeat($._statement),
-    //   blockStructureEnding($, 'subroutine')
-    // ),
+    subroutine: $ => seq(
+      $.subroutine_statement,
+      $._end_of_statement,
+      repeat($._specification_part),
+      repeat($._statement),
+      blockStructureEnding($, 'subroutine')
+    ),
+
+    subroutine_statement: $ => seq(
+      optional($.procedure_qualifier),
+      caseInsensitive('subroutine'),
+      $.identifier,
+      optional($.parameters),
+      optional($.comment)
+    ),
 
     // function_block: $ => seq(
     //   optional(choice($.intrinsic_type, $.custom_type)),
@@ -112,11 +117,11 @@ module.exports = grammar({
     //   blockStructureEnding($, 'function')
     // ),
 
-    // parameters: $ => seq(
-    //   '(',
-    //   commaSep1($.identifier),
-    //   ')'
-    // ),
+    parameters: $ => seq(
+      '(',
+      commaSep1($.identifier),
+      ')'
+    ),
 
     // Variable Declarations
 
@@ -228,7 +233,7 @@ module.exports = grammar({
     ),
 
     derived_type: $ => seq(
-      caseInsensitive('type'),
+      choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       $._type_name,
       ')'
@@ -268,6 +273,12 @@ module.exports = grammar({
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('volatile')
+    ),
+
+    procedure_qualifier: $ => choice(
+      caseInsensitive('elemental'),
+      caseInsensitive('pure'),
+      caseInsensitive('recursive')
     ),
 
     parameter_statement: $ => prec(1, seq(
