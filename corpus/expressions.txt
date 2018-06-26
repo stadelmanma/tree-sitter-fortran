@@ -374,8 +374,8 @@ END PROGRAM
               (number_literal))))
         (number_literal)))
     (subroutine_call
-      (call_expression (identifier)
-        (argument_list (identifier) (identifier))))
+      (name)
+      (argument_list (identifier) (identifier)))
     (call_expression (identifier)
       (argument_list
         (number_literal)

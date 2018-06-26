@@ -219,10 +219,8 @@ END PROGRAM
           (identifier)
           (keyword_argument (identifier) (string_literal))))
       (subroutine_call
-        (call_expression (identifier)
-          (argument_list
-            (identifier)
-            (keyword_argument (identifier) (boolean_literal))))))
+        (name)
+        (argument_list (identifier) (keyword_argument (identifier) (boolean_literal)))))
     (do_loop_statement
       (loop_control_expression
         (identifier)
