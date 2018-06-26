@@ -356,7 +356,8 @@ module.exports = grammar({
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
-      $.call_expression
+      $._name,
+      optional($.argument_list)
     ),
 
     keyword_statement: $ => choice(
