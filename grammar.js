@@ -67,10 +67,10 @@ module.exports = grammar({
 
     _top_level_item: $ => choice(
       $.program_block,
-      // $.module_block,
-      // $.interface_block,
+      // $.module,
+      // $.interface,
       $.subroutine
-      // $.functon_block,
+      // $.functon,
     ),
 
     // Block level structures
@@ -92,18 +92,20 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._specification_part),
       repeat($._statement),
+      optional($.internal_procedures),
       blockStructureEnding($, 'subroutine')
     ),
 
     subroutine_statement: $ => seq(
-      optional($.procedure_qualifier),
+      repeat($.procedure_qualifier),
       caseInsensitive('subroutine'),
-      $.identifier,
-      optional($.parameters),
-      optional($.comment)
+      $._name,
+      optional($.parameters)
     ),
 
-    // function_block: $ => seq(
+    _name: $ => alias($.identifier, $.name),
+
+    // function: $ => seq(
     //   optional(choice($.intrinsic_type, $.custom_type)),
     //   prec.right(seq(
     //     caseInsensitive('function'),
@@ -121,6 +123,16 @@ module.exports = grammar({
       '(',
       commaSep1($.identifier),
       ')'
+    ),
+
+    internal_procedures: $ => seq(
+      caseInsensitive('contains'),
+      $._end_of_statement,
+      repeat(
+        // $.function,
+        // $.procedure_statement,
+        $.subroutine
+      )
     ),
 
     // Variable Declarations

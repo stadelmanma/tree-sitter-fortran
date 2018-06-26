@@ -145,6 +145,18 @@
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "internal_procedures"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "PREC_RIGHT",
           "value": 0,
           "content": {
@@ -196,16 +208,11 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "procedure_qualifier"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "procedure_qualifier"
+          }
         },
         {
           "type": "PATTERN",
@@ -213,7 +220,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
+          "name": "_name"
         },
         {
           "type": "CHOICE",
@@ -226,20 +233,17 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "comment"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
         }
       ]
+    },
+    "_name": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "identifier"
+      },
+      "named": true,
+      "value": "name"
     },
     "parameters": {
       "type": "SEQ",
@@ -276,6 +280,26 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "internal_procedures": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[cC][oO][nN][tT][aA][iI][nN][sS]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "subroutine"
+          }
         }
       ]
     },
