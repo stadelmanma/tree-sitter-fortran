@@ -361,7 +361,7 @@ module.exports = grammar({
 
     keyword_statement: $ => choice(
       caseInsensitive('continue'),
-      seq(caseInsensitive('cycle'), $.identifier),
+      seq(caseInsensitive('cycle'), optional($.identifier)),
       seq(caseInsensitive('go[ \t]*to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression))
