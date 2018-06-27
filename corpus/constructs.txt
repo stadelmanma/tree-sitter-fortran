@@ -1,0 +1,70 @@
+============================================
+Program
+============================================
+
+PROGRAM TEST
+END PROGRAM
+
+PROGRAM TEST
+END PROGRAM TEST
+
+----
+
+(translation_unit
+  (program_block (identifier))
+  (program_block (identifier) (identifier)))
+
+============================================
+Subroutine
+============================================
+
+pure recursive subroutine static_method(arg)
+   integer, intent(in) :: arg
+   REAL(8), SAVE :: counter
+   counter = counter + arg
+end subroutine static_method
+
+
+SUBROUTINE WITH_INTERNAL_PROC
+  integer :: cmd_stat
+
+  CALL CHECK_RETURN_VAL("ls *", cmd_stat)
+
+  CONTAINS
+    SUBROUTINE CHECK_RETURN_VAL(cmd, istat)
+      integer, intent(out) :: istat
+      character(*), intent(in) :: cmd
+      istat = SYSTEM(cmd)
+      RETURN
+    END SUBROUTINE
+END SUBROUTINE
+
+----
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      (procedure_qualifier)
+      (procedure_qualifier)
+      (name)
+      (parameters (identifier)))
+    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (variable_declaration
+      (intrinsic_type) (size (argument_list (number_literal))) (type_qualifier) (identifier))
+    (assignment_statement
+      (identifier) (math_expression (identifier) (identifier)))
+    (identifier))
+  (subroutine (subroutine_statement (name))
+    (variable_declaration (intrinsic_type) (identifier))
+    (subroutine_call (name) (argument_list (string_literal) (identifier)))
+    (internal_procedures
+      (subroutine
+        (subroutine_statement (name) (parameters (identifier) (identifier)))
+        (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+        (variable_declaration
+          (intrinsic_type) (size (argument_list (assumed_size)))
+          (type_qualifier)
+          (identifier))
+        (assignment_statement (identifier)
+          (call_expression (identifier) (argument_list (identifier))))
+        (keyword_statement)))))

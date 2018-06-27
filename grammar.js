@@ -66,11 +66,11 @@ module.exports = grammar({
     translation_unit: $ => repeat($._top_level_item),
 
     _top_level_item: $ => choice(
-      $.program_block
-      // $.module_block,
-      // $.interface_block,
-      // $.subroutine_block
-      // $.functon_block,
+      $.program_block,
+      // $.module,
+      // $.interface,
+      $.subroutine
+      // $.functon,
     ),
 
     // Block level structures
@@ -87,18 +87,25 @@ module.exports = grammar({
       blockStructureEnding($, 'program')
     ),
 
-    // subroutine_block: $ => seq(
-    //   prec.right(seq(
-    //     caseInsensitive('subroutine'),
-    //     $.identifier,
-    //     optional($.parameters)
-    //   )),
-    //   $._newline,
-    //   repeat($._statement),
-    //   blockStructureEnding($, 'subroutine')
-    // ),
+    subroutine: $ => seq(
+      $.subroutine_statement,
+      $._end_of_statement,
+      repeat($._specification_part),
+      repeat($._statement),
+      optional($.internal_procedures),
+      blockStructureEnding($, 'subroutine')
+    ),
 
-    // function_block: $ => seq(
+    subroutine_statement: $ => seq(
+      repeat($.procedure_qualifier),
+      caseInsensitive('subroutine'),
+      $._name,
+      optional($.parameters)
+    ),
+
+    _name: $ => alias($.identifier, $.name),
+
+    // function: $ => seq(
     //   optional(choice($.intrinsic_type, $.custom_type)),
     //   prec.right(seq(
     //     caseInsensitive('function'),
@@ -112,11 +119,21 @@ module.exports = grammar({
     //   blockStructureEnding($, 'function')
     // ),
 
-    // parameters: $ => seq(
-    //   '(',
-    //   commaSep1($.identifier),
-    //   ')'
-    // ),
+    parameters: $ => seq(
+      '(',
+      commaSep1($.identifier),
+      ')'
+    ),
+
+    internal_procedures: $ => seq(
+      caseInsensitive('contains'),
+      $._end_of_statement,
+      repeat(
+        // $.function,
+        // $.procedure_statement,
+        $.subroutine
+      )
+    ),
 
     // Variable Declarations
 
@@ -228,7 +245,7 @@ module.exports = grammar({
     ),
 
     derived_type: $ => seq(
-      caseInsensitive('type'),
+      choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       $._type_name,
       ')'
@@ -268,6 +285,12 @@ module.exports = grammar({
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('volatile')
+    ),
+
+    procedure_qualifier: $ => choice(
+      caseInsensitive('elemental'),
+      caseInsensitive('pure'),
+      caseInsensitive('recursive')
     ),
 
     parameter_statement: $ => prec(1, seq(
@@ -333,12 +356,14 @@ module.exports = grammar({
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
-      $.call_expression
+      $._name,
+      optional($.argument_list)
     ),
 
     keyword_statement: $ => choice(
       caseInsensitive('continue'),
-      seq(caseInsensitive('cycle'), $.identifier),
+      seq(caseInsensitive('cycle'), optional($.identifier)),
+      seq(caseInsensitive('exit'), optional($.identifier)),
       seq(caseInsensitive('go[ \t]*to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression))
