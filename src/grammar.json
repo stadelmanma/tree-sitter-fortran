@@ -471,8 +471,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[cC][oO][nN][tT][aA][iI][nN][sS]"
+          "type": "SYMBOL",
+          "name": "contains_statement"
         },
         {
           "type": "SYMBOL",
@@ -481,11 +481,24 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "function"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "function"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "subroutine"
+              }
+            ]
           }
         }
       ]
+    },
+    "contains_statement": {
+      "type": "PATTERN",
+      "value": "[cC][oO][nN][tT][aA][iI][nN][sS]"
     },
     "_specification_part": {
       "type": "CHOICE",

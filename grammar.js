@@ -137,14 +137,16 @@ module.exports = grammar({
     ),
 
     internal_procedures: $ => seq(
-      caseInsensitive('contains'),
+      $.contains_statement,
       $._end_of_statement,
-      repeat(
+      repeat(choice(
         $.function,
-        // $.procedure_statement,
-        $.subroutine
-      )
+        $.subroutine,
+        // $.procedure_statement
+      ))
     ),
+
+    contains_statement: $ => caseInsensitive('contains'),
 
     // Variable Declarations
 
