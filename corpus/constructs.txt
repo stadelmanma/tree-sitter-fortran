@@ -69,3 +69,101 @@ END SUBROUTINE
         (assignment_statement (identifier)
           (call_expression (identifier) (argument_list (identifier))))
         (keyword_statement)))))
+
+
+============================================
+Functions (simple)
+============================================
+
+real(8) function current_time()
+  ! returns the wall clock time in seconds.
+  use mpi
+  current_time = mpi_wtime()
+end function
+
+type(object) function new_object
+  ! returns the current date string
+  TYPE(object) :: obj
+  obj%counter = 0
+  new_object = obj
+end function
+
+----
+
+(translation_unit
+  (function
+    (function_statement
+      (intrinsic_type) (size (argument_list (number_literal)))
+      (name))
+    (comment)
+    (use_statement (module_name))
+    (assignment_statement (identifier) (call_expression (identifier) (argument_list))))
+  (function
+    (function_statement (derived_type (type_name))
+      (name))
+    (comment)
+    (variable_declaration (derived_type (type_name)) (identifier))
+    (assignment_statement
+      (derived_type_member_expression (identifier) (identifier))
+      (number_literal))
+    (assignment_statement (identifier) (identifier))))
+
+
+============================================
+Functions (complex)
+============================================
+
+pure elemental logical function test(x, y) result(value)
+  REAL(8) :: x, y
+  logical :: value = (x == y)
+
+contains
+
+  real function internal_proc result(x)
+    real(8) x = 1.0
+  end function
+
+  subroutine increment(i)
+    integer :: i
+    i = i + 1
+  end subroutine
+
+end function test
+
+----
+
+(translation_unit
+  (function
+    (function_statement
+      (procedure_qualifier)
+      (procedure_qualifier)
+      (intrinsic_type)
+      (name)
+      (parameters (identifier) (identifier))
+      (function_result (identifier)))
+    (variable_declaration
+      (intrinsic_type) (size (argument_list  (number_literal)))
+      (identifier)
+      (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (assignment_statement
+        (identifier)
+        (parenthesized_expression  (relational_expression (identifier) (identifier)))))
+    (internal_procedures
+      (contains_statement)
+      (function
+        (function_statement
+          (intrinsic_type)
+          (name)
+          (function_result (identifier)))
+        (variable_declaration
+          (intrinsic_type) (size (argument_list (number_literal)))
+          (assignment_statement (identifier) (number_literal))))
+      (subroutine
+        (subroutine_statement (name) (parameters (identifier)))
+        (variable_declaration (intrinsic_type) (identifier))
+        (assignment_statement
+          (identifier)
+          (math_expression (identifier) (number_literal)))))
+    (identifier)))
