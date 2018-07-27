@@ -58,6 +58,7 @@ END SUBROUTINE
     (variable_declaration (intrinsic_type) (identifier))
     (subroutine_call (name) (argument_list (string_literal) (identifier)))
     (internal_procedures
+      (contains_statement)
       (subroutine
         (subroutine_statement (name) (parameters (identifier) (identifier)))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
