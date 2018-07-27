@@ -69,8 +69,8 @@ module.exports = grammar({
       $.program_block,
       // $.module,
       // $.interface,
-      $.subroutine
-      // $.functon,
+      $.subroutine,
+      $.function,
     ),
 
     // Block level structures
@@ -103,21 +103,32 @@ module.exports = grammar({
       optional($.parameters)
     ),
 
-    _name: $ => alias($.identifier, $.name),
+    function: $ => seq(
+      $.function_statement,
+      $._end_of_statement,
+      repeat($._specification_part),
+      repeat($._statement),
+      optional($.internal_procedures),
+      blockStructureEnding($, 'function')
+    ),
 
-    // function: $ => seq(
-    //   optional(choice($.intrinsic_type, $.custom_type)),
-    //   prec.right(seq(
-    //     caseInsensitive('function'),
-    //     $.identifier,
-    //     choice($.parameters, /\(\s*\)/)
-    //   )),
-    //   optional(seq(caseInsensitive('result'), '(', $.identifier ,')')),
-    //   '\n',
-    //   repeat(choice($.variable_declaration, $.type_block)),
-    //   repeat($._statement),
-    //   blockStructureEnding($, 'function')
-    // ),
+    function_statement: $ => seq(
+      repeat($.procedure_qualifier),
+      optional(choice($._intrinsic_type, $.derived_type)),
+      caseInsensitive('function'),
+      $._name,
+      optional(choice('()', $.parameters)),
+      optional($.function_result)
+    ),
+
+    function_result: $ => seq(
+      caseInsensitive('result'),
+      '(',
+      $.identifier,
+      ')'
+    ),
+
+    _name: $ => alias($.identifier, $.name),
 
     parameters: $ => seq(
       '(',
@@ -129,7 +140,7 @@ module.exports = grammar({
       caseInsensitive('contains'),
       $._end_of_statement,
       repeat(
-        // $.function,
+        $.function,
         // $.procedure_statement,
         $.subroutine
       )

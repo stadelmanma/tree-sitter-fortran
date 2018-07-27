@@ -18,6 +18,10 @@
         {
           "type": "SYMBOL",
           "name": "subroutine"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function"
         }
       ]
     },
@@ -236,6 +240,186 @@
         }
       ]
     },
+    "function": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "function_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_specification_part"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "internal_procedures"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "PREC_RIGHT",
+          "value": 0,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[eE][nN][dD]"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "PATTERN",
+                        "value": "[fF][uU][nN][cC][tT][iI][oO][nN]"
+                      },
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_end_of_statement"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "function_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "procedure_qualifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_intrinsic_type"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "derived_type"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "PATTERN",
+          "value": "[fF][uU][nN][cC][tT][iI][oO][nN]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "()"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "parameters"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "function_result"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "function_result": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[rR][eE][sS][uU][lL][tT]"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
     "_name": {
       "type": "ALIAS",
       "content": {
@@ -298,7 +482,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "subroutine"
+            "name": "function"
           }
         }
       ]
