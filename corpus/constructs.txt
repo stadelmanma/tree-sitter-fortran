@@ -167,3 +167,38 @@ end function test
           (identifier)
           (math_expression (identifier) (number_literal)))))
     (identifier)))
+
+============================================
+Derived Type Variable Declarations
+============================================
+
+PROGRAM TEST
+  TYPE, PUBLIC :: CUSTOM_TYPE
+    SEQUENCE
+    REAL(8) :: X,Y,Z
+    INTEGER :: W,H,L
+    REAL(EB), ALLOCATABLE, DIMENSION(:, :, :) :: VALS
+  END TYPE CUSTOM_TYPE
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (derived_type_definition (derived_type_statement (type_qualifier) (type_name))
+      (sequence_statement)
+      (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
+        (identifier)
+        (identifier)
+        (identifier))
+      (variable_declaration (intrinsic_type)
+        (identifier)
+        (identifier)
+        (identifier))
+      (variable_declaration
+        (intrinsic_type) (size (argument_list (identifier)))
+        (type_qualifier)
+        (type_qualifier
+          (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
+        (identifier))
+      (identifier))))
