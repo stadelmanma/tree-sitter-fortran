@@ -172,14 +172,18 @@ end function test
 Derived Type Variable Declarations
 ============================================
 
-PROGRAM TEST
-  TYPE, PUBLIC :: CUSTOM_TYPE
-    SEQUENCE
-    REAL(8) :: X,Y,Z
-    INTEGER :: W,H,L
-    REAL(EB), ALLOCATABLE, DIMENSION(:, :, :) :: VALS
-  END TYPE CUSTOM_TYPE
-END PROGRAM
+program test
+  type, public :: custom_type
+    sequence
+    real(8) :: x,y,z
+    integer :: w,h,l
+    real(eb), allocatable, dimension(:, :, :) :: vals
+    contains
+       procedure, nopass, non_overridable :: static_method ! static method
+       procedure instance_method ! instance method
+       procedure, pass :: binding_name => method_name, method_name2
+  end type custom_type
+end program
 
 ----
 
@@ -201,4 +205,11 @@ END PROGRAM
         (type_qualifier
           (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
         (identifier))
+        (derived_type_procedures
+          (contains_statement)
+          (procedure_statement (binding_attribute) (binding_attribute) (method_name))
+          (comment)
+          (procedure_statement (method_name))
+          (comment)
+          (procedure_statement (binding_attribute) (binding_name) (method_name) (method_name)))
       (identifier))))
