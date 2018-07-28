@@ -234,12 +234,11 @@ module.exports = grammar({
         ',',
         commaSep1($.binding_attribute)
       )),
-      '::',
-      optional(seq(
-        $._binding_name,
-        '=>'
+      optional(choice(
+        seq('::', $._binding_name, '=>'),
+        '::'
       )),
-      $._method_name
+      commaSep1($._method_name)
     ),
 
     _binding_name: $ => alias($.identifier, $.binding_name),
