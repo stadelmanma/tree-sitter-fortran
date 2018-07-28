@@ -204,7 +204,9 @@ module.exports = grammar({
       ),
       repeat(seq(
         choice($.include_statement, $.variable_declaration),
-        $._end_of_statement)),
+        $._end_of_statement
+      )),
+      optional($.derived_type_procedures),
       blockStructureEnding($, 'type')
     ),
 
@@ -220,6 +222,37 @@ module.exports = grammar({
     ),
 
     _type_name: $ => alias($.identifier, $.type_name),
+
+    derived_type_procedures: $ => seq(
+      $.contains_statement,
+      repeat($.procedure_statement)
+    ),
+
+    procedure_statement: $ => seq(
+      caseInsensitive('procedure'),
+      optional(seq(
+        ',',
+        commaSep1($.binding_attribute)
+      )),
+      '::',
+      optional(seq(
+        $._binding_name,
+        '=>'
+      )),
+      $._method_name
+    ),
+
+    _binding_name: $ => alias($.identifier, $.binding_name),
+    _method_name: $ => alias($.identifier, $.method_name),
+
+    binding_attribute: $ => choice(
+      caseInsensitive('pass'),
+      caseInsensitive('nopass'),
+      caseInsensitive('non_overridable'),
+      caseInsensitive('public'),
+      caseInsensitive('private'),
+      caseInsensitive('family')
+    ),
 
     variable_declaration: $ => seq(
       choice($._intrinsic_type, $.derived_type),
