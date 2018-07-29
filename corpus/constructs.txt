@@ -181,7 +181,7 @@ program test
     contains
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
-       procedure, pass :: binding_name => method_name, method_name2
+       generic, pass :: binding_name => method_name, method_name2
   end type custom_type
 end program
 
@@ -207,9 +207,9 @@ end program
         (identifier))
         (derived_type_procedures
           (contains_statement)
-          (procedure_statement (binding_attribute) (binding_attribute) (method_name))
+          (procedure_statement (procedure_attribute) (procedure_attribute) (method_name))
           (comment)
           (procedure_statement (method_name))
           (comment)
-          (procedure_statement (binding_attribute) (binding_name) (method_name) (method_name)))
+          (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
       (identifier))))

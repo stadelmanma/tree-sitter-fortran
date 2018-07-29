@@ -1090,8 +1090,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "[pP][rR][oO][cC][eE][dD][uU][rR][eE]"
+          "type": "SYMBOL",
+          "name": "_procedure_kind"
         },
         {
           "type": "CHOICE",
@@ -1108,7 +1108,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "binding_attribute"
+                      "name": "procedure_attribute"
                     },
                     {
                       "type": "REPEAT",
@@ -1121,7 +1121,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "binding_attribute"
+                            "name": "procedure_attribute"
                           }
                         ]
                       }
@@ -1214,7 +1214,28 @@
       "named": true,
       "value": "method_name"
     },
-    "binding_attribute": {
+    "_procedure_kind": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[gG][eE][nN][eE][rR][iI][cC]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[iI][nN][iI][tT][iI][aA][lL]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[pP][rR][oO][cC][eE][dD][uU][rR][eE]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[pP][rR][oO][pP][eE][rR][tT][yY]"
+        }
+      ]
+    },
+    "procedure_attribute": {
       "type": "CHOICE",
       "members": [
         {
@@ -1240,6 +1261,10 @@
         {
           "type": "PATTERN",
           "value": "[fF][aA][mM][iI][lL][yY]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[pP][oO][iI][nN][tT][eE][rR]"
         }
       ]
     },

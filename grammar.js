@@ -229,10 +229,10 @@ module.exports = grammar({
     ),
 
     procedure_statement: $ => seq(
-      caseInsensitive('procedure'),
+      $._procedure_kind,
       optional(seq(
         ',',
-        commaSep1($.binding_attribute)
+        commaSep1($.procedure_attribute)
       )),
       optional(choice(
         seq('::', $._binding_name, '=>'),
@@ -244,13 +244,21 @@ module.exports = grammar({
     _binding_name: $ => alias($.identifier, $.binding_name),
     _method_name: $ => alias($.identifier, $.method_name),
 
-    binding_attribute: $ => choice(
+    _procedure_kind: $ => choice(
+      caseInsensitive('generic'),
+      caseInsensitive('initial'),
+      caseInsensitive('procedure'),
+      caseInsensitive('property')
+    ),
+
+    procedure_attribute: $ => choice(
       caseInsensitive('pass'),
       caseInsensitive('nopass'),
       caseInsensitive('non_overridable'),
       caseInsensitive('public'),
       caseInsensitive('private'),
-      caseInsensitive('family')
+      caseInsensitive('family'),
+      caseInsensitive('pointer')
     ),
 
     variable_declaration: $ => seq(
