@@ -68,7 +68,7 @@ module.exports = grammar({
     _top_level_item: $ => choice(
       $.program_block,
       // $.module,
-      // $.interface,
+      $.interface,
       $.subroutine,
       $.function,
     ),
@@ -86,6 +86,39 @@ module.exports = grammar({
       repeat($._statement),
       blockStructureEnding($, 'program')
     ),
+
+    interface: $ => seq(
+      $.interface_statement,
+      repeat(choice(
+        $.procedure_statement,
+        $.function,
+        $.subroutine
+      )),
+      $.end_interface_statement
+    ),
+
+    interface_statement: $ => seq(
+      caseInsensitive('interface'),
+      optional(choice(
+        $._name,
+        $.assignment,
+        $.operator,
+      ))
+    ),
+
+    end_interface_statement: $ => prec.right(seq(
+      caseInsensitive('end'),
+      caseInsensitive('interface'),
+      optional(choice(
+        $._name,
+        $.assignment,
+        $.operator,
+      )),
+      $._end_of_statement
+    )),
+
+    assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
+    operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
 
     subroutine: $ => seq(
       $.subroutine_statement,
@@ -248,6 +281,7 @@ module.exports = grammar({
       caseInsensitive('generic'),
       caseInsensitive('initial'),
       caseInsensitive('procedure'),
+      seq(caseInsensitive('module'), caseInsensitive('procedure')),
       caseInsensitive('property')
     ),
 
