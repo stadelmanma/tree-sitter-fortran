@@ -17,6 +17,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "module"
+        },
+        {
+          "type": "SYMBOL",
           "name": "interface"
         },
         {
@@ -124,6 +128,93 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "module": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "module_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_specification_part"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "internal_procedures"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "PREC_RIGHT",
+          "value": 0,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[eE][nN][dD]"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "PATTERN",
+                        "value": "[mM][oO][dD][uU][lL][eE]"
+                      },
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_end_of_statement"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "module_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[mM][oO][dD][uU][lL][eE]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_name"
         }
       ]
     },
@@ -704,6 +795,10 @@
               "name": "_end_of_statement"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "interface"
         },
         {
           "type": "SYMBOL",
