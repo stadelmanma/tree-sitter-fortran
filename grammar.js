@@ -649,6 +649,7 @@ module.exports = grammar({
       $.complex_literal,
       $.string_literal,
       $.boolean_literal,
+      $.array_literal,
       $.identifier,
       $.derived_type_member_expression,
       $.logical_expression,
@@ -769,6 +770,8 @@ module.exports = grammar({
       $._expression,
       optional(seq(',', $._expression))
     ),
+
+    array_literal: $ => seq('(/', commaSep1($._expression), '/)'),
 
     number_literal: $ => token(
       choice(
