@@ -103,6 +103,35 @@ END PROGRAM
     (assignment_statement (identifier) (boolean_literal))))
 
 ============================================
+Array Literals
+============================================
+
+program test
+  integer :: n(3) = (/ 1, 2, 3  /)
+  real(8) :: x(3) = (/2.0**3, REAL(n(1)), SIN(3.1)/)
+end program
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration
+      (intrinsic_type)
+      (assignment_statement
+        (call_expression (identifier)  (argument_list (number_literal)))
+        (array_literal (number_literal) (number_literal) (number_literal))))
+    (variable_declaration
+      (intrinsic_type)  (size (argument_list (number_literal)))
+      (assignment_statement
+        (call_expression (identifier)  (argument_list (number_literal)))
+        (array_literal
+          (math_expression (number_literal) (number_literal))
+          (call_expression (identifier)
+            (argument_list (call_expression (identifier) (argument_list (number_literal)))))
+          (call_expression (identifier) (argument_list (number_literal))))))))
+
+
+============================================
 Array Slicing
 ============================================
 
