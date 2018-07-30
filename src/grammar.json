@@ -797,6 +797,32 @@
           ]
         },
         {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "public_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_end_of_statement"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "private_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_end_of_statement"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "interface"
         },
@@ -1954,6 +1980,14 @@
           "value": "[rR][eE][cC][uU][rR][sS][iI][vV][eE]"
         }
       ]
+    },
+    "private_statement": {
+      "type": "PATTERN",
+      "value": "[pP][rR][iI][vV][aA][tT][eE]"
+    },
+    "public_statement": {
+      "type": "PATTERN",
+      "value": "[pP][uU][bB][lL][iI][cC]"
     },
     "parameter_statement": {
       "type": "PREC",
