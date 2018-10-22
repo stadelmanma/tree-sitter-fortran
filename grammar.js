@@ -430,6 +430,7 @@ module.exports = grammar({
         $.include_statement,
         // $.data_statement,
         $.if_statement,
+        $.where_statement,
         $.select_case_statement,
         $.do_loop_statement,
         $.format_statement,
@@ -522,6 +523,36 @@ module.exports = grammar({
 
     else_clause: $ => seq(
       caseInsensitive('else'),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
+
+    where_statement: $ => choice(
+      $._inline_where_statement,
+      $._block_where_statement
+    ),
+
+    _inline_where_statement: $ => prec.right(seq(
+      caseInsensitive('where'),
+      $.parenthesized_expression,
+      $._statement
+    )),
+
+    _block_where_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('where'),
+      $.parenthesized_expression,
+      $._end_of_statement,
+      repeat($._statement),
+      repeat($.elsewhere_clause),
+      caseInsensitive('end[ \t]*where'),
+      optional($._block_label)
+    ),
+
+    elsewhere_clause: $ => seq(
+      caseInsensitive('else[ \t]*where'),
+      optional($.parenthesized_expression),
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
