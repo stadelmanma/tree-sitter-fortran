@@ -312,6 +312,66 @@ END PROGRAM
       (block_label))))
 
 ============================================
+Where Statements
+============================================
+
+program test
+
+WHERE(A .NE. 0) C = B / A
+
+WHERE(PRESSURE .GE. 1.0)
+  PRESSURE = PRESSURE + 1.0
+  TEMP = TEMP - 10.0
+ELSEWHERE (PRESSURE .LE. 2.0)
+  PRESSURE = PRESSURE - 1.0
+ELSEWHERE
+  PRECIPITATION = .TRUE.
+ENDWHERE
+
+cond1: WHERE(PRESSURE .GE. 1.0)
+  PRESSURE = PRESSURE + 1.0
+ELSEWHERE (PRESSURE .LE. 2.0) cond1
+  PRESSURE = PRESSURE - 1.0
+ELSEWHERE cond1
+  PRECIPITATION = .TRUE.
+ENDWHERE cond1
+
+end program
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (where_statement
+      (parenthesized_expression (relational_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (math_expression (identifier) (identifier))))
+    (where_statement
+      (parenthesized_expression (relational_expression  (identifier) (number_literal)))
+      (assignment_statement (identifier) (math_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (math_expression (identifier) (number_literal)))
+      (elsewhere_clause
+        (parenthesized_expression (relational_expression (identifier) (number_literal)))
+        (assignment_statement
+          (identifier) (math_expression (identifier) (number_literal))))
+      (elsewhere_clause
+        (assignment_statement (identifier) (boolean_literal))))
+    (where_statement
+      (block_label_start_expression)
+      (parenthesized_expression (relational_expression (identifier) (number_literal)))
+      (assignment_statement
+        (identifier) (math_expression (identifier) (number_literal)))
+      (elsewhere_clause
+        (parenthesized_expression (relational_expression (identifier) (number_literal)))
+        (block_label)
+        (assignment_statement
+          (identifier)
+          (math_expression (identifier) (number_literal))))
+      (elsewhere_clause (block_label)
+        (assignment_statement (identifier) (boolean_literal)))
+      (block_label))))
+
+
+============================================
 Select Case Statements
 ============================================
 
