@@ -421,24 +421,27 @@ module.exports = grammar({
 
     _statement: $ => seq(
       optional($.statement_label),
-      choice(
-        $.assignment_statement,
-        $.pointer_association_statement,
-        $.call_expression,
-        $.subroutine_call,
-        $.keyword_statement,
-        $.include_statement,
-        // $.data_statement,
-        $.if_statement,
-        $.where_statement,
-        $.select_case_statement,
-        $.do_loop_statement,
-        $.format_statement,
-        $.print_statement,
-        $.write_statement,
-        $.read_statement
-      ),
+      $._statements,
       $._end_of_statement
+    ),
+
+    _statements: $ => choice(
+      $.assignment_statement,
+      $.pointer_association_statement,
+      $.call_expression,
+      $.subroutine_call,
+      $.keyword_statement,
+      $.include_statement,
+      // $.data_statement,
+      $.if_statement,
+      $.where_statement,
+      $.forall_statement,
+      $.select_case_statement,
+      $.do_loop_statement,
+      $.format_statement,
+      $.print_statement,
+      $.write_statement,
+      $.read_statement
     ),
 
     statement_label: $ => /\d+/,
@@ -495,7 +498,7 @@ module.exports = grammar({
     _inline_if_statement: $ => prec.right(seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
-      $._statement
+      $._statements
     )),
 
     _block_if_statement: $ => seq(
@@ -536,7 +539,7 @@ module.exports = grammar({
     _inline_where_statement: $ => prec.right(seq(
       caseInsensitive('where'),
       $.parenthesized_expression,
-      $._statement
+      $._statements
     )),
 
     _block_where_statement: $ => seq(
@@ -556,6 +559,45 @@ module.exports = grammar({
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
+    ),
+
+    forall_statement: $ => choice(
+      $._inline_forall_statement,
+      $._block_forall_statement
+    ),
+
+    triplet_spec: $ => seq(
+      $.identifier,
+      '=',
+      $._expression,
+      ':',
+      $._expression,
+      optional(seq(
+        ':',
+        $._expression
+      ))
+    ),
+
+    _forall_control_expression: $ => seq(
+      caseInsensitive('forall'),
+      '(',
+      commaSep1($.triplet_spec),
+      optional(seq(',', choice($.logical_expression, $.relational_expression))),
+      ')',
+    ),
+
+    _inline_forall_statement: $ => seq(
+      $._forall_control_expression,
+      $._statements
+    ),
+
+    _block_forall_statement: $ => seq(
+      optional($.block_label_start_expression),
+      $._forall_control_expression,
+      $._end_of_statement,
+      repeat($._statement),
+      caseInsensitive('end[ \t]*forall'),
+      optional($._block_label)
     ),
 
     select_case_statement: $ => seq(
