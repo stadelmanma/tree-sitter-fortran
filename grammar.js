@@ -431,6 +431,7 @@ module.exports = grammar({
         // $.data_statement,
         $.if_statement,
         $.where_statement,
+        $.forall_statement,
         $.select_case_statement,
         $.do_loop_statement,
         $.format_statement,
@@ -556,6 +557,36 @@ module.exports = grammar({
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
+    ),
+
+    forall_statement: $ => choice(
+      $._inline_forall_statement,
+      //$._block_forall_statement
+    ),
+
+    triplet_spec: $ => seq(
+      $.identifier,
+      '=',
+      $._expression,
+      ':',
+      $._expression,
+      optional(seq(
+        ':',
+        $._expression
+      ))
+    ),
+
+    _forall_control_expression: $ => seq(
+      caseInsensitive('forall'),
+      '(',
+      commaSep1($.triplet_spec),
+      optional(seq(',', choice($.logical_expression, $.relational_expression))),
+      ')',
+    ),
+
+    _inline_forall_statement: $ => seq(
+      $._forall_control_expression,
+      $._statement
     ),
 
     select_case_statement: $ => seq(
