@@ -563,7 +563,7 @@ module.exports = grammar({
 
     forall_statement: $ => choice(
       $._inline_forall_statement,
-      //$._block_forall_statement
+      $._block_forall_statement
     ),
 
     triplet_spec: $ => seq(
@@ -588,7 +588,16 @@ module.exports = grammar({
 
     _inline_forall_statement: $ => seq(
       $._forall_control_expression,
-      $._statement
+      $._statements
+    ),
+
+    _block_forall_statement: $ => seq(
+      optional($.block_label_start_expression),
+      $._forall_control_expression,
+      $._end_of_statement,
+      repeat($._statement),
+      caseInsensitive('end[ \t]*forall'),
+      optional($._block_label)
     ),
 
     select_case_statement: $ => seq(
