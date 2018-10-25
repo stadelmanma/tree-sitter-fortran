@@ -421,25 +421,27 @@ module.exports = grammar({
 
     _statement: $ => seq(
       optional($.statement_label),
-      choice(
-        $.assignment_statement,
-        $.pointer_association_statement,
-        $.call_expression,
-        $.subroutine_call,
-        $.keyword_statement,
-        $.include_statement,
-        // $.data_statement,
-        $.if_statement,
-        $.where_statement,
-        $.forall_statement,
-        $.select_case_statement,
-        $.do_loop_statement,
-        $.format_statement,
-        $.print_statement,
-        $.write_statement,
-        $.read_statement
-      ),
+      $._statements,
       $._end_of_statement
+    ),
+
+    _statements: $ => choice(
+      $.assignment_statement,
+      $.pointer_association_statement,
+      $.call_expression,
+      $.subroutine_call,
+      $.keyword_statement,
+      $.include_statement,
+      // $.data_statement,
+      $.if_statement,
+      $.where_statement,
+      $.forall_statement,
+      $.select_case_statement,
+      $.do_loop_statement,
+      $.format_statement,
+      $.print_statement,
+      $.write_statement,
+      $.read_statement
     ),
 
     statement_label: $ => /\d+/,
@@ -496,7 +498,7 @@ module.exports = grammar({
     _inline_if_statement: $ => prec.right(seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
-      $._statement
+      $._statements
     )),
 
     _block_if_statement: $ => seq(
@@ -537,7 +539,7 @@ module.exports = grammar({
     _inline_where_statement: $ => prec.right(seq(
       caseInsensitive('where'),
       $.parenthesized_expression,
-      $._statement
+      $._statements
     )),
 
     _block_where_statement: $ => seq(
