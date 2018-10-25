@@ -370,6 +370,185 @@ end program
         (assignment_statement (identifier) (boolean_literal)))
       (block_label))))
 
+============================================
+Forall Statements
+============================================
+
+PROGRAM TEST
+
+FORALL(I = 1:N, J = 1:N, A(I, J) .NE. 0.0) B(I, J) = 1.0 / A(I, J)
+
+FORALL(J=1:8)  PATTERN(J)%P => OBJECT(1+IEOR(J-1,2))
+
+
+FORALL (I = 1:N, J = 1:N)
+  WHERE(A(I, J) .NE. 0.0) B(I, J) = 1.0/A(I, J)
+END FORALL
+
+FORALL(I = 3:N + 1, J = 3:N + 1, A(I, J) > 0.0)
+  C(I, J) = C(I, J + 2) + C(I, J - 2) + C(I + 2, J) + C(I - 2, J)
+  D(I, J) = C(I, J)
+END FORALL
+
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block
+    (identifier)
+    (forall_statement
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (identifier))
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (identifier))
+      (relational_expression
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))
+        (number_literal))
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))
+        (math_expression
+          (number_literal)
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)
+              (identifier))))))
+    (forall_statement
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (number_literal))
+      (pointer_association_statement
+        (derived_type_member_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
+          (identifier))
+        (call_expression
+          (identifier)
+          (argument_list
+            (math_expression
+              (number_literal)
+              (call_expression
+                (identifier)
+                (argument_list
+                  (math_expression
+                    (identifier)
+                    (number_literal))
+                  (number_literal))))))))
+    (forall_statement
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (identifier))
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (identifier))
+      (where_statement
+        (parenthesized_expression
+          (relational_expression
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)
+                (identifier)))
+            (number_literal)))
+        (assignment_statement
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)
+              (identifier)))
+          (math_expression
+            (number_literal)
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)
+                (identifier)))))))
+    (forall_statement
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (math_expression
+          (identifier)
+          (number_literal)))
+      (triplet_spec
+        (identifier)
+        (number_literal)
+        (math_expression
+          (identifier)
+          (number_literal)))
+      (relational_expression
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))
+        (number_literal))
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))
+        (math_expression
+          (math_expression
+            (math_expression
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (math_expression
+                    (identifier)
+                    (number_literal))))
+              (call_expression
+                (identifier)
+                (argument_list
+                  (identifier)
+                  (math_expression
+                    (identifier)
+                    (number_literal)))))
+            (call_expression
+              (identifier)
+              (argument_list
+                (math_expression
+                  (identifier)
+                  (number_literal))
+                (identifier))))
+          (call_expression
+            (identifier)
+            (argument_list
+              (math_expression
+                (identifier)
+                (number_literal))
+              (identifier)))))
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)
+            (identifier)))))))
 
 ============================================
 Select Case Statements
