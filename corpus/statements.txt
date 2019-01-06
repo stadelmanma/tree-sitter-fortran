@@ -725,6 +725,7 @@ PROGRAM TEST
   WRITE(*)
   WRITE(*, *) ''
   WRITE(10, 100) x, y, z
+  WRITE(IOUNIT, "(FORMAT STRING)", IOSTAT=IOS)
   WRITE(IOUNIT, FMT="(FORMAT STRING)") flags(:)
   WRITE(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
 END PROGRAM
@@ -742,6 +743,10 @@ END PROGRAM
       (unit_identifier (number_literal))
       (format_identifier (statement_label_reference))
       (output_item_list (identifier) (identifier) (identifier)))
+    (write_statement
+      (unit_identifier (identifier))
+      (format_identifier (string_literal))
+      (keyword_argument (identifier) (identifier)))
     (write_statement
       (unit_identifier (identifier))
       (keyword_argument (identifier) (string_literal))
