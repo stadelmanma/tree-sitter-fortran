@@ -416,3 +416,24 @@ END PROGRAM
           (call_expression (identifier)
             (argument_list
               (extent_specifier (number_literal) (identifier)))))))))
+
+=================
+Line Continuation
+=================
+
+program test
+    write(*, "('Testing line continuation')", &
+       &  advance='no', &
+          iostat=istat)
+end program
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (write_statement
+      (unit_identifier)
+      (format_identifier (string_literal))
+      (keyword_argument (identifier) (string_literal))
+      (keyword_argument (identifier) (identifier)))))
+
