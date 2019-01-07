@@ -4810,10 +4810,19 @@
     {
       "type": "SYMBOL",
       "name": "comment"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_line_continuation"
     }
   ],
   "conflicts": [],
-  "externals": [],
+  "externals": [
+    {
+      "type": "SYMBOL",
+      "name": "_line_continuation"
+    }
+  ],
   "inline": [
     "_top_level_item",
     "_statement"

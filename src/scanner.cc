@@ -8,7 +8,7 @@ using std::wstring;
 using std::iswspace;
 
 enum TokenType {
-  LINE_CONTINUATION,
+  _LINE_CONTINUATION,
 };
 
 struct Scanner {
@@ -17,7 +17,7 @@ struct Scanner {
       lexer->advance(lexer, true);
     }
 
-    lexer->result_symbol = LINE_CONTINUATION;
+    lexer->result_symbol = _LINE_CONTINUATION;
 
     // Consume '&' at the end of the line
     if (lexer->lookahead != '&') return false;
