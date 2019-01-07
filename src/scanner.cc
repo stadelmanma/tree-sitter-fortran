@@ -30,10 +30,21 @@ struct Scanner {
       if (lexer->lookahead == '\n') {
           lexer->advance(lexer, false);
       }
-      return true;
     }
-    if (lexer->lookahead != '\n') return false;
-    lexer->advance(lexer, false);
+    else {
+      if (lexer->lookahead != '\n') return false;
+      lexer->advance(lexer, false);
+    }
+
+    // in some instances a second ampersand exists, on the following line
+    // I assume this is to allow the code to compile properly as free form
+    // or fixed form (i.e. put the first ampersand past column 72 and the
+    // second in column 6)
+    while (iswspace(lexer->lookahead)) {
+      lexer->advance(lexer, false);
+    }
+    if (lexer->lookahead == '&') lexer->advance(lexer, false);
+
     return true;
   }
 };
