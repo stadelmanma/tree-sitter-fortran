@@ -7,6 +7,7 @@
         "src"
       ],
       "sources": [
+        "src/scanner.cc",
         "src/parser.c",
         "src/binding.cc"
       ],

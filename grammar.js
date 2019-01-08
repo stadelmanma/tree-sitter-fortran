@@ -50,9 +50,14 @@ const PREC = {
 module.exports = grammar({
   name: 'fortran',
 
+  externals: $ => [
+    $._line_continuation
+  ],
+
   extras: $ => [
     /[ \t\r\n]/,
-    $.comment
+    $.comment,
+    $._line_continuation
   ],
 
   inline: $ => [
