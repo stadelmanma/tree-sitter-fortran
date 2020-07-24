@@ -10,3 +10,4 @@ globals:
   repeat1: false
   seq: false
   token: false
+  word: false
