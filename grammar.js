@@ -75,7 +75,7 @@ module.exports = grammar({
       $.module,
       $.interface,
       $.subroutine,
-      $.function,
+      $.function
     ),
 
     // Block level structures
@@ -89,17 +89,20 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._specification_part),
       repeat($._statement),
-      blockStructureEnding($, 'program')
+      $.end_program_statement
     ),
+
+    end_program_statement: $ => blockStructureEnding($, 'program'),
 
     module: $ => seq(
       $.module_statement,
       repeat($._specification_part),
       optional($.internal_procedures),
-      blockStructureEnding($, 'module')
+      $.end_module_statement
     ),
 
     module_statement: $ => seq(caseInsensitive('module'), $._name),
+    end_module_statement: $ => blockStructureEnding($, 'module'),
 
     interface: $ => seq(
       $.interface_statement,
@@ -116,7 +119,7 @@ module.exports = grammar({
       optional(choice(
         $._name,
         $.assignment,
-        $.operator,
+        $.operator
       ))
     ),
 
@@ -126,7 +129,7 @@ module.exports = grammar({
       optional(choice(
         $._name,
         $.assignment,
-        $.operator,
+        $.operator
       )),
       $._end_of_statement
     )),
@@ -140,7 +143,7 @@ module.exports = grammar({
       repeat($._specification_part),
       repeat($._statement),
       optional($.internal_procedures),
-      blockStructureEnding($, 'subroutine')
+      $.end_subroutine_statement
     ),
 
     subroutine_statement: $ => seq(
@@ -150,13 +153,15 @@ module.exports = grammar({
       optional($.parameters)
     ),
 
+    end_subroutine_statement: $ => blockStructureEnding($, 'subroutine'),
+
     function: $ => seq(
       $.function_statement,
       $._end_of_statement,
       repeat($._specification_part),
       repeat($._statement),
       optional($.internal_procedures),
-      blockStructureEnding($, 'function')
+      $.end_function_statement
     ),
 
     function_statement: $ => seq(
@@ -167,6 +172,8 @@ module.exports = grammar({
       optional(choice('()', $.parameters)),
       optional($.function_result)
     ),
+
+    end_function_statement: $ => blockStructureEnding($, 'function'),
 
     function_result: $ => seq(
       caseInsensitive('result'),
@@ -188,7 +195,7 @@ module.exports = grammar({
       $._end_of_statement,
       repeat(choice(
         $.function,
-        $.subroutine,
+        $.subroutine
       ))
     ),
 
@@ -256,7 +263,7 @@ module.exports = grammar({
         $._end_of_statement
       )),
       optional($.derived_type_procedures),
-      blockStructureEnding($, 'type')
+      $.end_type_statement
     ),
 
     derived_type_statement: $ => seq(
@@ -269,6 +276,8 @@ module.exports = grammar({
       ),
       $._end_of_statement
     ),
+
+    end_type_statement: $ => blockStructureEnding($, 'type'),
 
     _type_name: $ => alias($.identifier, $.type_name),
 
@@ -491,6 +500,10 @@ module.exports = grammar({
       optional($.loop_control_expression),
       $._end_of_statement,
       repeat($._statement),
+      $.end_do_loop_statement
+    ),
+
+    end_do_loop_statement: $ => seq(
       caseInsensitive('end[ \t]*do'),
       optional($._block_label)
     ),
@@ -516,6 +529,10 @@ module.exports = grammar({
       repeat($._statement),
       repeat($.elseif_clause),
       optional($.else_clause),
+      $.end_if_statement
+    ),
+
+    end_if_statement: $ => seq(
       caseInsensitive('end[ \t]*if'),
       optional($._block_label)
     ),
@@ -554,6 +571,10 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement),
       repeat($.elsewhere_clause),
+      $.end_where_statement
+    ),
+
+    end_where_statement: $ => seq(
       caseInsensitive('end[ \t]*where'),
       optional($._block_label)
     ),
@@ -588,7 +609,7 @@ module.exports = grammar({
       '(',
       commaSep1($.triplet_spec),
       optional(seq(',', choice($.logical_expression, $.relational_expression))),
-      ')',
+      ')'
     ),
 
     _inline_forall_statement: $ => seq(
@@ -601,6 +622,10 @@ module.exports = grammar({
       $._forall_control_expression,
       $._end_of_statement,
       repeat($._statement),
+      $.end_forall_statement
+    ),
+
+    end_forall_statement: $ => seq(
       caseInsensitive('end[ \t]*forall'),
       optional($._block_label)
     ),
@@ -611,6 +636,10 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
+      $.end_select_case_statement
+    ),
+
+    end_select_case_statement: $ => seq(
       caseInsensitive('end[ \t]*select'),
       optional($._block_label)
     ),
@@ -927,9 +956,11 @@ function caseInsensitive (keyword) {
   )
 }
 
+/* TODO
 function preprocessor (command) {
   return alias(new RegExp('#[ \t]*' + command), '#' + command)
 }
+*/
 
 function commaSep (rule) {
   return optional(commaSep1(rule))
