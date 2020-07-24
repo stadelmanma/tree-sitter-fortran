@@ -884,7 +884,7 @@ module.exports = grammar({
     number_literal: $ => token(
       choice(
         // integer, real with and without exponential notation
-        /[-+]?\d*(\.\d*)?([eEdD][-+]?\d+)?(_\w+)?/,
+        /[-+]?(((\d*\.)?\d+)|(\d+(\.\d*)?))([eEdD][-+]?\d+)?(_[a-zA-Z_]+)?/,
         // binary literal
         /[-+]?[bB]'[01]+'/,
         /[-+]?'[01]+'[bB]/,
