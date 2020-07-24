@@ -1,7 +1,7 @@
 {
   "name": "tree-sitter-fortran",
   "version": "0.0.1",
-  "description": "Fortran grammar for node-tree-sitter",
+  "description": "Fortran grammar for tree-sitter",
   "repository": {
     "type": "git",
     "url": "https://github.com/stadelmanma/tree-sitter-fortran"
@@ -9,13 +9,17 @@
   "main": "index.js",
   "keywords": [
     "parser",
-    "lexer"
+    "fortran",
+    "tree-sitter"
   ],
-  "author": "Matt Stadelman",
+  "author": "Matt Stadelman <stadelmanma@gmail.com> (https://github.com/stadelmanma)",
+  "bugs": {
+    "url": "https://github.com/stadelmanma/tree-sitter-fortran/issues"
+  },
+  "homepage": "https://github.com/stadelmanma/tree-sitter-fortran#readme",
   "license": "MIT",
   "dependencies": {
-    "bindings": "1.2.x",
-    "nan": "^2.14.0"
+    "nan": "^2.14.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -24,11 +28,9 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "tree-sitter-cli": "^0.16.5"
+    "tree-sitter-cli": "^0.16.9"
   },
   "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
-    "test": "tree-sitter test && tree-sitter parse examples/* --quiet --time",
-    "parse": "tree-sitter parse"
+    "test": "tree-sitter test && tree-sitter parse examples/* --quiet --time"
   }
 }

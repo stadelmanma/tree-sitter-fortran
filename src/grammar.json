@@ -3340,7 +3340,7 @@
     },
     "edit_descriptor": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9\\/:.*]+"
+      "value": "[a-zA-Z0-9/:.*]+"
     },
     "read_statement": {
       "type": "CHOICE",
@@ -4827,6 +4827,7 @@
     "_top_level_item",
     "_statement"
   ],
+  "supertypes": [],
   "PREC": {
     "ASSIGNMENT": -10,
     "DEFAULT": 0,
@@ -4843,3 +4844,4 @@
     "TYPE_MEMBER": 100
   }
 }
+
