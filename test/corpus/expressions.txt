@@ -58,7 +58,8 @@ END PROGRAM
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (complex_literal (number_literal) (number_literal)))
-    (assignment_statement (identifier) (complex_literal (identifier) (identifier)))))
+    (assignment_statement (identifier) (complex_literal (identifier) (identifier)))
+  (end_program_statement)))
 
 ============================================
 String Literals
@@ -84,7 +85,8 @@ END PROGRAM
     (assignment_statement (identifier)
       (concatenation_expression (string_literal)
         (concatenation_expression (string_literal)
-          (concatenation_expression (identifier) (identifier)))))))
+          (concatenation_expression (identifier) (identifier)))))
+  (end_program_statement)))
 
 ============================================
 Boolean Literals
@@ -100,7 +102,8 @@ END PROGRAM
 (translation_unit
   (program_block (identifier)
     (assignment_statement (identifier) (boolean_literal))
-    (assignment_statement (identifier) (boolean_literal))))
+    (assignment_statement (identifier) (boolean_literal))
+  (end_program_statement)))
 
 ============================================
 Array Literals
@@ -128,7 +131,8 @@ end program
           (math_expression (number_literal) (number_literal))
           (call_expression (identifier)
             (argument_list (call_expression (identifier) (argument_list (number_literal)))))
-          (call_expression (identifier) (argument_list (number_literal))))))))
+          (call_expression (identifier) (argument_list (number_literal))))))
+  (end_program_statement)))
 
 
 ============================================
@@ -193,7 +197,8 @@ END PROGRAM
             (call_expression (identifier)
               (argument_list (math_expression (identifier) (number_literal))))
             (identifier))))
-      (number_literal))))
+      (number_literal))
+  (end_program_statement)))
 
 ============================================
 Pointer Assignment
@@ -215,7 +220,8 @@ END PROGRAM
       (identifier))
     (pointer_association_statement
       (derived_type_member_expression (identifier) (identifier))
-      (identifier))))
+      (identifier))
+  (end_program_statement)))
 
 ============================================
 Derived Type Member Access
@@ -240,7 +246,8 @@ END PROGRAM
       (derived_type_member_expression (identifier)
         (call_expression (identifier)
           (argument_list (extent_specifier  (number_literal) (number_literal)))))
-      (identifier))))
+      (identifier))
+  (end_program_statement)))
 
 ============================================
 Mathematical Expressions
@@ -286,7 +293,8 @@ END PROGRAM
       (math_expression (number_literal)
         (math_expression
           (parenthesized_expression
-            (math_expression (identifier) (identifier))) (number_literal))))))
+            (math_expression (identifier) (identifier))) (number_literal))))
+  (end_program_statement)))
 
 ============================================
 Logical Expressions
@@ -364,7 +372,8 @@ END PROGRAM
               (relational_expression (identifier) (identifier)))
             (parenthesized_expression
               (relational_expression (identifier) (identifier)))))
-        (boolean_literal)))))
+        (boolean_literal)))
+  (end_program_statement)))
 
 ============================================
 Function and Subroutine Call Expressions
@@ -415,7 +424,8 @@ END PROGRAM
         (argument_list
           (call_expression (identifier)
             (argument_list
-              (extent_specifier (number_literal) (identifier)))))))))
+              (extent_specifier (number_literal) (identifier)))))))
+    (end_program_statement)))
 
 =================
 Line Continuation
@@ -435,5 +445,5 @@ end program
       (unit_identifier)
       (format_identifier (string_literal))
       (keyword_argument (identifier) (string_literal))
-      (keyword_argument (identifier) (identifier)))))
-
+      (keyword_argument (identifier) (identifier)))
+  (end_program_statement)))
