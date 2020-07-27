@@ -11,8 +11,8 @@ END PROGRAM TEST
 ----
 
 (translation_unit
-  (program_block (identifier))
-  (program_block (identifier) (identifier)))
+  (program_block (identifier) (end_program_statement))
+  (program_block (identifier) (end_program_statement (identifier))))
 
 ============================================
 Interface (explicit)
@@ -52,8 +52,8 @@ end module
 
 (translation_unit
   (module (module_statement (name))
-    (use_statement (module_name))
     (private_statement)
+    (use_statement (module_name))
     (interface
       (interface_statement (name))
       (procedure_statement (method_name))
@@ -104,10 +104,13 @@ end module
           (intrinsic_type)
           (size (argument_list  (number_literal)))
           (identifier)
-          (identifier)))
+          (identifier))
+      (end_function_statement))
       (function
         (function_statement (name) (parameters (identifier) (identifier)) (function_result (identifier)))
-        (variable_declaration (intrinsic_type) (identifier) (identifier))))))
+        (variable_declaration (intrinsic_type) (identifier) (identifier))
+      (end_function_statement)))
+  (end_module_statement)))
 
 
 ============================================
@@ -141,13 +144,15 @@ end interface
           (call_expression
             (identifier)
             (argument_list (number_literal) (number_literal))))
-        (variable_declaration (intrinsic_type) (identifier)) (identifier))
+        (variable_declaration (intrinsic_type) (identifier))
+      (end_subroutine_statement (identifier)))
       (function
         (function_statement (name) (parameters (identifier) (identifier)))
         (implicit_statement (none))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
-        (variable_declaration (intrinsic_type) (identifier)) (identifier))
-      (end_interface_statement)))
+        (variable_declaration (intrinsic_type) (identifier))
+      (end_function_statement (identifier)))
+    (end_interface_statement)))
 
 ============================================
 Interface (generic)
@@ -190,15 +195,16 @@ end interface operator (.not.)
     (interface_statement (operator))
     (procedure_statement (method_name))
     (procedure_statement (method_name))
-    (end_interface_statement (operator)))
+  (end_interface_statement (operator)))
   (interface
     (interface_statement (operator))
     (procedure_statement (method_name))
     (function
       (function_statement (name) (parameters (identifier)))
       (variable_declaration (intrinsic_type) (identifier))
-      (variable_declaration (intrinsic_type) (type_qualifier) (identifier)))
-    (end_interface_statement (operator))))
+      (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (end_function_statement))
+  (end_interface_statement (operator))))
 
 ============================================
 Interface (assignment)
@@ -214,7 +220,7 @@ end interface assignment (=)
   (interface
     (interface_statement (assignment))
     (procedure_statement (method_name))
-    (end_interface_statement (assignment))))
+  (end_interface_statement (assignment))))
 
 ============================================
 Subroutine
@@ -255,7 +261,7 @@ END SUBROUTINE
       (intrinsic_type) (size (argument_list (number_literal))) (type_qualifier) (identifier))
     (assignment_statement
       (identifier) (math_expression (identifier) (identifier)))
-    (identifier))
+  (end_subroutine_statement (identifier)))
   (subroutine (subroutine_statement (name))
     (variable_declaration (intrinsic_type) (identifier))
     (subroutine_call (name) (argument_list (string_literal) (identifier)))
@@ -270,7 +276,9 @@ END SUBROUTINE
           (identifier))
         (assignment_statement (identifier)
           (call_expression (identifier) (argument_list (identifier))))
-        (keyword_statement)))))
+        (keyword_statement)
+    (end_subroutine_statement)))
+  (end_subroutine_statement)))
 
 
 ============================================
@@ -299,7 +307,8 @@ end function
       (name))
     (comment)
     (use_statement (module_name))
-    (assignment_statement (identifier) (call_expression (identifier) (argument_list))))
+    (assignment_statement (identifier) (call_expression (identifier) (argument_list)))
+  (end_function_statement))
   (function
     (function_statement (derived_type (type_name))
       (name))
@@ -308,7 +317,8 @@ end function
     (assignment_statement
       (derived_type_member_expression (identifier) (identifier))
       (number_literal))
-    (assignment_statement (identifier) (identifier))))
+    (assignment_statement (identifier) (identifier))
+  (end_function_statement)))
 
 
 ============================================
@@ -361,14 +371,16 @@ end function test
           (function_result (identifier)))
         (variable_declaration
           (intrinsic_type) (size (argument_list (number_literal)))
-          (assignment_statement (identifier) (number_literal))))
-      (subroutine
-        (subroutine_statement (name) (parameters (identifier)))
-        (variable_declaration (intrinsic_type) (identifier))
-        (assignment_statement
-          (identifier)
-          (math_expression (identifier) (number_literal)))))
-    (identifier)))
+          (assignment_statement (identifier) (number_literal)))
+        (end_function_statement))
+        (subroutine
+          (subroutine_statement (name) (parameters (identifier)))
+          (variable_declaration (intrinsic_type) (identifier))
+          (assignment_statement
+            (identifier)
+            (math_expression (identifier) (number_literal)))
+        (end_subroutine_statement)))
+      (end_function_statement (identifier))))
 
 ============================================
 Derived Type Variable Declarations
@@ -414,4 +426,5 @@ end program
           (procedure_statement (method_name))
           (comment)
           (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
-      (identifier))))
+      (end_type_statement (identifier)))
+  (end_program_statement)))
