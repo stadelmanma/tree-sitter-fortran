@@ -3,6 +3,7 @@ extends: standard
 globals:
   alias: false
   choice: false
+  field: false
   grammar: false
   optional: false
   prec: false

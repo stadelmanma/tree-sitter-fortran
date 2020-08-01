@@ -280,9 +280,9 @@ END PROGRAM
     (assignment_statement (identifier)
       (math_expression (identifier) (identifier)))
     (assignment_statement (identifier)
-      (math_expression (identifier)))
+      (unary_expression (identifier)))
     (assignment_statement (identifier)
-      (math_expression (identifier)))
+      (unary_expression (identifier)))
     (assignment_statement (identifier)
       (math_expression
         (math_expression

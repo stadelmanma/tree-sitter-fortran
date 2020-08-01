@@ -764,6 +764,7 @@ module.exports = grammar({
       $.relational_expression,
       $.concatenation_expression,
       $.math_expression,
+      $.unary_expression,
       $.parenthesized_expression,
       $.call_expression
       // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
@@ -781,17 +782,27 @@ module.exports = grammar({
       $._expression
     )),
 
-    logical_expression: $ => choice(
-      prec.left(PREC.LOGICAL_OR, seq($._expression, caseInsensitive('\\.or\\.'), $._expression)),
-      prec.left(PREC.LOGICAL_AND, seq($._expression, caseInsensitive('\\.and\\.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.eqv\\.'), $._expression)),
-      prec.left(PREC.LOGICAL_EQUIV, seq($._expression, caseInsensitive('\\.neqv\\.'), $._expression)),
-      prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('\\.not\\.'), $._expression))
-    ),
+    logical_expression: $ => {
+      const table = [
+        [caseInsensitive('\\.or\\.'), PREC.LOGICAL_OR],
+        [caseInsensitive('\\.and\\.'), PREC.LOGICAL_AND],
+        [caseInsensitive('\\.eqv\\.'), PREC.LOGICAL_EQUIV],
+        [caseInsensitive('\\.neqv\\.'), PREC.LOGICAL_EQUIV]
+      ]
 
-    relational_expression: $ => prec.left(PREC.RELATIONAL, seq(
-      $._expression,
-      choice(
+      return choice(...table.map(([operator, precedence]) => {
+        return prec.left(precedence, seq(
+          field('left', $._expression),
+          field('operator', operator),
+          field('right', $._expression)
+        ))
+      }).concat(
+        [prec.left(PREC.LOGICAL_NOT, seq(caseInsensitive('\\.not\\.'), $._expression))])
+      )
+    },
+
+    relational_expression: $ => {
+      const operators = [
         '<',
         caseInsensitive('\\.lt\\.'),
         '>',
@@ -804,25 +815,45 @@ module.exports = grammar({
         caseInsensitive('\\.eq\\.'),
         '/=',
         caseInsensitive('\\.ne\\.')
-      ),
-      $._expression
-    )),
+      ]
+
+      return choice(...operators.map((operator) => {
+        return prec.left(PREC.RELATIONAL, seq(
+          field('left', $._expression),
+          field('operator', operator),
+          field('right', $._expression)
+        ))
+      }))
+    },
 
     concatenation_expression: $ => prec.right(PREC.ADDITIVE, seq(
-      $._expression,
-      '//',
-      $._expression
+      field('left', $._expression),
+      field('operator', '//'),
+      field('right', $._expression)
     )),
 
-    math_expression: $ => choice(
-      prec.left(PREC.ADDITIVE, seq($._expression, '+', $._expression)),
-      prec.left(PREC.ADDITIVE, seq($._expression, '-', $._expression)),
-      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '*', $._expression)),
-      prec.left(PREC.MULTIPLICATIVE, seq($._expression, '/', $._expression)),
-      prec.left(PREC.EXPONENT, seq($._expression, '**', $._expression)),
-      prec.right(PREC.UNARY, seq('-', $._expression)),
-      prec.right(PREC.UNARY, seq('+', $._expression))
-    ),
+    math_expression: $ => {
+      const table = [
+        ['+', PREC.ADDITIVE],
+        ['-', PREC.ADDITIVE],
+        ['*', PREC.MULTIPLICATIVE],
+        ['/', PREC.MULTIPLICATIVE],
+        ['**', PREC.EXPONENT]
+      ]
+
+      return choice(...table.map(([operator, precedence]) => {
+        return prec.left(precedence, seq(
+          field('left', $._expression),
+          field('operator', operator),
+          field('right', $._expression)
+        ))
+      }))
+    },
+
+    unary_expression: $ => prec.left(PREC.UNARY, seq(
+      field('operator', choice('-', '+')),
+      field('argument', $._expression)
+    )),
 
     // Due to the fact Fortran uses parentheses for both function calls and
     // array access there is no way to differentiate the two except for the
