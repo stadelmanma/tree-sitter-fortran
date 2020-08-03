@@ -232,6 +232,8 @@ pure recursive subroutine static_method(arg)
    counter = counter + arg
 end subroutine static_method
 
+subroutine parens_but_no_args()
+end subroutine
 
 SUBROUTINE WITH_INTERNAL_PROC
   integer :: cmd_stat
@@ -262,6 +264,9 @@ END SUBROUTINE
     (assignment_statement
       (identifier) (math_expression (identifier) (identifier)))
   (end_subroutine_statement (identifier)))
+  (subroutine
+    (subroutine_statement (name))
+    (end_subroutine_statement))
   (subroutine (subroutine_statement (name))
     (variable_declaration (intrinsic_type) (identifier))
     (subroutine_call (name) (argument_list (string_literal) (identifier)))

@@ -151,7 +151,7 @@ module.exports = grammar({
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
-      optional($.parameters)
+      optional($._parameters)
     ),
 
     end_subroutine_statement: $ => blockStructureEnding($, 'subroutine'),
@@ -169,7 +169,7 @@ module.exports = grammar({
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       $._name,
-      optional(choice('()', $.parameters)),
+      optional($._parameters),
       optional($.function_result)
     ),
 
@@ -185,6 +185,11 @@ module.exports = grammar({
     ),
 
     _name: $ => alias($.identifier, $.name),
+
+    _parameters: $ => choice(
+      seq('(', ')'),
+      $.parameters
+    ),
 
     parameters: $ => seq(
       '(',
