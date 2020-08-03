@@ -3,29 +3,19 @@ Number Literals
 ============================================
 
 PROGRAM TEST
-    int_val = +1
-    int_val = -1
-    int_val =  1
-    int_val =  1_SZ
-    flt_val = +1.0
-    flt_val = -1.0
-    flt_val =  1.0
-    flt_val =  1.0_SZ
-    flt_val = -1.23E+4
-    flt_val = -1.23E-4
-    flt_val = -1.23E4
-    dbl_val = -1.23D+4
-    dbl_val = -1.23D-4
-    dbl_val = -1.23D4
-    bin_val = -B'1011'
-    bin_val = +B'1011'
-    bin_val =  B'1011'
-    oct_val = -O'0158'
-    oct_val = +O'0158'
-    oct_val =  O'0158'
-    hex_val = -Z'09AF'
-    hex_val = +Z'09AF'
-    hex_val =  Z'09AF'
+    int_val = 1
+    int_val = 1_SZ
+    flt_val = 1.0
+    flt_val = 1.0_SZ
+    flt_val = 1.23E+4
+    flt_val = 1.23E-4
+    flt_val = 1.23E4
+    dbl_val = 1.23D+4
+    dbl_val = 1.23D-4
+    dbl_val = 1.23D4
+    bin_val = B'1011'
+    oct_val = O'0158'
+    hex_val = Z'09AF'
     cpx_val = (1.0, 2.0)
     cpx_val = (dbl_val, dbl_val)
 END PROGRAM
@@ -34,16 +24,6 @@ END PROGRAM
 
 (translation_unit
   (program_block (identifier)
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
-    (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
@@ -288,7 +268,7 @@ END PROGRAM
         (math_expression
           (math_expression (identifier) (identifier))
           (math_expression (identifier)
-            (parenthesized_expression (number_literal)))) (number_literal)))
+            (parenthesized_expression (unary_expression (number_literal))))) (number_literal)))
     (assignment_statement (identifier)
       (math_expression (number_literal)
         (math_expression
