@@ -782,3 +782,19 @@ END PROGRAM
       (keyword_argument (identifier) (string_literal))
       (output_item_list (identifier)))
   (end_program_statement)))
+
+============================================
+Import Statements
+============================================
+
+function test()
+  import :: dp, cptr
+end function test
+
+----
+
+(translation_unit
+  (function
+    (function_statement (name))
+    (import_statement (identifier) (identifier))
+    (end_function_statement (identifier))))
