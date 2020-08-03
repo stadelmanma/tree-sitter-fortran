@@ -107,6 +107,7 @@ module.exports = grammar({
     interface: $ => seq(
       $.interface_statement,
       repeat(choice(
+        $.import_statement,
         $.procedure_statement,
         $.function,
         $.subroutine
@@ -147,7 +148,7 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
-      repeat($.procedure_qualifier),
+      optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
       optional($.parameters)
@@ -165,13 +166,14 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
-      repeat($.procedure_qualifier),
-      optional(choice($._intrinsic_type, $.derived_type)),
+      optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       $._name,
       optional(choice('()', $.parameters)),
       optional($.function_result)
     ),
+
+    _callable_interface_qualifers: $ => repeat1(choice($.procedure_qualifier, $._intrinsic_type, $.derived_type)),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
 
@@ -207,6 +209,7 @@ module.exports = grammar({
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
+      seq($.import_statement, $._end_of_statement),
       seq($.public_statement, $._end_of_statement),
       seq($.private_statement, $._end_of_statement),
       $.interface,
@@ -248,6 +251,12 @@ module.exports = grammar({
     implicit_range: $ => seq(
       /[a-zA-Z]/,
       optional(seq('-', /[a-zA-Z]/))
+    ),
+
+    import_statement: $ => seq(
+      caseInsensitive('import'),
+      '::',
+      commaSep1($.identifier)
     ),
 
     derived_type_definition: $ => seq(

@@ -1543,6 +1543,10 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "include_statement",
           "named": true
         },
@@ -1803,6 +1807,21 @@
     }
   },
   {
+    "type": "import_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "include_statement",
     "named": true,
     "fields": {},
@@ -1913,6 +1932,10 @@
         },
         {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "import_statement",
           "named": true
         },
         {
@@ -2207,30 +2230,6 @@
           },
           {
             "type": ")",
-            "named": false
-          },
-          {
-            "type": "/=",
-            "named": false
-          },
-          {
-            "type": "<",
-            "named": false
-          },
-          {
-            "type": "<=",
-            "named": false
-          },
-          {
-            "type": "==",
-            "named": false
-          },
-          {
-            "type": ">",
-            "named": false
-          },
-          {
-            "type": ">=",
             "named": false
           },
           {
@@ -2666,6 +2665,10 @@
         },
         {
           "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
           "named": true
         },
         {
@@ -3147,6 +3150,10 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "include_statement",
           "named": true
         },
@@ -3320,11 +3327,15 @@
         "required": true,
         "types": [
           {
-            "type": "(",
+            "type": "(/",
             "named": false
           },
           {
-            "type": ")",
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": "**",
             "named": false
           },
           {
@@ -3340,11 +3351,15 @@
             "named": false
           },
           {
-            "type": "/=",
+            "type": "/",
             "named": false
           },
           {
-            "type": ":",
+            "type": "/)",
+            "named": false
+          },
+          {
+            "type": "/=",
             "named": false
           },
           {
@@ -3372,11 +3387,23 @@
             "named": false
           },
           {
+            "type": "argument_list",
+            "named": true
+          },
+          {
             "type": "array_literal",
             "named": true
           },
           {
+            "type": "assumed_shape",
+            "named": true
+          },
+          {
             "type": "assumed_size",
+            "named": true
+          },
+          {
+            "type": "block_label",
             "named": true
           },
           {
@@ -3400,15 +3427,7 @@
             "named": true
           },
           {
-            "type": "extent_specifier",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "keyword_argument",
             "named": true
           },
           {
@@ -3682,6 +3701,10 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "include_statement",
           "named": true
         },
@@ -3788,6 +3811,14 @@
       "required": true,
       "types": [
         {
+          "type": "derived_type",
+          "named": true
+        },
+        {
+          "type": "intrinsic_type",
+          "named": true
+        },
+        {
           "type": "name",
           "named": true
         },
@@ -3797,6 +3828,10 @@
         },
         {
           "type": "procedure_qualifier",
+          "named": true
+        },
+        {
+          "type": "size",
           "named": true
         }
       ]
