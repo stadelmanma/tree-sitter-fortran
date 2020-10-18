@@ -436,6 +436,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "function_attributes"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "_callable_interface_qualifers"
             },
             {
@@ -562,6 +574,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "function_attributes"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "_callable_interface_qualifers"
             },
             {
@@ -600,6 +624,40 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "function_attributes": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[aA][tT][tT][rR][iI][bB][uU][tT][eE][sS]"
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[gG][lL][oO][bB][aA][lL]"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[dD][eE][vV][iI][cC][eE]"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[hH][oO][sS][tT]"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     },
@@ -884,6 +942,23 @@
         {
           "type": "SYMBOL",
           "name": "derived_type_definition"
+        },
+        {
+          "type": "PREC",
+          "value": 1,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "namelist_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_end_of_statement"
+              }
+            ]
+          }
         },
         {
           "type": "SEQ",
@@ -1175,6 +1250,57 @@
               },
               "named": true,
               "value": "none"
+            }
+          ]
+        }
+      ]
+    },
+    "namelist_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[nN][aA][mM][eE][lL][iI][sS][tT]"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": true,
+          "value": "namelist_name"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                ]
+              }
             }
           ]
         }
@@ -2054,6 +2180,10 @@
         {
           "type": "PATTERN",
           "value": "[tT][aA][rR][gG][eE][tT]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[dD][eE][vV][iI][cC][eE]"
         },
         {
           "type": "PATTERN",
@@ -3482,7 +3612,7 @@
     },
     "edit_descriptor": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9/:.*]+"
+      "value": "[a-zA-Z0-9\\/:.*]+"
     },
     "read_statement": {
       "type": "CHOICE",
