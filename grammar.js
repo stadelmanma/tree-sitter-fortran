@@ -148,6 +148,7 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
+      optional($.function_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
@@ -166,6 +167,7 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
+      optional($.function_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       $._name,
@@ -173,7 +175,19 @@ module.exports = grammar({
       optional($.function_result)
     ),
 
-    _callable_interface_qualifers: $ => repeat1(choice($.procedure_qualifier, $._intrinsic_type, $.derived_type)),
+    function_attributes: $ => seq(
+      caseInsensitive('attributes'),
+      '(',
+        choice(
+          caseInsensitive('global'),
+          caseInsensitive('device'),
+          caseInsensitive('host')),
+      ')'
+    ),
+
+    _callable_interface_qualifers: $ => repeat1(
+      choice($.procedure_qualifier, $._intrinsic_type, $.derived_type)
+    ),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
 

@@ -433,3 +433,25 @@ end program
           (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
       (end_type_statement (identifier)))
   (end_program_statement)))
+
+============================================
+Functions (with attributes)
+============================================
+
+attributes(device) real(8) function current_time()
+  ! returns the wall clock time in seconds.
+  use mpi
+  current_time = mpi_wtime()
+end function
+
+----
+
+(translation_unit
+  (function
+    (function_statement
+      (function_attributes) (intrinsic_type) (size (argument_list (number_literal)))
+      (name))
+    (comment)
+    (use_statement (module_name))
+    (assignment_statement (identifier) (call_expression (identifier) (argument_list)))
+  (end_function_statement)))
