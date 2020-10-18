@@ -798,3 +798,58 @@ end function test
     (function_statement (name))
     (import_statement (identifier) (identifier))
     (end_function_statement (identifier))))
+
+============================================
+Namelists in modules
+============================================
+
+PROGRAM TEST
+  INTEGER :: i, j
+  REAL :: a, b
+  namelist /test_nml/ i,j,a,b
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
+  (end_program_statement)))
+
+============================================
+Namelists in functions
+============================================
+
+function test()
+  namelist /test_nml/ i,j,a,b
+end function test
+
+----
+
+(translation_unit
+  (function
+    (function_statement (name))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
+    (end_function_statement (identifier))))
+
+============================================
+Namelists in subroutines
+============================================
+
+subroutine ex(a,b,c)
+    implicit none
+    namelist /test_nml/ a,b,c
+    a = 1
+end subroutine ex
+
+----
+
+(translation_unit
+  (subroutine
+    (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
+    (implicit_statement (none))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier))
+    (assignment_statement (identifier) (number_literal))
+    (end_subroutine_statement (identifier))))

@@ -219,6 +219,7 @@ module.exports = grammar({
       seq($.private_statement, $._end_of_statement),
       $.interface,
       $.derived_type_definition,
+      prec(1, seq($.namelist_statement, $._end_of_statement)),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -251,6 +252,14 @@ module.exports = grammar({
         )),
         alias(caseInsensitive('none'), $.none)
       )
+    ),
+
+    namelist_statement: $ => seq(
+      caseInsensitive('namelist'),
+      '/',
+      alias($.identifier,$.namelist_name),
+      '/',
+      commaSep1($.identifier)
     ),
 
     implicit_range: $ => seq(
