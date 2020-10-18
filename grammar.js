@@ -433,6 +433,7 @@ module.exports = grammar({
       caseInsensitive('sequence'),
       caseInsensitive('static'),
       caseInsensitive('target'),
+      caseInsensitive('device'),
       caseInsensitive('volatile')
     ),
 
