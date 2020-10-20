@@ -434,6 +434,7 @@ module.exports = grammar({
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('device'),
+      caseInsensitive('value'),
       caseInsensitive('volatile')
     ),
 
