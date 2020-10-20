@@ -515,7 +515,14 @@ module.exports = grammar({
     subroutine_call: $ => seq(
       caseInsensitive('call'),
       $._name,
+      optional($.cuda_kernel_argument_list),
       optional($.argument_list)
+    ),
+
+    cuda_kernel_argument_list: $ => seq(
+      '<<<',
+      commaSep1($._expression),
+      '>>>'
     ),
 
     keyword_statement: $ => choice(
