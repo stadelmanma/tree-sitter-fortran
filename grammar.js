@@ -433,6 +433,7 @@ module.exports = grammar({
       caseInsensitive('public'),
       caseInsensitive('save'),
       caseInsensitive('sequence'),
+      caseInsensitive('shared'),
       caseInsensitive('static'),
       caseInsensitive('target'),
       caseInsensitive('value'),
