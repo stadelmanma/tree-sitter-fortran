@@ -2105,6 +2105,14 @@
         },
         {
           "type": "PATTERN",
+          "value": "[cC][oO][nN][sS][tT][aA][nN][tT]"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[dD][eE][vV][iI][cC][eE]"
+        },
+        {
+          "type": "PATTERN",
           "value": "[eE][xX][tT][eE][rR][nN][aA][lL]"
         },
         {
@@ -2180,10 +2188,6 @@
         {
           "type": "PATTERN",
           "value": "[tT][aA][rR][gG][eE][tT]"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[dD][eE][vV][iI][cC][eE]"
         },
         {
           "type": "PATTERN",
