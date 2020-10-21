@@ -412,6 +412,8 @@ module.exports = grammar({
         caseInsensitive('dimension'),
         optional($.argument_list)
       )),
+      caseInsensitive('constant'),
+      caseInsensitive('device'),
       caseInsensitive('external'),
       seq(
         caseInsensitive('intent'),
@@ -433,7 +435,6 @@ module.exports = grammar({
       caseInsensitive('sequence'),
       caseInsensitive('static'),
       caseInsensitive('target'),
-      caseInsensitive('device'),
       caseInsensitive('value'),
       caseInsensitive('volatile')
     ),
