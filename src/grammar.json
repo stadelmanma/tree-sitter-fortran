@@ -436,7 +436,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "function_attributes"
+              "name": "procedure_attributes"
             },
             {
               "type": "BLANK"
@@ -574,7 +574,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "function_attributes"
+              "name": "procedure_attributes"
             },
             {
               "type": "BLANK"
@@ -627,7 +627,7 @@
         }
       ]
     },
-    "function_attributes": {
+    "procedure_attributes": {
       "type": "SEQ",
       "members": [
         {

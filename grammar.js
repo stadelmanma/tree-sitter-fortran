@@ -148,7 +148,7 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
-      optional($.function_attributes),
+      optional($.procedure_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
@@ -167,7 +167,7 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
-      optional($.function_attributes),
+      optional($.procedure_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       $._name,
@@ -175,7 +175,7 @@ module.exports = grammar({
       optional($.function_result)
     ),
 
-    function_attributes: $ => seq(
+    procedure_attributes: $ => seq(
       caseInsensitive('attributes'),
       '(',
         choice(

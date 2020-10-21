@@ -1693,11 +1693,6 @@
     }
   },
   {
-    "type": "function_attributes",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "function_result",
     "named": true,
     "fields": {},
@@ -1725,10 +1720,6 @@
           "named": true
         },
         {
-          "type": "function_attributes",
-          "named": true
-        },
-        {
           "type": "function_result",
           "named": true
         },
@@ -1742,6 +1733,10 @@
         },
         {
           "type": "parameters",
+          "named": true
+        },
+        {
+          "type": "procedure_attributes",
           "named": true
         },
         {
@@ -3100,6 +3095,11 @@
     "fields": {}
   },
   {
+    "type": "procedure_attributes",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "procedure_qualifier",
     "named": true,
     "fields": {}
@@ -3753,10 +3753,6 @@
           "named": true
         },
         {
-          "type": "function_attributes",
-          "named": true
-        },
-        {
           "type": "intrinsic_type",
           "named": true
         },
@@ -3766,6 +3762,10 @@
         },
         {
           "type": "parameters",
+          "named": true
+        },
+        {
+          "type": "procedure_attributes",
           "named": true
         },
         {
