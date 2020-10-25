@@ -545,6 +545,7 @@ module.exports = grammar({
     do_loop_statement: $ => seq(
       optional($.block_label_start_expression),
       caseInsensitive('do'),
+      optional($.while_statement),
       optional($.loop_control_expression),
       $._end_of_statement,
       repeat($._statement),
@@ -555,6 +556,9 @@ module.exports = grammar({
       caseInsensitive('end[ \t]*do'),
       optional($._block_label)
     ),
+
+    while_statement: $ => seq(caseInsensitive('while'),
+      $.parenthesized_expression),
 
     if_statement: $ => choice(
       $._inline_if_statement,

@@ -2749,6 +2749,18 @@
           "members": [
             {
               "type": "SYMBOL",
+              "name": "while_statement"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
               "name": "loop_control_expression"
             },
             {
@@ -2791,6 +2803,19 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "while_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[wW][hH][iI][lL][eE]"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesized_expression"
         }
       ]
     },
