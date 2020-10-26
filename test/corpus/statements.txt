@@ -185,6 +185,10 @@ PROGRAM TEST
         CYCLE out44
       END DO
     END DO out44
+
+    DO WHILE (is_true)
+        j = 0
+    END DO
 END PROGRAM
 
 ----
@@ -233,6 +237,13 @@ END PROGRAM
         (keyword_statement (identifier))
       (end_do_loop_statement))
     (end_do_loop_statement (block_label)))
+    (do_loop_statement
+      (while_statement
+        (parenthesized_expression
+          (identifier )))
+      (assignment_statement
+        (identifier) (number_literal))
+      (end_do_loop_statement))
   (end_program_statement)))
 
 ============================================
