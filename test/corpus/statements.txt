@@ -864,3 +864,25 @@ end subroutine ex
     (namelist_statement (namelist_name) (identifier) (identifier) (identifier))
     (assignment_statement (identifier) (number_literal))
     (end_subroutine_statement (identifier))))
+
+============================================
+Enum Statements
+============================================
+
+PROGRAM test
+    ENUM, BIND(C)
+        ENUMERATOR :: red = 1
+        ENUMERATOR blue, green
+    END ENUM
+END PROGRAM test
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (enum_statement
+      (enumerator_statement
+        (explicit_enumerator (identifier) (number_literal)))
+      (enumerator_statement (implicit_enumerator) (implicit_enumerator))
+    (end_enum_statement))
+  (end_program_statement (identifier))))

@@ -1303,6 +1303,44 @@
     }
   },
   {
+    "type": "enum_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_enum_statement",
+          "named": true
+        },
+        {
+          "type": "enumerator_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enumerator_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "explicit_enumerator",
+          "named": true
+        },
+        {
+          "type": "implicit_enumerator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "equivalence_set",
     "named": true,
     "fields": {},
@@ -1331,6 +1369,25 @@
       "types": [
         {
           "type": "equivalence_set",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "explicit_enumerator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "number_literal",
           "named": true
         }
       ]
@@ -1587,6 +1644,10 @@
         },
         {
           "type": "end_function_statement",
+          "named": true
+        },
+        {
+          "type": "enum_statement",
           "named": true
         },
         {
@@ -2666,6 +2727,10 @@
           "named": true
         },
         {
+          "type": "enum_statement",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -3164,6 +3229,10 @@
           "named": true
         },
         {
+          "type": "enum_statement",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -3612,6 +3681,10 @@
         },
         {
           "type": "end_subroutine_statement",
+          "named": true
+        },
+        {
+          "type": "enum_statement",
           "named": true
         },
         {
@@ -4376,7 +4449,15 @@
     "named": true
   },
   {
+    "type": "end_enum_statement",
+    "named": true
+  },
+  {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "implicit_enumerator",
     "named": true
   },
   {

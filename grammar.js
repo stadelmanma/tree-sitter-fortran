@@ -234,6 +234,7 @@ module.exports = grammar({
       $.interface,
       $.derived_type_definition,
       prec(1, seq($.namelist_statement, $._end_of_statement)),
+      seq($.enum_statement, $._end_of_statement),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -773,6 +774,30 @@ module.exports = grammar({
       ')',
       optional($.output_item_list)
     ),
+
+    enum_statement: $ => seq(
+      caseInsensitive('enum'),
+      ',',
+      caseInsensitive('bind'),
+      '(',
+      caseInsensitive('c'),
+      ')',
+      repeat($.enumerator_statement),
+      $.end_enum_statement
+    ),
+
+    enumerator_statement: $ => seq(
+      caseInsensitive('enumerator'),
+      optional('::'),
+      commaSep1(choice(
+        alias($.identifier, $.implicit_enumerator),
+        $.explicit_enumerator,
+      )),
+    ),
+
+    explicit_enumerator: $ => seq($.identifier,'=', $.number_literal),
+
+    end_enum_statement: $=> caseInsensitive('end[ \t]*enum'),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(
