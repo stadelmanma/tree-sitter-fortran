@@ -25,8 +25,12 @@ Cuda Kernel Call Expressions
 ============================================
 
 program test
-    call get_command_argument<<<1,n>>>(arg)
-    call get_command_argument<<<1,n,m,stream(i)>>>(arg)
+    call dummy_cuda_kernel<<<1,n>>>(arg)
+    call dummy_cuda_kernel<<<1,n,m,stream(i)>>>(arg)
+    call dummy_cuda_kernel <<<1, &
+           n,m &
+           ,stream(i)
+    >>>(arg)
 end program
 
 ----
@@ -36,6 +40,12 @@ end program
     (subroutine_call
       (name)
       (cuda_kernel_argument_list (number_literal) (identifier))
+      (argument_list (identifier)))
+    (subroutine_call
+      (name)
+      (cuda_kernel_argument_list
+        (number_literal) (identifier) (identifier)
+        (call_expression (identifier) (argument_list (identifier))))
       (argument_list (identifier)))
     (subroutine_call
       (name)
