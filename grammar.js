@@ -148,7 +148,6 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
-      optional($.procedure_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
@@ -167,13 +166,20 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
-      optional($.procedure_attributes),
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       $._name,
       optional($._parameters),
       optional($.function_result)
     ),
+
+    _callable_interface_qualifers: $ => repeat1(
+      choice(
+        $.procedure_attributes,
+        $.procedure_qualifier,
+        $._intrinsic_type,
+        $.derived_type
+      )),
 
     procedure_attributes: $ => seq(
       caseInsensitive('attributes'),
