@@ -184,15 +184,12 @@ module.exports = grammar({
     procedure_attributes: $ => seq(
       caseInsensitive('attributes'),
       '(',
-        choice(
+        commaSep1(choice(
           caseInsensitive('global'),
           caseInsensitive('device'),
-          caseInsensitive('host')),
+          caseInsensitive('host'),
+          caseInsensitive('grid_global'))),
       ')'
-    ),
-
-    _callable_interface_qualifers: $ => repeat1(
-      choice($.procedure_qualifier, $._intrinsic_type, $.derived_type)
     ),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
