@@ -173,7 +173,24 @@ module.exports = grammar({
       optional($.function_result)
     ),
 
-    _callable_interface_qualifers: $ => repeat1(choice($.procedure_qualifier, $._intrinsic_type, $.derived_type)),
+    _callable_interface_qualifers: $ => repeat1(
+      choice(
+        $.procedure_attributes,
+        $.procedure_qualifier,
+        $._intrinsic_type,
+        $.derived_type
+      )),
+
+    procedure_attributes: $ => seq(
+      caseInsensitive('attributes'),
+      '(',
+        commaSep1(choice(
+          caseInsensitive('global'),
+          caseInsensitive('device'),
+          caseInsensitive('host'),
+          caseInsensitive('grid_global'))),
+      ')'
+    ),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
 
@@ -219,6 +236,8 @@ module.exports = grammar({
       seq($.private_statement, $._end_of_statement),
       $.interface,
       $.derived_type_definition,
+      prec(1, seq($.namelist_statement, $._end_of_statement)),
+      seq($.enum_statement, $._end_of_statement),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -251,6 +270,14 @@ module.exports = grammar({
         )),
         alias(caseInsensitive('none'), $.none)
       )
+    ),
+
+    namelist_statement: $ => seq(
+      caseInsensitive('namelist'),
+      '/',
+      alias($.identifier,$.namelist_name),
+      '/',
+      commaSep1($.identifier)
     ),
 
     implicit_range: $ => seq(
@@ -389,6 +416,8 @@ module.exports = grammar({
         caseInsensitive('dimension'),
         optional($.argument_list)
       )),
+      caseInsensitive('constant'),
+      caseInsensitive('device'),
       caseInsensitive('external'),
       seq(
         caseInsensitive('intent'),
@@ -408,8 +437,10 @@ module.exports = grammar({
       caseInsensitive('public'),
       caseInsensitive('save'),
       caseInsensitive('sequence'),
+      caseInsensitive('shared'),
       caseInsensitive('static'),
       caseInsensitive('target'),
+      caseInsensitive('value'),
       caseInsensitive('volatile')
     ),
 
@@ -491,7 +522,14 @@ module.exports = grammar({
     subroutine_call: $ => seq(
       caseInsensitive('call'),
       $._name,
+      optional($.cuda_kernel_argument_list),
       optional($.argument_list)
+    ),
+
+    cuda_kernel_argument_list: $ => seq(
+      '<<<',
+      commaSep1($._expression),
+      '>>>'
     ),
 
     keyword_statement: $ => choice(
@@ -511,7 +549,7 @@ module.exports = grammar({
     do_loop_statement: $ => seq(
       optional($.block_label_start_expression),
       caseInsensitive('do'),
-      optional($.loop_control_expression),
+      optional(choice($.while_statement, $.loop_control_expression)),
       $._end_of_statement,
       repeat($._statement),
       $.end_do_loop_statement
@@ -521,6 +559,9 @@ module.exports = grammar({
       caseInsensitive('end[ \t]*do'),
       optional($._block_label)
     ),
+
+    while_statement: $ => seq(caseInsensitive('while'),
+      $.parenthesized_expression),
 
     if_statement: $ => choice(
       $._inline_if_statement,
@@ -735,6 +776,30 @@ module.exports = grammar({
       ')',
       optional($.output_item_list)
     ),
+
+    enum_statement: $ => seq(
+      caseInsensitive('enum'),
+      ',',
+      caseInsensitive('bind'),
+      '(',
+      caseInsensitive('c'),
+      ')',
+      repeat($.enumerator_statement),
+      $.end_enum_statement
+    ),
+
+    enumerator_statement: $ => seq(
+      caseInsensitive('enumerator'),
+      optional('::'),
+      commaSep1(choice(
+        alias($.identifier, $.implicit_enumerator),
+        $.explicit_enumerator,
+      )),
+    ),
+
+    explicit_enumerator: $ => seq($.identifier,'=', $.number_literal),
+
+    end_enum_statement: $=> caseInsensitive('end[ \t]*enum'),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(

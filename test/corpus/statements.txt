@@ -185,6 +185,10 @@ PROGRAM TEST
         CYCLE out44
       END DO
     END DO out44
+
+    DO WHILE (is_true)
+        j = 0
+    END DO
 END PROGRAM
 
 ----
@@ -233,6 +237,13 @@ END PROGRAM
         (keyword_statement (identifier))
       (end_do_loop_statement))
     (end_do_loop_statement (block_label)))
+    (do_loop_statement
+      (while_statement
+        (parenthesized_expression
+          (identifier )))
+      (assignment_statement
+        (identifier) (number_literal))
+      (end_do_loop_statement))
   (end_program_statement)))
 
 ============================================
@@ -798,3 +809,80 @@ end function test
     (function_statement (name))
     (import_statement (identifier) (identifier))
     (end_function_statement (identifier))))
+
+============================================
+Namelists in modules
+============================================
+
+PROGRAM TEST
+  INTEGER :: i, j
+  REAL :: a, b
+  namelist /test_nml/ i,j,a,b
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
+  (end_program_statement)))
+
+============================================
+Namelists in functions
+============================================
+
+function test()
+  namelist /test_nml/ i,j,a,b
+end function test
+
+----
+
+(translation_unit
+  (function
+    (function_statement (name))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
+    (end_function_statement (identifier))))
+
+============================================
+Namelists in subroutines
+============================================
+
+subroutine ex(a,b,c)
+    implicit none
+    namelist /test_nml/ a,b,c
+    a = 1
+end subroutine ex
+
+----
+
+(translation_unit
+  (subroutine
+    (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
+    (implicit_statement (none))
+    (namelist_statement (namelist_name) (identifier) (identifier) (identifier))
+    (assignment_statement (identifier) (number_literal))
+    (end_subroutine_statement (identifier))))
+
+============================================
+Enum Statements
+============================================
+
+PROGRAM test
+    ENUM, BIND(C)
+        ENUMERATOR :: red = 1
+        ENUMERATOR blue, green
+    END ENUM
+END PROGRAM test
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (enum_statement
+      (enumerator_statement
+        (explicit_enumerator (identifier) (number_literal)))
+      (enumerator_statement (implicit_enumerator) (implicit_enumerator))
+    (end_enum_statement))
+  (end_program_statement (identifier))))
