@@ -369,9 +369,25 @@ module.exports = grammar({
     ),
 
     variable_modification: $ => seq(
-      $.type_qualifier,
+      repeat1(choice(
+        $.type_qualifier,
+        $.variable_attributes
+      )),
       optional('::'),
       $._declaration_targets
+    ),
+
+    variable_attributes: $ => seq(
+      caseInsensitive('attributes'),
+      '(',
+        choice(
+          caseInsensitive('device'),
+          caseInsensitive('managed'),
+          caseInsensitive('constant'),
+          caseInsensitive('shared'),
+          caseInsensitive('pinned'),
+          caseInsensitive('texture')),
+      ')'
     ),
 
     _declaration_targets: $ => commaSep1(choice(
@@ -430,8 +446,10 @@ module.exports = grammar({
         ')'
       ),
       caseInsensitive('intrinsic'),
+      caseInsensitive('managed'),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
+      caseInsensitive('pinned'),
       caseInsensitive('pointer'),
       caseInsensitive('private'),
       caseInsensitive('public'),
@@ -440,6 +458,7 @@ module.exports = grammar({
       caseInsensitive('shared'),
       caseInsensitive('static'),
       caseInsensitive('target'),
+      caseInsensitive('texture'),
       caseInsensitive('value'),
       caseInsensitive('volatile')
     ),
