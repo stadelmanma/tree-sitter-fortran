@@ -2357,9 +2357,78 @@
         ]
       },
       "operator": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
-        "types": []
+        "types": [
+          {
+            "type": "*",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "block_label",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "complex_literal",
+            "named": true
+          },
+          {
+            "type": "concatenation_expression",
+            "named": true
+          },
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "logical_expression",
+            "named": true
+          },
+          {
+            "type": "math_expression",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "relational_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
       },
       "right": {
         "multiple": false,
@@ -3434,9 +3503,21 @@
         ]
       },
       "operator": {
-        "multiple": false,
-        "required": true,
+        "multiple": true,
+        "required": false,
         "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": ",",
+            "named": false
+          },
           {
             "type": "/=",
             "named": false
@@ -3460,6 +3541,94 @@
           {
             "type": ">=",
             "named": false
+          },
+          {
+            "type": "derived_type_definition",
+            "named": true
+          },
+          {
+            "type": "enum_statement",
+            "named": true
+          },
+          {
+            "type": "equivalence_statement",
+            "named": true
+          },
+          {
+            "type": "format_statement",
+            "named": true
+          },
+          {
+            "type": "function",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implicit_range",
+            "named": true
+          },
+          {
+            "type": "implicit_statement",
+            "named": true
+          },
+          {
+            "type": "import_statement",
+            "named": true
+          },
+          {
+            "type": "include_statement",
+            "named": true
+          },
+          {
+            "type": "interface",
+            "named": true
+          },
+          {
+            "type": "namelist_statement",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parameter_statement",
+            "named": true
+          },
+          {
+            "type": "private_statement",
+            "named": true
+          },
+          {
+            "type": "procedure_statement",
+            "named": true
+          },
+          {
+            "type": "public_statement",
+            "named": true
+          },
+          {
+            "type": "statement_label",
+            "named": true
+          },
+          {
+            "type": "subroutine",
+            "named": true
+          },
+          {
+            "type": "use_statement",
+            "named": true
+          },
+          {
+            "type": "variable_declaration",
+            "named": true
+          },
+          {
+            "type": "variable_modification",
+            "named": true
           }
         ]
       },
@@ -3851,6 +4020,25 @@
         },
         {
           "type": "size",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "transfer_items",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "edit_descriptor",
+          "named": true
+        },
+        {
+          "type": "string_literal",
           "named": true
         }
       ]
