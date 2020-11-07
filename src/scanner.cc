@@ -5,6 +5,7 @@
 namespace {
 
 using std::wstring;
+using std::isalpha;
 using std::iswalnum;
 using std::iswdigit;
 using std::iswxdigit;
@@ -21,9 +22,13 @@ struct Scanner {
       lexer->advance(lexer, false);
     }
 
-    // ignore current character and advanceWW
+    // ignore current character and advance
     void skip(TSLexer *lexer) {
       lexer->advance(lexer, true);
+    }
+
+    bool is_ident_char(char c) {
+        return iswalnum(c) || c == '_';
     }
 
     bool is_boz_sentinel(char c) {
@@ -52,6 +57,42 @@ struct Scanner {
         }
     }
 
+    /// Scan a basic number of the forms 1XXX, 1.0XXX, 0.1XXX
+    /// this forms the base for all other numbers  except BOZ literals
+    bool scan_number(TSLexer *lexer) {
+        bool decimal = false, leading_digits = false, trailing_digits = false;
+        if (iswdigit(lexer->lookahead)) {
+            // consume leading digits
+            while (iswdigit(lexer->lookahead)) {
+                advance(lexer); // store all digits
+            }
+            lexer->mark_end(lexer);
+            leading_digits = true;
+        }
+        if (lexer->lookahead == '.') {
+            advance(lexer);
+            // exclude decimal if followed by any letter other than d/D and e/E
+            if (!is_exp_sentinel(lexer->lookahead) && isalpha(lexer->lookahead)) {
+                return true;
+            }
+            decimal = true;
+            lexer->mark_end(lexer);
+        }
+        if (decimal && iswdigit(lexer->lookahead)) {
+            // consume trailing digits
+            while (iswdigit(lexer->lookahead)) {
+                advance(lexer); // store all digits
+            }
+            lexer->mark_end(lexer);
+            trailing_digits = true;
+        }
+        if (!leading_digits && !trailing_digits) {
+            return false; // don't allow empty matches
+        }
+
+        return true;
+    }
+
     bool scan(TSLexer *lexer, const bool *valid_symbols) {
         while (iswspace(lexer->lookahead)) {
             skip(lexer);
@@ -62,56 +103,27 @@ struct Scanner {
             // /([bBoOzZ]["'][0-9a-fA-F]+["'])|(["'][0-9a-fA-F]+["'][bBoOzZ])/
             // generic decimal rule (fails for 1.and.2)
             // /(((\d*\.)?\d+)|(\d+(\.\d*)?))([eEdD][-+]?\d+)?(_[a-zA-Z_]+)?/
+
+            // extract out root number from expression
             lexer->result_symbol = NUMBER_LITERAL;
-            bool decimal = false, leading_digits = false, trailing_digits = false;
-
-            if (iswdigit(lexer->lookahead)) {
-                // consume leading digits
-                while (iswdigit(lexer->lookahead)) {
-                    advance(lexer); // store all digits
-                }
-                lexer->mark_end(lexer);
-                leading_digits = true;
+            if (!scan_number(lexer)) {
+                return false;
             }
-            if (lexer->lookahead == '.') {
-                advance(lexer);
-                // only allow 0-9dDeE_ after a decimal
-                if (iswdigit(lexer->lookahead)) {decimal = true;}
-                else if (is_exp_sentinel(lexer->lookahead)) {decimal = true;}
-                else if (lexer->lookahead == '_') {decimal = true;}
-                else if (iswspace(lexer->lookahead)) {decimal = true;}
-                if (decimal) {
-                    lexer->mark_end(lexer);
-                }
-            }
-            if (decimal && iswdigit(lexer->lookahead)) {
-                // consume trailing digits
-                while (iswdigit(lexer->lookahead)) {
-                    advance(lexer); // store all digits
-                }
-                lexer->mark_end(lexer);
-                trailing_digits = true;
-            }
-            if (!leading_digits && !trailing_digits) {
-                return false; // don't allow empty matches
-            }
-
             // process exp notation
             if (is_exp_sentinel(lexer->lookahead)) {
                 // TODO
             }
             // get size qualifer
             if (lexer->lookahead == '_') {
-                // TODO
+                advance(lexer);
+                if (!isalpha(lexer->lookahead)) {
+                    return false; // a bare trailing underscore is invalid
+                }
+                while (is_ident_char(lexer->lookahead)) {
+                    advance(lexer); // store all digits
+                }
+                lexer->mark_end(lexer);
             }
-
-
-            // only a limited set of non-whitespace characters are allowed
-            // after a number, this might be too permissive
-            if (iswalnum(lexer->lookahead)) {
-                return false;
-            }
-            // TODO: figure out how to handle 1.and.2
             return true;
         }
         else {
