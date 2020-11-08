@@ -57,40 +57,90 @@ struct Scanner {
         }
     }
 
-    /// Scan a basic number of the forms 1XXX, 1.0XXX, 0.1XXX
-    /// this forms the base for all other numbers  except BOZ literals
-    bool scan_number(TSLexer *lexer) {
-        bool decimal = false, leading_digits = false, trailing_digits = false;
-        if (iswdigit(lexer->lookahead)) {
-            // consume leading digits
-            while (iswdigit(lexer->lookahead)) {
-                advance(lexer); // store all digits
-            }
-            lexer->mark_end(lexer);
-            leading_digits = true;
+    bool scan_int(TSLexer *lexer) {
+        if (!iswdigit(lexer->lookahead)) {
+            return false;
         }
+        // consume digits
+        while (iswdigit(lexer->lookahead)) {
+            advance(lexer); // store all digits
+        }
+
+        lexer->mark_end(lexer);
+        return true;
+    }
+
+    /// Scan a number of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, etc.
+    bool scan_number(TSLexer *lexer) {
+        bool digits = scan_int(lexer);
         if (lexer->lookahead == '.') {
             advance(lexer);
             // exclude decimal if followed by any letter other than d/D and e/E
-            if (!is_exp_sentinel(lexer->lookahead) && isalpha(lexer->lookahead)) {
-                return true;
+            // if no leading digits are present and a non-digit follows
+            // the decimal it's a nonmatch.
+            if (digits && (is_exp_sentinel(lexer->lookahead) || !iswalnum(lexer->lookahead))) {
+                lexer->mark_end(lexer); // add decimal to token
             }
-            decimal = true;
-            lexer->mark_end(lexer);
         }
-        if (decimal && iswdigit(lexer->lookahead)) {
-            // consume trailing digits
-            while (iswdigit(lexer->lookahead)) {
-                advance(lexer); // store all digits
+        // if next char isn't number return since we handle exp
+        // notation and precision identifiers separately. If there are
+        // no leading digit it's a nonmatch.
+        digits = scan_int(lexer) || digits;
+        if (digits) {
+            // process exp notation
+            if (is_exp_sentinel(lexer->lookahead)) {
+                advance(lexer);
+                if (lexer->lookahead == '+' || lexer->lookahead == '-') {
+                    advance(lexer);
+                }
+                if (!scan_int(lexer)) {
+                    return true; // valid number token with junk after it
+                }
+                lexer->mark_end(lexer);
             }
-            lexer->mark_end(lexer);
-            trailing_digits = true;
+            // get size qualifer
+            if (lexer->lookahead == '_') {
+                advance(lexer);
+                if (!isalpha(lexer->lookahead)) {
+                    return true; // valid number token with junk after it
+                }
+                while (is_ident_char(lexer->lookahead)) {
+                    advance(lexer); // store all digits
+                }
+                lexer->mark_end(lexer);
+            }
         }
-        if (!leading_digits && !trailing_digits) {
-            return false; // don't allow empty matches
-        }
+        return digits;
+    }
 
-        return true;
+    bool scan_boz(TSLexer *lexer) {
+        bool boz_prefix = false;
+        char quote = '\0';
+        if (is_boz_sentinel(lexer->lookahead)) {
+            advance(lexer);
+            boz_prefix = true;
+        }
+        if (lexer->lookahead == '\'' || lexer->lookahead == '"') {
+            quote = lexer->lookahead;
+            advance(lexer);
+            if (!isxdigit(lexer->lookahead)) {
+                return false;
+            }
+            while (isxdigit(lexer->lookahead)) {
+                advance(lexer); // store all hex digits
+            }
+            if (lexer->lookahead != quote) {
+                return false;
+            }
+            advance(lexer); // store enclosing quote
+            if (!boz_prefix && !is_boz_sentinel(lexer->lookahead)) {
+                return false; // no boz suffix or prefix provided
+            }
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     bool scan(TSLexer *lexer, const bool *valid_symbols) {
@@ -98,7 +148,6 @@ struct Scanner {
             skip(lexer);
         }
         if (valid_symbols[NUMBER_LITERAL]) {
-            // this whole block needs tested with line cont.
             // generic BOZ rule
             // /([bBoOzZ]["'][0-9a-fA-F]+["'])|(["'][0-9a-fA-F]+["'][bBoOzZ])/
             // generic decimal rule (fails for 1.and.2)
@@ -106,25 +155,13 @@ struct Scanner {
 
             // extract out root number from expression
             lexer->result_symbol = NUMBER_LITERAL;
-            if (!scan_number(lexer)) {
-                return false;
+            if (scan_number(lexer)) {
+                return true;
             }
-            // process exp notation
-            if (is_exp_sentinel(lexer->lookahead)) {
-                // TODO
+            if (scan_boz(lexer)) {
+                return true;
             }
-            // get size qualifer
-            if (lexer->lookahead == '_') {
-                advance(lexer);
-                if (!isalpha(lexer->lookahead)) {
-                    return false; // a bare trailing underscore is invalid
-                }
-                while (is_ident_char(lexer->lookahead)) {
-                    advance(lexer); // store all digits
-                }
-                lexer->mark_end(lexer);
-            }
-            return true;
+            return false;
         }
         else {
             lexer->result_symbol = _LINE_CONTINUATION;
