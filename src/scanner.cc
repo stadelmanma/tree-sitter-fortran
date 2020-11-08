@@ -136,6 +136,7 @@ struct Scanner {
             if (!boz_prefix && !is_boz_sentinel(lexer->lookahead)) {
                 return false; // no boz suffix or prefix provided
             }
+            lexer->mark_end(lexer);
             return true;
         }
         else {
@@ -161,40 +162,39 @@ struct Scanner {
             if (scan_boz(lexer)) {
                 return true;
             }
+        }
+
+        // always check for line cont. if nothing else found
+        lexer->result_symbol = _LINE_CONTINUATION;
+
+        // Consume '&' at the end of the line
+        if (lexer->lookahead != '&') {
             return false;
         }
-        else {
-            lexer->result_symbol = _LINE_CONTINUATION;
+        advance(lexer);
 
-            // Consume '&' at the end of the line
-            if (lexer->lookahead != '&') {
-                return false;
-            }
-            advance(lexer);
-
-            // Consume end of line characters, we allow '\n', '\r\n' and
-            // '\r' to cover unix, MSDOS and old style Macintosh
-            if (lexer->lookahead == '\r') {
-              lexer->advance(lexer, false);
-              if (lexer->lookahead == '\n') {
-                  advance(lexer);
-              }
-            }
-            else {
-              if (lexer->lookahead != '\n') return false;
+        // Consume end of line characters, we allow '\n', '\r\n' and
+        // '\r' to cover unix, MSDOS and old style Macintosh
+        if (lexer->lookahead == '\r') {
+          lexer->advance(lexer, false);
+          if (lexer->lookahead == '\n') {
               advance(lexer);
-            }
-
-            // in some instances a second ampersand exists, on the following line
-            // I assume this is to allow the code to compile properly as free form
-            // or fixed form (i.e. put the first ampersand past column 72 and the
-            // second in column 6)
-            while (iswspace(lexer->lookahead)) {
-              advance(lexer);
-            }
-            if (lexer->lookahead == '&') advance(lexer);
-            return true;
+          }
         }
+        else {
+          if (lexer->lookahead != '\n') return false;
+          advance(lexer);
+        }
+
+        // in some instances a second ampersand exists, on the following line
+        // I assume this is to allow the code to compile properly as free form
+        // or fixed form (i.e. put the first ampersand past column 72 and the
+        // second in column 6)
+        while (iswspace(lexer->lookahead)) {
+          advance(lexer);
+        }
+        if (lexer->lookahead == '&') advance(lexer);
+        return true;
     }
 };
 
