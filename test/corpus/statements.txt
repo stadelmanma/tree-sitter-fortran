@@ -252,6 +252,7 @@ If Statements
 
 PROGRAM TEST
   IF (x<7) y = 9
+  if(ix.ge.1.and.2.le.nx)x=1.4
 
   IF (arg(1:1) == ADJUSTL(' r')) THEN
     r = 0
@@ -283,6 +284,12 @@ END PROGRAM
     (if_statement
       (parenthesized_expression (relational_expression (identifier) (number_literal)))
       (assignment_statement (identifier) (number_literal)))
+    (if_statement
+      (parenthesized_expression
+        (logical_expression
+          (relational_expression (identifier) (number_literal))
+          (relational_expression (number_literal) (identifier))))
+    (assignment_statement (identifier) (number_literal)))
     (if_statement
       (parenthesized_expression
         (relational_expression
