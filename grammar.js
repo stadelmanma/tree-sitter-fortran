@@ -271,7 +271,7 @@ module.exports = grammar({
           commaSep1($.implicit_range),
           ')'
         )),
-        alias(caseInsensitive('none'), $.none)
+        alias(caseInsensitive('none',aliasAsWord=false), $.none)
       )
     ),
 
@@ -409,9 +409,9 @@ module.exports = grammar({
       caseInsensitive('byte'),
       caseInsensitive('integer'),
       caseInsensitive('real'),
-      caseInsensitive('double[ \t]*precision'),
+      whiteSpacedKeyword('double','precision'),
       caseInsensitive('complex'),
-      caseInsensitive('double[ \t]*complex'),
+      whiteSpacedKeyword('double','complex'),
       caseInsensitive('logical'),
       caseInsensitive('character')
     ),
@@ -444,7 +444,7 @@ module.exports = grammar({
         choice(
           caseInsensitive('in'),
           caseInsensitive('out'),
-          caseInsensitive('in[ \t]*out')
+          whiteSpacedKeyword('in','out')
         ),
         ')'
       ),
@@ -558,7 +558,7 @@ module.exports = grammar({
       caseInsensitive('continue'),
       seq(caseInsensitive('cycle'), optional($.identifier)),
       seq(caseInsensitive('exit'), optional($.identifier)),
-      seq(caseInsensitive('go[ \t]*to'), $.statement_label),
+      seq(whiteSpacedKeyword('go','to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression))
     ),
@@ -578,7 +578,7 @@ module.exports = grammar({
     ),
 
     end_do_loop_statement: $ => seq(
-      caseInsensitive('end[ \t]*do'),
+      whiteSpacedKeyword('end','do'),
       optional($._block_label)
     ),
 
@@ -610,12 +610,12 @@ module.exports = grammar({
     ),
 
     end_if_statement: $ => seq(
-      caseInsensitive('end[ \t]*if'),
+      whiteSpacedKeyword('end', 'if'),
       optional($._block_label)
     ),
 
     elseif_clause: $ => seq(
-      caseInsensitive('else[ \t]*if'),
+      whiteSpacedKeyword('else','if'),
       $.parenthesized_expression,
       caseInsensitive('then'),
       optional($._block_label),
@@ -652,12 +652,12 @@ module.exports = grammar({
     ),
 
     end_where_statement: $ => seq(
-      caseInsensitive('end[ \t]*where'),
+      whiteSpacedKeyword('end','where'),
       optional($._block_label)
     ),
 
     elsewhere_clause: $ => seq(
-      caseInsensitive('else[ \t]*where'),
+      whiteSpacedKeyword('else','where'),
       optional($.parenthesized_expression),
       optional($._block_label),
       $._end_of_statement,
@@ -703,13 +703,13 @@ module.exports = grammar({
     ),
 
     end_forall_statement: $ => seq(
-      caseInsensitive('end[ \t]*forall'),
+      whiteSpacedKeyword('end','forall'),
       optional($._block_label)
     ),
 
     select_case_statement: $ => seq(
       optional($.block_label_start_expression),
-      caseInsensitive('select[ \t]*case'),
+      whiteSpacedKeyword('select','case'),
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
@@ -717,7 +717,7 @@ module.exports = grammar({
     ),
 
     end_select_case_statement: $ => seq(
-      caseInsensitive('end[ \t]*select'),
+      whiteSpacedKeyword('end','select'),
       optional($._block_label)
     ),
 
@@ -821,7 +821,7 @@ module.exports = grammar({
 
     explicit_enumerator: $ => seq($.identifier,'=', $.number_literal),
 
-    end_enum_statement: $=> caseInsensitive('end[ \t]*enum'),
+    end_enum_statement: $=> whiteSpacedKeyword('end','enum'),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(
@@ -1065,12 +1065,21 @@ module.exports = grammar({
 
 module.exports.PREC = PREC
 
-function caseInsensitive (keyword) {
-  return new RegExp(keyword
+function caseInsensitive (keyword, aliasAsWord = true) {
+  let result = new RegExp(keyword
     .split('')
     .map(l => l !== l.toUpperCase() ? `[${l}${l.toUpperCase()}]` : l)
     .join('')
   )
+  if (aliasAsWord) result = alias(result, keyword)
+  return result
+}
+
+function whiteSpacedKeyword(prefix, suffix) {
+  return alias(choice(
+        seq(caseInsensitive(prefix,aliasAsWord= false), caseInsensitive(suffix,aliasAsWord= false)),
+        caseInsensitive(prefix + suffix, aliasAsWord= false)),
+        prefix + suffix)
 }
 
 /* TODO
@@ -1091,15 +1100,17 @@ function sep1 (rule, separator) {
   return seq(rule, repeat(seq(separator, rule)))
 }
 
+// This can be merged with whiteSpacedKeyword, keeping for now.
 function blockStructureEnding ($, structType) {
   const obj = prec.right(seq(
-    caseInsensitive('end'),
-    optional(seq(
-      caseInsensitive(structType),
-      optional($.identifier)
-    )),
-    $._end_of_statement
-  ))
+    alias(choice(
+      seq(
+        caseInsensitive('end',aliasAsWord=false),
+        optional(caseInsensitive(structType,aliasAsWord=false))),
+      caseInsensitive('end'+structType,aliasAsWord=false)),
+      'end'+structType),
+    optional($.identifier),
+    optional($._end_of_statement)))
   //
   return obj
 }
