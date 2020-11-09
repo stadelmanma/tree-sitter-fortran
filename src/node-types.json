@@ -4114,6 +4114,11 @@
     }
   },
   {
+    "type": "variable_attributes",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "variable_declaration",
     "named": true,
     "fields": {},
@@ -4182,6 +4187,10 @@
         },
         {
           "type": "type_qualifier",
+          "named": true
+        },
+        {
+          "type": "variable_attributes",
           "named": true
         }
       ]

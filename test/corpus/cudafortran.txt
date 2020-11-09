@@ -1,4 +1,23 @@
 ============================================
+Variable declaration (with attributes)
+============================================
+
+program test
+    real, constant :: alpha
+    integer :: i
+    attributes(device) :: i
+end program test
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+    (variable_declaration (intrinsic_type) (identifier))
+    (variable_modification (variable_attributes) (identifier))
+  (end_program_statement (identifier))))
+
+============================================
 Functions (with attributes)
 ============================================
 
