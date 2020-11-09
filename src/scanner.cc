@@ -13,7 +13,9 @@ using std::iswspace;
 
 enum TokenType {
     _LINE_CONTINUATION,
-    NUMBER_LITERAL,
+    _INTEGER_LITERAL,
+    _FLOAT_LITERAL,
+    _BOZ_LITERAL
 };
 
 struct Scanner {
@@ -72,6 +74,7 @@ struct Scanner {
 
     /// Scan a number of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, etc.
     bool scan_number(TSLexer *lexer) {
+        lexer->result_symbol = _INTEGER_LITERAL;
         bool digits = scan_int(lexer);
         if (lexer->lookahead == '.') {
             advance(lexer);
@@ -81,6 +84,7 @@ struct Scanner {
             if (digits && (is_exp_sentinel(lexer->lookahead) || !iswalnum(lexer->lookahead))) {
                 lexer->mark_end(lexer); // add decimal to token
             }
+            lexer->result_symbol = _FLOAT_LITERAL;
         }
         // if next char isn't number return since we handle exp
         // notation and precision identifiers separately. If there are
@@ -97,6 +101,7 @@ struct Scanner {
                     return true; // valid number token with junk after it
                 }
                 lexer->mark_end(lexer);
+                lexer->result_symbol = _FLOAT_LITERAL;
             }
             // get size qualifer
             if (lexer->lookahead == '_') {
@@ -114,6 +119,7 @@ struct Scanner {
     }
 
     bool scan_boz(TSLexer *lexer) {
+        lexer->result_symbol = _BOZ_LITERAL;
         bool boz_prefix = false;
         char quote = '\0';
         if (is_boz_sentinel(lexer->lookahead)) {
@@ -148,14 +154,8 @@ struct Scanner {
         while (iswspace(lexer->lookahead)) {
             skip(lexer);
         }
-        if (valid_symbols[NUMBER_LITERAL]) {
-            // generic BOZ rule
-            // /([bBoOzZ]["'][0-9a-fA-F]+["'])|(["'][0-9a-fA-F]+["'][bBoOzZ])/
-            // generic decimal rule (fails for 1.and.2)
-            // /(((\d*\.)?\d+)|(\d+(\.\d*)?))([eEdD][-+]?\d+)?(_[a-zA-Z_]+)?/
-
+        if (valid_symbols[_INTEGER_LITERAL] || valid_symbols[_FLOAT_LITERAL] || valid_symbols[_BOZ_LITERAL]) {
             // extract out root number from expression
-            lexer->result_symbol = NUMBER_LITERAL;
             if (scan_number(lexer)) {
                 return true;
             }

@@ -52,7 +52,9 @@ module.exports = grammar({
 
   externals: $ => [
     $._line_continuation,
-    $.number_literal
+    $._integer_literal,
+    $._float_literal,
+    $._boz_literal
   ],
 
   extras: $ => [
@@ -523,9 +525,9 @@ module.exports = grammar({
       $.read_statement
     ),
 
-    statement_label: $ => /\d+/,
+    statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
 
-    _statement_label_reference: $ => alias($.statement_label, $.statement_label_reference),
+    statement_label_reference: $ => alias($.statement_label, 'statement_label_reference'),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
       $._expression,
@@ -828,7 +830,7 @@ module.exports = grammar({
     )),
 
     format_identifier: $ => choice(
-      $._statement_label_reference,
+      $.statement_label_reference,
       $._io_expressions
     ),
 
@@ -1017,6 +1019,12 @@ module.exports = grammar({
       ',',
       choice($.number_literal, $.identifier),
       ')'
+    ),
+
+    number_literal: $ => choice(
+      $._integer_literal,
+      $._float_literal,
+      $._boz_literal
     ),
 
     string_literal: $ => choice(

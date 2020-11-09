@@ -2594,16 +2594,25 @@
       ]
     },
     "statement_label": {
-      "type": "PATTERN",
-      "value": "\\d+"
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_integer_literal"
+        },
+        "named": false,
+        "value": "statement_label"
+      }
     },
-    "_statement_label_reference": {
+    "statement_label_reference": {
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
         "name": "statement_label"
       },
-      "named": true,
+      "named": false,
       "value": "statement_label_reference"
     },
     "assignment_statement": {
@@ -4323,7 +4332,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_statement_label_reference"
+          "name": "statement_label_reference"
         },
         {
           "type": "SYMBOL",
@@ -5658,6 +5667,23 @@
         }
       ]
     },
+    "number_literal": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_integer_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_float_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_boz_literal"
+        }
+      ]
+    },
     "string_literal": {
       "type": "CHOICE",
       "members": [
@@ -5815,7 +5841,15 @@
     },
     {
       "type": "SYMBOL",
-      "name": "number_literal"
+      "name": "_integer_literal"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_float_literal"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_boz_literal"
     }
   ],
   "inline": [

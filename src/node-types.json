@@ -2901,6 +2901,11 @@
     }
   },
   {
+    "type": "number_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "operator",
     "named": true,
     "fields": {}
@@ -3543,15 +3548,19 @@
             "named": false
           },
           {
-            "type": "derived_type_definition",
+            "type": "assignment_statement",
             "named": true
           },
           {
-            "type": "enum_statement",
+            "type": "call_expression",
             "named": true
           },
           {
-            "type": "equivalence_statement",
+            "type": "do_loop_statement",
+            "named": true
+          },
+          {
+            "type": "forall_statement",
             "named": true
           },
           {
@@ -3567,15 +3576,7 @@
             "named": true
           },
           {
-            "type": "implicit_range",
-            "named": true
-          },
-          {
-            "type": "implicit_statement",
-            "named": true
-          },
-          {
-            "type": "import_statement",
+            "type": "if_statement",
             "named": true
           },
           {
@@ -3587,7 +3588,11 @@
             "named": true
           },
           {
-            "type": "namelist_statement",
+            "type": "keyword_statement",
+            "named": true
+          },
+          {
+            "type": "module",
             "named": true
           },
           {
@@ -3595,19 +3600,23 @@
             "named": true
           },
           {
-            "type": "parameter_statement",
+            "type": "pointer_association_statement",
             "named": true
           },
           {
-            "type": "private_statement",
+            "type": "print_statement",
             "named": true
           },
           {
-            "type": "procedure_statement",
+            "type": "program_block",
             "named": true
           },
           {
-            "type": "public_statement",
+            "type": "read_statement",
+            "named": true
+          },
+          {
+            "type": "select_case_statement",
             "named": true
           },
           {
@@ -3619,15 +3628,15 @@
             "named": true
           },
           {
-            "type": "use_statement",
+            "type": "subroutine_call",
             "named": true
           },
           {
-            "type": "variable_declaration",
+            "type": "where_statement",
             "named": true
           },
           {
-            "type": "variable_modification",
+            "type": "write_statement",
             "named": true
           }
         ]
@@ -3816,7 +3825,7 @@
   },
   {
     "type": "statement_label_reference",
-    "named": true,
+    "named": false,
     "fields": {}
   },
   {
@@ -4678,12 +4687,12 @@
     "named": true
   },
   {
-    "type": "number_literal",
+    "type": "sequence_statement",
     "named": true
   },
   {
-    "type": "sequence_statement",
-    "named": true
+    "type": "statement_label",
+    "named": false
   },
   {
     "type": "type_name",
