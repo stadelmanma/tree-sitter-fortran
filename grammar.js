@@ -1110,7 +1110,7 @@ function blockStructureEnding ($, structType) {
       caseInsensitive('end'+structType,aliasAsWord=false)),
       'end'+structType),
     optional($.identifier),
-    optional($._end_of_statement)))
-  //
+    $._end_of_statement
+  ))
   return obj
 }
