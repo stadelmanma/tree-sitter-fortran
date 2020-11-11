@@ -284,6 +284,22 @@ module.exports = grammar({
       ))
     )),
 
+    private_statement: $ => prec(1, seq(
+      caseInsensitive('private'),
+      optional(seq(
+        '::',
+        commaSep1(choice($.identifier, $.operator))
+      ))
+    )),
+
+    public_statement: $ => prec(1, seq(
+      caseInsensitive('public'),
+      optional(seq(
+        '::',
+        commaSep1(choice($.identifier, $.operator))
+      ))
+    )),
+
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),
       '/',
@@ -480,10 +496,6 @@ module.exports = grammar({
       caseInsensitive('pure'),
       caseInsensitive('recursive')
     ),
-
-    private_statement: $ => caseInsensitive('private'),
-
-    public_statement: $ => caseInsensitive('public'),
 
     parameter_statement: $ => prec(1, seq(
       caseInsensitive('parameter'),

@@ -94,8 +94,8 @@ end module
           (call_expression (identifier) (argument_list (number_literal)))
           (string_literal))))
     (comment)
-    (variable_modification (type_qualifier) (identifier))
-    (variable_modification (type_qualifier) (identifier))
+    (public_statement (identifier))
+    (public_statement (identifier))
     (internal_procedures
       (contains_statement)
       (function

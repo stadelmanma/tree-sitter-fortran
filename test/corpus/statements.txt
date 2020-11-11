@@ -76,6 +76,40 @@ END MODULE
     (end_module_statement)))
 
 ============================================
+Private Statements
+============================================
+
+MODULE TEST
+  PRIVATE
+  PRIVATE :: a, b_1, operator(.and.), operator(+)
+END MODULE
+
+----
+
+(translation_unit
+  (module (module_statement (name))
+    (private_statement)
+    (private_statement (identifier) (identifier) (operator) (operator))
+    (end_module_statement)))
+
+============================================
+Public Statements
+============================================
+
+MODULE TEST
+  PUBLIC
+  PUBLIC :: a, b_1, operator(.and.), operator(+)
+END MODULE
+
+----
+
+(translation_unit
+  (module (module_statement (name))
+    (public_statement)
+    (public_statement (identifier) (identifier) (operator) (operator))
+    (end_module_statement)))
+
+============================================
 Intrinsic Variable Declarations
 ============================================
 
