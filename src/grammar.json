@@ -4701,7 +4701,7 @@
     },
     "edit_descriptor": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9\\/:.*]+"
+      "value": "[a-zA-Z0-9/:.*]+"
     },
     "read_statement": {
       "type": "CHOICE",

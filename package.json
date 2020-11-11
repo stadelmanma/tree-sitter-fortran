@@ -19,16 +19,12 @@
   "homepage": "https://github.com/stadelmanma/tree-sitter-fortran#readme",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.1"
+    "nan": "^2.14.2"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "tree-sitter-cli": "^0.16.9"
+    "eslint": "^7.13.0",
+    "eslint-config-standard": "^16.0.1",
+    "tree-sitter-cli": "^0.17.3"
   },
   "scripts": {
     "test": "tree-sitter test && tree-sitter parse examples/* --quiet --time"
