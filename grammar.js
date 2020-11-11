@@ -234,6 +234,7 @@ module.exports = grammar({
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
+      seq($.save_statement, $._end_of_statement),
       seq($.import_statement, $._end_of_statement),
       seq($.public_statement, $._end_of_statement),
       seq($.private_statement, $._end_of_statement),
@@ -274,6 +275,14 @@ module.exports = grammar({
         alias(caseInsensitive('none',aliasAsWord=false), $.none)
       )
     ),
+
+    save_statement: $ => prec(1, seq(
+      caseInsensitive('save'),
+      optional(seq(
+        '::',
+        commaSep1($.identifier)
+      ))
+    )),
 
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),

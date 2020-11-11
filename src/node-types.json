@@ -1733,6 +1733,10 @@
           "named": true
         },
         {
+          "type": "save_statement",
+          "named": true
+        },
+        {
           "type": "select_case_statement",
           "named": true
         },
@@ -2806,6 +2810,10 @@
           "named": true
         },
         {
+          "type": "save_statement",
+          "named": true
+        },
+        {
           "type": "statement_label",
           "named": true
         },
@@ -3333,6 +3341,10 @@
           "named": true
         },
         {
+          "type": "save_statement",
+          "named": true
+        },
+        {
           "type": "select_case_statement",
           "named": true
         },
@@ -3584,6 +3596,21 @@
     }
   },
   {
+    "type": "save_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "select_case_statement",
     "named": true,
     "fields": {},
@@ -3809,6 +3836,10 @@
         },
         {
           "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
           "named": true
         },
         {

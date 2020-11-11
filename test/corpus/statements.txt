@@ -59,6 +59,23 @@ END PROGRAM
   (end_program_statement)))
 
 ============================================
+Save Statements
+============================================
+
+MODULE TEST
+  SAVE
+  SAVE :: a, b, c, d_1
+END MODULE
+
+----
+
+(translation_unit
+  (module (module_statement (name))
+    (save_statement)
+    (save_statement (identifier) (identifier) (identifier) (identifier))
+    (end_module_statement)))
+
+============================================
 Intrinsic Variable Declarations
 ============================================
 
