@@ -187,11 +187,11 @@ module.exports = grammar({
     procedure_attributes: $ => seq(
       caseInsensitive('attributes'),
       '(',
-        commaSep1(choice(
-          caseInsensitive('global'),
-          caseInsensitive('device'),
-          caseInsensitive('host'),
-          caseInsensitive('grid_global'))),
+      commaSep1(choice(
+        caseInsensitive('global'),
+        caseInsensitive('device'),
+        caseInsensitive('host'),
+        caseInsensitive('grid_global'))),
       ')'
     ),
 
@@ -272,7 +272,7 @@ module.exports = grammar({
           commaSep1($.implicit_range),
           ')'
         )),
-        alias(caseInsensitive('none',aliasAsWord=false), $.none)
+        alias(caseInsensitive('none', false), $.none)
       )
     ),
 
@@ -287,7 +287,7 @@ module.exports = grammar({
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),
       '/',
-      alias($.identifier,$.namelist_name),
+      alias($.identifier, $.namelist_name),
       '/',
       commaSep1($.identifier)
     ),
@@ -392,13 +392,13 @@ module.exports = grammar({
     variable_attributes: $ => seq(
       caseInsensitive('attributes'),
       '(',
-        choice(
-          caseInsensitive('device'),
-          caseInsensitive('managed'),
-          caseInsensitive('constant'),
-          caseInsensitive('shared'),
-          caseInsensitive('pinned'),
-          caseInsensitive('texture')),
+      choice(
+        caseInsensitive('device'),
+        caseInsensitive('managed'),
+        caseInsensitive('constant'),
+        caseInsensitive('shared'),
+        caseInsensitive('pinned'),
+        caseInsensitive('texture')),
       ')'
     ),
 
@@ -418,9 +418,9 @@ module.exports = grammar({
       caseInsensitive('byte'),
       caseInsensitive('integer'),
       caseInsensitive('real'),
-      whiteSpacedKeyword('double','precision'),
+      whiteSpacedKeyword('double', 'precision'),
       caseInsensitive('complex'),
-      whiteSpacedKeyword('double','complex'),
+      whiteSpacedKeyword('double', 'complex'),
       caseInsensitive('logical'),
       caseInsensitive('character')
     ),
@@ -453,7 +453,7 @@ module.exports = grammar({
         choice(
           caseInsensitive('in'),
           caseInsensitive('out'),
-          whiteSpacedKeyword('in','out')
+          whiteSpacedKeyword('in', 'out')
         ),
         ')'
       ),
@@ -567,7 +567,7 @@ module.exports = grammar({
       caseInsensitive('continue'),
       seq(caseInsensitive('cycle'), optional($.identifier)),
       seq(caseInsensitive('exit'), optional($.identifier)),
-      seq(whiteSpacedKeyword('go','to'), $.statement_label),
+      seq(whiteSpacedKeyword('go', 'to'), $.statement_label),
       caseInsensitive('return'),
       seq(caseInsensitive('stop'), optional($._expression))
     ),
@@ -587,7 +587,7 @@ module.exports = grammar({
     ),
 
     end_do_loop_statement: $ => seq(
-      whiteSpacedKeyword('end','do'),
+      whiteSpacedKeyword('end', 'do'),
       optional($._block_label)
     ),
 
@@ -624,7 +624,7 @@ module.exports = grammar({
     ),
 
     elseif_clause: $ => seq(
-      whiteSpacedKeyword('else','if'),
+      whiteSpacedKeyword('else', 'if'),
       $.parenthesized_expression,
       caseInsensitive('then'),
       optional($._block_label),
@@ -661,12 +661,12 @@ module.exports = grammar({
     ),
 
     end_where_statement: $ => seq(
-      whiteSpacedKeyword('end','where'),
+      whiteSpacedKeyword('end', 'where'),
       optional($._block_label)
     ),
 
     elsewhere_clause: $ => seq(
-      whiteSpacedKeyword('else','where'),
+      whiteSpacedKeyword('else', 'where'),
       optional($.parenthesized_expression),
       optional($._block_label),
       $._end_of_statement,
@@ -712,13 +712,13 @@ module.exports = grammar({
     ),
 
     end_forall_statement: $ => seq(
-      whiteSpacedKeyword('end','forall'),
+      whiteSpacedKeyword('end', 'forall'),
       optional($._block_label)
     ),
 
     select_case_statement: $ => seq(
       optional($.block_label_start_expression),
-      whiteSpacedKeyword('select','case'),
+      whiteSpacedKeyword('select', 'case'),
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
@@ -726,7 +726,7 @@ module.exports = grammar({
     ),
 
     end_select_case_statement: $ => seq(
-      whiteSpacedKeyword('end','select'),
+      whiteSpacedKeyword('end', 'select'),
       optional($._block_label)
     ),
 
@@ -824,13 +824,13 @@ module.exports = grammar({
       optional('::'),
       commaSep1(choice(
         alias($.identifier, $.implicit_enumerator),
-        $.explicit_enumerator,
-      )),
+        $.explicit_enumerator
+      ))
     ),
 
-    explicit_enumerator: $ => seq($.identifier,'=', $.number_literal),
+    explicit_enumerator: $ => seq($.identifier, '=', $.number_literal),
 
-    end_enum_statement: $=> whiteSpacedKeyword('end','enum'),
+    end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(
@@ -1084,11 +1084,11 @@ function caseInsensitive (keyword, aliasAsWord = true) {
   return result
 }
 
-function whiteSpacedKeyword(prefix, suffix) {
+function whiteSpacedKeyword (prefix, suffix) {
   return alias(choice(
-        seq(caseInsensitive(prefix,aliasAsWord= false), caseInsensitive(suffix,aliasAsWord= false)),
-        caseInsensitive(prefix + suffix, aliasAsWord= false)),
-        prefix + suffix)
+    seq(caseInsensitive(prefix, false), caseInsensitive(suffix, false)),
+    caseInsensitive(prefix + suffix, false)),
+  prefix + suffix)
 }
 
 /* TODO
@@ -1114,10 +1114,10 @@ function blockStructureEnding ($, structType) {
   const obj = prec.right(seq(
     alias(choice(
       seq(
-        caseInsensitive('end',aliasAsWord=false),
-        optional(caseInsensitive(structType,aliasAsWord=false))),
-      caseInsensitive('end'+structType,aliasAsWord=false)),
-      'end'+structType),
+        caseInsensitive('end', false),
+        optional(caseInsensitive(structType, false))),
+      caseInsensitive('end' + structType, false)),
+    'end' + structType),
     optional($.identifier),
     $._end_of_statement
   ))
