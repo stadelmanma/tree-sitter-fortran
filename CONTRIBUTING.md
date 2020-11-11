@@ -1,31 +1,31 @@
 # Contributing
 
-First, thank you for your interest in contributing to this project, teamwork makes the dreamwork! When contributing
+First, thank you for your interest in contributing to this project, teamwork makes the dream work! When contributing
 to this repository, please first discuss the change you wish to make via issue, with the owners of this repository
-before making a change. This will greatly speed up the process of determing if and how your contrbution will fit
+before making a change. This will greatly speed up the process of determining if and how your contribution will fit
 into the project.
 
 ## Pull Request Process
 
-1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
+1. Ensure any install or build dependencies are removed before the end of the layer when doing a
    build.
 2. Include useful information about the changes you are wanting to contribute, including: what you've done, the
    intended goal and any possible side effects or breaking changes relative to previous version.
 3. If your pull request intends to fix a specific issue please reference that in the pull request message.
 4. Do not increment the version number, this will be done by one of the maintainers as needed. The versioning scheme
    we use is [SemVer](http://semver.org/).
-5. Pull requests will only be merged after the code is reviewed, requested changes made and the changes are sufficently
+5. Pull requests will only be merged after the code is reviewed, requested changes made and the changes are sufficiently
    covered by the test suite.
 
 ## Coding Conventions
 
 Effort is taken to make ensure code is first and foremost readable, below are some quick guidelines to follow. When in
-doubt if it doesn't match the existing style you will likely be asked to refomat accordingly (i.e. listen to the linter).
+doubt if it doesn't match the existing style you will likely be asked to reformat accordingly (i.e. listen to the linter).
   * All JavaScript and free form Fortran code is indented two spaces
-  * Parser output in unit tests (corpus/*.txt) is indented two spaces
+  * Parser output in unit tests (corpus/\*.txt) is indented two spaces
   * Parser ouput in unit tests is logically grouped to reduce the vertical space required
   * Line length is preferred to be 80 characters or less
-  
+
 ## Commit Messages
 
 Good clean commit messages benefit everyone, please refer to https://chris.beams.io/posts/git-commit. To summarize
