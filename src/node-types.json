@@ -409,6 +409,25 @@
     }
   },
   {
+    "type": "common_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "variable_group",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "complex_literal",
     "named": true,
     "fields": {},
@@ -1645,6 +1664,10 @@
           "named": true
         },
         {
+          "type": "common_statement",
+          "named": true
+        },
+        {
           "type": "derived_type_definition",
           "named": true
         },
@@ -2773,6 +2796,10 @@
       "required": true,
       "types": [
         {
+          "type": "common_statement",
+          "named": true
+        },
+        {
           "type": "derived_type_definition",
           "named": true
         },
@@ -2879,11 +2906,7 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "namelist_name",
+          "type": "variable_group",
           "named": true
         }
       ]
@@ -3291,6 +3314,10 @@
         },
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "common_statement",
           "named": true
         },
         {
@@ -3803,6 +3830,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "common_statement",
           "named": true
         },
         {
@@ -4323,6 +4354,25 @@
     }
   },
   {
+    "type": "variable_group",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "variable_modification",
     "named": true,
     "fields": {},
@@ -4691,6 +4741,10 @@
     "named": true
   },
   {
+    "type": "common",
+    "named": false
+  },
+  {
     "type": "complex",
     "named": false
   },
@@ -4933,10 +4987,6 @@
   {
     "type": "namelist",
     "named": false
-  },
-  {
-    "type": "namelist_name",
-    "named": true
   },
   {
     "type": "non_overridable",

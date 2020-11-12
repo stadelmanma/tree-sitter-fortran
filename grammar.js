@@ -251,7 +251,8 @@ module.exports = grammar({
       $.enum,
       $.interface,
       $.derived_type_definition,
-      prec(1, seq($.namelist_statement, $._end_of_statement)),
+      seq($.namelist_statement, $._end_of_statement),
+      seq($.common_statement, $._end_of_statement),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -312,8 +313,20 @@ module.exports = grammar({
 
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),
+      repeat1($.variable_group)
+    ),
+
+    common_statement: $ => seq(
+      caseInsensitive('common'),
+      repeat1(choice(
+        $.variable_group,
+        commaSep1($.identifier)
+      ))
+    ),
+
+    variable_group: $ => seq(
       '/',
-      alias($.identifier, $.namelist_name),
+      $._name,
       '/',
       commaSep1($.identifier)
     ),

@@ -869,13 +869,32 @@ end function test
     (end_function_statement (identifier))))
 
 ============================================
-Namelists in modules
+Common Statement
+============================================
+
+PROGRAM TEST
+  COMMON /blk1/ m, n /blk2/ o
+  COMMON p
+END PROGRAM
+
+----
+
+(translation_unit
+  (program_block (identifier)
+    (common_statement
+      (variable_group (name) (identifier) (identifier))
+      (variable_group (name) (identifier)))
+    (common_statement (identifier))
+    (end_program_statement)))
+
+============================================
+Namelist Statement
 ============================================
 
 PROGRAM TEST
   INTEGER :: i, j
   REAL :: a, b
-  namelist /test_nml/ i,j,a,b
+  namelist /test/ i,j /test2/ a,b
 END PROGRAM
 
 ----
@@ -884,44 +903,10 @@ END PROGRAM
   (program_block (identifier)
     (variable_declaration (intrinsic_type) (identifier) (identifier))
     (variable_declaration (intrinsic_type) (identifier) (identifier))
-    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
-  (end_program_statement)))
-
-============================================
-Namelists in functions
-============================================
-
-function test()
-  namelist /test_nml/ i,j,a,b
-end function test
-
-----
-
-(translation_unit
-  (function
-    (function_statement (name))
-    (namelist_statement (namelist_name) (identifier) (identifier) (identifier) (identifier))
-    (end_function_statement (identifier))))
-
-============================================
-Namelists in subroutines
-============================================
-
-subroutine ex(a,b,c)
-    implicit none
-    namelist /test_nml/ a,b,c
-    a = 1
-end subroutine ex
-
-----
-
-(translation_unit
-  (subroutine
-    (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
-    (implicit_statement (none))
-    (namelist_statement (namelist_name) (identifier) (identifier) (identifier))
-    (assignment_statement (identifier) (number_literal))
-    (end_subroutine_statement (identifier))))
+    (namelist_statement
+      (variable_group (name) (identifier) (identifier))
+      (variable_group (name) (identifier) (identifier)))
+    (end_program_statement)))
 
 ============================================
 Enum Statements
