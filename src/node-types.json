@@ -1313,7 +1313,7 @@
     }
   },
   {
-    "type": "enum_statement",
+    "type": "enum",
     "named": true,
     "fields": {},
     "children": {
@@ -1325,7 +1325,26 @@
           "named": true
         },
         {
+          "type": "enum_statement",
+          "named": true
+        },
+        {
           "type": "enumerator_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enum_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "language_binding",
           "named": true
         }
       ]
@@ -1340,11 +1359,11 @@
       "required": true,
       "types": [
         {
-          "type": "explicit_enumerator",
+          "type": "identifier",
           "named": true
         },
         {
-          "type": "implicit_enumerator",
+          "type": "number_literal",
           "named": true
         }
       ]
@@ -1379,25 +1398,6 @@
       "types": [
         {
           "type": "equivalence_set",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "explicit_enumerator",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number_literal",
           "named": true
         }
       ]
@@ -1657,7 +1657,7 @@
           "named": true
         },
         {
-          "type": "enum_statement",
+          "type": "enum",
           "named": true
         },
         {
@@ -2781,7 +2781,7 @@
           "named": true
         },
         {
-          "type": "enum_statement",
+          "type": "enum",
           "named": true
         },
         {
@@ -3306,7 +3306,7 @@
           "named": true
         },
         {
-          "type": "enum_statement",
+          "type": "enum",
           "named": true
         },
         {
@@ -3818,7 +3818,7 @@
           "named": true
         },
         {
-          "type": "enum_statement",
+          "type": "enum",
           "named": true
         },
         {
@@ -4671,10 +4671,6 @@
     "named": false
   },
   {
-    "type": "c",
-    "named": false
-  },
-  {
     "type": "call",
     "named": false
   },
@@ -4873,10 +4869,6 @@
   {
     "type": "implicit",
     "named": false
-  },
-  {
-    "type": "implicit_enumerator",
-    "named": true
   },
   {
     "type": "import",

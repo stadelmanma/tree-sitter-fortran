@@ -938,9 +938,9 @@ END PROGRAM test
 
 (translation_unit
   (program_block (identifier)
-    (enum_statement
-      (enumerator_statement
-        (explicit_enumerator (identifier) (number_literal)))
-      (enumerator_statement (implicit_enumerator) (implicit_enumerator))
-    (end_enum_statement))
-  (end_program_statement (identifier))))
+    (enum
+      (enum_statement (language_binding (identifier)))
+      (enumerator_statement (identifier) (number_literal))
+      (enumerator_statement (identifier) (identifier))
+      (end_enum_statement))
+    (end_program_statement (identifier))))

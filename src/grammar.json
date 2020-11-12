@@ -1199,6 +1199,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "enum"
+        },
+        {
+          "type": "SYMBOL",
           "name": "interface"
         },
         {
@@ -1221,19 +1225,6 @@
               }
             ]
           }
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "enum_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_end_of_statement"
-            }
-          ]
         },
         {
           "type": "SEQ",
@@ -5368,6 +5359,30 @@
         }
       ]
     },
+    "enum": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "enum_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enumerator_statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_enum_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        }
+      ]
+    },
     "enum_statement": {
       "type": "SEQ",
       "members": [
@@ -5385,41 +5400,8 @@
           "value": ","
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[bB][iI][nN][dD]"
-          },
-          "named": false,
-          "value": "bind"
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[cC]"
-          },
-          "named": false,
-          "value": "c"
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "enumerator_statement"
-          }
-        },
-        {
           "type": "SYMBOL",
-          "name": "end_enum_statement"
+          "name": "language_binding"
         }
       ]
     },
@@ -5454,17 +5436,25 @@
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  },
-                  "named": true,
-                  "value": "implicit_enumerator"
+                  "type": "SYMBOL",
+                  "name": "identifier"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "explicit_enumerator"
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "identifier"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "="
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "number_literal"
+                    }
+                  ]
                 }
               ]
             },
@@ -5481,17 +5471,25 @@
                     "type": "CHOICE",
                     "members": [
                       {
-                        "type": "ALIAS",
-                        "content": {
-                          "type": "SYMBOL",
-                          "name": "identifier"
-                        },
-                        "named": true,
-                        "value": "implicit_enumerator"
+                        "type": "SYMBOL",
+                        "name": "identifier"
                       },
                       {
-                        "type": "SYMBOL",
-                        "name": "explicit_enumerator"
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "="
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "number_literal"
+                          }
+                        ]
                       }
                     ]
                   }
@@ -5499,23 +5497,6 @@
               }
             }
           ]
-        }
-      ]
-    },
-    "explicit_enumerator": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": "="
-        },
-        {
-          "type": "SYMBOL",
-          "name": "number_literal"
         }
       ]
     },

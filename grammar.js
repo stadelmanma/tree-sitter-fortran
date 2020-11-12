@@ -248,10 +248,10 @@ module.exports = grammar({
       seq($.import_statement, $._end_of_statement),
       seq($.public_statement, $._end_of_statement),
       seq($.private_statement, $._end_of_statement),
+      $.enum,
       $.interface,
       $.derived_type_definition,
       prec(1, seq($.namelist_statement, $._end_of_statement)),
-      seq($.enum_statement, $._end_of_statement),
       seq($.variable_declaration, $._end_of_statement),
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
@@ -830,27 +830,27 @@ module.exports = grammar({
       optional($.output_item_list)
     ),
 
+    enum: $ => seq(
+      $.enum_statement,
+      repeat($.enumerator_statement),
+      $.end_enum_statement,
+      $._end_of_statement
+    ),
+
     enum_statement: $ => seq(
       caseInsensitive('enum'),
       ',',
-      caseInsensitive('bind'),
-      '(',
-      caseInsensitive('c'),
-      ')',
-      repeat($.enumerator_statement),
-      $.end_enum_statement
+      $.language_binding
     ),
 
     enumerator_statement: $ => seq(
       caseInsensitive('enumerator'),
       optional('::'),
       commaSep1(choice(
-        alias($.identifier, $.implicit_enumerator),
-        $.explicit_enumerator
+        $.identifier,
+        seq($.identifier, '=', $.number_literal)
       ))
     ),
-
-    explicit_enumerator: $ => seq($.identifier, '=', $.number_literal),
 
     end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),
 
