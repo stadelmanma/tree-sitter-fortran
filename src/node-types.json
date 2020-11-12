@@ -1807,6 +1807,10 @@
           "named": true
         },
         {
+          "type": "language_binding",
+          "named": true
+        },
+        {
           "type": "name",
           "named": true
         },
@@ -2299,6 +2303,25 @@
         },
         {
           "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "language_binding",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
           "named": true
         }
       ]
@@ -3946,6 +3969,10 @@
         },
         {
           "type": "intrinsic_type",
+          "named": true
+        },
+        {
+          "type": "language_binding",
           "named": true
         },
         {

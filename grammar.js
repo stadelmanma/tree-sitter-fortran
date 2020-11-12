@@ -154,7 +154,8 @@ module.exports = grammar({
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       $._name,
-      optional($._parameters)
+      optional($._parameters),
+      optional($.language_binding)
     ),
 
     end_subroutine_statement: $ => blockStructureEnding($, 'subroutine'),
@@ -173,7 +174,16 @@ module.exports = grammar({
       caseInsensitive('function'),
       $._name,
       optional($._parameters),
+      optional($.language_binding),
       optional($.function_result)
+    ),
+
+    language_binding: $ => seq(
+      caseInsensitive('bind'),
+      '(',
+      $.identifier,
+      optional(seq(',', $.keyword_argument)),
+      ')'
     ),
 
     _callable_interface_qualifers: $ => repeat1(

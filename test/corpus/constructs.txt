@@ -235,6 +235,12 @@ end subroutine static_method
 subroutine parens_but_no_args()
 end subroutine
 
+subroutine exported_fun(arg1, arg2) bind(c)
+end subroutine
+
+subroutine exported_fun2() bind(c, name="f90_func")
+end subroutine
+
 SUBROUTINE WITH_INTERNAL_PROC
   integer :: cmd_stat
 
@@ -263,9 +269,20 @@ END SUBROUTINE
       (intrinsic_type) (size (argument_list (number_literal))) (type_qualifier) (identifier))
     (assignment_statement
       (identifier) (math_expression (identifier) (identifier)))
-  (end_subroutine_statement (identifier)))
+    (end_subroutine_statement (identifier)))
   (subroutine
     (subroutine_statement (name))
+    (end_subroutine_statement))
+  (subroutine
+    (subroutine_statement (name)
+      (parameters (identifier) (identifier))
+      (language_binding (identifier)))
+    (end_subroutine_statement))
+  (subroutine
+    (subroutine_statement (name)
+      (language_binding
+        (identifier)
+        (keyword_argument (identifier) (string_literal))))
     (end_subroutine_statement))
   (subroutine (subroutine_statement (name))
     (variable_declaration (intrinsic_type) (identifier))
@@ -285,7 +302,6 @@ END SUBROUTINE
     (end_subroutine_statement)))
   (end_subroutine_statement)))
 
-
 ============================================
 Functions (simple)
 ============================================
@@ -301,6 +317,12 @@ type(object) function new_object
   TYPE(object) :: obj
   obj%counter = 0
   new_object = obj
+end function
+
+integer(8) function exported_fun(arg1, arg2) bind(c)
+end function
+
+complex(8) function exported_fun2() bind(c, name="f90_func")
 end function
 
 ----
@@ -323,8 +345,22 @@ end function
       (derived_type_member_expression (identifier) (identifier))
       (number_literal))
     (assignment_statement (identifier) (identifier))
-  (end_function_statement)))
-
+  (end_function_statement))
+  (function
+    (function_statement
+      (intrinsic_type) (size (argument_list (number_literal)))
+      (name)
+      (parameters (identifier) (identifier))
+       (language_binding (identifier)))
+    (end_function_statement))
+  (function
+    (function_statement
+      (intrinsic_type) (size (argument_list (number_literal)))
+      (name)
+      (language_binding
+        (identifier)
+        (keyword_argument (identifier) (string_literal))))
+    (end_function_statement)))
 
 ============================================
 Functions (complex)
