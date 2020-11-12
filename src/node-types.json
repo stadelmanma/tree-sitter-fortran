@@ -84,7 +84,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "array_literal",
@@ -4637,6 +4637,10 @@
     "named": false
   },
   {
+    "type": "[",
+    "named": false
+  },
+  {
     "type": "\\.and\\.",
     "named": false
   },
@@ -4678,6 +4682,10 @@
   },
   {
     "type": "\\.or\\.",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

@@ -1056,7 +1056,16 @@ module.exports = grammar({
       optional(seq(',', $._expression))
     ),
 
-    array_literal: $ => seq('(/', commaSep1($._expression), '/)'),
+    array_literal: $ => choice(
+      $._array_constructor_legacy,
+      $._array_constructor_f2003
+    ),
+
+    _array_constructor_legacy: $ => seq('(/', $._ac_value_list, '/)'),
+
+    _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
+
+    _ac_value_list: $ => commaSep1($._expression),
 
     complex_literal: $ => seq(
       '(',
