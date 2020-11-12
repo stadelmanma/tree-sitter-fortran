@@ -3059,6 +3059,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[pP][rR][oO][tT][eE][cC][tT][eE][dD]"
+          },
+          "named": false,
+          "value": "protected"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[pP][uU][bB][lL][iI][cC]"
           },
           "named": false,

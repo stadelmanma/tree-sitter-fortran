@@ -490,6 +490,7 @@ module.exports = grammar({
       caseInsensitive('pinned'),
       caseInsensitive('pointer'),
       caseInsensitive('private'),
+      caseInsensitive('protected'),
       caseInsensitive('public'),
       caseInsensitive('save'),
       caseInsensitive('sequence'),
