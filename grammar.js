@@ -817,6 +817,7 @@ module.exports = grammar({
       choice(
         $.unit_identifier,
         seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
         seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
         commaSep1($.keyword_argument)
       ),

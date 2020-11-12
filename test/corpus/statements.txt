@@ -758,6 +758,7 @@ PROGRAM TEST
   READ(*)
   READ(*, *)
   READ(10, 100) x, y, z
+  READ(10,*,iostat=ioerr)
   READ(IOUNIT, FMT="(FORMAT STRING)") flags(:)
   READ(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
 END PROGRAM
@@ -776,6 +777,10 @@ END PROGRAM
       (unit_identifier (number_literal))
       (format_identifier (statement_label_reference))
       (input_item_list (identifier) (identifier) (identifier)))
+    (read_statement
+        (unit_identifier (number_literal))
+        (format_identifier)
+        (keyword_argument  (identifier) (identifier)))
     (read_statement
       (unit_identifier (identifier))
       (keyword_argument (identifier) (string_literal))
