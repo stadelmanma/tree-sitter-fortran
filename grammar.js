@@ -68,7 +68,9 @@ module.exports = grammar({
     $._statement
   ],
 
-  conflicts: $ => [],
+  conflicts: $ => [
+    [$._expression, $.complex_literal]
+  ],
 
   rules: {
     translation_unit: $ => repeat($._top_level_item),
@@ -1081,7 +1083,7 @@ module.exports = grammar({
       $.unary_expression,
       $.parenthesized_expression,
       $.call_expression,
-      // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+      $.implied_do_loop_expression
     ),
 
     parenthesized_expression: $ => seq(
@@ -1182,6 +1184,14 @@ module.exports = grammar({
     call_expression: $ => prec(
       PREC.CALL,
       seq($._expression, repeat1($.argument_list))
+    ),
+
+    implied_do_loop_expression: $ => seq(
+      '(',
+      commaSep1($._expression),
+      ',',
+      $.loop_control_expression,
+      ')'
     ),
 
     argument_list: $ => prec.dynamic(
