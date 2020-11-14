@@ -6735,8 +6735,11 @@
             "name": "identifier"
           },
           {
-            "type": "SYMBOL",
-            "name": "argument_list"
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "argument_list"
+            }
           }
         ]
       }

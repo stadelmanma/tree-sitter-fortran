@@ -913,7 +913,7 @@ module.exports = grammar({
       $.math_expression,
       $.unary_expression,
       $.parenthesized_expression,
-      $.call_expression
+      $.call_expression,
       // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
     ),
 
@@ -1008,9 +1008,13 @@ module.exports = grammar({
     // Because the difference is context specific it is better to consistently
     // use the call expression for all cases instead of adding a few odd
     // corner cases when the two can be differentiated.
+    // Similarly call_expressions can also get chained e.g. accessing
+    // elements of an array of strings so we need to repeat the arg list.
+    // Ideally we'd nest call_expressions innermost to outer but that
+    // isn't easy to do.
     call_expression: $ => prec(
       PREC.CALL,
-      seq($.identifier, $.argument_list)
+      seq($.identifier, repeat1($.argument_list))
     ),
 
     argument_list: $ => prec.dynamic(

@@ -386,6 +386,7 @@ PROGRAM TEST
     CALL get_command_argument(i, arg)
     OPEN(7, FILE="output.txt")
     obj%attr = SIN(rr(1:i))
+    name = adjustl(line(i)(1:pos-1)(0))
 END PROGRAM
 
 ----
@@ -425,6 +426,18 @@ END PROGRAM
           (call_expression (identifier)
             (argument_list
               (extent_specifier (number_literal) (identifier)))))))
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (call_expression
+            (identifier)
+            (argument_list (identifier))
+            (argument_list
+              (extent_specifier  (number_literal)
+              (math_expression left: (identifier) right: (number_literal))))
+            (argument_list (number_literal))))))
     (end_program_statement)))
 
 =================
