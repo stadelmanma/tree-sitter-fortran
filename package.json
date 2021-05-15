@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/stadelmanma/tree-sitter-fortran"
   },
-  "main": "index.js",
+  "main": "bindings/node",
   "keywords": [
     "parser",
     "fortran",
