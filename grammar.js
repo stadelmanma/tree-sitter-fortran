@@ -152,8 +152,8 @@ module.exports = grammar({
     subroutine_statement: $ => seq(
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
-      $._name,
-      optional($._parameters),
+      field('name', $._name),
+      optional(field('parameters',$._parameters)),
       optional($.language_binding)
     ),
 
@@ -171,8 +171,8 @@ module.exports = grammar({
     function_statement: $ => seq(
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
-      $._name,
-      optional($._parameters),
+      field('name', $._name),
+      optional(field('parameters',$._parameters)),
       optional($.language_binding),
       optional($.function_result)
     ),
@@ -574,9 +574,9 @@ module.exports = grammar({
     statement_label_reference: $ => alias($.statement_label, 'statement_label_reference'),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
-      $._expression,
+      field('left',$._expression),
       '=',
-      $._expression
+      field('right',$._expression),
     )),
 
     pointer_association_statement: $ => prec.right(seq(
@@ -609,7 +609,7 @@ module.exports = grammar({
 
     include_statement: $ => seq(
       caseInsensitive('include'),
-      alias($.string_literal, $.filename)
+      field("path", alias($.string_literal, $.filename))
     ),
 
     do_loop_statement: $ => seq(
@@ -1032,9 +1032,9 @@ module.exports = grammar({
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(
-      $.identifier,
+      field("left",$.identifier),
       '=',
-      choice($._expression, $.assumed_size, $.assumed_shape)
+      field("right",choice($._expression, $.assumed_size, $.assumed_shape))
     )),
 
     extent_specifier: $ => seq(
