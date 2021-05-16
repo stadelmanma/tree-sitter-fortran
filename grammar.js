@@ -128,8 +128,7 @@ module.exports = grammar({
     ),
 
     end_interface_statement: $ => prec.right(seq(
-      caseInsensitive('end'),
-      caseInsensitive('interface'),
+      whiteSpacedKeyword('end', 'interface'),
       optional(choice(
         $._name,
         $.assignment,
