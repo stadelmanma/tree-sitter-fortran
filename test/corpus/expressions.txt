@@ -399,19 +399,19 @@ END PROGRAM
       (call_expression (identifier)
         (argument_list
           (math_expression
-            (math_expression (number_literal) (identifier))
-            (math_expression (identifier) (identifier))))))
+            left: (math_expression left: (number_literal) right: (identifier))
+            right: (math_expression left: (identifier) right: (identifier))))))
     (assignment_statement (identifier)
       (math_expression
-        (call_expression (identifier)
+        left: (call_expression (identifier)
           (argument_list
             (math_expression
-              (call_expression (identifier)
+              left: (call_expression (identifier)
                 (argument_list
-                  (math_expression (identifier) (identifier))
+                  (math_expression left: (identifier) right: (identifier))
                   (number_literal)))
-              (number_literal))))
-        (number_literal)))
+              right: (number_literal))))
+        right: (number_literal)))
     (subroutine_call
       (name)
       (argument_list (identifier) (identifier)))
