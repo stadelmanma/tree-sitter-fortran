@@ -1166,7 +1166,7 @@ function blockStructureEnding ($, structType) {
         optional(caseInsensitive(structType, false))),
       caseInsensitive('end' + structType, false)),
     'end' + structType),
-    optional($.identifier),
+    optional($._name),
     $._end_of_statement
   ))
   return obj
