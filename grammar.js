@@ -924,7 +924,7 @@ module.exports = grammar({
     derived_type_member_expression: $ => prec.right(PREC.TYPE_MEMBER, seq(
       $._expression,
       '%',
-      $._expression
+      alias($.identifier, $.type_member)
     )),
 
     logical_expression: $ => {
@@ -1012,7 +1012,7 @@ module.exports = grammar({
     // isn't easy to do.
     call_expression: $ => prec(
       PREC.CALL,
-      seq($.identifier, repeat1($.argument_list))
+      seq($._expression, repeat1($.argument_list))
     ),
 
     argument_list: $ => prec.dynamic(
