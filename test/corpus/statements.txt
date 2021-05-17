@@ -11,7 +11,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (include_statement (filename))
     (assignment_statement (identifier) (number_literal))
     (include_statement (filename))
@@ -30,7 +31,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (use_statement (module_name))
     (use_statement (module_name)
       (included_items (identifier) (identifier)))
@@ -50,7 +52,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (implicit_statement
       (intrinsic_type) (implicit_range)
       (intrinsic_type) (size (argument_list (number_literal))) (implicit_range)
@@ -128,7 +131,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (variable_declaration (intrinsic_type) (type_qualifier)
       (assignment_statement (identifier) (number_literal))
       (assignment_statement (identifier) (number_literal)))
@@ -175,7 +179,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (variable_declaration (derived_type (type_name)) (identifier))
   (end_program_statement)))
 
@@ -194,7 +199,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (variable_modification (type_qualifier) (identifier))
     (variable_modification (type_qualifier)
       (call_expression (identifier) (argument_list (extent_specifier) (extent_specifier)))
@@ -245,7 +251,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (do_loop_statement
       (loop_control_expression (identifier) (number_literal) (number_literal))
       (assignment_statement
@@ -331,7 +338,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (if_statement
       (parenthesized_expression (relational_expression (identifier) (number_literal)))
       (assignment_statement (identifier) (number_literal)))
@@ -423,7 +431,8 @@ end program
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (where_statement
       (parenthesized_expression (relational_expression (identifier) (number_literal)))
       (assignment_statement (identifier) (math_expression (identifier) (identifier))))
@@ -479,8 +488,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block
-    (identifier)
+  (program 
+    (program_statement (name))
     (forall_statement
       (triplet_spec
         (identifier)
@@ -521,7 +530,7 @@ END PROGRAM
             (identifier)
             (argument_list
               (identifier)))
-          (identifier))
+          (type_member))
         (call_expression
           (identifier)
           (argument_list
@@ -666,7 +675,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (select_case_statement (block_label_start_expression) (selector (identifier))
       (case_statement (case_value_range_list (extent_specifier (unary_expression (number_literal))))
         (block_label)
@@ -720,7 +730,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (statement_label)
     (format_statement
       (transfer_items (string_literal) (edit_descriptor) (edit_descriptor)))
@@ -766,7 +777,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (read_statement (format_identifier) (input_item_list (identifier)))
     (read_statement
       (format_identifier (statement_label_reference))
@@ -806,7 +818,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (print_statement (format_identifier))
     (print_statement (format_identifier) (output_item_list (string_literal)))
     (print_statement
@@ -830,7 +843,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (write_statement (unit_identifier))
     (write_statement
       (unit_identifier)
@@ -871,7 +885,7 @@ end function test
   (function
     (function_statement (name))
     (import_statement (identifier) (identifier))
-    (end_function_statement (identifier))))
+    (end_function_statement (name))))
 
 ============================================
 Common Statement
@@ -885,7 +899,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (common_statement
       (variable_group (name) (identifier) (identifier))
       (variable_group (name) (identifier)))
@@ -905,7 +920,8 @@ END PROGRAM
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (variable_declaration (intrinsic_type) (identifier) (identifier))
     (variable_declaration (intrinsic_type) (identifier) (identifier))
     (namelist_statement
@@ -927,10 +943,11 @@ END PROGRAM test
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (enum
       (enum_statement (language_binding (identifier)))
       (enumerator_statement (identifier) (number_literal))
       (enumerator_statement (identifier) (identifier))
       (end_enum_statement))
-    (end_program_statement (identifier))))
+    (end_program_statement (name))))
