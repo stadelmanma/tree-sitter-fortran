@@ -340,6 +340,8 @@ module.exports = grammar({
 
     derived_type_definition: $ => seq(
       $.derived_type_statement,
+      optional($.public_statement),
+      optional($.private_statement),
       optional(
         seq(
           alias(caseInsensitive('sequence'), $.sequence_statement),
