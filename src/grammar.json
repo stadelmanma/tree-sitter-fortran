@@ -5932,8 +5932,13 @@
             "value": "%"
           },
           {
-            "type": "SYMBOL",
-            "name": "_expression"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            },
+            "named": true,
+            "value": "type_member"
           }
         ]
       }
@@ -6793,7 +6798,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "_expression"
           },
           {
             "type": "REPEAT1",
