@@ -74,7 +74,7 @@ module.exports = grammar({
     translation_unit: $ => repeat($._top_level_item),
 
     _top_level_item: $ => choice(
-      $.program_block,
+      $.program,
       $.module,
       $.interface,
       $.subroutine,
@@ -83,18 +83,15 @@ module.exports = grammar({
 
     // Block level structures
 
-    program_block: $ => seq(
-      prec.right(seq(
-        caseInsensitive('program'),
-        $.identifier
-      )),
-      optional($.comment),
-      $._end_of_statement,
+    program: $ => seq(
+      $.program_statement,
       repeat($._specification_part),
       repeat($._statement),
+      optional($.internal_procedures),
       $.end_program_statement
     ),
 
+    program_statement: $ => seq(caseInsensitive('program'), $._name),
     end_program_statement: $ => blockStructureEnding($, 'program'),
 
     module: $ => seq(
