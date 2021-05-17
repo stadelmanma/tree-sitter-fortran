@@ -586,7 +586,7 @@ module.exports = grammar({
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
-      $._name,
+      field('subroutine', $._name),
       optional($.cuda_kernel_argument_list),
       optional($.argument_list)
     ),
