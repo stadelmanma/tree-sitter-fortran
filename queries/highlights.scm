@@ -18,6 +18,7 @@
   "device"
   "host"
   "grid_global"
+  "pointer"
 ] @type
 
 [
@@ -44,6 +45,7 @@
   "endmodule"
   "bind"
   "call"
+  "class"
   "continue"
   "cycle"
   "enumerator"
@@ -54,7 +56,9 @@
   "include"
   "interface"
   "endinterface"
+  "only"
   "parameter"
+  "procedure"
   "print"
   "program"
   "endprogram"
