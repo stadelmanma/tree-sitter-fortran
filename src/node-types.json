@@ -930,10 +930,6 @@
       "required": true,
       "types": [
         {
-          "type": "language_binding",
-          "named": true
-        },
-        {
           "type": "statement_label",
           "named": true
         },
