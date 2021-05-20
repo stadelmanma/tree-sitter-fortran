@@ -930,6 +930,10 @@
       "required": true,
       "types": [
         {
+          "type": "language_binding",
+          "named": true
+        },
+        {
           "type": "statement_label",
           "named": true
         },
@@ -2338,7 +2342,7 @@
     "type": "keyword_argument",
     "named": true,
     "fields": {
-      "left": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -2348,7 +2352,7 @@
           }
         ]
       },
-      "right": {
+      "value": {
         "multiple": false,
         "required": true,
         "types": [

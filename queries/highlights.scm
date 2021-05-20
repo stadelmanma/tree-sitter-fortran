@@ -162,7 +162,7 @@
 	(name) @function)
 
 (keyword_argument
-  left: (identifier) @keyword)
+  name: (identifier) @keyword)
 
 (derived_type_member_expression
   (type_member) @property)

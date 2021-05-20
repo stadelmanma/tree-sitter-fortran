@@ -256,11 +256,12 @@ module.exports = grammar({
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
     ),
 
-    use_statement: $ => seq(
+    use_statement: $ => prec.left(seq(
       caseInsensitive('use'),
+      optional(seq(',',caseInsensitive('intrinsic'),'::')),
       alias($.identifier, $.module_name),
       optional($.included_items)
-    ),
+    )),
 
     included_items: $ => seq(
       ',',
@@ -359,6 +360,7 @@ module.exports = grammar({
     derived_type_statement: $ => seq(
       optional($.statement_label),
       caseInsensitive('type'),
+      optional(seq(',',$.language_binding)),
       choice(
         $._type_name,
         seq('::', $._type_name),
@@ -1031,9 +1033,9 @@ module.exports = grammar({
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(
-      field("left",$.identifier),
+      field("name",$.identifier),
       '=',
-      field("right",choice($._expression, $.assumed_size, $.assumed_shape))
+      field("value",choice($._expression, $.assumed_size, $.assumed_shape))
     )),
 
     extent_specifier: $ => seq(

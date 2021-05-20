@@ -431,7 +431,7 @@ END PROGRAM
     (call_expression (identifier)
       (argument_list
         (number_literal)
-        (keyword_argument left: (identifier) right: (string_literal))))
+        (keyword_argument name: (identifier) value: (string_literal))))
     (assignment_statement
       left: (derived_type_member_expression (identifier) (type_member))
       right: (call_expression
