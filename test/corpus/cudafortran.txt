@@ -11,11 +11,12 @@ end program test
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
     (variable_declaration (intrinsic_type) (identifier))
     (variable_modification (variable_attributes) (identifier))
-  (end_program_statement (identifier))))
+  (end_program_statement (name))))
 
 ============================================
 Functions (with attributes)
@@ -55,7 +56,8 @@ end program
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program 
+    (program_statement (name))
     (subroutine_call
       (name)
       (cuda_kernel_argument_list (number_literal) (identifier))

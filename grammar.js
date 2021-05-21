@@ -74,7 +74,7 @@ module.exports = grammar({
     translation_unit: $ => repeat($._top_level_item),
 
     _top_level_item: $ => choice(
-      $.program_block,
+      $.program,
       $.module,
       $.interface,
       $.subroutine,
@@ -83,18 +83,15 @@ module.exports = grammar({
 
     // Block level structures
 
-    program_block: $ => seq(
-      prec.right(seq(
-        caseInsensitive('program'),
-        $.identifier
-      )),
-      optional($.comment),
-      $._end_of_statement,
+    program: $ => seq(
+      $.program_statement,
       repeat($._specification_part),
       repeat($._statement),
+      optional($.internal_procedures),
       $.end_program_statement
     ),
 
+    program_statement: $ => seq(caseInsensitive('program'), $._name),
     end_program_statement: $ => blockStructureEnding($, 'program'),
 
     module: $ => seq(
@@ -128,8 +125,7 @@ module.exports = grammar({
     ),
 
     end_interface_statement: $ => prec.right(seq(
-      caseInsensitive('end'),
-      caseInsensitive('interface'),
+      whiteSpacedKeyword('end', 'interface'),
       optional(choice(
         $._name,
         $.assignment,
@@ -153,8 +149,8 @@ module.exports = grammar({
     subroutine_statement: $ => seq(
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
-      $._name,
-      optional($._parameters),
+      field('name', $._name),
+      optional(field('parameters',$._parameters)),
       optional($.language_binding)
     ),
 
@@ -172,8 +168,8 @@ module.exports = grammar({
     function_statement: $ => seq(
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
-      $._name,
-      optional($._parameters),
+      field('name', $._name),
+      optional(field('parameters',$._parameters)),
       optional($.language_binding),
       optional($.function_result)
     ),
@@ -344,6 +340,8 @@ module.exports = grammar({
 
     derived_type_definition: $ => seq(
       $.derived_type_statement,
+      optional($.public_statement),
+      optional($.private_statement),
       optional(
         seq(
           alias(caseInsensitive('sequence'), $.sequence_statement),
@@ -575,9 +573,9 @@ module.exports = grammar({
     statement_label_reference: $ => alias($.statement_label, 'statement_label_reference'),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
-      $._expression,
+      field('left',$._expression),
       '=',
-      $._expression
+      field('right',$._expression),
     )),
 
     pointer_association_statement: $ => prec.right(seq(
@@ -588,7 +586,7 @@ module.exports = grammar({
 
     subroutine_call: $ => seq(
       caseInsensitive('call'),
-      $._name,
+      field('subroutine', $._name),
       optional($.cuda_kernel_argument_list),
       optional($.argument_list)
     ),
@@ -610,7 +608,7 @@ module.exports = grammar({
 
     include_statement: $ => seq(
       caseInsensitive('include'),
-      alias($.string_literal, $.filename)
+      field("path", alias($.string_literal, $.filename))
     ),
 
     do_loop_statement: $ => seq(
@@ -926,7 +924,7 @@ module.exports = grammar({
     derived_type_member_expression: $ => prec.right(PREC.TYPE_MEMBER, seq(
       $._expression,
       '%',
-      $._expression
+      alias($.identifier, $.type_member)
     )),
 
     logical_expression: $ => {
@@ -1014,7 +1012,7 @@ module.exports = grammar({
     // isn't easy to do.
     call_expression: $ => prec(
       PREC.CALL,
-      seq($.identifier, repeat1($.argument_list))
+      seq($._expression, repeat1($.argument_list))
     ),
 
     argument_list: $ => prec.dynamic(
@@ -1033,9 +1031,9 @@ module.exports = grammar({
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(
-      $.identifier,
+      field("name",$.identifier),
       '=',
-      choice($._expression, $.assumed_size, $.assumed_shape)
+      field("value",choice($._expression, $.assumed_size, $.assumed_shape))
     )),
 
     extent_specifier: $ => seq(
@@ -1168,7 +1166,7 @@ function blockStructureEnding ($, structType) {
         optional(caseInsensitive(structType, false))),
       caseInsensitive('end' + structType, false)),
     'end' + structType),
-    optional($.identifier),
+    optional($._name),
     $._end_of_statement
   ))
   return obj

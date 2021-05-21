@@ -11,8 +11,12 @@ END PROGRAM TEST
 ----
 
 (translation_unit
-  (program_block (identifier) (end_program_statement))
-  (program_block (identifier) (end_program_statement (identifier))))
+  (program
+    (program_statement (name))
+    (end_program_statement))
+  (program
+    (program_statement (name))
+    (end_program_statement (name))))
 
 ============================================
 Interface (explicit)
@@ -145,13 +149,13 @@ end interface
             (identifier)
             (argument_list (number_literal) (number_literal))))
         (variable_declaration (intrinsic_type) (identifier))
-      (end_subroutine_statement (identifier)))
+      (end_subroutine_statement (name)))
       (function
         (function_statement (name) (parameters (identifier) (identifier)))
         (implicit_statement (none))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
         (variable_declaration (intrinsic_type) (identifier))
-      (end_function_statement (identifier)))
+      (end_function_statement (name)))
     (end_interface_statement)))
 
 ============================================
@@ -269,7 +273,7 @@ END SUBROUTINE
       (intrinsic_type) (size (argument_list (number_literal))) (type_qualifier) (identifier))
     (assignment_statement
       (identifier) (math_expression (identifier) (identifier)))
-    (end_subroutine_statement (identifier)))
+    (end_subroutine_statement (name)))
   (subroutine
     (subroutine_statement (name))
     (end_subroutine_statement))
@@ -342,7 +346,7 @@ end function
     (comment)
     (variable_declaration (derived_type (type_name)) (identifier))
     (assignment_statement
-      (derived_type_member_expression (identifier) (identifier))
+      (derived_type_member_expression (identifier) (type_member))
       (number_literal))
     (assignment_statement (identifier) (identifier))
   (end_function_statement))
@@ -421,7 +425,7 @@ end function test
             (identifier)
             (math_expression (identifier) (number_literal)))
         (end_subroutine_statement)))
-      (end_function_statement (identifier))))
+      (end_function_statement (name))))
 
 ============================================
 Derived Type Variable Declarations
@@ -443,7 +447,8 @@ end program
 ----
 
 (translation_unit
-  (program_block (identifier)
+  (program
+    (program_statement (name))
     (derived_type_definition (derived_type_statement (type_qualifier) (type_name))
       (sequence_statement)
       (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
@@ -467,5 +472,5 @@ end program
           (procedure_statement (method_name))
           (comment)
           (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
-      (end_type_statement (identifier)))
+      (end_type_statement (name)))
   (end_program_statement)))
