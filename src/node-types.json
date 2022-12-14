@@ -1369,6 +1369,21 @@
     }
   },
   {
+    "type": "end_module_procedure_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "end_module_statement",
     "named": true,
     "fields": {},
@@ -1408,6 +1423,21 @@
       "types": [
         {
           "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_submodule_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
           "named": true
         }
       ]
@@ -3043,6 +3073,63 @@
     }
   },
   {
+    "type": "module_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "module_procedure_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "name",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "derived_type",
+          "named": true
+        },
+        {
+          "type": "intrinsic_type",
+          "named": true
+        },
+        {
+          "type": "procedure_attributes",
+          "named": true
+        },
+        {
+          "type": "procedure_qualifier",
+          "named": true
+        },
+        {
+          "type": "size",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "module_statement",
     "named": true,
     "fields": {},
@@ -3992,6 +4079,120 @@
     "fields": {}
   },
   {
+    "type": "submodule",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "end_submodule_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "submodule_statement",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "submodule_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "module_name",
+          "named": true
+        },
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "subroutine",
     "named": true,
     "fields": {},
@@ -4273,6 +4474,10 @@
         },
         {
           "type": "program",
+          "named": true
+        },
+        {
+          "type": "submodule",
           "named": true
         },
         {
@@ -5048,11 +5253,19 @@
     "named": false
   },
   {
+    "type": "endprocedure",
+    "named": false
+  },
+  {
     "type": "endprogram",
     "named": false
   },
   {
     "type": "endselect",
+    "named": false
+  },
+  {
+    "type": "endsubmodule",
     "named": false
   },
   {
@@ -5188,8 +5401,8 @@
     "named": false
   },
   {
-    "type": "module_name",
-    "named": true
+    "type": "moduleprocedure",
+    "named": false
   },
   {
     "type": "name",
@@ -5325,6 +5538,10 @@
   },
   {
     "type": "stop",
+    "named": false
+  },
+  {
+    "type": "submodule",
     "named": false
   },
   {
