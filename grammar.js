@@ -160,6 +160,7 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
+      optional(caseInsensitive('module')),
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       field('name', $._name),
@@ -180,7 +181,7 @@ module.exports = grammar({
 
     module_procedure_statement: $ => seq(
       optional($._callable_interface_qualifers),
-      caseInsensitive('moduleprocedure'),
+      seq(caseInsensitive('module'), caseInsensitive('procedure')),
       field('name', $._name)
     ),
 
@@ -196,6 +197,7 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
+      optional(caseInsensitive('module')),
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       field('name', $._name),
@@ -258,7 +260,8 @@ module.exports = grammar({
       $._end_of_statement,
       repeat(choice(
         $.function,
-        $.subroutine
+        $.module_procedure,
+        $.subroutine,
       ))
     ),
 

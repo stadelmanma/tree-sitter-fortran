@@ -2353,6 +2353,10 @@
           "named": true
         },
         {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
           "type": "subroutine",
           "named": true
         }
@@ -3082,6 +3086,153 @@
       "types": [
         {
           "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "module_procedure",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_module_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
           "named": true
         }
       ]
@@ -5398,10 +5549,6 @@
   },
   {
     "type": "module",
-    "named": false
-  },
-  {
-    "type": "moduleprocedure",
     "named": false
   },
   {

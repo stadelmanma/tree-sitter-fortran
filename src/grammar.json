@@ -633,6 +633,23 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][oO][dD][uU][lL][eE]"
+              },
+              "named": false,
+              "value": "module"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
               "type": "SYMBOL",
               "name": "_callable_interface_qualifers"
             },
@@ -807,13 +824,27 @@
           ]
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[mM][oO][dD][uU][lL][eE][pP][rR][oO][cC][eE][dD][uU][rR][eE]"
-          },
-          "named": false,
-          "value": "moduleprocedure"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][oO][dD][uU][lL][eE]"
+              },
+              "named": false,
+              "value": "module"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[pP][rR][oO][cC][eE][dD][uU][rR][eE]"
+              },
+              "named": false,
+              "value": "procedure"
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -931,6 +962,23 @@
     "function_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[mM][oO][dD][uU][lL][eE]"
+              },
+              "named": false,
+              "value": "module"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
         {
           "type": "CHOICE",
           "members": [
@@ -1368,6 +1416,10 @@
               {
                 "type": "SYMBOL",
                 "name": "function"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "module_procedure"
               },
               {
                 "type": "SYMBOL",
