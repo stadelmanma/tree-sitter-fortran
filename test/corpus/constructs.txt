@@ -474,3 +474,69 @@ end program
           (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
       (end_type_statement (name)))
   (end_program_statement)))
+
+
+
+============================================
+Submodule definition (simple)
+============================================
+
+SUBMODULE(BoundingBox_Method) ConstructorMethods
+IMPLICIT NONE
+CONTAINS
+
+END SUBMODULE ConstructorMethods
+
+-----
+
+(translation_unit
+  (submodule
+    (submodule_statement (module_name (name)) (name))
+    (implicit_statement (none))
+    (internal_procedures
+      (contains_statement))
+    (end_submodule_statement (name))))
+
+===============================================
+Module definition (with internal module procedures)
+===============================================
+
+MODULE BoundingBox_Method
+
+PRIVATE
+
+INTERFACE
+  MODULE PURE SUBROUTINE initiate_1(obj, nsd, lim)
+    CLASS(BoundingBox_), INTENT(INOUT) :: obj
+  END SUBROUTINE initiate_1
+END INTERFACE
+
+INTERFACE
+  MODULE FUNCTION Constructor_2(Anotherobj) RESULT(Ans)
+    CLASS(BoundingBox_), POINTER :: Ans
+  END FUNCTION Constructor_2
+END INTERFACE
+
+END MODULE BoundingBox_Method
+
+-----
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (private_statement)
+    (interface
+      (interface_statement)
+      (subroutine
+        (subroutine_statement (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
+        (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
+      (end_subroutine_statement (name)))
+    (end_interface_statement))
+    (interface
+      (interface_statement)
+      (function
+        (function_statement (name) (parameters (identifier)) (function_result (identifier)))
+        (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
+      (end_function_statement (name)))
+    (end_interface_statement))
+  (end_module_statement (name))))

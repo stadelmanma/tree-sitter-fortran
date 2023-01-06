@@ -43,6 +43,8 @@
 [
   "module"
   "endmodule"
+  "submodule"
+  "endsubmodule"
   "bind"
   "call"
   "class"
@@ -139,6 +141,9 @@
 
 (module_statement
   (name) @namespace)
+  
+(submodule_statement
+  (name) @namespace)
 
 (function_statement
   (name) @function)
@@ -150,6 +155,9 @@
   (name) @namespace)
 
 (end_module_statement
+  (name) @namespace)
+
+(end_submodule_statement
   (name) @namespace)
 
 (end_function_statement
