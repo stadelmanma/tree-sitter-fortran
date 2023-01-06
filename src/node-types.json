@@ -5324,6 +5324,10 @@
     "named": false
   },
   {
+    "type": "contiguous",
+    "named": false
+  },
+  {
     "type": "continue",
     "named": false
   },
@@ -5501,6 +5505,10 @@
   },
   {
     "type": "import",
+    "named": false
+  },
+  {
+    "type": "impure",
     "named": false
   },
   {

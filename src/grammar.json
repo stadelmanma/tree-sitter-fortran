@@ -3337,6 +3337,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[cC][oO][nN][tT][iI][gG][uU][oO][uU][sS]"
+          },
+          "named": false,
+          "value": "contiguous"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[dD][eE][vV][iI][cC][eE]"
           },
           "named": false,
@@ -3589,6 +3598,15 @@
           },
           "named": false,
           "value": "elemental"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[iI][mM][pP][uU][rR][eE]"
+          },
+          "named": false,
+          "value": "impure"
         },
         {
           "type": "ALIAS",

@@ -376,7 +376,7 @@ pure elemental logical function test(x, y) result(value)
 
 contains
 
-  real function internal_proc result(x)
+  real impure function internal_proc result(x)
     real(8) x = 1.0
   end function
 
@@ -412,6 +412,7 @@ end function test
       (function
         (function_statement
           (intrinsic_type)
+          (procedure_qualifier)
           (name)
           (function_result (identifier)))
         (variable_declaration

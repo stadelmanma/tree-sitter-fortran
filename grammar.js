@@ -515,6 +515,7 @@ module.exports = grammar({
         optional($.argument_list)
       )),
       caseInsensitive('constant'),
+      caseInsensitive('contiguous'),
       caseInsensitive('device'),
       caseInsensitive('external'),
       seq(
@@ -548,6 +549,7 @@ module.exports = grammar({
 
     procedure_qualifier: $ => choice(
       caseInsensitive('elemental'),
+      caseInsensitive('impure'),
       caseInsensitive('pure'),
       caseInsensitive('recursive')
     ),
