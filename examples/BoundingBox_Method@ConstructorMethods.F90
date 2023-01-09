@@ -33,14 +33,14 @@ CONTAINS
 !-----------------------------------------------------------------------------
 
 MODULE PROCEDURE initiate_1
-obj%Box = 0.0_DFP
-obj%NSD = NSD
-obj%Box(1, 1) = lim(1) !xmin
-obj%Box(1, 2) = lim(3) !ymin
-obj%Box(1, 3) = lim(5) !zmin
-obj%Box(2, 1) = lim(2) !xmax
-obj%Box(2, 2) = lim(4) !ymax
-obj%Box(2, 3) = lim(6) !zmax
+obj % Box = 0.0_DFP
+obj % NSD = NSD
+obj % Box(1, 1) = lim(1) !xmin
+obj % Box(1, 2) = lim(3) !ymin
+obj % Box(1, 3) = lim(5) !zmin
+obj % Box(2, 1) = lim(2) !xmax
+obj % Box(2, 2) = lim(4) !ymax
+obj % Box(2, 3) = lim(6) !zmax
 END PROCEDURE initiate_1
 
 !-----------------------------------------------------------------------------
@@ -48,8 +48,8 @@ END PROCEDURE initiate_1
 !-----------------------------------------------------------------------------
 
 MODULE PROCEDURE initiate_2
-obj%Box = Anotherobj%Box
-obj%NSD = Anotherobj%NSD
+obj % Box = Anotherobj % Box
+obj % NSD = Anotherobj % NSD
 END PROCEDURE initiate_2
 
 !-----------------------------------------------------------------------------
@@ -118,8 +118,8 @@ END PROCEDURE Constructor_2
 !----------------------------------------------------------------------------
 
 MODULE PROCEDURE BB_Deallocate
-obj%NSD = 0
-obj%Box = 0.0_DFP
+obj % NSD = 0
+obj % Box = 0.0_DFP
 END PROCEDURE BB_Deallocate
 
 END SUBMODULE ConstructorMethods
