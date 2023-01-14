@@ -688,7 +688,7 @@ END PROGRAM
       (case_statement (case_value_range_list (extent_specifier (number_literal)))
         (block_label)
         (assignment_statement (identifier) (number_literal)))
-      (end_select_case_statement (block_label)))
+      (end_select_statement (block_label)))
     (select_case_statement (selector (identifier))
       (case_statement
         (case_value_range_list
@@ -714,7 +714,7 @@ END PROGRAM
           (unit_identifier)
           (format_identifier)
           (output_item_list (string_literal))))
-      (end_select_case_statement))
+      (end_select_statement))
   (end_program_statement)))
 
 ============================================
