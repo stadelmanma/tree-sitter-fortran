@@ -129,6 +129,7 @@ module.exports = grammar({
     ),
 
     interface_statement: $ => seq(
+      optional(caseInsensitive('abstract')),
       caseInsensitive('interface'),
       optional(choice(
         $._name,
@@ -291,6 +292,9 @@ module.exports = grammar({
 
     use_statement: $ => seq(
       caseInsensitive('use'),
+      optional(
+        seq(',', choice(caseInsensitive('intrinsic'), caseInsensitive('non_intrinsic')), '::')
+      ),
       alias($.identifier, $.module_name),
       optional($.included_items)
     ),
@@ -367,7 +371,7 @@ module.exports = grammar({
 
     import_statement: $ => seq(
       caseInsensitive('import'),
-      '::',
+      optional('::'),
       commaSep1($.identifier)
     ),
 
@@ -395,7 +399,7 @@ module.exports = grammar({
       choice(
         $._type_name,
         seq('::', $._type_name),
-        seq(',', $.type_qualifier, '::', $._type_name)
+        seq(',', commaSep1($.type_qualifier), '::', $._type_name)
       ),
       $._end_of_statement
     ),
@@ -411,6 +415,9 @@ module.exports = grammar({
 
     procedure_statement: $ => seq(
       $._procedure_kind,
+      optional(seq(
+        '(', alias($.identifier,$.procedure_interface),')'
+      )),
       optional(seq(
         ',',
         commaSep1($.procedure_attribute)
@@ -434,6 +441,7 @@ module.exports = grammar({
     ),
 
     procedure_attribute: $ => choice(
+      caseInsensitive('deferred'),
       caseInsensitive('pass'),
       caseInsensitive('nopass'),
       caseInsensitive('non_overridable'),
@@ -508,6 +516,7 @@ module.exports = grammar({
     ),
 
     type_qualifier: $ => choice(
+      caseInsensitive('abstract'),
       caseInsensitive('allocatable'),
       caseInsensitive('automatic'),
       prec.right(seq(
@@ -518,6 +527,7 @@ module.exports = grammar({
       caseInsensitive('contiguous'),
       caseInsensitive('device'),
       caseInsensitive('external'),
+      seq( caseInsensitive('extends'), '(', $.identifier, ')'),
       seq(
         caseInsensitive('intent'),
         '(',
@@ -596,6 +606,7 @@ module.exports = grammar({
       $.where_statement,
       $.forall_statement,
       $.select_case_statement,
+      $.select_type_statement,
       $.do_loop_statement,
       $.format_statement,
       $.print_statement,
@@ -791,21 +802,44 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
-      $.end_select_case_statement
+      $.end_select_statement
     ),
 
-    end_select_case_statement: $ => seq(
+    select_type_statement: $ => seq(
+      optional($.block_label_start_expression),
+      whiteSpacedKeyword('select', 'type'),
+      $.selector,
+      $._end_of_statement,
+      repeat1($.type_statement),
+      optional(alias(whiteSpacedKeyword('class','default'), $.default_type_statement)),
+      $.end_select_statement
+    ),
+
+    end_select_statement: $ => seq(
       whiteSpacedKeyword('end', 'select'),
       optional($._block_label)
     ),
 
-    selector: $ => seq('(', $._expression, ')'),
+    selector: $ => seq('(',
+      choice($._expression, $.pointer_association_statement),
+      ')'),
 
     case_statement: $ => seq(
       caseInsensitive('case'),
       choice(
         seq('(', $.case_value_range_list, ')'),
         alias(caseInsensitive('default'), $.default)
+      ),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
+
+    type_statement: $ => seq(
+      whiteSpacedKeyword('type', 'is'),
+      choice(
+        seq('(', $.identifier, ')'),
+        alias(whiteSpacedKeyword('class', 'default'), $.default)
       ),
       optional($._block_label),
       $._end_of_statement,
@@ -862,6 +896,22 @@ module.exports = grammar({
       caseInsensitive('print'),
       $.format_identifier,
       optional(seq(',', $.output_item_list))
+    ),
+
+    open_statement: $ => seq(
+      caseInsensitive('open'),
+      '(',
+      caseInsensitive('unit'),
+        "=",
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+      optional($.output_item_list)
     ),
 
     write_statement: $ => seq(
