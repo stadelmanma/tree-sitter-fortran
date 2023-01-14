@@ -609,6 +609,8 @@ module.exports = grammar({
       $.select_type_statement,
       $.do_loop_statement,
       $.format_statement,
+      $.open_statement,
+      $.close_statement,
       $.print_statement,
       $.write_statement,
       $.read_statement
@@ -913,6 +915,17 @@ module.exports = grammar({
       ')',
       optional($.output_item_list)
     ),
+
+    close_statement: $ => prec(1,
+    seq(
+      caseInsensitive('close'),
+      '(',
+      choice(
+        $.unit_identifier,
+        commaSep1($.keyword_argument)
+      ),
+      ')',
+    )),
 
     write_statement: $ => seq(
       caseInsensitive('write'),
