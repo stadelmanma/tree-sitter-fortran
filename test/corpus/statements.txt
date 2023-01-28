@@ -259,10 +259,10 @@ END PROGRAM
       (assignment_statement
         (identifier)
         (math_expression (number_literal) (identifier)))
-      (call_expression (identifier)
-        (argument_list
-          (identifier)
-          (keyword_argument (identifier) (string_literal))))
+      (open_statement
+       (unit_identifier
+        (identifier))
+       (keyword_argument (identifier) (string_literal)))
       (subroutine_call
         (name)
         (argument_list (identifier) (keyword_argument (identifier) (boolean_literal))))

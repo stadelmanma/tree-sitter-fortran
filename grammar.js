@@ -613,12 +613,23 @@ module.exports = grammar({
       $.close_statement,
       $.print_statement,
       $.write_statement,
-      $.read_statement
+      $.read_statement,
+      $.stop_statement
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
 
     statement_label_reference: $ => alias($.statement_label, 'statement_label_reference'),
+
+    stop_statement: $ => seq(
+      optional(caseInsensitive("error")),
+      caseInsensitive('stop'),
+      optional($._expression),
+      optional(seq(
+        ',',
+        prec(1, seq(caseInsensitive('quiet'), '=', $._expression))
+      ))
+    ),
 
     assignment_statement: $ => prec.right(PREC.ASSIGNMENT, seq(
       field('left',$._expression),
@@ -651,7 +662,7 @@ module.exports = grammar({
       seq(caseInsensitive('exit'), optional($.identifier)),
       seq(whiteSpacedKeyword('go', 'to'), $.statement_label),
       caseInsensitive('return'),
-      seq(caseInsensitive('stop'), optional($._expression))
+      // seq(caseInsensitive('stop'), optional($._expression))
     ),
 
     include_statement: $ => seq(
@@ -903,8 +914,6 @@ module.exports = grammar({
     open_statement: $ => seq(
       caseInsensitive('open'),
       '(',
-      caseInsensitive('unit'),
-        "=",
       choice(
         $.unit_identifier,
         seq($.unit_identifier, ',', $.format_identifier),

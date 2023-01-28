@@ -446,6 +446,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -1060,6 +1064,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -1152,6 +1160,10 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
           "named": true
         },
         {
@@ -1250,6 +1262,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -1342,6 +1358,10 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
           "named": true
         },
         {
@@ -1819,6 +1839,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -2028,6 +2052,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -2231,6 +2259,10 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
           "named": true
         },
         {
@@ -2578,63 +2610,11 @@
       "required": false,
       "types": [
         {
-          "type": "array_literal",
-          "named": true
-        },
-        {
-          "type": "boolean_literal",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "complex_literal",
-          "named": true
-        },
-        {
-          "type": "concatenation_expression",
-          "named": true
-        },
-        {
-          "type": "derived_type_member_expression",
-          "named": true
-        },
-        {
           "type": "identifier",
           "named": true
         },
         {
-          "type": "logical_expression",
-          "named": true
-        },
-        {
-          "type": "math_expression",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "relational_expression",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
           "named": true
         }
       ]
@@ -3339,6 +3319,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -3985,6 +3969,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -4430,6 +4418,73 @@
     "fields": {}
   },
   {
+    "type": "stop_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "string_literal",
     "named": true,
     "fields": {}
@@ -4674,6 +4729,10 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
           "named": true
         },
         {
@@ -5026,6 +5085,10 @@
           "named": true
         },
         {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
           "type": "subroutine_call",
           "named": true
         },
@@ -5372,6 +5435,10 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
           "named": true
         },
         {
@@ -5796,6 +5863,10 @@
     "named": false
   },
   {
+    "type": "error",
+    "named": false
+  },
+  {
     "type": "exit",
     "named": false
   },
@@ -6008,6 +6079,10 @@
     "named": false
   },
   {
+    "type": "quiet",
+    "named": false
+  },
+  {
     "type": "read",
     "named": false
   },
@@ -6097,10 +6172,6 @@
   },
   {
     "type": "typeis",
-    "named": false
-  },
-  {
-    "type": "unit",
     "named": false
   },
   {
