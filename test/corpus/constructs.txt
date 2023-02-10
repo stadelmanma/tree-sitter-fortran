@@ -517,7 +517,29 @@ end program
       (end_type_statement (name)))
   (end_program_statement)))
 
+============================================
+Derived Type Attributes
+============================================
 
+program test
+  type, private, abstract :: abstract_type
+  end type abstract_type
+  type, public, extends(abstract_type) :: concrete_type
+  end type concrete_type
+end program
+
+----
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (derived_type_definition
+      (derived_type_statement (type_qualifier) (type_qualifier) (type_name))
+      (end_type_statement (name)))
+    (derived_type_definition
+      (derived_type_statement (type_qualifier) (type_qualifier (identifier)) (type_name))
+      (end_type_statement (name)))
+  (end_program_statement)))
 
 ============================================
 Submodule definition (simple)
