@@ -409,8 +409,8 @@ module.exports = grammar({
     // doesn't support permutations
     _derived_type_qualifier: $ => choice(
       $.abstract_specifier,
-      $.access_specifier,
-      $.base_type_specifier,
+      field('access', $.access_specifier),
+      field('base', $.base_type_specifier),
       $.language_binding
     ),
 
