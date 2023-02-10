@@ -426,7 +426,7 @@ END PROGRAM
               right: (number_literal))))
         right: (number_literal)))
     (subroutine_call
-      subroutine: (name)
+      subroutine: (identifier)
       (argument_list (identifier) (identifier)))
     (open_statement
       (unit_identifier
@@ -459,6 +459,30 @@ END PROGRAM
                     right: (number_literal)))))
             (argument_list (number_literal))))))
     (end_program_statement)))
+
+============================================
+Call Type-Bound Procedure
+============================================
+
+program use_type_bound_procedures
+  call foo%bar()
+  call foo%bar%quux()
+end program use_type_bound_procedures
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (subroutine_call
+      (derived_type_member_expression (identifier) (type_member))
+      (argument_list))
+    (subroutine_call
+      (derived_type_member_expression
+        (derived_type_member_expression (identifier) (type_member))
+        (type_member))
+      (argument_list))
+    (end_program_statement (name))))
 
 =================
 Line Continuation

@@ -331,7 +331,7 @@ END SUBROUTINE
     (end_subroutine_statement))
   (subroutine (subroutine_statement (name))
     (variable_declaration (intrinsic_type) (identifier))
-    (subroutine_call (name) (argument_list (string_literal) (identifier)))
+    (subroutine_call (identifier) (argument_list (string_literal) (identifier)))
     (internal_procedures
       (contains_statement)
       (subroutine

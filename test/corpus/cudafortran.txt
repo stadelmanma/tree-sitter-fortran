@@ -59,17 +59,17 @@ end program
   (program 
     (program_statement (name))
     (subroutine_call
-      (name)
+      (identifier)
       (cuda_kernel_argument_list (number_literal) (identifier))
       (argument_list (identifier)))
     (subroutine_call
-      (name)
+      (identifier)
       (cuda_kernel_argument_list
         (number_literal) (identifier) (identifier)
         (call_expression (identifier) (argument_list (identifier))))
       (argument_list (identifier)))
     (subroutine_call
-      (name)
+      (identifier)
       (cuda_kernel_argument_list
         (number_literal) (identifier) (identifier)
         (call_expression (identifier) (argument_list (identifier))))
