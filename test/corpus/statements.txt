@@ -180,7 +180,10 @@ Derived Type Variable Declarations
 PROGRAM TEST
   TYPE(CUSTOM_TYPE) :: CT
   type(real) :: r
+  type(real(real32)) :: r32
+  type(real(kind(1.d0))) :: r64
   class(custom_type), pointer :: cl
+  class(*), pointer :: up
 END PROGRAM
 
 ----
@@ -189,9 +192,83 @@ END PROGRAM
   (program
     (program_statement (name))
     (variable_declaration (derived_type (type_name)) (identifier))
-    (variable_declaration (derived_type (type_name)) (identifier))
+    (variable_declaration (derived_type (intrinsic_type)) (identifier))
+    (variable_declaration
+      (derived_type
+        (intrinsic_type) (size (argument_list (identifier))))
+      (identifier))
+    (variable_declaration
+      (derived_type
+        (intrinsic_type)
+        (size (argument_list (call_expression (identifier) (argument_list (number_literal))))))
+      (identifier))
     (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
+    (variable_declaration
+      (derived_type (unlimited_polymorphic)) (type_qualifier)
+      (identifier))
   (end_program_statement)))
+
+============================================
+Derived Type Procedure Arguments
+============================================
+
+module foo
+contains
+
+subroutine test(arg1, arg2)
+  type(dt), intent(in) :: arg1
+  type(real), intent(out) :: arg2
+end subroutine test
+
+subroutine test2(arg1, arg2)
+  class(dt), intent(in) :: arg1
+  type(real(real32)), intent(out) :: arg2
+end subroutine test2
+
+subroutine test3(arg1, arg2)
+  class(*), intent(in) :: arg1
+  type(real(kind(1.0d0))), intent(out) :: arg2
+end subroutine test3
+
+end module foo
+
+---
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (internal_procedures
+      (contains_statement)
+      (subroutine
+        (subroutine_statement (name)
+          (parameters (identifier) (identifier)))
+        (variable_declaration
+          (derived_type (type_name)) (type_qualifier) (identifier))
+        (variable_declaration
+          (derived_type (intrinsic_type)) (type_qualifier) (identifier))
+        (end_subroutine_statement (name)))
+      (subroutine
+        (subroutine_statement (name)
+          (parameters (identifier) (identifier)))
+        (variable_declaration
+          (derived_type (type_name)) (type_qualifier) (identifier))
+        (variable_declaration
+          (derived_type (intrinsic_type)
+            (size (argument_list (identifier))))
+          (type_qualifier) (identifier))
+        (end_subroutine_statement (name)))
+      (subroutine
+        (subroutine_statement (name)
+          (parameters (identifier) (identifier)))
+        (variable_declaration
+          (derived_type (unlimited_polymorphic)) (type_qualifier) (identifier))
+        (variable_declaration
+          (derived_type (intrinsic_type)
+            (size (argument_list
+                (call_expression (identifier) (argument_list (number_literal))))))
+          (type_qualifier) (identifier))
+        (end_subroutine_statement (name))))
+    (end_module_statement (name))))
 
 ============================================
 Variable Modification Statements

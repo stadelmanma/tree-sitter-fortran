@@ -3505,14 +3505,31 @@
           "value": "("
         },
         {
-          "type": "SYMBOL",
-          "name": "_type_name"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_intrinsic_type"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_type_name"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unlimited_polymorphic"
+            }
+          ]
         },
         {
           "type": "STRING",
           "value": ")"
         }
       ]
+    },
+    "unlimited_polymorphic": {
+      "type": "STRING",
+      "value": "*"
     },
     "size": {
       "type": "CHOICE",
@@ -5757,8 +5774,21 @@
                   "value": "("
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "identifier"
+                  "type": "FIELD",
+                  "name": "type",
+                  "content": {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "_intrinsic_type"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "derived_type"
+                      }
+                    ]
+                  }
                 },
                 {
                   "type": "STRING",

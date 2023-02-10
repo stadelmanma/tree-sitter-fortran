@@ -533,9 +533,12 @@ module.exports = grammar({
     derived_type: $ => seq(
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
-      $._type_name,
+      // Strictly, only `class` can be unlimited polymorphic
+      choice($._intrinsic_type, $._type_name, $.unlimited_polymorphic),
       ')'
     ),
+
+    unlimited_polymorphic: $ => '*',
 
     size: $ => choice(
       $.argument_list,
@@ -879,7 +882,7 @@ module.exports = grammar({
     type_statement: $ => seq(
       whiteSpacedKeyword('type', 'is'),
       choice(
-        seq('(', $.identifier, ')'),
+        seq('(', field('type', choice($._intrinsic_type, $.derived_type)), ')'),
         alias(whiteSpacedKeyword('class', 'default'), $.default)
       ),
       optional($._block_label),
