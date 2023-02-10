@@ -474,6 +474,8 @@ Derived Type Variable Declarations
 ============================================
 
 program test
+  type simple
+  end type
   type, public :: custom_type
     sequence
     real(8) :: x,y,z
@@ -491,7 +493,13 @@ end program
 (translation_unit
   (program
     (program_statement (name))
-    (derived_type_definition (derived_type_statement (type_qualifier) (type_name))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (end_type_statement))
+    (derived_type_definition
+      (derived_type_statement
+       (access_specifier)
+       (type_name))
       (sequence_statement)
       (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
         (identifier)
@@ -534,10 +542,16 @@ end program
   (program
     (program_statement (name))
     (derived_type_definition
-      (derived_type_statement (type_qualifier) (type_qualifier) (type_name))
+      (derived_type_statement
+        (access_specifier)
+        (abstract_specifier)
+        (type_name))
       (end_type_statement (name)))
     (derived_type_definition
-      (derived_type_statement (type_qualifier) (type_qualifier (identifier)) (type_name))
+      (derived_type_statement
+        (access_specifier)
+        (base_type_specifier (identifier))
+        (type_name))
       (end_type_statement (name)))
   (end_program_statement)))
 
