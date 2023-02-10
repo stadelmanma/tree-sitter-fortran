@@ -652,3 +652,40 @@ END MODULE BoundingBox_Method
       (end_function_statement (name)))
     (end_interface_statement))
   (end_module_statement (name))))
+
+============================================
+Procedure as argument
+============================================
+
+module test
+  abstract interface
+    subroutine do_nothing
+    end subroutine do_nothing
+  end interface
+contains
+  subroutine apply(f)
+    procedure(do_nothing) :: f
+    call f()
+  end subroutine apply
+end module test
+
+---
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (interface
+      (interface_statement (abstract_specifier))
+      (subroutine
+        (subroutine_statement (name))
+        (end_subroutine_statement (name)))
+      (end_interface_statement))
+    (internal_procedures
+      (contains_statement)
+      (subroutine
+        (subroutine_statement (name) (parameters (identifier)))
+        (variable_declaration (procedure (procedure_interface)) (identifier))
+        (subroutine_call (identifier) (argument_list))
+        (end_subroutine_statement (name))))
+    (end_module_statement (name))))
+

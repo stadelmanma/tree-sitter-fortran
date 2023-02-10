@@ -472,11 +472,18 @@ module.exports = grammar({
     ),
 
     variable_declaration: $ => seq(
-      choice($._intrinsic_type, $.derived_type),
+      choice($._intrinsic_type, $.derived_type, alias($.procedure_declaration, $.procedure)),
       optional(seq(',', commaSep1($.type_qualifier))),
       optional('::'),
       $._declaration_targets
     ),
+
+    procedure_declaration: $ => prec.right(1, seq(
+      caseInsensitive('procedure'),
+      optional(seq(
+        '(', alias($.identifier, $.procedure_interface), ')'
+      ))
+    )),
 
     variable_modification: $ => seq(
       repeat1(choice(
