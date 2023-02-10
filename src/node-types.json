@@ -2502,9 +2502,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "abstract_specifier",
+          "named": true
+        },
         {
           "type": "assignment",
           "named": true
