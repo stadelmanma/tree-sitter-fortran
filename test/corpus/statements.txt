@@ -268,7 +268,7 @@ END PROGRAM
         (identifier))
        (keyword_argument (identifier) (string_literal)))
       (subroutine_call
-        (name)
+        (identifier)
         (argument_list (identifier) (keyword_argument (identifier) (boolean_literal))))
     (end_do_loop_statement))
     (do_loop_statement

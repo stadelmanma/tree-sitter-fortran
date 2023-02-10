@@ -174,7 +174,7 @@
   (name) @function)
 
 (subroutine_call
-	(name) @function)
+  (identifier) @function)
 
 (keyword_argument
   name: (identifier) @keyword)

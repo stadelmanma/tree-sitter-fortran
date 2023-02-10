@@ -662,12 +662,14 @@ module.exports = grammar({
       $._expression
     )),
 
-    subroutine_call: $ => seq(
+    // `call` should bind more tightly than ordinary expressions
+    subroutine_call: $ => prec(1, seq(
       caseInsensitive('call'),
-      field('subroutine', $._name),
+      // Allow expressions to allow calling type-bound procedures
+      field('subroutine', $._expression),
       optional($.cuda_kernel_argument_list),
       optional($.argument_list)
-    ),
+    )),
 
     cuda_kernel_argument_list: $ => seq(
       '<<<',
