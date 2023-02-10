@@ -879,6 +879,9 @@ Import Statements
 function test()
   import :: dp, cptr
 end function test
+function test2()
+  import dp
+end function test2
 
 ----
 
@@ -886,6 +889,10 @@ end function test
   (function
     (function_statement (name))
     (import_statement (identifier) (identifier))
+    (end_function_statement (name)))
+  (function
+    (function_statement (name))
+    (import_statement (identifier))
     (end_function_statement (name))))
 
 ============================================
