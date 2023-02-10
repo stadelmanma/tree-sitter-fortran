@@ -1044,3 +1044,56 @@ END PROGRAM test
       (enumerator_statement (identifier) (identifier))
       (end_enum_statement))
     (end_program_statement (name))))
+
+============================================
+Select Type Statement
+============================================
+
+subroutine print_decorated_numbers(number)
+  class(*), intent(in) :: number
+
+  select type(number)
+  type is (integer)
+    write(*, '("<", i0, ">")') number
+  type is (real(kind(1.0)))
+    write(*, '("(", f8.5, ")")') number
+  type is (real(kind(1.0d0)))
+    write(*, '("{", f13.8, "}")') number
+  type is (complex)
+    write(*, '("[", f13.8, " + ", f13.8 "i]")') number
+  class is (custom_type)
+    write(*, '("#", f8.5, "#")') number%value
+  class default
+    write(*, '("~Not a number~")')
+  end select
+end subroutine print_decorated_numbers
+
+---
+
+(translation_unit
+  (subroutine
+    (subroutine_statement (name) (parameters (identifier)))
+    (variable_declaration (derived_type (unlimited_polymorphic)) (type_qualifier) (identifier))
+    (select_type_statement
+      (selector (identifier))
+      (type_statement (intrinsic_type)
+        (write_statement (unit_identifier) (format_identifier (string_literal))
+          (output_item_list (identifier))))
+      (type_statement (intrinsic_type)
+        (size (argument_list (call_expression (identifier) (argument_list (number_literal)))))
+        (write_statement (unit_identifier) (format_identifier (string_literal))
+          (output_item_list (identifier))))
+      (type_statement (intrinsic_type)
+        (size (argument_list (call_expression (identifier) (argument_list (number_literal)))))
+        (write_statement (unit_identifier) (format_identifier (string_literal))
+          (output_item_list (identifier))))
+      (type_statement (intrinsic_type)
+        (write_statement (unit_identifier) (format_identifier (string_literal))
+          (output_item_list (identifier))))
+      (type_statement (identifier)
+        (write_statement (unit_identifier) (format_identifier (string_literal))
+          (output_item_list (derived_type_member_expression (identifier) (type_member)))))
+      (type_statement (default)
+        (write_statement (unit_identifier) (format_identifier (string_literal))))
+      (end_select_statement))
+    (end_subroutine_statement (name))))
