@@ -838,11 +838,23 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
+          "type": "intrinsic_type",
+          "named": true
+        },
+        {
+          "type": "size",
+          "named": true
+        },
+        {
           "type": "type_name",
+          "named": true
+        },
+        {
+          "type": "unlimited_polymorphic",
           "named": true
         }
       ]
@@ -5120,10 +5132,29 @@
   {
     "type": "type_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "derived_type",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          },
+          {
+            "type": "size",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "assignment_statement",
@@ -5155,10 +5186,6 @@
         },
         {
           "type": "format_statement",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -5344,6 +5371,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "unlimited_polymorphic",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "use_statement",
