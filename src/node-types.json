@@ -984,21 +984,34 @@
   {
     "type": "derived_type_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "access": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "access_specifier",
+            "named": true
+          }
+        ]
+      },
+      "base": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "base_type_specifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
         {
           "type": "abstract_specifier",
-          "named": true
-        },
-        {
-          "type": "access_specifier",
-          "named": true
-        },
-        {
-          "type": "base_type_specifier",
           "named": true
         },
         {

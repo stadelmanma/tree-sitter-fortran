@@ -2523,12 +2523,20 @@
           "name": "abstract_specifier"
         },
         {
-          "type": "SYMBOL",
-          "name": "access_specifier"
+          "type": "FIELD",
+          "name": "access",
+          "content": {
+            "type": "SYMBOL",
+            "name": "access_specifier"
+          }
         },
         {
-          "type": "SYMBOL",
-          "name": "base_type_specifier"
+          "type": "FIELD",
+          "name": "base",
+          "content": {
+            "type": "SYMBOL",
+            "name": "base_type_specifier"
+          }
         },
         {
           "type": "SYMBOL",

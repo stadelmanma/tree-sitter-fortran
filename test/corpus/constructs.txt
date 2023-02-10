@@ -543,18 +543,52 @@ end program
     (program_statement (name))
     (derived_type_definition
       (derived_type_statement
-        (access_specifier)
+        access: (access_specifier)
         (abstract_specifier)
         (type_name))
       (end_type_statement (name)))
     (derived_type_definition
       (derived_type_statement
-        (access_specifier)
-        (base_type_specifier (identifier))
+        access: (access_specifier)
+        base: (base_type_specifier (identifier))
         (type_name))
       (end_type_statement (name)))
   (end_program_statement)))
 
+============================================
+Deferred binding
+============================================
+
+program test
+  type foo
+  contains
+    procedure(bar_impl), deferred :: bar
+  end type
+  abstract interface
+    subroutine bar_impl
+    end subroutine
+  end interface
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (derived_type_procedures
+        (contains_statement)
+        (procedure_statement (procedure_interface) (procedure_attribute) (method_name)))
+      (end_type_statement))
+    (interface
+      (interface_statement (abstract_specifier))
+        (subroutine
+          (subroutine_statement (name))
+          (end_subroutine_statement))
+      (end_interface_statement))
+    (end_program_statement)))
+      
 ============================================
 Submodule definition (simple)
 ============================================
