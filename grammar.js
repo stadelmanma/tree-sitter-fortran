@@ -393,13 +393,33 @@ module.exports = grammar({
       $.end_type_statement
     ),
 
+    abstract_specifier: $ => caseInsensitive('abstract'),
+
+    access_specifier: $ => choice(
+      caseInsensitive('public'),
+      caseInsensitive('private')
+    ),
+
+    base_type_specifier: $ => seq(
+      caseInsensitive('extends'),
+      '(', $.identifier, ')'
+    ),
+
+    // These are only valid to specify once each, but tree-sitter
+    // doesn't support permutations
+    _derived_type_qualifier: $ => choice(
+      $.abstract_specifier,
+      $.access_specifier,
+      $.base_type_specifier,
+      $.language_binding
+    ),
+
     derived_type_statement: $ => seq(
       optional($.statement_label),
       caseInsensitive('type'),
       choice(
-        $._type_name,
-        seq('::', $._type_name),
-        seq(',', commaSep1($.type_qualifier), '::', $._type_name)
+        seq(optional('::'), $._type_name),
+        seq(',', commaSep1($._derived_type_qualifier), '::', $._type_name)
       ),
       $._end_of_statement
     ),
@@ -527,7 +547,6 @@ module.exports = grammar({
       caseInsensitive('contiguous'),
       caseInsensitive('device'),
       caseInsensitive('external'),
-      seq( caseInsensitive('extends'), '(', $.identifier, ')'),
       seq(
         caseInsensitive('intent'),
         '(',

@@ -1,5 +1,15 @@
 [
   {
+    "type": "abstract_specifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "access_specifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "argument_list",
     "named": true,
     "fields": {},
@@ -289,6 +299,21 @@
     "type": "assumed_size",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "base_type_specifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "call_expression",
@@ -965,15 +990,27 @@
       "required": true,
       "types": [
         {
+          "type": "abstract_specifier",
+          "named": true
+        },
+        {
+          "type": "access_specifier",
+          "named": true
+        },
+        {
+          "type": "base_type_specifier",
+          "named": true
+        },
+        {
+          "type": "language_binding",
+          "named": true
+        },
+        {
           "type": "statement_label",
           "named": true
         },
         {
           "type": "type_name",
-          "named": true
-        },
-        {
-          "type": "type_qualifier",
           "named": true
         }
       ]
@@ -4991,10 +5028,6 @@
       "types": [
         {
           "type": "argument_list",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         }
       ]
