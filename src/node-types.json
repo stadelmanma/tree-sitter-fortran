@@ -518,10 +518,6 @@
           "named": true
         },
         {
-          "type": "default",
-          "named": true
-        },
-        {
           "type": "derived_type_member_expression",
           "named": true
         },
@@ -832,6 +828,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "default",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "derived_type",
@@ -4380,10 +4381,6 @@
           "named": true
         },
         {
-          "type": "default_type_statement",
-          "named": true
-        },
-        {
           "type": "end_select_statement",
           "named": true
         },
@@ -5138,7 +5135,7 @@
         "required": false,
         "types": [
           {
-            "type": "derived_type",
+            "type": "identifier",
             "named": true
           },
           {
@@ -5860,6 +5857,10 @@
     "named": false
   },
   {
+    "type": "classis",
+    "named": false
+  },
+  {
     "type": "close",
     "named": false
   },
@@ -5894,14 +5895,6 @@
   {
     "type": "cycle",
     "named": false
-  },
-  {
-    "type": "default",
-    "named": true
-  },
-  {
-    "type": "default_type_statement",
-    "named": true
   },
   {
     "type": "deferred",

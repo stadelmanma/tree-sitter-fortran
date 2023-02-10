@@ -855,7 +855,6 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.type_statement),
-      optional(alias(whiteSpacedKeyword('class','default'), $.default_type_statement)),
       $.end_select_statement
     ),
 
@@ -880,20 +879,29 @@ module.exports = grammar({
     ),
 
     type_statement: $ => seq(
-      whiteSpacedKeyword('type', 'is'),
       choice(
-        seq('(', field('type', choice($._intrinsic_type, $.derived_type)), ')'),
-        alias(whiteSpacedKeyword('class', 'default'), $.default)
+        seq(
+          choice(
+            whiteSpacedKeyword('type', 'is'),
+            whiteSpacedKeyword('class', 'is')
+          ),
+          choice(
+            seq('(', field('type', choice($._intrinsic_type, $.identifier)), ')'),
+          ),
+        ),
+        alias($._class_default, $.default)
       ),
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
     ),
 
+    // Standalone rule otherwise it gets aliased as '(default) (default)'
+    _class_default: $ => whiteSpacedKeyword('class', 'default', false),
+
     case_value_range_list: $ => commaSep1(choice(
       $._expression,
-      $.extent_specifier,
-      alias(caseInsensitive('default'), $.default)
+      $.extent_specifier
     )),
 
     format_statement: $ => seq(
@@ -1270,11 +1278,12 @@ function caseInsensitive (keyword, aliasAsWord = true) {
   return result
 }
 
-function whiteSpacedKeyword (prefix, suffix) {
-  return alias(choice(
+function whiteSpacedKeyword (prefix, suffix, aliasAsWord = true) {
+  let result = choice(
     seq(caseInsensitive(prefix, false), caseInsensitive(suffix, false)),
-    caseInsensitive(prefix + suffix, false)),
-  prefix + suffix)
+    caseInsensitive(prefix + suffix, false))
+  if (aliasAsWord) result = alias(result, prefix + suffix)
+  return result
 }
 
 /* TODO
