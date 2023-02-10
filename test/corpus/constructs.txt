@@ -159,6 +159,47 @@ end interface
     (end_interface_statement)))
 
 ============================================
+Interface (abstract)
+============================================
+
+abstract interface
+  subroutine ex(a,b,c)
+    implicit none
+    real :: a,b(10,2)
+    integer :: c
+  end subroutine ex
+  function why(t,f)
+    implicit none
+    logical,intent(in) :: t,f
+    logical :: why
+  end function why
+end interface
+
+----
+
+(translation_unit
+    (interface
+      (interface_statement)
+      (subroutine
+        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
+        (implicit_statement (none))
+        (variable_declaration
+          (intrinsic_type)
+          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list (number_literal) (number_literal))))
+        (variable_declaration (intrinsic_type) (identifier))
+      (end_subroutine_statement (name)))
+      (function
+        (function_statement (name) (parameters (identifier) (identifier)))
+        (implicit_statement (none))
+        (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
+        (variable_declaration (intrinsic_type) (identifier))
+      (end_function_statement (name)))
+    (end_interface_statement)))
+
+============================================
 Interface (generic)
 ============================================
 
