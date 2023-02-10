@@ -129,7 +129,7 @@ module.exports = grammar({
     ),
 
     interface_statement: $ => seq(
-      optional(caseInsensitive('abstract')),
+      optional($.abstract_specifier),
       caseInsensitive('interface'),
       optional(choice(
         $._name,

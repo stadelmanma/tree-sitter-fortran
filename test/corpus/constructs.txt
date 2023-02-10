@@ -179,7 +179,7 @@ end interface
 
 (translation_unit
     (interface
-      (interface_statement)
+      (interface_statement (abstract_specifier))
       (subroutine
         (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
         (implicit_statement (none))

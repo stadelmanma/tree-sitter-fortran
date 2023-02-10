@@ -434,13 +434,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[aA][bB][sS][tT][rR][aA][cC][tT]"
-              },
-              "named": false,
-              "value": "abstract"
+              "type": "SYMBOL",
+              "name": "abstract_specifier"
             },
             {
               "type": "BLANK"
