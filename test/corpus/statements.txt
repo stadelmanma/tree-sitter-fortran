@@ -179,6 +179,8 @@ Derived Type Variable Declarations
 
 PROGRAM TEST
   TYPE(CUSTOM_TYPE) :: CT
+  type(real) :: r
+  class(custom_type), pointer :: cl
 END PROGRAM
 
 ----
@@ -187,6 +189,8 @@ END PROGRAM
   (program
     (program_statement (name))
     (variable_declaration (derived_type (type_name)) (identifier))
+    (variable_declaration (derived_type (type_name)) (identifier))
+    (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
   (end_program_statement)))
 
 ============================================
