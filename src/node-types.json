@@ -2417,6 +2417,10 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "use_alias",
+          "named": true
         }
       ]
     }
@@ -5375,6 +5379,25 @@
     "fields": {}
   },
   {
+    "type": "use_alias",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "local_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "use_statement",
     "named": true,
     "fields": {},
@@ -6111,6 +6134,10 @@
   {
     "type": "intrinsic",
     "named": false
+  },
+  {
+    "type": "local_name",
+    "named": true
   },
   {
     "type": "logical",

@@ -303,7 +303,15 @@ module.exports = grammar({
       ',',
       caseInsensitive('only'),
       ':',
-      commaSep1($.identifier)
+      commaSep1(
+        choice($.use_alias, $.identifier)
+      )
+    ),
+
+    use_alias: $ => seq(
+      alias($.identifier, $.local_name),
+      '=>',
+      $.identifier
     ),
 
     implicit_statement: $ => seq(
