@@ -61,6 +61,7 @@
   "only"
   "parameter"
   "procedure"
+  "endprocedure"
   "print"
   "program"
   "endprogram"
@@ -76,7 +77,7 @@
 ] @keyword
 
 [
-  "if" 
+  "if"
   "then"
   "else"
   "elseif"
@@ -141,14 +142,17 @@
 
 (module_statement
   (name) @namespace)
-  
+
 (submodule_statement
-  (name) @namespace)
+  (module_name) (name) @namespace)
 
 (function_statement
   (name) @function)
 
 (subroutine_statement
+  (name) @function)
+
+(module_procedure_statement
   (name) @function)
 
 (end_program_statement
@@ -164,6 +168,9 @@
   (name) @function)
 
 (end_subroutine_statement
+  (name) @function)
+
+(end_module_procedure_statement
   (name) @function)
 
 (subroutine_call

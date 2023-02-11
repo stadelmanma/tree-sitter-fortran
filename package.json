@@ -31,5 +31,21 @@
   },
   "scripts": {
     "test": "tree-sitter test && tree-sitter parse examples/* --quiet --time"
-  }
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.fortran",
+      "file-types": [
+        "F90",
+        "f90",
+        "f",
+        "f77",
+        "f95"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ],
+      "injection-regex": "fortran"
+    }
+  ]
 }
