@@ -1148,3 +1148,54 @@ end program test
     (close_statement
       (unit_identifier (number_literal)))
     (end_program_statement (name))))
+
+============================================
+Select Rank and Assumed Rank
+============================================
+
+subroutine assumed_rank(A)
+  integer, intent(inout) :: A(..)
+
+  select rank(A)
+    rank (0)
+      write(*, *) "scalar"
+    rank (1)
+      write(*, *) "rank 1"
+    rank (2)
+      write(*, *) "rank 2"
+    rank default
+      error stop 'assumed_rank: only rank 0..2 is handled for now.'
+  end select
+end subroutine assumed_rank
+
+---
+
+(translation_unit
+  (subroutine
+    (subroutine_statement (name)
+      (parameters (identifier)))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier)
+      (call_expression (identifier) (argument_list (assumed_rank))))
+    (select_rank_statement (selector (identifier))
+      (rank_statement
+        (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement
+        (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement (default)
+        (stop_statement (string_literal)))
+      (end_select_statement))
+    (end_subroutine_statement (name))))

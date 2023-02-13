@@ -653,6 +653,7 @@ module.exports = grammar({
       $.forall_statement,
       $.select_case_statement,
       $.select_type_statement,
+      $.select_rank_statement,
       $.do_loop_statement,
       $.format_statement,
       $.open_statement,
@@ -876,6 +877,15 @@ module.exports = grammar({
       $.end_select_statement
     ),
 
+    select_rank_statement: $ => seq(
+      optional($.block_label_start_expression),
+      whiteSpacedKeyword('select', 'rank'),
+      $.selector,
+      $._end_of_statement,
+      repeat1($.rank_statement),
+      $.end_select_statement
+    ),
+
     end_select_statement: $ => seq(
       whiteSpacedKeyword('end', 'select'),
       optional($._block_label)
@@ -921,6 +931,17 @@ module.exports = grammar({
       $._expression,
       $.extent_specifier
     )),
+
+    rank_statement: $ => seq(
+      caseInsensitive('rank'),
+      choice(
+        seq('(', $.case_value_range_list, ')'),
+        alias(caseInsensitive('default'), $.default)
+      ),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
 
     block_construct: $ => seq(
       optional($.block_label_start_expression),
@@ -1210,6 +1231,7 @@ module.exports = grammar({
           $.keyword_argument,
           $.extent_specifier,
           $.assumed_size,
+          $.assumed_rank,
           $._expression
         )),
         ')'
@@ -1233,6 +1255,8 @@ module.exports = grammar({
     assumed_size: $ => '*',
 
     assumed_shape: $ => ':',
+
+    assumed_rank: $ => '..',
 
     block_label_start_expression: $ => /[a-zA-Z_]\w*:[^:]/,
     _block_label: $ => alias($.identifier, $.block_label),

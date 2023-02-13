@@ -4283,6 +4283,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "select_rank_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "do_loop_statement"
         },
         {
@@ -5657,6 +5661,69 @@
         }
       ]
     },
+    "select_rank_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block_label_start_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[sS][eE][lL][eE][cC][tT]"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[rR][aA][nN][kK]"
+                  }
+                ]
+              },
+              {
+                "type": "PATTERN",
+                "value": "[sS][eE][lL][eE][cC][tT][rR][aA][nN][kK]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "selectrank"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "selector"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "rank_statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_select_statement"
+        }
+      ]
+    },
     "end_select_statement": {
       "type": "SEQ",
       "members": [
@@ -6002,6 +6069,79 @@
                 ]
               }
             ]
+          }
+        }
+      ]
+    },
+    "rank_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[rR][aA][nN][kK]"
+          },
+          "named": false,
+          "value": "rank"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "case_value_range_list"
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[dD][eE][fF][aA][uU][lL][tT]"
+                },
+                "named": false,
+                "value": "default"
+              },
+              "named": true,
+              "value": "default"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_block_label"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
           }
         }
       ]
@@ -8281,6 +8421,10 @@
                       },
                       {
                         "type": "SYMBOL",
+                        "name": "assumed_rank"
+                      },
+                      {
+                        "type": "SYMBOL",
                         "name": "_expression"
                       }
                     ]
@@ -8308,6 +8452,10 @@
                             {
                               "type": "SYMBOL",
                               "name": "assumed_size"
+                            },
+                            {
+                              "type": "SYMBOL",
+                              "name": "assumed_rank"
                             },
                             {
                               "type": "SYMBOL",
@@ -8435,6 +8583,10 @@
     "assumed_shape": {
       "type": "STRING",
       "value": ":"
+    },
+    "assumed_rank": {
+      "type": "STRING",
+      "value": ".."
     },
     "block_label_start_expression": {
       "type": "PATTERN",
