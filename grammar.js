@@ -298,7 +298,12 @@ module.exports = grammar({
         seq(',', choice(caseInsensitive('intrinsic'), caseInsensitive('non_intrinsic')), '::')
       ),
       alias($.identifier, $.module_name),
-      optional($.included_items)
+      optional(
+        choice(
+          seq(',', commaSep1($.use_alias)),
+          $.included_items
+        )
+      )
     ),
 
     included_items: $ => seq(

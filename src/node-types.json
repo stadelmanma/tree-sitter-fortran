@@ -5845,6 +5845,10 @@
         {
           "type": "module_name",
           "named": true
+        },
+        {
+          "type": "use_alias",
+          "named": true
         }
       ]
     }
