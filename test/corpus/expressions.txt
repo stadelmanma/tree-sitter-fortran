@@ -490,7 +490,7 @@ Line Continuation
 
 program test
     write(*, "('Testing line continuation')", &
-       &  advance='no', &
+       &  advance='no', &  ! Comment after line continuation
           iostat=istat)
     ! Note trailing whitespace after line continuation on next line
     error &    
@@ -506,6 +506,7 @@ end program
       (unit_identifier)
       (format_identifier (string_literal))
       (keyword_argument (identifier) (string_literal))
+      (comment)
       (keyword_argument (identifier) (identifier)))
     (comment)
     (stop_statement)

@@ -173,9 +173,13 @@ struct Scanner {
         }
         advance(lexer);
 
+        // Allow whitespace after line continuation
         while (lexer->lookahead == ' ') {
           skip(lexer);
         }
+
+        // Allow comments after line continuation
+        if (lexer->lookahead == '!') return true;
 
         // Consume end of line characters, we allow '\n', '\r\n' and
         // '\r' to cover unix, MSDOS and old style Macintosh
