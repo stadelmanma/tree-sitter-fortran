@@ -445,6 +445,8 @@ module.exports = grammar({
 
     derived_type_procedures: $ => seq(
       $.contains_statement,
+      optional($.public_statement),
+      optional($.private_statement),
       repeat($.procedure_statement)
     ),
 

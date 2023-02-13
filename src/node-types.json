@@ -1207,7 +1207,15 @@
           "named": true
         },
         {
+          "type": "private_statement",
+          "named": true
+        },
+        {
           "type": "procedure_statement",
+          "named": true
+        },
+        {
+          "type": "public_statement",
           "named": true
         }
       ]

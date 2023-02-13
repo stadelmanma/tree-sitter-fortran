@@ -590,6 +590,34 @@ end program
     (end_program_statement)))
       
 ============================================
+Derived Type Private Type-Bound Procedures
+============================================
+
+program test
+  type foo
+  contains
+    private
+    procedure :: bar
+    procedure, public :: quux
+  end type foo
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (derived_type_procedures
+        (contains_statement)
+        (private_statement)
+        (procedure_statement (method_name))
+        (procedure_statement (procedure_attribute) (method_name)))
+      (end_type_statement (name)))
+    (end_program_statement (name))))
+
+============================================
 Submodule definition (simple)
 ============================================
 
