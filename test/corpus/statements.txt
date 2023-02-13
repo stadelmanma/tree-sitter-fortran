@@ -133,6 +133,7 @@ PROGRAM TEST
   CHARACTER(LEN=:) :: message
   CHARACTER(LEN=*) :: options
   CHARACTER*(MXLN) :: errflag
+  integer::no_whitespace=1
 END PROGRAM
 
 ----
@@ -174,6 +175,9 @@ END PROGRAM
     (variable_declaration
       (intrinsic_type) (size (parenthesized_expression (identifier)))
       (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (assignment_statement (identifier) (number_literal)))
   (end_program_statement)))
 
 ============================================

@@ -8191,7 +8191,7 @@
     },
     "block_label_start_expression": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*:"
+      "value": "[a-zA-Z_]\\w*:[^:]"
     },
     "_block_label": {
       "type": "ALIAS",

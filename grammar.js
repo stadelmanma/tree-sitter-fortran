@@ -1201,7 +1201,7 @@ module.exports = grammar({
 
     assumed_shape: $ => ':',
 
-    block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
+    block_label_start_expression: $ => /[a-zA-Z_]\w*:[^:]/,
     _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(
