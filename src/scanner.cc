@@ -173,6 +173,10 @@ struct Scanner {
         }
         advance(lexer);
 
+        while (lexer->lookahead == ' ') {
+          skip(lexer);
+        }
+
         // Consume end of line characters, we allow '\n', '\r\n' and
         // '\r' to cover unix, MSDOS and old style Macintosh
         if (lexer->lookahead == '\r') {
