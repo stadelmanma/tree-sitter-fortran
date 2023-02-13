@@ -4249,6 +4249,10 @@
         {
           "type": "SYMBOL",
           "name": "stop_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "block_construct"
         }
       ]
     },
@@ -5936,6 +5940,98 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "block_construct": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block_label_start_expression"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[bB][lL][oO][cC][kK]"
+          },
+          "named": false,
+          "value": "block"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_specification_part"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_block_construct_statement"
+        }
+      ]
+    },
+    "end_block_construct_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[eE][nN][dD]"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "[bB][lL][oO][cC][kK]"
+                  }
+                ]
+              },
+              {
+                "type": "PATTERN",
+                "value": "[eE][nN][dD][bB][lL][oO][cC][kK]"
+              }
+            ]
+          },
+          "named": false,
+          "value": "endblock"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_block_label"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },

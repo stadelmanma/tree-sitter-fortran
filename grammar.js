@@ -651,7 +651,8 @@ module.exports = grammar({
       $.print_statement,
       $.write_statement,
       $.read_statement,
-      $.stop_statement
+      $.stop_statement,
+      $.block_construct
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -911,6 +912,20 @@ module.exports = grammar({
       $._expression,
       $.extent_specifier
     )),
+
+    block_construct: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('block'),
+      $._end_of_statement,
+      repeat($._specification_part),
+      repeat($._statement),
+      $.end_block_construct_statement
+    ),
+
+    end_block_construct_statement: $ => seq(
+      whiteSpacedKeyword('end', 'block'),
+      optional($._block_label)
+    ),
 
     format_statement: $ => seq(
       caseInsensitive('format'),
