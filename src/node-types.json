@@ -121,6 +121,10 @@
           "named": true
         },
         {
+          "type": "derived_type",
+          "named": true
+        },
+        {
           "type": "derived_type_member_expression",
           "named": true
         },
@@ -130,6 +134,10 @@
         },
         {
           "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "intrinsic_type",
           "named": true
         },
         {
@@ -150,6 +158,10 @@
         },
         {
           "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "size",
           "named": true
         },
         {

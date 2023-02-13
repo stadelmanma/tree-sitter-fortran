@@ -1248,7 +1248,13 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _ac_value_list: $ => commaSep1($._expression),
+    _ac_value_list: $ => seq(
+      optional(seq(
+        choice($._intrinsic_type, $.derived_type),
+        '::',
+      )),
+      commaSep1($._expression)
+    ),
 
     complex_literal: $ => seq(
       '(',

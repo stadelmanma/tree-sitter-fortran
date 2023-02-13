@@ -523,8 +523,9 @@ program array_constructors
 
   array2 = [((real(i - 1) / 10.), i=1, 10)]
 
-  print*, sin([1., 2., 3., 4.])
+  print*, sin([real(real64)::1., 2., 3., 4.])
   print*, sin((/1., 2., 3., 4./))
+  print*, [character(len=3) :: "foo", "fo", "f"]
 end program array_constructors
 
 ---
@@ -560,6 +561,8 @@ end program array_constructors
         (call_expression (identifier)
           (argument_list
             (array_literal
+              (intrinsic_type)
+              (size (argument_list (identifier)))
               (number_literal)
               (number_literal)
               (number_literal)
@@ -573,4 +576,13 @@ end program array_constructors
               (number_literal)
               (number_literal)
               (number_literal))))))
+    (print_statement (format_identifier)
+      (output_item_list
+        (array_literal
+          (intrinsic_type)
+          (size (argument_list
+              (keyword_argument (identifier) (number_literal))))
+          (string_literal)
+          (string_literal)
+          (string_literal))))
     (end_program_statement (name))))
