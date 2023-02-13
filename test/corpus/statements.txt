@@ -1104,3 +1104,44 @@ end subroutine print_decorated_numbers
         (write_statement (unit_identifier) (format_identifier (string_literal))))
       (end_select_statement))
     (end_subroutine_statement (name))))
+
+============================================
+Open/Close statements
+============================================
+
+program test
+  integer :: unit
+
+  open(newunit=unit, file="foo.txt")
+  close(unit, status="delete")
+
+  open(newunit=unit, file="foo.txt")
+  close(unit=unit, status="delete")
+
+  open(99)
+  close(99)
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type) (identifier))
+    (open_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (close_statement
+      (unit_identifier (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (open_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (close_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (open_statement
+      (unit_identifier (number_literal)))
+    (close_statement
+      (unit_identifier (number_literal)))
+    (end_program_statement (name))))
