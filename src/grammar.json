@@ -8848,6 +8848,10 @@
                 {
                   "type": "PATTERN",
                   "value": "\"\"."
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "& *\\n *&"
                 }
               ]
             }
@@ -8880,6 +8884,10 @@
                 {
                   "type": "PATTERN",
                   "value": "''."
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "& *\\n *&"
                 }
               ]
             }

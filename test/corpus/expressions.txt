@@ -513,6 +513,24 @@ end program
   (end_program_statement)))
 
 ============================================
+Line Continuation in String Literal
+============================================
+
+program test
+  print*, "hello &
+    & world"
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (print_statement (format_identifier)
+      (output_item_list (string_literal)))
+    (end_program_statement (name))))
+
+============================================
 Array Constructors
 ============================================
 
