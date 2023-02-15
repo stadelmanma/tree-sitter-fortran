@@ -3106,6 +3106,15 @@
           },
           "named": false,
           "value": "property"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[fF][iI][nN][aA][lL]"
+          },
+          "named": false,
+          "value": "final"
         }
       ]
     },

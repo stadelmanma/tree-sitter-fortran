@@ -7053,6 +7053,10 @@
     "named": false
   },
   {
+    "type": "final",
+    "named": false
+  },
+  {
     "type": "forall",
     "named": false
   },

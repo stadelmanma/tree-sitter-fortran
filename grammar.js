@@ -486,7 +486,8 @@ module.exports = grammar({
       caseInsensitive('initial'),
       caseInsensitive('procedure'),
       seq(caseInsensitive('module'), caseInsensitive('procedure')),
-      caseInsensitive('property')
+      caseInsensitive('property'),
+      caseInsensitive('final')
     ),
 
     procedure_attribute: $ => choice(
