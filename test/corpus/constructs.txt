@@ -505,6 +505,7 @@ program test
     contains
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
+       procedure, public, pass(self) :: pass_method
        generic, pass :: binding_name => method_name, method_name2
        generic, private :: assignment(=) => assign_method
        generic, private :: operator(+) => add_method
@@ -539,12 +540,13 @@ end program
         (type_qualifier
           (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
         (identifier))
-        (derived_type_procedures
+      (derived_type_procedures
           (contains_statement)
           (procedure_statement (procedure_attribute) (procedure_attribute) (method_name))
           (comment)
           (procedure_statement (method_name))
           (comment)
+          (procedure_statement (procedure_attribute) (procedure_attribute (identifier)) (method_name))
           (procedure_statement (procedure_attribute) (binding_name (identifier)) (method_name) (method_name))
           (procedure_statement (procedure_attribute) (binding_name (assignment)) (method_name))
           (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name))

@@ -492,7 +492,10 @@ module.exports = grammar({
 
     procedure_attribute: $ => choice(
       caseInsensitive('deferred'),
-      caseInsensitive('pass'),
+      seq(
+        caseInsensitive('pass'),
+        optional(seq('(', $.identifier, ')'))
+      ),
       caseInsensitive('nopass'),
       caseInsensitive('non_overridable'),
       caseInsensitive('public'),
