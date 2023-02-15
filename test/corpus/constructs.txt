@@ -506,6 +506,8 @@ program test
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
        generic, pass :: binding_name => method_name, method_name2
+       generic, private :: assignment(=) => assign_method
+       generic, private :: operator(+) => add_method
   end type custom_type
 end program
 
@@ -542,7 +544,9 @@ end program
           (comment)
           (procedure_statement (method_name))
           (comment)
-          (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
+          (procedure_statement (procedure_attribute) (binding_name (identifier)) (method_name) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (assignment)) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name)))
       (end_type_statement (name)))
   (end_program_statement)))
 

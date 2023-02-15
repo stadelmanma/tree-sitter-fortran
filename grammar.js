@@ -468,13 +468,17 @@ module.exports = grammar({
         commaSep1($.procedure_attribute)
       )),
       optional(choice(
-        seq('::', $._binding_name, '=>'),
+        seq('::', $.binding_name, '=>'),
         '::'
       )),
       commaSep1($._method_name)
     ),
 
-    _binding_name: $ => alias($.identifier, $.binding_name),
+    binding_name: $ => choice(
+      $.identifier,
+      $.assignment,
+      $.operator
+    ),
     _method_name: $ => alias($.identifier, $.method_name),
 
     _procedure_kind: $ => choice(

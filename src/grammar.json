@@ -2973,7 +2973,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "_binding_name"
+                      "name": "binding_name"
                     },
                     {
                       "type": "STRING",
@@ -3019,14 +3019,22 @@
         }
       ]
     },
-    "_binding_name": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "identifier"
-      },
-      "named": true,
-      "value": "binding_name"
+    "binding_name": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "operator"
+        }
+      ]
     },
     "_method_name": {
       "type": "ALIAS",
