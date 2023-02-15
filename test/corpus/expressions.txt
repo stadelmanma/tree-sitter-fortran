@@ -63,6 +63,10 @@ PROGRAM TEST
     sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
     dble_qt = ""
     dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+    dble_qt = """double double quotes"""
+    sngl_qt = '''double single quotes'''
+    dble_qt = "'single in double quotes'"
+    sngl_qt = '"double in single quotes"'
 
     val = "one"//'two'//sngl_qt//dble_qt
 END PROGRAM
@@ -72,6 +76,10 @@ END PROGRAM
 (translation_unit
   (program 
     (program_statement (name))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))

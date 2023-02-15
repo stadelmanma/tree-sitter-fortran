@@ -1311,13 +1311,13 @@ module.exports = grammar({
 
     _double_quoted_string: $ => token(seq(
       '"',
-      repeat(choice(/[^"\n]/, /""./, /& *\n *&/)),
+      repeat(choice(/[^"\n]/, /""./, /.""/, /& *\n *&/)),
       '"')
     ),
 
     _single_quoted_string: $ => token(seq(
       "'",
-      repeat(choice(/[^'\n]/, /''./, /& *\n *&/)),
+      repeat(choice(/[^'\n]/, /''./, /.''/, /& *\n *&/)),
       "'")
     ),
 
