@@ -311,7 +311,10 @@ module.exports = grammar({
       caseInsensitive('only'),
       ':',
       commaSep1(
-        choice($.use_alias, $.identifier)
+        choice(
+          $.use_alias,
+          $.identifier,
+          $.operator)
       )
     ),
 

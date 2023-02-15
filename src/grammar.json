@@ -1813,6 +1813,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "operator"
                 }
               ]
             },
@@ -1835,6 +1839,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "identifier"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "operator"
                       }
                     ]
                   }
