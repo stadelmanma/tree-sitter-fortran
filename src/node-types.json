@@ -323,6 +323,203 @@
     }
   },
   {
+    "type": "associate_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "association",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_associate_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "association",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "selector": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "complex_literal",
+            "named": true
+          },
+          {
+            "type": "concatenation_expression",
+            "named": true
+          },
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implied_do_loop_expression",
+            "named": true
+          },
+          {
+            "type": "logical_expression",
+            "named": true
+          },
+          {
+            "type": "math_expression",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "relational_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "assumed_shape",
     "named": true,
     "fields": {}
@@ -357,6 +554,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -599,6 +800,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -1294,6 +1499,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -1409,6 +1618,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -1509,6 +1722,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -1619,6 +1836,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -1708,6 +1929,21 @@
         },
         {
           "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_associate_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "block_label",
           "named": true
         }
       ]
@@ -2116,6 +2352,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -2290,6 +2530,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -2544,6 +2788,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -3695,6 +3943,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -4407,6 +4659,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -4613,6 +4869,10 @@
       "types": [
         {
           "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
           "named": true
         },
         {
@@ -5336,6 +5596,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -5816,6 +6080,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -6205,6 +6473,10 @@
           "named": true
         },
         {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
           "type": "block_construct",
           "named": true
         },
@@ -6514,6 +6786,10 @@
     "named": false
   },
   {
+    "type": "associate",
+    "named": false
+  },
+  {
     "type": "assumed_rank",
     "named": true
   },
@@ -6651,6 +6927,10 @@
   },
   {
     "type": "elsewhere",
+    "named": false
+  },
+  {
+    "type": "endassociate",
     "named": false
   },
   {

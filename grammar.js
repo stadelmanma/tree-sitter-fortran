@@ -666,7 +666,8 @@ module.exports = grammar({
       $.write_statement,
       $.read_statement,
       $.stop_statement,
-      $.block_construct
+      $.block_construct,
+      $.associate_statement
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -958,6 +959,28 @@ module.exports = grammar({
 
     end_block_construct_statement: $ => seq(
       whiteSpacedKeyword('end', 'block'),
+      optional($._block_label)
+    ),
+
+    associate_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('associate'),
+      '(',
+      commaSep1($.association),
+      ')',
+      $._end_of_statement,
+      repeat($._statement),
+      $.end_associate_statement
+    ),
+
+    association: $ => seq(
+      field('name', $.identifier),
+      '=>',
+      field('selector', $._expression)
+    ),
+
+    end_associate_statement: $ => seq(
+      whiteSpacedKeyword('end', 'associate'),
       optional($._block_label)
     ),
 

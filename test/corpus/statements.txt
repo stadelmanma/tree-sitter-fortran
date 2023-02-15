@@ -1221,3 +1221,42 @@ end program test
   (program
     (program_statement (name))
     (end_program_statement (name))))
+
+============================================
+Associate Statement
+============================================
+
+program test
+  associate(foo => bar, bing => bat)
+    inner: associate(this => that%other())
+        foo = this + 1
+    end associate inner
+  end associate
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (associate_statement
+      (association
+        (identifier)
+        (identifier))
+      (association
+        (identifier)
+        (identifier))
+      (associate_statement
+        (block_label_start_expression)
+        (association
+          (identifier)
+          (call_expression
+            (derived_type_member_expression
+              (identifier) (type_member))
+            (argument_list)))
+        (assignment_statement
+          (identifier)
+          (math_expression (identifier) (number_literal)))
+        (end_associate_statement (block_label)))
+      (end_associate_statement))
+    (end_program_statement)))
