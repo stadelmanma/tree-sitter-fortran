@@ -268,11 +268,13 @@ end interface assignment (=)
   (end_interface_statement (assignment))))
 
 ============================================
-Use Operator
+Use Operator and Assignment
 ============================================
 
 module test
   use other, only: operator(==)
+  public :: assignment(=)
+  private :: operator(==)
 end module
 
 ---
@@ -281,6 +283,8 @@ end module
   (module
     (module_statement (name))
     (use_statement (module_name) (included_items (operator)))
+    (public_statement (assignment))
+    (private_statement (operator))
     (end_module_statement)))
 
 ============================================

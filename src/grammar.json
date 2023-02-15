@@ -2126,6 +2126,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "operator"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "assignment"
                           }
                         ]
                       },
@@ -2148,6 +2152,10 @@
                                 {
                                   "type": "SYMBOL",
                                   "name": "operator"
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "assignment"
                                 }
                               ]
                             }
@@ -2204,6 +2212,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "operator"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "assignment"
                           }
                         ]
                       },
@@ -2226,6 +2238,10 @@
                                 {
                                   "type": "SYMBOL",
                                   "name": "operator"
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "assignment"
                                 }
                               ]
                             }

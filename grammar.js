@@ -351,7 +351,7 @@ module.exports = grammar({
       caseInsensitive('private'),
       optional(seq(
         '::',
-        commaSep1(choice($.identifier, $.operator))
+        commaSep1(choice($.identifier, $.operator, $.assignment))
       ))
     )),
 
@@ -359,7 +359,7 @@ module.exports = grammar({
       caseInsensitive('public'),
       optional(seq(
         '::',
-        commaSep1(choice($.identifier, $.operator))
+        commaSep1(choice($.identifier, $.operator, $.assignment))
       ))
     )),
 
