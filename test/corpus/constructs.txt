@@ -272,7 +272,7 @@ Use Operator and Assignment
 ============================================
 
 module test
-  use other, only: operator(==)
+  use other, only: operator(==), assignment(=)
   public :: assignment(=)
   private :: operator(==)
 end module
@@ -282,7 +282,8 @@ end module
 (translation_unit
   (module
     (module_statement (name))
-    (use_statement (module_name) (included_items (operator)))
+    (use_statement (module_name)
+      (included_items (operator) (assignment)))
     (public_statement (assignment))
     (private_statement (operator))
     (end_module_statement)))

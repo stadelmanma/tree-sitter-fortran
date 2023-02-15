@@ -3052,6 +3052,10 @@
       "required": true,
       "types": [
         {
+          "type": "assignment",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },

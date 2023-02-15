@@ -315,7 +315,8 @@ module.exports = grammar({
         choice(
           $.use_alias,
           $.identifier,
-          $.operator)
+          $.operator,
+          $.assignment)
       )
     ),
 
