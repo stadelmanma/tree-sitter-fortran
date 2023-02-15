@@ -1320,9 +1320,9 @@ module.exports = grammar({
 
     complex_literal: $ => seq(
       '(',
-      choice($.number_literal, $.identifier),
+      choice($.number_literal, $.identifier, $.unary_expression),
       ',',
-      choice($.number_literal, $.identifier),
+      choice($.number_literal, $.identifier, $.unary_expression),
       ')'
     ),
 

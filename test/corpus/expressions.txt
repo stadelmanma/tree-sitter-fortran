@@ -24,6 +24,8 @@ PROGRAM TEST
     hex_val = Z'09AF'
     cpx_val = (1.0, 2.0)
     cpx_val = (dbl_val, dbl_val)
+    cpx_val = (-1.0, 1.0)
+    cpx_val = (1.0, -1.0)
 END PROGRAM
 
 ----
@@ -52,6 +54,8 @@ END PROGRAM
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (complex_literal (number_literal) (number_literal)))
     (assignment_statement (identifier) (complex_literal (identifier) (identifier)))
+    (assignment_statement (identifier) (complex_literal (unary_expression (number_literal)) (number_literal)))
+    (assignment_statement (identifier) (complex_literal (number_literal) (unary_expression (number_literal))))
   (end_program_statement)))
 
 ============================================

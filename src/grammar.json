@@ -8967,6 +8967,10 @@
             {
               "type": "SYMBOL",
               "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unary_expression"
             }
           ]
         },
@@ -8984,6 +8988,10 @@
             {
               "type": "SYMBOL",
               "name": "identifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unary_expression"
             }
           ]
         },
