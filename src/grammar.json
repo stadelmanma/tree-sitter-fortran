@@ -1678,43 +1678,60 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
+              "type": "CHOICE",
               "members": [
                 {
-                  "type": "STRING",
-                  "value": ","
-                },
-                {
-                  "type": "CHOICE",
+                  "type": "SEQ",
                   "members": [
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "PATTERN",
-                        "value": "[iI][nN][tT][rR][iI][nN][sS][iI][cC]"
-                      },
-                      "named": false,
-                      "value": "intrinsic"
+                      "type": "STRING",
+                      "value": ","
                     },
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "PATTERN",
-                        "value": "[nN][oO][nN]_[iI][nN][tT][rR][iI][nN][sS][iI][cC]"
-                      },
-                      "named": false,
-                      "value": "non_intrinsic"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "PATTERN",
+                            "value": "[iI][nN][tT][rR][iI][nN][sS][iI][cC]"
+                          },
+                          "named": false,
+                          "value": "intrinsic"
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "PATTERN",
+                            "value": "[nN][oO][nN]_[iI][nN][tT][rR][iI][nN][sS][iI][cC]"
+                          },
+                          "named": false,
+                          "value": "non_intrinsic"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "::"
                     }
                   ]
                 },
                 {
-                  "type": "STRING",
-                  "value": "::"
+                  "type": "BLANK"
                 }
               ]
             },
             {
-              "type": "BLANK"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "::"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         },

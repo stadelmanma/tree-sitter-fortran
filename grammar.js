@@ -295,8 +295,11 @@ module.exports = grammar({
 
     use_statement: $ => seq(
       caseInsensitive('use'),
-      optional(
-        seq(',', choice(caseInsensitive('intrinsic'), caseInsensitive('non_intrinsic')), '::')
+      choice(
+        optional(
+          seq(',', choice(caseInsensitive('intrinsic'), caseInsensitive('non_intrinsic')), '::')
+        ),
+        optional('::')
       ),
       alias($.identifier, $.module_name),
       optional(
