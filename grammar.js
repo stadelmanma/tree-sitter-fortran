@@ -60,7 +60,8 @@ module.exports = grammar({
   extras: $ => [
     /[ \t\r\n]/,
     $.comment,
-    $._line_continuation
+    $._line_continuation,
+    $.preproc_file_line
   ],
 
   inline: $ => [
@@ -1326,6 +1327,16 @@ module.exports = grammar({
         caseInsensitive('\\.true\\.'),
         caseInsensitive('\\.false\\.')
       )
+    ),
+
+    // This handles files preprocessed by gfortran -E
+    // Other preprocessors may use different syntax
+    preproc_file_line: $ => seq(
+      '#',
+      alias(/\d+/, $.preproc_line_number),
+      alias(/"[^"\n]*"/, $.preproc_filename),
+      optional(/\d+/),
+      $._newline
     ),
 
     identifier: $ => /[a-zA-Z_]\w*/,

@@ -1199,3 +1199,25 @@ end subroutine assumed_rank
         (stop_statement (string_literal)))
       (end_select_statement))
     (end_subroutine_statement (name))))
+
+============================================
+Preprocessed Files
+============================================
+
+# 1 "/path/some/file.F90"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/path/some/file.F90" 1
+program test
+end program test
+
+---
+
+(translation_unit
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (program
+    (program_statement (name))
+    (end_program_statement (name))))

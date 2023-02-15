@@ -4277,6 +4277,25 @@
     }
   },
   {
+    "type": "preproc_file_line",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "preproc_filename",
+          "named": true
+        },
+        {
+          "type": "preproc_line_number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "print_statement",
     "named": true,
     "fields": {},
@@ -6323,6 +6342,10 @@
     }
   },
   {
+    "type": "#",
+    "named": false
+  },
+  {
     "type": "%",
     "named": false
   },
@@ -6877,6 +6900,14 @@
   {
     "type": "pointer",
     "named": false
+  },
+  {
+    "type": "preproc_filename",
+    "named": true
+  },
+  {
+    "type": "preproc_line_number",
+    "named": true
   },
   {
     "type": "print",

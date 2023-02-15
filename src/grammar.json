@@ -8941,6 +8941,49 @@
         ]
       }
     },
+    "preproc_file_line": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "#"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "\\d+"
+          },
+          "named": true,
+          "value": "preproc_line_number"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "\"[^\"\\n]*\""
+          },
+          "named": true,
+          "value": "preproc_filename"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\d+"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_newline"
+        }
+      ]
+    },
     "identifier": {
       "type": "PATTERN",
       "value": "[a-zA-Z_]\\w*"
@@ -8995,6 +9038,10 @@
     {
       "type": "SYMBOL",
       "name": "_line_continuation"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "preproc_file_line"
     }
   ],
   "conflicts": [
