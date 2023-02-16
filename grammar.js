@@ -34,6 +34,7 @@
 const PREC = {
   ASSIGNMENT: -10,
   DEFAULT: 0,
+  DEFINED_OPERATOR: 2,
   LOGICAL_EQUIV: 5,
   LOGICAL_OR: 10,
   LOGICAL_AND: 20,
@@ -1164,7 +1165,7 @@ module.exports = grammar({
       $.unary_expression,
       $.parenthesized_expression,
       $.call_expression,
-      $.implied_do_loop_expression
+      $.implied_do_loop_expression,
     ),
 
     parenthesized_expression: $ => seq(
@@ -1235,7 +1236,8 @@ module.exports = grammar({
         ['-', PREC.ADDITIVE],
         ['*', PREC.MULTIPLICATIVE],
         ['/', PREC.MULTIPLICATIVE],
-        ['**', PREC.EXPONENT]
+        ['**', PREC.EXPONENT],
+        [$.user_defined_operator, PREC.DEFINED_OPERATOR]
       ]
 
       return choice(...table.map(([operator, precedence]) => {
@@ -1248,8 +1250,12 @@ module.exports = grammar({
     },
 
     unary_expression: $ => prec.left(PREC.UNARY, seq(
-      field('operator', choice('-', '+')),
+      field('operator', choice('-', '+', $.user_defined_operator)),
       field('argument', $._expression)
+    )),
+
+    user_defined_operator: $ => prec.right(seq(
+      '.', /[a-zA-Z]+/, '.'
     )),
 
     // Due to the fact Fortran uses parentheses for both function calls and

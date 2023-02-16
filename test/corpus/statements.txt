@@ -1262,3 +1262,60 @@ end program
         (end_associate_statement (block_label)))
       (end_associate_statement))
     (end_program_statement)))
+
+============================================
+User Defined Operator
+============================================
+
+program foo
+  interface operator(.unary.)
+    integer function unary_op(x)
+      integer, intent(in) :: x
+    end function unary_op
+  end interface
+
+  interface operator(.binary.)
+    integer function binary_op(x, y)
+      integer, intent(in) :: x, y
+    end function unary_op
+  end interface
+
+  integer :: a, b
+  print*, . unary . a
+  print*, b .binary. a
+
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (interface 
+      (interface_statement (operator))
+      (function
+        (function_statement (intrinsic_type)
+          (name) (parameters (identifier)))
+        (variable_declaration (intrinsic_type)
+          (type_qualifier) (identifier))
+         (end_function_statement (name)))
+      (end_interface_statement))
+    (interface 
+      (interface_statement (operator))
+      (function
+        (function_statement (intrinsic_type)
+          (name) (parameters (identifier) (identifier)))
+        (variable_declaration (intrinsic_type)
+          (type_qualifier) (identifier) (identifier))
+         (end_function_statement (name)))
+      (end_interface_statement))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (print_statement (format_identifier)
+      (output_item_list
+        (unary_expression
+          (user_defined_operator) (identifier))))
+    (print_statement (format_identifier)
+      (output_item_list
+        (math_expression
+          (identifier) (user_defined_operator) (identifier))))
+    (end_program_statement)))

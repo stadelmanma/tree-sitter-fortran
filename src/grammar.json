@@ -8528,6 +8528,39 @@
               }
             ]
           }
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 2,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "left",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "user_defined_operator"
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "right",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                }
+              }
+            ]
+          }
         }
       ]
     },
@@ -8550,6 +8583,10 @@
                 {
                   "type": "STRING",
                   "value": "+"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "user_defined_operator"
                 }
               ]
             }
@@ -8561,6 +8598,27 @@
               "type": "SYMBOL",
               "name": "_expression"
             }
+          }
+        ]
+      }
+    },
+    "user_defined_operator": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "."
+          },
+          {
+            "type": "PATTERN",
+            "value": "[a-zA-Z]+"
+          },
+          {
+            "type": "STRING",
+            "value": "."
           }
         ]
       }
@@ -9470,6 +9528,7 @@
   "PREC": {
     "ASSIGNMENT": -10,
     "DEFAULT": 0,
+    "DEFINED_OPERATOR": 2,
     "LOGICAL_EQUIV": 5,
     "LOGICAL_OR": 10,
     "LOGICAL_AND": 20,

@@ -3795,6 +3795,10 @@
           {
             "type": "/",
             "named": false
+          },
+          {
+            "type": "user_defined_operator",
+            "named": true
           }
         ]
       },
@@ -6340,6 +6344,10 @@
           {
             "type": "-",
             "named": false
+          },
+          {
+            "type": "user_defined_operator",
+            "named": true
           }
         ]
       }
@@ -6434,6 +6442,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "user_defined_operator",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "variable_attributes",
@@ -6740,6 +6753,10 @@
   },
   {
     "type": "-",
+    "named": false
+  },
+  {
+    "type": ".",
     "named": false
   },
   {
