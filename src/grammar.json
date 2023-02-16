@@ -9228,8 +9228,112 @@
       ]
     },
     "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[a-zA-Z_]\\w*"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][aA][tT][aA]"
+          },
+          "named": false,
+          "value": "data"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][oO][uU][bB][lL][eE]"
+          },
+          "named": false,
+          "value": "double"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][lL][sS][eE][iI][fF]"
+          },
+          "named": false,
+          "value": "elseif"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][dD]"
+          },
+          "named": false,
+          "value": "end"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][dD][iI][fF]"
+          },
+          "named": false,
+          "value": "endif"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][rR][rR][oO][rR]"
+          },
+          "named": false,
+          "value": "error"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][xX][iI][tT]"
+          },
+          "named": false,
+          "value": "exit"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[iI][fF]"
+          },
+          "named": false,
+          "value": "if"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[sS][eE][lL][eE][cC][tT]"
+          },
+          "named": false,
+          "value": "select"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[sS][tT][oO][pP]"
+          },
+          "named": false,
+          "value": "stop"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[vV][aA][lL][uU][eE]"
+          },
+          "named": false,
+          "value": "value"
+        }
+      ]
     },
     "comment": {
       "type": "TOKEN",
@@ -9291,6 +9395,52 @@
     [
       "_expression",
       "complex_literal"
+    ],
+    [
+      "_inline_if_statement",
+      "_block_if_statement",
+      "identifier"
+    ],
+    [
+      "case_statement"
+    ],
+    [
+      "else_clause"
+    ],
+    [
+      "elseif_clause",
+      "identifier"
+    ],
+    [
+      "elseif_clause"
+    ],
+    [
+      "elsewhere_clause",
+      "identifier"
+    ],
+    [
+      "elsewhere_clause"
+    ],
+    [
+      "interface_statement"
+    ],
+    [
+      "intrinsic_type",
+      "identifier"
+    ],
+    [
+      "rank_statement"
+    ],
+    [
+      "stop_statement",
+      "identifier"
+    ],
+    [
+      "type_qualifier",
+      "identifier"
+    ],
+    [
+      "type_statement"
     ]
   ],
   "precedences": [],

@@ -617,3 +617,49 @@ end program array_constructors
           (string_literal)
           (string_literal))))
     (end_program_statement (name))))
+
+============================================
+Keywords As Identifiers
+============================================
+
+program demo
+   integer :: endif, if, elseif, error
+   integer, DIMENSION(2) :: function
+   endif = 3; if = 2
+   error = 1
+   if (endif == 2) then
+      endif = 5
+      elseif = if + endif
+   elseif (endif == 3) then
+      function(if) = endif/elseif
+      print *, endif
+   endif
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type) (identifier) (identifier) (identifier) (identifier))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal))) (identifier))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (if_statement
+      (parenthesized_expression
+        (relational_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (number_literal))
+      (assignment_statement (identifier)
+        (math_expression (identifier) (identifier)))
+      (elseif_clause
+        (parenthesized_expression
+          (relational_expression (identifier) (number_literal)))
+        (assignment_statement
+          (call_expression (identifier) (argument_list (identifier)))
+          (math_expression (identifier) (identifier)))
+        (print_statement (format_identifier)
+          (output_item_list (identifier))))
+      (end_if_statement))
+    (end_program_statement)))

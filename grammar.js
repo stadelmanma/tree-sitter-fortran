@@ -70,7 +70,20 @@ module.exports = grammar({
   ],
 
   conflicts: $ => [
-    [$._expression, $.complex_literal]
+    [$._expression, $.complex_literal],
+    [$._inline_if_statement, $._block_if_statement, $.identifier],
+    [$.case_statement],
+    [$.else_clause],
+    [$.elseif_clause, $.identifier],
+    [$.elseif_clause],
+    [$.elsewhere_clause, $.identifier],
+    [$.elsewhere_clause],
+    [$.interface_statement],
+    [$.intrinsic_type, $.identifier],
+    [$.rank_statement],
+    [$.stop_statement, $.identifier],
+    [$.type_qualifier, $.identifier],
+    [$.type_statement],
   ],
 
   rules: {
@@ -1374,7 +1387,24 @@ module.exports = grammar({
       $._newline
     ),
 
-    identifier: $ => /[a-zA-Z_]\w*/,
+    // Fortran doesn't have reserved keywords, and to allow _just
+    // enough_ ambiguity so that tree-sitter can parse tokens
+    // correctly as either a keyword or a plain identifier, we must
+    // add the keywords here -- and possibly in `conflicts` too.
+    identifier: $ => choice(
+      /[a-zA-Z_]\w*/,
+      caseInsensitive('data'),
+      caseInsensitive('double'),
+      caseInsensitive('elseif'),
+      caseInsensitive('end'),
+      caseInsensitive('endif'),
+      caseInsensitive('error'),
+      caseInsensitive('exit'),
+      caseInsensitive('if'),
+      caseInsensitive('select'),
+      caseInsensitive('stop'),
+      caseInsensitive('value'),
+    ),
 
     comment: $ => token(seq('!', /.*/)),
 
