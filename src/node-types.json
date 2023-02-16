@@ -6009,15 +6009,32 @@
   {
     "type": "submodule_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "ancestor": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "module_name",
+            "named": true
+          }
+        ]
+      },
+      "parent": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "module_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
-        {
-          "type": "module_name",
-          "named": true
-        },
         {
           "type": "name",
           "named": true

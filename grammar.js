@@ -130,7 +130,16 @@ module.exports = grammar({
       $.end_submodule_statement
     ),
 
-    submodule_statement: $ => seq(caseInsensitive('submodule'), '(', $.module_name, ')', $._name),
+    submodule_statement: $ => seq(
+      caseInsensitive('submodule'),
+      '(',
+      field('ancestor', $.module_name),
+      optional(seq(
+        ':', field('parent', $.module_name)
+      )),
+      ')',
+      $._name
+    ),
     end_submodule_statement: $ => blockStructureEnding($, 'submodule'),
     module_name: $ => $._name,
 
