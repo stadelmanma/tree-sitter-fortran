@@ -1287,7 +1287,7 @@ Associate Statement
 
 program test
   associate(foo => bar, bing => bat)
-    inner: associate(this => that%other())
+    inner:associate(this => that%other())
         foo = this + 1
     end associate inner
   end associate

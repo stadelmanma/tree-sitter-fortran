@@ -9183,10 +9183,6 @@
       "type": "STRING",
       "value": ".."
     },
-    "block_label_start_expression": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_]\\w*:[^:]"
-    },
     "_block_label": {
       "type": "ALIAS",
       "content": {
@@ -9195,6 +9191,24 @@
       },
       "named": true,
       "value": "block_label"
+    },
+    "block_label_start_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          },
+          "named": false,
+          "value": "label"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        }
+      ]
     },
     "loop_control_expression": {
       "type": "SEQ",

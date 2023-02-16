@@ -1366,7 +1366,7 @@ module.exports = grammar({
 
     assumed_rank: $ => '..',
 
-    block_label_start_expression: $ => /[a-zA-Z_]\w*:[^:]/,
+    block_label_start_expression: $ => seq(alias($.identifier, 'label'), ':'),
     _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(
