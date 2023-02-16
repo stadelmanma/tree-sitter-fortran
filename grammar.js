@@ -81,6 +81,7 @@ module.exports = grammar({
     [$.elsewhere_clause],
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],
+    [$.module_statement, $.procedure_qualifier],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
     [$.type_qualifier, $.identifier],
@@ -187,7 +188,6 @@ module.exports = grammar({
     ),
 
     subroutine_statement: $ => seq(
-      optional(caseInsensitive('module')),
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       field('name', $._name),
@@ -224,7 +224,6 @@ module.exports = grammar({
     ),
 
     function_statement: $ => seq(
-      optional(caseInsensitive('module')),
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       field('name', $._name),
@@ -645,6 +644,7 @@ module.exports = grammar({
     procedure_qualifier: $ => choice(
       caseInsensitive('elemental'),
       caseInsensitive('impure'),
+      caseInsensitive('module'),
       caseInsensitive('pure'),
       caseInsensitive('recursive')
     ),

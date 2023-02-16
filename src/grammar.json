@@ -674,23 +674,6 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[mM][oO][dD][uU][lL][eE]"
-              },
-              "named": false,
-              "value": "module"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
               "type": "SYMBOL",
               "name": "_callable_interface_qualifers"
             },
@@ -1003,23 +986,6 @@
     "function_statement": {
       "type": "SEQ",
       "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[mM][oO][dD][uU][lL][eE]"
-              },
-              "named": false,
-              "value": "module"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
         {
           "type": "CHOICE",
           "members": [
@@ -4133,6 +4099,15 @@
           },
           "named": false,
           "value": "impure"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[mM][oO][dD][uU][lL][eE]"
+          },
+          "named": false,
+          "value": "module"
         },
         {
           "type": "ALIAS",
@@ -9822,6 +9797,10 @@
     [
       "intrinsic_type",
       "identifier"
+    ],
+    [
+      "module_statement",
+      "procedure_qualifier"
     ],
     [
       "rank_statement"

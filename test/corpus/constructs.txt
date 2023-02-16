@@ -709,14 +709,14 @@ END MODULE BoundingBox_Method
     (interface
       (interface_statement)
       (subroutine
-        (subroutine_statement (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
+        (subroutine_statement (procedure_qualifier) (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
         (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
       (end_subroutine_statement (name)))
     (end_interface_statement))
     (interface
       (interface_statement)
       (function
-        (function_statement (name) (parameters (identifier)) (function_result (identifier)))
+        (function_statement (procedure_qualifier) (name) (parameters (identifier)) (function_result (identifier)))
         (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
       (end_function_statement (name)))
     (end_interface_statement))
