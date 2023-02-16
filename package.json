@@ -19,7 +19,7 @@
   "homepage": "https://github.com/stadelmanma/tree-sitter-fortran#readme",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.2"
+    "nan": "^2.17.0"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
@@ -30,6 +30,7 @@
     "tree-sitter-cli": "^0.20.0"
   },
   "scripts": {
+    "generate": "tree-sitter generate",
     "test": "tree-sitter test && tree-sitter parse examples/* --quiet --time"
   },
   "tree-sitter": [
