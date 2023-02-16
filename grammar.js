@@ -68,7 +68,9 @@ module.exports = grammar({
     $._statement
   ],
 
-  conflicts: $ => [],
+  conflicts: $ => [
+    [$._expression, $.complex_literal]
+  ],
 
   rules: {
     translation_unit: $ => repeat($._top_level_item),
@@ -296,7 +298,12 @@ module.exports = grammar({
         seq(',', choice(caseInsensitive('intrinsic'), caseInsensitive('non_intrinsic')), '::')
       ),
       alias($.identifier, $.module_name),
-      optional($.included_items)
+      optional(
+        choice(
+          seq(',', commaSep1($.use_alias)),
+          $.included_items
+        )
+      )
     ),
 
     included_items: $ => seq(
@@ -438,6 +445,8 @@ module.exports = grammar({
 
     derived_type_procedures: $ => seq(
       $.contains_statement,
+      optional($.public_statement),
+      optional($.private_statement),
       repeat($.procedure_statement)
     ),
 
@@ -644,6 +653,7 @@ module.exports = grammar({
       $.forall_statement,
       $.select_case_statement,
       $.select_type_statement,
+      $.select_rank_statement,
       $.do_loop_statement,
       $.format_statement,
       $.open_statement,
@@ -651,7 +661,8 @@ module.exports = grammar({
       $.print_statement,
       $.write_statement,
       $.read_statement,
-      $.stop_statement
+      $.stop_statement,
+      $.block_construct
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -866,6 +877,15 @@ module.exports = grammar({
       $.end_select_statement
     ),
 
+    select_rank_statement: $ => seq(
+      optional($.block_label_start_expression),
+      whiteSpacedKeyword('select', 'rank'),
+      $.selector,
+      $._end_of_statement,
+      repeat1($.rank_statement),
+      $.end_select_statement
+    ),
+
     end_select_statement: $ => seq(
       whiteSpacedKeyword('end', 'select'),
       optional($._block_label)
@@ -911,6 +931,31 @@ module.exports = grammar({
       $._expression,
       $.extent_specifier
     )),
+
+    rank_statement: $ => seq(
+      caseInsensitive('rank'),
+      choice(
+        seq('(', $.case_value_range_list, ')'),
+        alias(caseInsensitive('default'), $.default)
+      ),
+      optional($._block_label),
+      $._end_of_statement,
+      repeat($._statement)
+    ),
+
+    block_construct: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('block'),
+      $._end_of_statement,
+      repeat($._specification_part),
+      repeat($._statement),
+      $.end_block_construct_statement
+    ),
+
+    end_block_construct_statement: $ => seq(
+      whiteSpacedKeyword('end', 'block'),
+      optional($._block_label)
+    ),
 
     format_statement: $ => seq(
       caseInsensitive('format'),
@@ -978,6 +1023,7 @@ module.exports = grammar({
       '(',
       choice(
         $.unit_identifier,
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
         commaSep1($.keyword_argument)
       ),
       ')',
@@ -1066,7 +1112,7 @@ module.exports = grammar({
       $.unary_expression,
       $.parenthesized_expression,
       $.call_expression,
-      // $.implied_do_loop_expression  // https://pages.mtu.edu/~shene/COURSES/cs201/NOTES/chap08/io.html
+      $.implied_do_loop_expression
     ),
 
     parenthesized_expression: $ => seq(
@@ -1169,6 +1215,14 @@ module.exports = grammar({
       seq($._expression, repeat1($.argument_list))
     ),
 
+    implied_do_loop_expression: $ => seq(
+      '(',
+      commaSep1($._expression),
+      ',',
+      $.loop_control_expression,
+      ')'
+    ),
+
     argument_list: $ => prec.dynamic(
       1,
       seq(
@@ -1177,6 +1231,7 @@ module.exports = grammar({
           $.keyword_argument,
           $.extent_specifier,
           $.assumed_size,
+          $.assumed_rank,
           $._expression
         )),
         ')'
@@ -1201,7 +1256,9 @@ module.exports = grammar({
 
     assumed_shape: $ => ':',
 
-    block_label_start_expression: $ => /[a-zA-Z_]\w*:/,
+    assumed_rank: $ => '..',
+
+    block_label_start_expression: $ => /[a-zA-Z_]\w*:[^:]/,
     _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(
@@ -1222,7 +1279,13 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _ac_value_list: $ => commaSep1($._expression),
+    _ac_value_list: $ => seq(
+      optional(seq(
+        choice($._intrinsic_type, $.derived_type),
+        '::',
+      )),
+      commaSep1($._expression)
+    ),
 
     complex_literal: $ => seq(
       '(',
@@ -1245,13 +1308,13 @@ module.exports = grammar({
 
     _double_quoted_string: $ => token(seq(
       '"',
-      repeat(choice(/[^"\n]/, /""./)),
+      repeat(choice(/[^"\n]/, /""./, /& *\n *&/)),
       '"')
     ),
 
     _single_quoted_string: $ => token(seq(
       "'",
-      repeat(choice(/[^'\n]/, /''./)),
+      repeat(choice(/[^'\n]/, /''./, /& *\n *&/)),
       "'")
     ),
 

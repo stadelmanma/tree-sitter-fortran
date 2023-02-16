@@ -29,6 +29,7 @@ PROGRAM TEST
   use, intrinsic :: iso_fortran_env
   use, non_intrinsic :: iso_varying_string
   use my_module, only: func2 => foo
+  use, intrinsic:: iso_fortran_env, stderr => error_unit
 END PROGRAM
 
 ----
@@ -45,6 +46,8 @@ END PROGRAM
     (use_statement (module_name))
     (use_statement (module_name)
       (included_items (use_alias (local_name) (identifier))))
+    (use_statement (module_name)
+      (use_alias (local_name) (identifier)))
   (end_program_statement)))
 
 ============================================
@@ -133,6 +136,7 @@ PROGRAM TEST
   CHARACTER(LEN=:) :: message
   CHARACTER(LEN=*) :: options
   CHARACTER*(MXLN) :: errflag
+  integer::no_whitespace=1
 END PROGRAM
 
 ----
@@ -174,6 +178,9 @@ END PROGRAM
     (variable_declaration
       (intrinsic_type) (size (parenthesized_expression (identifier)))
       (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (assignment_statement (identifier) (number_literal)))
   (end_program_statement)))
 
 ============================================
@@ -1098,5 +1105,97 @@ end subroutine print_decorated_numbers
           (output_item_list (derived_type_member_expression (identifier) (type_member)))))
       (type_statement (default)
         (write_statement (unit_identifier) (format_identifier (string_literal))))
+      (end_select_statement))
+    (end_subroutine_statement (name))))
+
+============================================
+Open/Close statements
+============================================
+
+program test
+  integer :: unit
+
+  open(newunit=unit, file="foo.txt")
+  close(unit, status="delete")
+
+  open(newunit=unit, file="foo.txt")
+  close(unit=unit, status="delete")
+
+  open(99)
+  close(99)
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type) (identifier))
+    (open_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (close_statement
+      (unit_identifier (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (open_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (close_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (string_literal)))
+    (open_statement
+      (unit_identifier (number_literal)))
+    (close_statement
+      (unit_identifier (number_literal)))
+    (end_program_statement (name))))
+
+============================================
+Select Rank and Assumed Rank
+============================================
+
+subroutine assumed_rank(A)
+  integer, intent(inout) :: A(..)
+
+  select rank(A)
+    rank (0)
+      write(*, *) "scalar"
+    rank (1)
+      write(*, *) "rank 1"
+    rank (2)
+      write(*, *) "rank 2"
+    rank default
+      error stop 'assumed_rank: only rank 0..2 is handled for now.'
+  end select
+end subroutine assumed_rank
+
+---
+
+(translation_unit
+  (subroutine
+    (subroutine_statement (name)
+      (parameters (identifier)))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier)
+      (call_expression (identifier) (argument_list (assumed_rank))))
+    (select_rank_statement (selector (identifier))
+      (rank_statement
+        (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement
+        (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement (case_value_range_list (number_literal))
+        (write_statement
+          (unit_identifier)
+          (format_identifier)
+          (output_item_list (string_literal))))
+      (rank_statement (default)
+        (stop_statement (string_literal)))
       (end_select_statement))
     (end_subroutine_statement (name))))
