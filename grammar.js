@@ -754,7 +754,12 @@ module.exports = grammar({
     do_loop_statement: $ => seq(
       optional($.block_label_start_expression),
       caseInsensitive('do'),
-      optional(choice($.while_statement, $.loop_control_expression)),
+      optional(','),
+      optional(choice(
+        $.while_statement,
+        $.loop_control_expression,
+        $.concurrent_statement
+      )),
       $._end_of_statement,
       repeat($._statement),
       $.end_do_loop_statement
@@ -767,6 +772,51 @@ module.exports = grammar({
 
     while_statement: $ => seq(caseInsensitive('while'),
       $.parenthesized_expression),
+
+    concurrent_statement: $ => seq(
+      $.concurrent_header,
+      repeat($.concurrent_locality)
+    ),
+
+    concurrent_header: $ => seq(
+      caseInsensitive('concurrent'),
+      '(',
+      optional(seq(
+        // This is actually limited to integer types only
+        field('type', $._intrinsic_type),
+        '::'
+      )),
+      commaSep1($.concurrent_control),
+      optional(seq(',', alias($._expression, $.concurrent_mask))),
+      ')'
+    ),
+
+    concurrent_control: $ => seq(
+      $.identifier,
+      '=',
+      field('initial', $._expression),
+      ':',
+      field('final', $._expression),
+      optional(seq(
+        ':',
+        field('step', $._expression)
+      ))
+    ),
+
+    concurrent_locality: $ => choice(
+      seq(
+        choice(
+          caseInsensitive('local'),
+          caseInsensitive('local_init'),
+          caseInsensitive('shared'),
+        ),
+        '(', commaSep1($.identifier), ')'
+      ),
+      seq(
+        caseInsensitive('default'),
+        '(', caseInsensitive('none'), ')'
+      )
+    ),
 
     if_statement: $ => choice(
       $._inline_if_statement,

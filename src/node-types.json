@@ -1218,6 +1218,359 @@
     }
   },
   {
+    "type": "concurrent_control",
+    "named": true,
+    "fields": {
+      "final": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "complex_literal",
+            "named": true
+          },
+          {
+            "type": "concatenation_expression",
+            "named": true
+          },
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implied_do_loop_expression",
+            "named": true
+          },
+          {
+            "type": "logical_expression",
+            "named": true
+          },
+          {
+            "type": "math_expression",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "relational_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "initial": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "complex_literal",
+            "named": true
+          },
+          {
+            "type": "concatenation_expression",
+            "named": true
+          },
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implied_do_loop_expression",
+            "named": true
+          },
+          {
+            "type": "logical_expression",
+            "named": true
+          },
+          {
+            "type": "math_expression",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "relational_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      },
+      "step": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "array_literal",
+            "named": true
+          },
+          {
+            "type": "boolean_literal",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "complex_literal",
+            "named": true
+          },
+          {
+            "type": "concatenation_expression",
+            "named": true
+          },
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "implied_do_loop_expression",
+            "named": true
+          },
+          {
+            "type": "logical_expression",
+            "named": true
+          },
+          {
+            "type": "math_expression",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "relational_expression",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "concurrent_header",
+    "named": true,
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "intrinsic_type",
+            "named": true
+          },
+          {
+            "type": "size",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "concurrent_control",
+          "named": true
+        },
+        {
+          "type": "concurrent_mask",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "concurrent_locality",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "concurrent_mask",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "concurrent_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "concurrent_header",
+          "named": true
+        },
+        {
+          "type": "concurrent_locality",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "contains_statement",
     "named": true,
     "fields": {}
@@ -1548,6 +1901,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "concurrent_statement",
           "named": true
         },
         {
@@ -6956,6 +7313,10 @@
     "named": false
   },
   {
+    "type": "concurrent",
+    "named": false
+  },
+  {
     "type": "constant",
     "named": false
   },
@@ -6977,6 +7338,10 @@
   },
   {
     "type": "data",
+    "named": false
+  },
+  {
+    "type": "default",
     "named": false
   },
   {
@@ -7212,6 +7577,14 @@
     "named": false
   },
   {
+    "type": "local",
+    "named": false
+  },
+  {
+    "type": "local_init",
+    "named": false
+  },
+  {
     "type": "logical",
     "named": false
   },
@@ -7233,6 +7606,10 @@
   },
   {
     "type": "non_overridable",
+    "named": false
+  },
+  {
+    "type": "none",
     "named": false
   },
   {

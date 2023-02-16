@@ -403,6 +403,63 @@ END PROGRAM
   (end_program_statement)))
 
 ============================================
+Do Concurrent Statement
+============================================
+
+PROGRAM TEST
+  INTEGER,DIMENSION(N) :: J, K
+  INTEGER              :: I, M
+  M = 10
+  I = 15
+  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K)
+     M =  MOD (K(I), J(I))
+     K(I) = K(I) - M
+  END DO
+  PRINT *, I, M
+END PROGRAM TEST
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (identifier)))
+      (identifier) (identifier))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (assignment_statement left: (identifier) right: (number_literal))
+    (assignment_statement left: (identifier) right: (number_literal))
+    (do_loop_statement
+      (concurrent_statement
+        (concurrent_header
+          (concurrent_control
+            (identifier)
+            initial: (number_literal)
+            final: (identifier))
+          (concurrent_mask
+            (relational_expression
+              left: (call_expression (identifier) (argument_list (identifier)))
+              right: (number_literal))))
+        (concurrent_locality (identifier))
+        (concurrent_locality (identifier) (identifier)))
+      (assignment_statement
+        left: (identifier)
+        right: (call_expression
+          (identifier)
+          (argument_list
+            (call_expression (identifier) (argument_list (identifier)))
+            (call_expression (identifier) (argument_list (identifier))))))
+      (assignment_statement
+        left: (call_expression (identifier) (argument_list (identifier)))
+        right: (math_expression
+          left: (call_expression (identifier) (argument_list (identifier)))
+          right: (identifier)))
+      (end_do_loop_statement))
+    (print_statement (format_identifier)
+      (output_item_list (identifier) (identifier)))
+    (end_program_statement (name))))
+
+============================================
 If Statements
 ============================================
 
