@@ -1396,12 +1396,14 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _ac_value_list: $ => seq(
-      optional(seq(
-        choice($._intrinsic_type, $.derived_type),
-        '::',
-      )),
-      commaSep1($._expression)
+    _type_spec: $ => seq(choice($._intrinsic_type, $.derived_type), '::'),
+
+    _ac_value_list: $ => choice(
+      field('type', $._type_spec),
+      seq(
+        optional(field('type', $._type_spec)),
+        commaSep1($._expression)
+      )
     ),
 
     complex_literal: $ => seq(

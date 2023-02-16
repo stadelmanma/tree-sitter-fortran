@@ -99,7 +99,30 @@
   {
     "type": "array_literal",
     "named": true,
-    "fields": {},
+    "fields": {
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "::",
+            "named": false
+          },
+          {
+            "type": "derived_type",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          },
+          {
+            "type": "size",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
@@ -125,10 +148,6 @@
           "named": true
         },
         {
-          "type": "derived_type",
-          "named": true
-        },
-        {
           "type": "derived_type_member_expression",
           "named": true
         },
@@ -138,10 +157,6 @@
         },
         {
           "type": "implied_do_loop_expression",
-          "named": true
-        },
-        {
-          "type": "intrinsic_type",
           "named": true
         },
         {
@@ -162,10 +177,6 @@
         },
         {
           "type": "relational_expression",
-          "named": true
-        },
-        {
-          "type": "size",
           "named": true
         },
         {

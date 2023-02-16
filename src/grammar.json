@@ -9307,61 +9307,82 @@
         }
       ]
     },
-    "_ac_value_list": {
+    "_type_spec": {
       "type": "SEQ",
       "members": [
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_intrinsic_type"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "derived_type"
-                    }
-                  ]
-                },
-                {
-                  "type": "STRING",
-                  "value": "::"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_intrinsic_type"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "derived_type"
             }
           ]
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        }
+      ]
+    },
+    "_ac_value_list": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "type",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_type_spec"
+          }
         },
         {
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_expression"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "type",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_type_spec"
+                  }
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             },
             {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_expression"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_expression"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "_expression"
+                      }
+                    ]
                   }
-                ]
-              }
+                }
+              ]
             }
           ]
         }
