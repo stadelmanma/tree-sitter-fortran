@@ -321,6 +321,7 @@ module.exports = grammar({
       seq($.variable_modification, $._end_of_statement),
       seq($.parameter_statement, $._end_of_statement),
       seq($.equivalence_statement, $._end_of_statement),
+      seq($.data_statement, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
     ),
 
@@ -693,7 +694,6 @@ module.exports = grammar({
       $.subroutine_call,
       $.keyword_statement,
       $.include_statement,
-      $.data_statement,
       $.if_statement,
       $.where_statement,
       $.forall_statement,

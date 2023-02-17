@@ -1458,6 +1458,14 @@ program test
   DATA (array(1,k),k=1,n) /3.14e-3, -42.5/
   DATA array(:, N) / &
     54.45_fp, 200.01_fp /
+
+  ! This is awful, but this makes sure the specification part has
+  ! finished, as is a hacky workaround to make sure the next part is
+  ! parsed correctly
+  x = 4
+
+  ! Check data is still ok as identifier
+  data(n) = 54
 end program test
 
 ---
@@ -1501,4 +1509,12 @@ end program test
         (call_expression (identifier) (argument_list (extent_specifier) (identifier)))
         (data_value
           (number_literal) (number_literal))))
+    (comment)
+    (comment)
+    (comment)
+    (assignment_statement (identifier) (number_literal))
+    (comment)
+    (assignment_statement
+      (call_expression (identifier) (argument_list (identifier)))
+      (number_literal))
     (end_program_statement (name))))

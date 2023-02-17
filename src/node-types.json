@@ -370,10 +370,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -880,10 +876,6 @@
         },
         {
           "type": "close_statement",
-          "named": true
-        },
-        {
-          "type": "data_statement",
           "named": true
         },
         {
@@ -2033,10 +2025,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2156,10 +2144,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2264,10 +2248,6 @@
         },
         {
           "type": "close_statement",
-          "named": true
-        },
-        {
-          "type": "data_statement",
           "named": true
         },
         {
@@ -2379,10 +2359,6 @@
         },
         {
           "type": "close_statement",
-          "named": true
-        },
-        {
-          "type": "data_statement",
           "named": true
         },
         {
@@ -2906,10 +2882,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -3359,10 +3331,6 @@
         },
         {
           "type": "close_statement",
-          "named": true
-        },
-        {
-          "type": "data_statement",
           "named": true
         },
         {
@@ -4412,6 +4380,10 @@
       "types": [
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -5514,10 +5486,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "default",
           "named": true
         },
@@ -6105,6 +6073,10 @@
       "types": [
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -6757,10 +6729,6 @@
           "named": true
         },
         {
-          "type": "data_statement",
-          "named": true
-        },
-        {
           "type": "default",
           "named": true
         },
@@ -7160,10 +7128,6 @@
         },
         {
           "type": "close_statement",
-          "named": true
-        },
-        {
-          "type": "data_statement",
           "named": true
         },
         {
