@@ -8089,6 +8089,18 @@
             "type": "CHOICE",
             "members": [
               {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
                 "type": "SYMBOL",
                 "name": "output_item_list"
               },

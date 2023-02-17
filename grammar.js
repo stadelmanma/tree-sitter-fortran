@@ -1202,6 +1202,8 @@ module.exports = grammar({
         commaSep1($.keyword_argument)
       ),
       ')',
+      // Trailing comma here is a legacy extension to gfortran
+      optional(','),
       optional($.output_item_list)
     )),
 
