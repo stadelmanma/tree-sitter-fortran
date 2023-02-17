@@ -1380,3 +1380,59 @@ end program
         (math_expression
           (identifier) (user_defined_operator) (identifier))))
     (end_program_statement)))
+
+============================================
+Defined IO Procedures
+============================================
+
+module test
+  use other, only : write(unformatted), read(formatted)
+  implicit none
+
+  public :: read(unformatted)
+  private :: write(formatted)
+
+  interface write(formatted)
+    module procedure :: write_formatted
+  end interface
+
+  interface read(formatted)
+    module procedure read_formatted
+  end interface read(formatted)
+
+  type foo
+  contains
+    generic, public :: write(formatted) => write_formatted
+  end type foo
+end module
+
+---
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (use_statement (module_name)
+      (included_items
+        (defined_io_procedure)
+        (defined_io_procedure)))
+    (implicit_statement (none))
+    (public_statement (defined_io_procedure))
+    (private_statement (defined_io_procedure))
+    (interface
+      (interface_statement (defined_io_procedure))
+      (procedure_statement (method_name))
+      (end_interface_statement))
+    (interface
+      (interface_statement (defined_io_procedure))
+      (procedure_statement (method_name))
+      (end_interface_statement (defined_io_procedure)))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (derived_type_procedures
+        (contains_statement)
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name (defined_io_procedure))
+          (method_name)))
+      (end_type_statement (name)))
+    (end_module_statement)))

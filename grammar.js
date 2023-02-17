@@ -159,25 +159,28 @@ module.exports = grammar({
     interface_statement: $ => seq(
       optional($.abstract_specifier),
       caseInsensitive('interface'),
-      optional(choice(
-        $._name,
-        $.assignment,
-        $.operator
-      ))
+      optional(choice($._name, $._generic_procedure)),
     ),
 
     end_interface_statement: $ => prec.right(seq(
       whiteSpacedKeyword('end', 'interface'),
-      optional(choice(
-        $._name,
-        $.assignment,
-        $.operator
-      )),
+      optional(choice($._name, $._generic_procedure)),
       $._end_of_statement
     )),
 
     assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
     operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
+    defined_io_procedure: $ => seq(
+      choice(caseInsensitive('read'), caseInsensitive('write')),
+      '(',
+      choice(caseInsensitive('formatted'), caseInsensitive('unformatted')),
+      ')'
+    ),
+    _generic_procedure: $ => choice(
+        $.assignment,
+        $.operator,
+        $.defined_io_procedure,
+    ),
 
     subroutine: $ => seq(
       $.subroutine_statement,
@@ -341,8 +344,7 @@ module.exports = grammar({
         choice(
           $.use_alias,
           $.identifier,
-          $.operator,
-          $.assignment)
+          $._generic_procedure)
       )
     ),
 
@@ -378,7 +380,7 @@ module.exports = grammar({
       caseInsensitive('private'),
       optional(seq(
         '::',
-        commaSep1(choice($.identifier, $.operator, $.assignment))
+        commaSep1(choice($.identifier, $._generic_procedure))
       ))
     )),
 
@@ -386,7 +388,7 @@ module.exports = grammar({
       caseInsensitive('public'),
       optional(seq(
         '::',
-        commaSep1(choice($.identifier, $.operator, $.assignment))
+        commaSep1(choice($.identifier, $._generic_procedure))
       ))
     )),
 
@@ -499,8 +501,7 @@ module.exports = grammar({
 
     binding_name: $ => choice(
       $.identifier,
-      $.assignment,
-      $.operator
+      $._generic_procedure
     ),
     _method_name: $ => alias($.identifier, $.method_name),
 

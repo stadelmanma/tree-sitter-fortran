@@ -492,11 +492,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "assignment"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "operator"
+                  "name": "_generic_procedure"
                 }
               ]
             },
@@ -552,11 +548,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "assignment"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "operator"
+                    "name": "_generic_procedure"
                   }
                 ]
               },
@@ -621,6 +613,82 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "defined_io_procedure": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[rR][eE][aA][dD]"
+              },
+              "named": false,
+              "value": "read"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[wW][rR][iI][tT][eE]"
+              },
+              "named": false,
+              "value": "write"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[fF][oO][rR][mM][aA][tT][tT][eE][dD]"
+              },
+              "named": false,
+              "value": "formatted"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[uU][nN][fF][oO][rR][mM][aA][tT][tT][eE][dD]"
+              },
+              "named": false,
+              "value": "unformatted"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "_generic_procedure": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "assignment"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "operator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "defined_io_procedure"
         }
       ]
     },
@@ -1828,11 +1896,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "operator"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "assignment"
+                  "name": "_generic_procedure"
                 }
               ]
             },
@@ -1858,11 +1922,7 @@
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "operator"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "assignment"
+                        "name": "_generic_procedure"
                       }
                     ]
                   }
@@ -2145,11 +2205,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "operator"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "assignment"
+                            "name": "_generic_procedure"
                           }
                         ]
                       },
@@ -2171,11 +2227,7 @@
                                 },
                                 {
                                   "type": "SYMBOL",
-                                  "name": "operator"
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "assignment"
+                                  "name": "_generic_procedure"
                                 }
                               ]
                             }
@@ -2231,11 +2283,7 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "operator"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "assignment"
+                            "name": "_generic_procedure"
                           }
                         ]
                       },
@@ -2257,11 +2305,7 @@
                                 },
                                 {
                                   "type": "SYMBOL",
-                                  "name": "operator"
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "assignment"
+                                  "name": "_generic_procedure"
                                 }
                               ]
                             }
@@ -3023,11 +3067,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "assignment"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "operator"
+          "name": "_generic_procedure"
         }
       ]
     },
