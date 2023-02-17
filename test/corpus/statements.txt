@@ -1402,7 +1402,10 @@ module test
 
   type foo
   contains
+    ! User defined IO
     generic, public :: write(formatted) => write_formatted
+    ! Just some function called read
+    procedure, public :: read => read_foo
   end type foo
 end module
 
@@ -1430,9 +1433,15 @@ end module
       (derived_type_statement (type_name))
       (derived_type_procedures
         (contains_statement)
+        (comment)
         (procedure_statement
           (procedure_attribute)
           (binding_name (defined_io_procedure))
+          (method_name))
+        (comment)
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name (identifier))
           (method_name)))
       (end_type_statement (name)))
     (end_module_statement)))

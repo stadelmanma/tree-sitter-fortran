@@ -73,6 +73,9 @@ module.exports = grammar({
   conflicts: $ => [
     [$._expression, $.complex_literal],
     [$._inline_if_statement, $._block_if_statement, $.identifier],
+    [$._simple_read_statement, $._parameterized_read_statement, $.identifier],
+    [$._simple_read_statement, $.identifier],
+    [$.write_statement, $.identifier],
     [$.argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.else_clause],
@@ -1086,18 +1089,18 @@ module.exports = grammar({
 
     edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
 
-    read_statement: $ => choice(
+    read_statement: $ => prec(1, choice(
       $._simple_read_statement,
       $._parameterized_read_statement
-    ),
+    )),
 
-    _simple_read_statement: $ => seq(
+    _simple_read_statement: $ => prec(1, seq(
       caseInsensitive('read'),
       $.format_identifier,
       optional(seq(',', $.input_item_list))
-    ),
+    )),
 
-    _parameterized_read_statement: $ => seq(
+    _parameterized_read_statement: $ => prec(1, seq(
       caseInsensitive('read'),
       '(',
       choice(
@@ -1109,7 +1112,7 @@ module.exports = grammar({
       ),
       ')',
       optional($.input_item_list)
-    ),
+    )),
 
     print_statement: $ => seq(
       caseInsensitive('print'),
@@ -1143,7 +1146,7 @@ module.exports = grammar({
       ')',
     )),
 
-    write_statement: $ => seq(
+    write_statement: $ => prec(1, seq(
       caseInsensitive('write'),
       '(',
       choice(
@@ -1155,7 +1158,7 @@ module.exports = grammar({
       ),
       ')',
       optional($.output_item_list)
-    ),
+    )),
 
     enum: $ => seq(
       $.enum_statement,
@@ -1470,9 +1473,11 @@ module.exports = grammar({
       caseInsensitive('error'),
       caseInsensitive('exit'),
       caseInsensitive('if'),
+      caseInsensitive('read'),
       caseInsensitive('select'),
       caseInsensitive('stop'),
       caseInsensitive('value'),
+      caseInsensitive('write'),
     ),
 
     comment: $ => token(seq('!', /.*/)),
