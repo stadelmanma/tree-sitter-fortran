@@ -4425,6 +4425,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "data_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "if_statement"
         },
         {
@@ -4870,6 +4874,315 @@
             "named": true,
             "value": "filename"
           }
+        }
+      ]
+    },
+    "data_statement": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[dD][aA][tT][aA]"
+            },
+            "named": false,
+            "value": "data"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "data_set"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "data_set"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "data_set": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "implied_do_loop_expression"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_expression"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "derived_type_member_expression"
+                  }
+                ]
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "identifier"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "implied_do_loop_expression"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "call_expression"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "derived_type_member_expression"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "data_value"
+          }
+        ]
+      }
+    },
+    "data_value": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "PREC",
+                      "value": 1,
+                      "content": {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "FIELD",
+                            "name": "repeat",
+                            "content": {
+                              "type": "SYMBOL",
+                              "name": "number_literal"
+                            }
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "*"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "number_literal"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "string_literal"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "unary_expression"
+                    },
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "PATTERN",
+                              "value": "[nN][uU][lL][lL]"
+                            },
+                            "named": false,
+                            "value": "null"
+                          },
+                          "named": true,
+                          "value": "null_literal"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "("
+                        },
+                        {
+                          "type": "STRING",
+                          "value": ")"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "call_expression"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "PREC",
+                            "value": 1,
+                            "content": {
+                              "type": "SEQ",
+                              "members": [
+                                {
+                                  "type": "FIELD",
+                                  "name": "repeat",
+                                  "content": {
+                                    "type": "SYMBOL",
+                                    "name": "number_literal"
+                                  }
+                                },
+                                {
+                                  "type": "STRING",
+                                  "value": "*"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "number_literal"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "string_literal"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "unary_expression"
+                          },
+                          {
+                            "type": "SEQ",
+                            "members": [
+                              {
+                                "type": "ALIAS",
+                                "content": {
+                                  "type": "ALIAS",
+                                  "content": {
+                                    "type": "PATTERN",
+                                    "value": "[nN][uU][lL][lL]"
+                                  },
+                                  "named": false,
+                                  "value": "null"
+                                },
+                                "named": true,
+                                "value": "null_literal"
+                              },
+                              {
+                                "type": "STRING",
+                                "value": "("
+                              },
+                              {
+                                "type": "STRING",
+                                "value": ")"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "call_expression"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "/"
         }
       ]
     },
@@ -9907,6 +10220,14 @@
     ],
     [
       "case_statement"
+    ],
+    [
+      "data_set",
+      "_expression"
+    ],
+    [
+      "data_value",
+      "_expression"
     ],
     [
       "else_clause"

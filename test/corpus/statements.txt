@@ -1445,3 +1445,60 @@ end module
           (method_name)))
       (end_type_statement (name)))
     (end_module_statement)))
+
+============================================
+Data statement
+============================================
+
+program test
+  data a, b /1, 2/, c /3, 4/
+  data list / null() /
+  data foo%bar / "hello" /
+  DATA person / Person_t(42, "Test Name") /
+  DATA (array(1,k),k=1,n) /3.14e-3, -42.5/
+  DATA array(:, N) / &
+    54.45_fp, 200.01_fp /
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (data_statement
+      (data_set
+        (identifier) (identifier)
+        (data_value (number_literal) (number_literal)))
+      (data_set
+        (identifier)
+        (data_value (number_literal) (number_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value (null_literal))))
+    (data_statement
+      (data_set
+        (derived_type_member_expression (identifier) (type_member))
+        (data_value (string_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value
+          (call_expression
+            (identifier)
+            (argument_list (number_literal) (string_literal))))))
+    (data_statement
+      (data_set
+        (implied_do_loop_expression
+          (call_expression
+            (identifier)
+            (argument_list (number_literal) (identifier)))
+          (loop_control_expression
+            (identifier) (number_literal) (identifier)))
+        (data_value (number_literal) (unary_expression (number_literal)))))
+    (data_statement
+      (data_set
+        (call_expression (identifier) (argument_list (extent_specifier) (identifier)))
+        (data_value
+          (number_literal) (number_literal))))
+    (end_program_statement (name))))

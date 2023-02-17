@@ -370,6 +370,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -616,6 +620,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -872,6 +880,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -1667,6 +1679,94 @@
     }
   },
   {
+    "type": "data_set",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "data_value",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "data_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "data_set",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "data_value",
+    "named": true,
+    "fields": {
+      "repeat": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "number_literal",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "default",
     "named": true,
     "fields": {}
@@ -1933,6 +2033,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2052,6 +2156,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2156,6 +2264,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -2267,6 +2379,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -2790,6 +2906,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2968,6 +3088,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -3235,6 +3359,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -4417,6 +4545,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "derived_type_definition",
           "named": true
         },
@@ -5157,6 +5289,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "derived_type_definition",
           "named": true
         },
@@ -5375,6 +5511,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -6119,6 +6259,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "derived_type_definition",
           "named": true
         },
@@ -6613,6 +6757,10 @@
           "named": true
         },
         {
+          "type": "data_statement",
+          "named": true
+        },
+        {
           "type": "default",
           "named": true
         },
@@ -7012,6 +7160,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
           "named": true
         },
         {
@@ -7690,6 +7842,10 @@
   {
     "type": "nopass",
     "named": false
+  },
+  {
+    "type": "null_literal",
+    "named": true
   },
   {
     "type": "only",

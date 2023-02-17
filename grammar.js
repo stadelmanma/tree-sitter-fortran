@@ -78,6 +78,8 @@ module.exports = grammar({
     [$.write_statement, $.identifier],
     [$.argument_list, $.parenthesized_expression],
     [$.case_statement],
+    [$.data_set, $._expression],
+    [$.data_value, $._expression],
     [$.else_clause],
     [$.elseif_clause, $.identifier],
     [$.elseif_clause],
@@ -691,7 +693,7 @@ module.exports = grammar({
       $.subroutine_call,
       $.keyword_statement,
       $.include_statement,
-      // $.data_statement,
+      $.data_statement,
       $.if_statement,
       $.where_statement,
       $.forall_statement,
@@ -763,6 +765,39 @@ module.exports = grammar({
     include_statement: $ => seq(
       caseInsensitive('include'),
       field("path", alias($.string_literal, $.filename))
+    ),
+
+    data_statement: $ => prec(1, seq(
+      caseInsensitive('data'),
+      commaSep1($.data_set)
+    )),
+    data_set: $ => prec(1, seq(
+      commaSep1(
+        choice(
+          $.identifier,
+          $.implied_do_loop_expression,
+          $.call_expression,  // For array indexing
+          $.derived_type_member_expression
+        )
+      ),
+      $.data_value,
+    )),
+    data_value: $ => seq(
+      '/',
+      commaSep1(seq(
+        optional(prec(1, seq(field('repeat', $.number_literal), '*'))),
+        choice(
+          $.number_literal,
+          $.string_literal,
+          $.unary_expression,
+          seq(
+            alias(caseInsensitive('null'), $.null_literal),
+            '(', ')'
+          ),
+          $.call_expression
+        )
+      )),
+      '/'
     ),
 
     do_loop_statement: $ => seq(
