@@ -370,7 +370,17 @@ module.exports = grammar({
           commaSep1($.implicit_range),
           ')'
         )),
-        alias(caseInsensitive('none', false), $.none)
+        seq(
+          alias(caseInsensitive('none', false), $.none),
+          optional(seq(
+            '(',
+            commaSep1(choice(
+              caseInsensitive('type'),
+              caseInsensitive('external')
+            )),
+            ')'
+          ))
+        )
       )
     ),
 

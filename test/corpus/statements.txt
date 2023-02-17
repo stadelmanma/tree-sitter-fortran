@@ -59,6 +59,7 @@ Implicit Statements
 PROGRAM TEST
   IMPLICIT INTEGER(i - n), REAL(8)(r-z),  COMPLEX*8(a - c, d, e-h)
   IMPLICIT NONE
+  implicit none (type, external)
 END PROGRAM
 
 ----
@@ -70,6 +71,7 @@ END PROGRAM
       (intrinsic_type) (implicit_range)
       (intrinsic_type) (size (argument_list (number_literal))) (implicit_range)
       (intrinsic_type) (size) (implicit_range) (implicit_range) (implicit_range))
+    (implicit_statement (none))
     (implicit_statement (none))
   (end_program_statement)))
 
