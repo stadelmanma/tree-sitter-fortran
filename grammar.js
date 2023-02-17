@@ -73,6 +73,7 @@ module.exports = grammar({
   conflicts: $ => [
     [$._expression, $.complex_literal],
     [$._inline_if_statement, $._block_if_statement, $.identifier],
+    [$.argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.else_clause],
     [$.elseif_clause, $.identifier],
@@ -596,7 +597,7 @@ module.exports = grammar({
     unlimited_polymorphic: $ => '*',
 
     size: $ => choice(
-      $.argument_list,
+      seq(optional(alias('*', $.assumed_size)), $.argument_list),
       seq('*', choice(/\d+/, $.parenthesized_expression))
     ),
 

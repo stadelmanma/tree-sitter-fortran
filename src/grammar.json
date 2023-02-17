@@ -3729,8 +3729,30 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "argument_list"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "STRING",
+                    "value": "*"
+                  },
+                  "named": true,
+                  "value": "assumed_size"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "argument_list"
+            }
+          ]
         },
         {
           "type": "SEQ",
@@ -9791,6 +9813,10 @@
       "_inline_if_statement",
       "_block_if_statement",
       "identifier"
+    ],
+    [
+      "argument_list",
+      "parenthesized_expression"
     ],
     [
       "case_statement"

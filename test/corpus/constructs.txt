@@ -313,9 +313,10 @@ SUBROUTINE WITH_INTERNAL_PROC
   CALL CHECK_RETURN_VAL("ls *", cmd_stat)
 
   CONTAINS
-    SUBROUTINE CHECK_RETURN_VAL(cmd, istat)
+    SUBROUTINE CHECK_RETURN_VAL(cmd, title, istat)
       integer, intent(out) :: istat
       character(*), intent(in) :: cmd
+      character*(*), intent(in) :: title
       istat = SYSTEM(cmd)
       RETURN
     END SUBROUTINE
@@ -356,10 +357,14 @@ END SUBROUTINE
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier)))
+        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
         (variable_declaration
           (intrinsic_type) (size (argument_list (assumed_size)))
+          (type_qualifier)
+          (identifier))
+        (variable_declaration
+          (intrinsic_type) (size (assumed_size) (argument_list (assumed_size)))
           (type_qualifier)
           (identifier))
         (assignment_statement (identifier)
