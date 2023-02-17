@@ -1487,12 +1487,13 @@ module.exports = grammar({
       "'")
     ),
 
-    boolean_literal: $ => token(
+    boolean_literal: $ => token(seq(
       choice(
         caseInsensitive('\\.true\\.'),
         caseInsensitive('\\.false\\.')
-      )
-    ),
+      ),
+      optional(seq('_', /\w+/))
+    )),
 
     // This handles files preprocessed by gfortran -E
     // Other preprocessors may use different syntax

@@ -10041,25 +10041,51 @@
     "boolean_literal": {
       "type": "TOKEN",
       "content": {
-        "type": "CHOICE",
+        "type": "SEQ",
         "members": [
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "\\.[tT][rR][uU][eE]\\."
-            },
-            "named": false,
-            "value": "\\.true\\."
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\.[tT][rR][uU][eE]\\."
+                },
+                "named": false,
+                "value": "\\.true\\."
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\.[fF][aA][lL][sS][eE]\\."
+                },
+                "named": false,
+                "value": "\\.false\\."
+              }
+            ]
           },
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "\\.[fF][aA][lL][sS][eE]\\."
-            },
-            "named": false,
-            "value": "\\.false\\."
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "_"
+                  },
+                  {
+                    "type": "PATTERN",
+                    "value": "\\w+"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
