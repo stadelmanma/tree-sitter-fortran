@@ -10456,6 +10456,10 @@
         ]
       }
     },
+    "_line_continuation": {
+      "type": "STRING",
+      "value": "&"
+    },
     "_semicolon": {
       "type": "STRING",
       "value": ";"

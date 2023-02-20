@@ -1546,6 +1546,8 @@ module.exports = grammar({
 
     comment: $ => token(seq('!', /.*/)),
 
+    _line_continuation: $ => '&',
+
     _semicolon: $ => ';',
 
     _newline: $ => '\n',
