@@ -1103,20 +1103,20 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "language_binding"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "function_result"
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "language_binding"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_result"
+                  }
+                ]
+              }
             },
             {
               "type": "BLANK"

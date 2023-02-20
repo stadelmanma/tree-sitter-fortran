@@ -396,6 +396,13 @@ end function
 complex(8) function exported_fun2() bind(c, name="f90_func")
 end function
 
+function exported_fun3() result(res) bind(c, name="fun3")
+end function
+
+function exported_fun4() bind(c, name="fun3") result(res)
+end function
+
+
 ----
 
 (translation_unit
@@ -431,6 +438,18 @@ end function
       (language_binding
         (identifier)
         (keyword_argument (identifier) (string_literal))))
+    (end_function_statement))
+  (function
+    (function_statement (name)
+      (function_result (identifier))
+      (language_binding (identifier)
+        (keyword_argument (identifier) (string_literal))))
+    (end_function_statement))
+  (function
+    (function_statement (name)
+      (language_binding (identifier)
+        (keyword_argument (identifier) (string_literal)))
+      (function_result (identifier)))
     (end_function_statement)))
 
 ============================================

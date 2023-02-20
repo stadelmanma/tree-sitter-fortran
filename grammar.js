@@ -238,8 +238,10 @@ module.exports = grammar({
       caseInsensitive('function'),
       field('name', $._name),
       optional(field('parameters',$._parameters)),
-      optional($.language_binding),
-      optional($.function_result)
+      optional(repeat(choice(
+        $.language_binding,
+        $.function_result
+      )))
     ),
 
     language_binding: $ => seq(
