@@ -10407,6 +10407,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[tT][aA][rR][gG][eE][tT]"
+          },
+          "named": false,
+          "value": "target"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[vV][aA][lL][uU][eE]"
           },
           "named": false,

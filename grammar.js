@@ -1538,6 +1538,7 @@ module.exports = grammar({
       caseInsensitive('read'),
       caseInsensitive('select'),
       caseInsensitive('stop'),
+      caseInsensitive('target'),
       caseInsensitive('value'),
       caseInsensitive('write'),
     ),
