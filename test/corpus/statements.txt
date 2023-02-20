@@ -1471,6 +1471,7 @@ Data statement
 program test
   data a, b /1, 2/, c /3, 4/
   data list / null() /
+  data bool / .true. /
   data foo%bar / "hello" /
   DATA person / Person_t(42, "Test Name") /
   DATA (array(1,k),k=1,n) /3.14e-3, -42.5/
@@ -1502,6 +1503,10 @@ end program test
       (data_set
         (identifier)
         (data_value (null_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value (boolean_literal))))
     (data_statement
       (data_set
         (derived_type_member_expression (identifier) (type_member))

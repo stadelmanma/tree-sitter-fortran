@@ -5288,6 +5288,10 @@
                     },
                     {
                       "type": "SYMBOL",
+                      "name": "boolean_literal"
+                    },
+                    {
+                      "type": "SYMBOL",
                       "name": "unary_expression"
                     },
                     {
@@ -5376,6 +5380,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "string_literal"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "boolean_literal"
                           },
                           {
                             "type": "SYMBOL",

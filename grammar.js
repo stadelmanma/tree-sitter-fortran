@@ -812,6 +812,7 @@ module.exports = grammar({
         choice(
           $.number_literal,
           $.string_literal,
+          $.boolean_literal,
           $.unary_expression,
           seq(
             alias(caseInsensitive('null'), $.null_literal),

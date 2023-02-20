@@ -1736,6 +1736,10 @@
       "required": true,
       "types": [
         {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
           "type": "call_expression",
           "named": true
         },
