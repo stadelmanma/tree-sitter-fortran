@@ -1515,6 +1515,7 @@ module.exports = grammar({
     // add the keywords here -- and possibly in `conflicts` too.
     identifier: $ => choice(
       /[a-zA-Z_]\w*/,
+      caseInsensitive('byte'),
       caseInsensitive('data'),
       caseInsensitive('double'),
       caseInsensitive('elseif'),

@@ -10198,6 +10198,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[bB][yY][tT][eE]"
+          },
+          "named": false,
+          "value": "byte"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[dD][aA][tT][aA]"
           },
           "named": false,
