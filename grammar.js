@@ -434,10 +434,19 @@ module.exports = grammar({
       optional(seq('-', /[a-zA-Z]/))
     ),
 
-    import_statement: $ => seq(
+    import_statement: $ => prec.left(seq(
       caseInsensitive('import'),
-      optional('::'),
-      commaSep1($.identifier)
+      optional($._import_names)
+    )),
+    _import_names: $ => choice(
+      seq(optional('::'), commaSep1($.identifier)),
+      seq(',',
+          choice(
+            seq(caseInsensitive('only'), ':', commaSep1($.identifier)),
+            caseInsensitive('none'),
+            caseInsensitive('all')
+          )
+         )
     ),
 
     derived_type_definition: $ => seq(

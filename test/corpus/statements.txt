@@ -1042,6 +1042,13 @@ end function test
 function test2()
   import dp
 end function test2
+function test3(self)
+  import
+  class(self_type), intent(inout) :: self
+end function test3
+function test4()
+  import, only : dp
+end function test4
 
 ----
 
@@ -1049,6 +1056,15 @@ end function test2
   (function
     (function_statement (name))
     (import_statement (identifier) (identifier))
+    (end_function_statement (name)))
+  (function
+    (function_statement (name))
+    (import_statement (identifier))
+    (end_function_statement (name)))
+  (function
+    (function_statement (name) (parameters (identifier)))
+    (import_statement)
+    (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
     (end_function_statement (name)))
   (function
     (function_statement (name))

@@ -3537,7 +3537,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "identifier",
@@ -7421,6 +7421,10 @@
   },
   {
     "type": "abstract",
+    "named": false
+  },
+  {
+    "type": "all",
     "named": false
   },
   {
