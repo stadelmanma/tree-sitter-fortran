@@ -88,6 +88,7 @@ module.exports = grammar({
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],
     [$.module_statement, $.procedure_qualifier],
+    [$.procedure_declaration],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
     [$.type_qualifier, $.identifier],
@@ -530,7 +531,7 @@ module.exports = grammar({
       caseInsensitive('final')
     ),
 
-    procedure_attribute: $ => choice(
+    procedure_attribute: $ => prec.left(choice(
       caseInsensitive('deferred'),
       seq(
         caseInsensitive('pass'),
@@ -542,7 +543,7 @@ module.exports = grammar({
       caseInsensitive('private'),
       caseInsensitive('family'),
       caseInsensitive('pointer')
-    ),
+    )),
 
     variable_declaration: $ => seq(
       choice($._intrinsic_type, $.derived_type, alias($.procedure_declaration, $.procedure)),
@@ -551,12 +552,13 @@ module.exports = grammar({
       $._declaration_targets
     ),
 
-    procedure_declaration: $ => prec.right(1, seq(
+    procedure_declaration: $ => seq(
       caseInsensitive('procedure'),
       optional(seq(
         '(', alias($.identifier, $.procedure_interface), ')'
-      ))
-    )),
+      )),
+      optional(seq(',', commaSep1($.procedure_attribute))),
+    ),
 
     variable_modification: $ => seq(
       repeat1(choice(

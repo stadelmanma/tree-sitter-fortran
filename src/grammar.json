@@ -3256,111 +3256,115 @@
       ]
     },
     "procedure_attribute": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[dD][eE][fF][eE][rR][rR][eE][dD]"
-          },
-          "named": false,
-          "value": "deferred"
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "PATTERN",
-                "value": "[pP][aA][sS][sS]"
-              },
-              "named": false,
-              "value": "pass"
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[dD][eE][fF][eE][rR][rR][eE][dD]"
             },
-            {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "("
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": ")"
-                    }
-                  ]
+            "named": false,
+            "value": "deferred"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[pP][aA][sS][sS]"
                 },
-                {
-                  "type": "BLANK"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[nN][oO][pP][aA][sS][sS]"
+                "named": false,
+                "value": "pass"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "("
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": ")"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
           },
-          "named": false,
-          "value": "nopass"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[nN][oO][nN]_[oO][vV][eE][rR][rR][iI][dD][aA][bB][lL][eE]"
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[nN][oO][pP][aA][sS][sS]"
+            },
+            "named": false,
+            "value": "nopass"
           },
-          "named": false,
-          "value": "non_overridable"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[pP][uU][bB][lL][iI][cC]"
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[nN][oO][nN]_[oO][vV][eE][rR][rR][iI][dD][aA][bB][lL][eE]"
+            },
+            "named": false,
+            "value": "non_overridable"
           },
-          "named": false,
-          "value": "public"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[pP][rR][iI][vV][aA][tT][eE]"
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][uU][bB][lL][iI][cC]"
+            },
+            "named": false,
+            "value": "public"
           },
-          "named": false,
-          "value": "private"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[fF][aA][mM][iI][lL][yY]"
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][rR][iI][vV][aA][tT][eE]"
+            },
+            "named": false,
+            "value": "private"
           },
-          "named": false,
-          "value": "family"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[pP][oO][iI][nN][tT][eE][rR]"
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[fF][aA][mM][iI][lL][yY]"
+            },
+            "named": false,
+            "value": "family"
           },
-          "named": false,
-          "value": "pointer"
-        }
-      ]
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][oO][iI][nN][tT][eE][rR]"
+            },
+            "named": false,
+            "value": "pointer"
+          }
+        ]
+      }
     },
     "variable_declaration": {
       "type": "SEQ",
@@ -3448,52 +3452,90 @@
       ]
     },
     "procedure_declaration": {
-      "type": "PREC_RIGHT",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[pP][rR][oO][cC][eE][dD][uU][rR][eE]"
-            },
-            "named": false,
-            "value": "procedure"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[pP][rR][oO][cC][eE][dD][uU][rR][eE]"
           },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "("
+          "named": false,
+          "value": "procedure"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
                   },
-                  {
-                    "type": "ALIAS",
-                    "content": {
+                  "named": true,
+                  "value": "procedure_interface"
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
                       "type": "SYMBOL",
-                      "name": "identifier"
+                      "name": "procedure_attribute"
                     },
-                    "named": true,
-                    "value": "procedure_interface"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": ")"
-                  }
-                ]
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        ]
-      }
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": ","
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "procedure_attribute"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "variable_modification": {
       "type": "SEQ",
@@ -10392,6 +10434,9 @@
     [
       "module_statement",
       "procedure_qualifier"
+    ],
+    [
+      "procedure_declaration"
     ],
     [
       "rank_statement"

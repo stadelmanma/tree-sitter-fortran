@@ -652,6 +652,33 @@ end program test
     (end_program_statement (name))))
 
 ============================================
+Derived Type Procedure Pointer Components
+============================================
+
+program test
+  type foo
+    procedure(some_interface), pointer :: bar => null()
+    procedure(some_interface), pointer, nopass :: quux
+  end type foo
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (variable_declaration
+        (procedure (procedure_interface) (procedure_attribute))
+        (pointer_association_statement (identifier) (call_expression (identifier) (argument_list))))
+      (variable_declaration
+        (procedure (procedure_interface) (procedure_attribute) (procedure_attribute))
+        (identifier))
+      (end_type_statement (name)))
+    (end_program_statement (name))))
+
+============================================
 Submodule definition (simple)
 ============================================
 
@@ -737,8 +764,9 @@ module test
     end subroutine do_nothing
   end interface
 contains
-  subroutine apply(f)
+  subroutine apply(f, g)
     procedure(do_nothing) :: f
+    procedure(do_nothing), optional :: g
     call f()
   end subroutine apply
 end module test
@@ -757,8 +785,9 @@ end module test
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier)))
+        (subroutine_statement (name) (parameters (identifier) (identifier)))
         (variable_declaration (procedure (procedure_interface)) (identifier))
+        (variable_declaration (procedure (procedure_interface)) (type_qualifier) (identifier))
         (subroutine_call (identifier) (argument_list))
         (end_subroutine_statement (name))))
     (end_module_statement (name))))
