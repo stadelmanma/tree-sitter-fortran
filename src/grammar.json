@@ -10467,19 +10467,6 @@
     "_newline": {
       "type": "STRING",
       "value": "\n"
-    },
-    "_end_of_statement": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_semicolon"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_newline"
-        }
-      ]
     }
   },
   "extras": [
@@ -10601,6 +10588,10 @@
     {
       "type": "SYMBOL",
       "name": "_boz_literal"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_end_of_statement"
     }
   ],
   "inline": [

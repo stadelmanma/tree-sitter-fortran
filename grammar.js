@@ -55,7 +55,8 @@ module.exports = grammar({
     $._line_continuation,
     $._integer_literal,
     $._float_literal,
-    $._boz_literal
+    $._boz_literal,
+    $._end_of_statement
   ],
 
   extras: $ => [
@@ -1551,8 +1552,6 @@ module.exports = grammar({
     _semicolon: $ => ';',
 
     _newline: $ => '\n',
-
-    _end_of_statement: $ => choice($._semicolon, $._newline)
   }
 })
 
