@@ -1,3 +1,4 @@
+#include <cctype>
 #include <tree_sitter/parser.h>
 #include <string>
 #include <cwctype>
@@ -106,7 +107,7 @@ struct Scanner {
             // get size qualifer
             if (lexer->lookahead == '_') {
                 advance(lexer);
-                if (!isalpha(lexer->lookahead)) {
+                if (!std::isalnum(lexer->lookahead)) {
                     return true; // valid number token with junk after it
                 }
                 while (is_ident_char(lexer->lookahead)) {

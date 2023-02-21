@@ -5,6 +5,7 @@ Number Literals
 PROGRAM TEST
     int_val = 1
     int_val = 1_SZ1
+    int_val = 1_4
     flt_val = 1.0
     flt_val = 1.
     flt_val = .1
@@ -24,6 +25,9 @@ PROGRAM TEST
     hex_val = Z'09AF'
     cpx_val = (1.0, 2.0)
     cpx_val = (dbl_val, dbl_val)
+    cpx_val = (-1.0, 1.0)
+    cpx_val = (1.0, -1.0)
+    bool_val = .false._c_bool
 END PROGRAM
 
 ----
@@ -50,8 +54,12 @@ END PROGRAM
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
     (assignment_statement (identifier) (complex_literal (number_literal) (number_literal)))
     (assignment_statement (identifier) (complex_literal (identifier) (identifier)))
+    (assignment_statement (identifier) (complex_literal (unary_expression (number_literal)) (number_literal)))
+    (assignment_statement (identifier) (complex_literal (number_literal) (unary_expression (number_literal))))
+    (assignment_statement (identifier) (boolean_literal))
   (end_program_statement)))
 
 ============================================
@@ -63,6 +71,10 @@ PROGRAM TEST
     sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
     dble_qt = ""
     dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+    dble_qt = """double double quotes"""
+    sngl_qt = '''double single quotes'''
+    dble_qt = "'single in double quotes'"
+    sngl_qt = '"double in single quotes"'
 
     val = "one"//'two'//sngl_qt//dble_qt
 END PROGRAM
@@ -72,6 +84,10 @@ END PROGRAM
 (translation_unit
   (program 
     (program_statement (name))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
+    (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))
     (assignment_statement (identifier) (string_literal))
@@ -491,7 +507,8 @@ Line Continuation
 program test
     write(*, "('Testing line continuation')", &
        &  advance='no', &  ! Comment after line continuation
-          iostat=istat)
+          iostat=istat, &  ! Comment followed by line continuation
+       &  iomsg=imsg)
     ! Note trailing whitespace after line continuation on next line
     error &    
       stop
@@ -506,6 +523,8 @@ end program
       (unit_identifier)
       (format_identifier (string_literal))
       (keyword_argument (identifier) (string_literal))
+      (comment)
+      (keyword_argument (identifier) (identifier))
       (comment)
       (keyword_argument (identifier) (identifier)))
     (comment)
@@ -541,6 +560,7 @@ program array_constructors
   real, dimension(10) :: array2
 
   array2 = [((real(i - 1) / 10.), i=1, 10)]
+  array2 = [real::]
 
   print*, sin([real(real64)::1., 2., 3., 4.])
   print*, sin((/1., 2., 3., 4./))
@@ -575,6 +595,8 @@ end program array_constructors
               (number_literal)))
         (loop_control_expression
           (identifier) (number_literal) (number_literal)))))
+    (assignment_statement (identifier)
+      (array_literal (intrinsic_type)))
     (print_statement (format_identifier)
       (output_item_list
         (call_expression (identifier)
@@ -605,3 +627,49 @@ end program array_constructors
           (string_literal)
           (string_literal))))
     (end_program_statement (name))))
+
+============================================
+Keywords As Identifiers
+============================================
+
+program demo
+   integer :: endif, if, elseif, error
+   integer, DIMENSION(2) :: function
+   endif = 3; if = 2
+   error = 1
+   if (endif == 2) then
+      endif = 5
+      elseif = if + endif
+   elseif (endif == 3) then
+      function(if) = endif/elseif
+      print *, endif
+   endif
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type) (identifier) (identifier) (identifier) (identifier))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal))) (identifier))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal))
+    (if_statement
+      (parenthesized_expression
+        (relational_expression (identifier) (number_literal)))
+      (assignment_statement (identifier) (number_literal))
+      (assignment_statement (identifier)
+        (math_expression (identifier) (identifier)))
+      (elseif_clause
+        (parenthesized_expression
+          (relational_expression (identifier) (number_literal)))
+        (assignment_statement
+          (call_expression (identifier) (argument_list (identifier)))
+          (math_expression (identifier) (identifier)))
+        (print_statement (format_identifier)
+          (output_item_list (identifier))))
+      (end_if_statement))
+    (end_program_statement)))

@@ -268,6 +268,27 @@ end interface assignment (=)
   (end_interface_statement (assignment))))
 
 ============================================
+Use Operator and Assignment
+============================================
+
+module test
+  use other, only: operator(==), assignment(=)
+  public :: assignment(=)
+  private :: operator(==)
+end module
+
+---
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (use_statement (module_name)
+      (included_items (operator) (assignment)))
+    (public_statement (assignment))
+    (private_statement (operator))
+    (end_module_statement)))
+
+============================================
 Subroutine
 ============================================
 
@@ -292,9 +313,10 @@ SUBROUTINE WITH_INTERNAL_PROC
   CALL CHECK_RETURN_VAL("ls *", cmd_stat)
 
   CONTAINS
-    SUBROUTINE CHECK_RETURN_VAL(cmd, istat)
+    SUBROUTINE CHECK_RETURN_VAL(cmd, title, istat)
       integer, intent(out) :: istat
       character(*), intent(in) :: cmd
+      character*(*), intent(in) :: title
       istat = SYSTEM(cmd)
       RETURN
     END SUBROUTINE
@@ -335,10 +357,14 @@ END SUBROUTINE
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier)))
+        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
         (variable_declaration
           (intrinsic_type) (size (argument_list (assumed_size)))
+          (type_qualifier)
+          (identifier))
+        (variable_declaration
+          (intrinsic_type) (size (assumed_size) (argument_list (assumed_size)))
           (type_qualifier)
           (identifier))
         (assignment_statement (identifier)
@@ -369,6 +395,13 @@ end function
 
 complex(8) function exported_fun2() bind(c, name="f90_func")
 end function
+
+function exported_fun3() result(res) bind(c, name="fun3")
+end function
+
+function exported_fun4() bind(c, name="fun3") result(res)
+end function
+
 
 ----
 
@@ -405,6 +438,18 @@ end function
       (language_binding
         (identifier)
         (keyword_argument (identifier) (string_literal))))
+    (end_function_statement))
+  (function
+    (function_statement (name)
+      (function_result (identifier))
+      (language_binding (identifier)
+        (keyword_argument (identifier) (string_literal))))
+    (end_function_statement))
+  (function
+    (function_statement (name)
+      (language_binding (identifier)
+        (keyword_argument (identifier) (string_literal)))
+      (function_result (identifier)))
     (end_function_statement)))
 
 ============================================
@@ -484,7 +529,11 @@ program test
     contains
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
+       procedure, public, pass(self) :: pass_method
        generic, pass :: binding_name => method_name, method_name2
+       generic, private :: assignment(=) => assign_method
+       generic, private :: operator(+) => add_method
+       final :: finalize
   end type custom_type
 end program
 
@@ -515,13 +564,17 @@ end program
         (type_qualifier
           (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
         (identifier))
-        (derived_type_procedures
+      (derived_type_procedures
           (contains_statement)
           (procedure_statement (procedure_attribute) (procedure_attribute) (method_name))
           (comment)
           (procedure_statement (method_name))
           (comment)
-          (procedure_statement (procedure_attribute) (binding_name) (method_name) (method_name)))
+          (procedure_statement (procedure_attribute) (procedure_attribute (identifier)) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (identifier)) (method_name) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (assignment)) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name))
+          (procedure_statement (method_name)))
       (end_type_statement (name)))
   (end_program_statement)))
 
@@ -618,6 +671,33 @@ end program test
     (end_program_statement (name))))
 
 ============================================
+Derived Type Procedure Pointer Components
+============================================
+
+program test
+  type foo
+    procedure(some_interface), pointer :: bar => null()
+    procedure(some_interface), pointer, nopass :: quux
+  end type foo
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (variable_declaration
+        (procedure (procedure_interface) (procedure_attribute))
+        (pointer_association_statement (identifier) (call_expression (identifier) (argument_list))))
+      (variable_declaration
+        (procedure (procedure_interface) (procedure_attribute) (procedure_attribute))
+        (identifier))
+      (end_type_statement (name)))
+    (end_program_statement (name))))
+
+============================================
 Submodule definition (simple)
 ============================================
 
@@ -627,11 +707,23 @@ CONTAINS
 
 END SUBMODULE ConstructorMethods
 
+SUBMODULE(BoundingBox_Method:ConstructorMethods) ConstructorMethods_child
+IMPLICIT NONE
+CONTAINS
+
+END SUBMODULE ConstructorMethods_child
+
 -----
 
 (translation_unit
   (submodule
     (submodule_statement (module_name (name)) (name))
+    (implicit_statement (none))
+    (internal_procedures
+      (contains_statement))
+    (end_submodule_statement (name)))
+  (submodule
+    (submodule_statement (module_name (name)) (module_name (name)) (name))
     (implicit_statement (none))
     (internal_procedures
       (contains_statement))
@@ -668,14 +760,14 @@ END MODULE BoundingBox_Method
     (interface
       (interface_statement)
       (subroutine
-        (subroutine_statement (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
+        (subroutine_statement (procedure_qualifier) (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
         (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
       (end_subroutine_statement (name)))
     (end_interface_statement))
     (interface
       (interface_statement)
       (function
-        (function_statement (name) (parameters (identifier)) (function_result (identifier)))
+        (function_statement (procedure_qualifier) (name) (parameters (identifier)) (function_result (identifier)))
         (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
       (end_function_statement (name)))
     (end_interface_statement))
@@ -691,8 +783,9 @@ module test
     end subroutine do_nothing
   end interface
 contains
-  subroutine apply(f)
+  subroutine apply(f, g)
     procedure(do_nothing) :: f
+    procedure(do_nothing), optional :: g
     call f()
   end subroutine apply
 end module test
@@ -711,8 +804,9 @@ end module test
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier)))
+        (subroutine_statement (name) (parameters (identifier) (identifier)))
         (variable_declaration (procedure (procedure_interface)) (identifier))
+        (variable_declaration (procedure (procedure_interface)) (type_qualifier) (identifier))
         (subroutine_call (identifier) (argument_list))
         (end_subroutine_statement (name))))
     (end_module_statement (name))))

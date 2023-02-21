@@ -30,6 +30,7 @@ PROGRAM TEST
   use, non_intrinsic :: iso_varying_string
   use my_module, only: func2 => foo
   use, intrinsic:: iso_fortran_env, stderr => error_unit
+  use :: some_mod
 END PROGRAM
 
 ----
@@ -48,6 +49,7 @@ END PROGRAM
       (included_items (use_alias (local_name) (identifier))))
     (use_statement (module_name)
       (use_alias (local_name) (identifier)))
+    (use_statement (module_name))
   (end_program_statement)))
 
 ============================================
@@ -57,6 +59,7 @@ Implicit Statements
 PROGRAM TEST
   IMPLICIT INTEGER(i - n), REAL(8)(r-z),  COMPLEX*8(a - c, d, e-h)
   IMPLICIT NONE
+  implicit none (type, external)
 END PROGRAM
 
 ----
@@ -68,6 +71,7 @@ END PROGRAM
       (intrinsic_type) (implicit_range)
       (intrinsic_type) (size (argument_list (number_literal))) (implicit_range)
       (intrinsic_type) (size) (implicit_range) (implicit_range) (implicit_range))
+    (implicit_statement (none))
     (implicit_statement (none))
   (end_program_statement)))
 
@@ -136,6 +140,7 @@ PROGRAM TEST
   CHARACTER(LEN=:) :: message
   CHARACTER(LEN=*) :: options
   CHARACTER*(MXLN) :: errflag
+  CHARACTER(*) :: thing
   integer::no_whitespace=1
 END PROGRAM
 
@@ -176,7 +181,10 @@ END PROGRAM
       (size (argument_list (keyword_argument (identifier) (assumed_size))))
       (identifier))
     (variable_declaration
-      (intrinsic_type) (size (parenthesized_expression (identifier)))
+      (intrinsic_type) (size (assumed_size) (argument_list (identifier)))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type) (size (argument_list (assumed_size)))
       (identifier))
     (variable_declaration
       (intrinsic_type)
@@ -399,6 +407,63 @@ END PROGRAM
         (identifier) (number_literal))
       (end_do_loop_statement))
   (end_program_statement)))
+
+============================================
+Do Concurrent Statement
+============================================
+
+PROGRAM TEST
+  INTEGER,DIMENSION(N) :: J, K
+  INTEGER              :: I, M
+  M = 10
+  I = 15
+  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K)
+     M =  MOD (K(I), J(I))
+     K(I) = K(I) - M
+  END DO
+  PRINT *, I, M
+END PROGRAM TEST
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (identifier)))
+      (identifier) (identifier))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (assignment_statement left: (identifier) right: (number_literal))
+    (assignment_statement left: (identifier) right: (number_literal))
+    (do_loop_statement
+      (concurrent_statement
+        (concurrent_header
+          (concurrent_control
+            (identifier)
+            initial: (number_literal)
+            final: (identifier))
+          (concurrent_mask
+            (relational_expression
+              left: (call_expression (identifier) (argument_list (identifier)))
+              right: (number_literal))))
+        (concurrent_locality (identifier))
+        (concurrent_locality (identifier) (identifier)))
+      (assignment_statement
+        left: (identifier)
+        right: (call_expression
+          (identifier)
+          (argument_list
+            (call_expression (identifier) (argument_list (identifier)))
+            (call_expression (identifier) (argument_list (identifier))))))
+      (assignment_statement
+        left: (call_expression (identifier) (argument_list (identifier)))
+        right: (math_expression
+          left: (call_expression (identifier) (argument_list (identifier)))
+          right: (identifier)))
+      (end_do_loop_statement))
+    (print_statement (format_identifier)
+      (output_item_list (identifier) (identifier)))
+    (end_program_statement (name))))
 
 ============================================
 If Statements
@@ -975,8 +1040,15 @@ function test()
   import :: dp, cptr
 end function test
 function test2()
-  import dp
+  import c_size_t, c_ptr
 end function test2
+function test3(self)
+  import
+  class(self_type), intent(inout) :: self
+end function test3
+function test4()
+  import, only : dp
+end function test4
 
 ----
 
@@ -984,6 +1056,15 @@ end function test2
   (function
     (function_statement (name))
     (import_statement (identifier) (identifier))
+    (end_function_statement (name)))
+  (function
+    (function_statement (name))
+    (import_statement (identifier) (identifier))
+    (end_function_statement (name)))
+  (function
+    (function_statement (name) (parameters (identifier)))
+    (import_statement)
+    (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
     (end_function_statement (name)))
   (function
     (function_statement (name))
@@ -1199,3 +1280,264 @@ end subroutine assumed_rank
         (stop_statement (string_literal)))
       (end_select_statement))
     (end_subroutine_statement (name))))
+
+============================================
+Preprocessed Files
+============================================
+
+# 1 "/path/some/file.F90"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/path/some/file.F90" 1
+program test
+end program test
+
+---
+
+(translation_unit
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (preproc_file_line (preproc_line_number) (preproc_filename))
+  (program
+    (program_statement (name))
+    (end_program_statement (name))))
+
+============================================
+Associate Statement
+============================================
+
+program test
+  associate(foo => bar, bing => bat)
+    inner:associate(this => that%other())
+        foo = this + 1
+    end associate inner
+  end associate
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (associate_statement
+      (association
+        (identifier)
+        (identifier))
+      (association
+        (identifier)
+        (identifier))
+      (associate_statement
+        (block_label_start_expression)
+        (association
+          (identifier)
+          (call_expression
+            (derived_type_member_expression
+              (identifier) (type_member))
+            (argument_list)))
+        (assignment_statement
+          (identifier)
+          (math_expression (identifier) (number_literal)))
+        (end_associate_statement (block_label)))
+      (end_associate_statement))
+    (end_program_statement)))
+
+============================================
+User Defined Operator
+============================================
+
+program foo
+  interface operator(.unary.)
+    integer function unary_op(x)
+      integer, intent(in) :: x
+    end function unary_op
+  end interface
+
+  interface operator(.binary.)
+    integer function binary_op(x, y)
+      integer, intent(in) :: x, y
+    end function unary_op
+  end interface
+
+  integer :: a, b
+  print*, . unary . a
+  print*, b .binary. a
+
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (interface 
+      (interface_statement (operator))
+      (function
+        (function_statement (intrinsic_type)
+          (name) (parameters (identifier)))
+        (variable_declaration (intrinsic_type)
+          (type_qualifier) (identifier))
+         (end_function_statement (name)))
+      (end_interface_statement))
+    (interface 
+      (interface_statement (operator))
+      (function
+        (function_statement (intrinsic_type)
+          (name) (parameters (identifier) (identifier)))
+        (variable_declaration (intrinsic_type)
+          (type_qualifier) (identifier) (identifier))
+         (end_function_statement (name)))
+      (end_interface_statement))
+    (variable_declaration (intrinsic_type) (identifier) (identifier))
+    (print_statement (format_identifier)
+      (output_item_list
+        (unary_expression
+          (user_defined_operator) (identifier))))
+    (print_statement (format_identifier)
+      (output_item_list
+        (math_expression
+          (identifier) (user_defined_operator) (identifier))))
+    (end_program_statement)))
+
+============================================
+Defined IO Procedures
+============================================
+
+module test
+  use other, only : write(unformatted), read(formatted)
+  implicit none
+
+  public :: read(unformatted)
+  private :: write(formatted)
+
+  interface write(formatted)
+    module procedure :: write_formatted
+  end interface
+
+  interface read(formatted)
+    module procedure read_formatted
+  end interface read(formatted)
+
+  type foo
+  contains
+    ! User defined IO
+    generic, public :: write(formatted) => write_formatted
+    ! Just some function called read
+    procedure, public :: read => read_foo
+  end type foo
+end module
+
+---
+
+(translation_unit
+  (module
+    (module_statement (name))
+    (use_statement (module_name)
+      (included_items
+        (defined_io_procedure)
+        (defined_io_procedure)))
+    (implicit_statement (none))
+    (public_statement (defined_io_procedure))
+    (private_statement (defined_io_procedure))
+    (interface
+      (interface_statement (defined_io_procedure))
+      (procedure_statement (method_name))
+      (end_interface_statement))
+    (interface
+      (interface_statement (defined_io_procedure))
+      (procedure_statement (method_name))
+      (end_interface_statement (defined_io_procedure)))
+    (derived_type_definition
+      (derived_type_statement (type_name))
+      (derived_type_procedures
+        (contains_statement)
+        (comment)
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name (defined_io_procedure))
+          (method_name))
+        (comment)
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name (identifier))
+          (method_name)))
+      (end_type_statement (name)))
+    (end_module_statement)))
+
+============================================
+Data statement
+============================================
+
+program test
+  data a, b /1, 2/, c /3, 4/
+  data list / null() /
+  data bool / .true. /
+  data foo%bar / "hello" /
+  DATA person / Person_t(42, "Test Name") /
+  DATA (array(1,k),k=1,n) /3.14e-3, -42.5/
+  DATA array(:, N) / &
+    54.45_fp, 200.01_fp /
+
+  ! This is awful, but this makes sure the specification part has
+  ! finished, as is a hacky workaround to make sure the next part is
+  ! parsed correctly
+  x = 4
+
+  ! Check data is still ok as identifier
+  data(n) = 54
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (data_statement
+      (data_set
+        (identifier) (identifier)
+        (data_value (number_literal) (number_literal)))
+      (data_set
+        (identifier)
+        (data_value (number_literal) (number_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value (null_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value (boolean_literal))))
+    (data_statement
+      (data_set
+        (derived_type_member_expression (identifier) (type_member))
+        (data_value (string_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value
+          (call_expression
+            (identifier)
+            (argument_list (number_literal) (string_literal))))))
+    (data_statement
+      (data_set
+        (implied_do_loop_expression
+          (call_expression
+            (identifier)
+            (argument_list (number_literal) (identifier)))
+          (loop_control_expression
+            (identifier) (number_literal) (identifier)))
+        (data_value (number_literal) (unary_expression (number_literal)))))
+    (data_statement
+      (data_set
+        (call_expression (identifier) (argument_list (extent_specifier) (identifier)))
+        (data_value
+          (number_literal) (number_literal))))
+    (comment)
+    (comment)
+    (comment)
+    (assignment_statement (identifier) (number_literal))
+    (comment)
+    (assignment_statement
+      (call_expression (identifier) (argument_list (identifier)))
+      (number_literal))
+    (end_program_statement (name))))
