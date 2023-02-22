@@ -2849,11 +2849,6 @@
     }
   },
   {
-    "type": "filename",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "forall_statement",
     "named": true,
     "fields": {},
@@ -6067,11 +6062,6 @@
     }
   },
   {
-    "type": "string_literal",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "submodule",
     "named": true,
     "fields": {},
@@ -7688,6 +7678,10 @@
     "named": false
   },
   {
+    "type": "filename",
+    "named": true
+  },
+  {
     "type": "final",
     "named": false
   },
@@ -7809,11 +7803,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
@@ -7970,6 +7964,10 @@
   {
     "type": "stop",
     "named": false
+  },
+  {
+    "type": "string_literal",
+    "named": true
   },
   {
     "type": "submodule",

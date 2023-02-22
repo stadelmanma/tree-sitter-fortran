@@ -16,6 +16,7 @@ enum TokenType {
     _INTEGER_LITERAL,
     _FLOAT_LITERAL,
     _BOZ_LITERAL,
+    STRING_LITERAL,
     _END_OF_STATEMENT
 };
 
@@ -228,6 +229,65 @@ struct Scanner {
       return true;
     }
 
+    bool scan_string_literal(TSLexer *lexer) {
+      const char opening_quote = lexer->lookahead;
+
+      if (opening_quote != '"' && opening_quote != '\'') {
+        return false;
+      }
+
+      advance(lexer);
+      lexer->result_symbol = STRING_LITERAL;
+
+      while (lexer->lookahead != '\n') {
+        // Handle line continuations: MUST have both trailing '&' on
+        // first line AND leading '&' on second line. Various
+        // compilers do accept string literals missing the second '&'.
+        // Comments can also technically appear in the line
+        // continuation, but no thank you, we'll eat them as part of
+        // the string
+        if (lexer->lookahead == '&') {
+          advance(lexer);
+          // Consume blanks up to the end of the line or non-blank
+          while (std::iswblank(lexer->lookahead)) {
+            advance(lexer);
+          }
+          // If we hit the end of the line, consume all whitespace,
+          // including new lines
+          if (lexer->lookahead == '\n') {
+            while (std::iswspace(lexer->lookahead)) {
+              advance(lexer);
+            }
+            // If the next non-whitespace character isn't '&', this
+            // literal is technically ill-formed... but we could relax
+            // this to support compiler extensions
+            if (lexer->lookahead != '&') {
+              return false;
+            }
+            // Consume the '&'
+            advance(lexer);
+          }
+        }
+
+        // If we hit the same kind of quote that opened this literal,
+        // check to see if there's two in a row, and if so, consume
+        // both of them
+        if (lexer->lookahead == opening_quote) {
+          advance(lexer);
+          // It was just one quote, so we've successfully reached the
+          // end of the literal
+          if (lexer->lookahead != opening_quote) {
+            return true;
+          }
+        }
+        advance(lexer);
+      }
+
+      // We hit the end of the line without an '&', so this is an
+      // unclosed string literal (an error)
+      return false;
+    }
+
     bool scan(TSLexer *lexer, const bool *valid_symbols) {
         // Consume any leading whitespace except newlines
         while (std::iswblank(lexer->lookahead)) {
@@ -250,6 +310,12 @@ struct Scanner {
 
         if (scan_end_line_continuation(lexer)) {
           return true;
+        }
+
+        if (valid_symbols[STRING_LITERAL]) {
+          if (scan_string_literal(lexer)) {
+            return true;
+          }
         }
 
         if (valid_symbols[_INTEGER_LITERAL] || valid_symbols[_FLOAT_LITERAL] || valid_symbols[_BOZ_LITERAL]) {

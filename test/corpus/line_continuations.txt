@@ -157,3 +157,24 @@ end program ! comment
     (end_program_statement))
   (comment)
   (comment))
+
+============================================
+Line continuation in concat string
+============================================
+
+program test
+  print*, "12&bar"
+  print*, "&
+    &hello"
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (print_statement (format_identifier)
+      (output_item_list (string_literal)))
+    (print_statement (format_identifier)
+      (output_item_list (string_literal)))
+    (end_program_statement)))
