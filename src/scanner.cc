@@ -239,7 +239,7 @@ struct Scanner {
       advance(lexer);
       lexer->result_symbol = STRING_LITERAL;
 
-      while (lexer->lookahead != '\n') {
+      while (lexer->lookahead != '\n' && !lexer->eof(lexer)) {
         // Handle line continuations: strictly speaking, we MUST have
         // both trailing '&' on first line AND leading '&' on second
         // line, though most compilers do accept string literals
