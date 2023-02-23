@@ -240,12 +240,21 @@ struct Scanner {
       lexer->result_symbol = STRING_LITERAL;
 
       while (lexer->lookahead != '\n') {
-        // Handle line continuations: MUST have both trailing '&' on
-        // first line AND leading '&' on second line. Various
-        // compilers do accept string literals missing the second '&'.
-        // Comments can also technically appear in the line
-        // continuation, but no thank you, we'll eat them as part of
-        // the string
+        // Handle line continuations: strictly speaking, we MUST have
+        // both trailing '&' on first line AND leading '&' on second
+        // line, though most compilers do accept string literals
+        // missing the second '&'. In practice, everyone does seem to
+        // include it.
+
+        // We need to handle this here because sometimes '&' is part
+        // of the literal and not a continuation marker, and otherwise
+        // the parser gets confused, especially if there's no
+        // whitespace before the '&' in the string
+
+        // The literal token will end up containing the line
+        // continuation as well as any blank or comment lines inside
+        // the quotes (yes, you can have comments _inside_ string
+        // literals if they contain a line continuation)
         if (lexer->lookahead == '&') {
           advance(lexer);
           // Consume blanks up to the end of the line or non-blank
@@ -258,14 +267,6 @@ struct Scanner {
             while (std::iswspace(lexer->lookahead)) {
               advance(lexer);
             }
-            // If the next non-whitespace character isn't '&', this
-            // literal is technically ill-formed... but we could relax
-            // this to support compiler extensions
-            if (lexer->lookahead != '&') {
-              return false;
-            }
-            // Consume the '&'
-            advance(lexer);
           }
         }
 
