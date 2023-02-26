@@ -68,9 +68,9 @@ String Literals
 
 PROGRAM TEST
     sngl_qt = ''
-    sngl_qt = '123456789!<>/?@#$%"\\"//abcdefgh''ABCDEFGH'
+    sngl_qt = '123456789!<>/?@#$%&"\\"//abcdefgh''ABCDEFGH'
     dble_qt = ""
-    dble_qt = "123456789!<>/?@#$%'\\'//abcdefgh""ABCDEFGH"
+    dble_qt = "123456789!<>/?@#$%&'\\'//abcdefgh""ABCDEFGH"
     dble_qt = """double double quotes"""
     sngl_qt = '''double single quotes'''
     dble_qt = "'single in double quotes'"

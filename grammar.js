@@ -55,7 +55,9 @@ module.exports = grammar({
     $._line_continuation,
     $._integer_literal,
     $._float_literal,
-    $._boz_literal
+    $._boz_literal,
+    $.string_literal,
+    $._end_of_statement
   ],
 
   extras: $ => [
@@ -1486,23 +1488,6 @@ module.exports = grammar({
       $._boz_literal
     ),
 
-    string_literal: $ => choice(
-      $._double_quoted_string,
-      $._single_quoted_string
-    ),
-
-    _double_quoted_string: $ => token(seq(
-      '"',
-      repeat(choice(/[^"\n]/, /""./, /.""/, /& *\n *&/)),
-      '"')
-    ),
-
-    _single_quoted_string: $ => token(seq(
-      "'",
-      repeat(choice(/[^'\n]/, /''./, /.''/, /& *\n *&/)),
-      "'")
-    ),
-
     boolean_literal: $ => token(seq(
       choice(
         caseInsensitive('\\.true\\.'),
@@ -1551,8 +1536,6 @@ module.exports = grammar({
     _semicolon: $ => ';',
 
     _newline: $ => '\n',
-
-    _end_of_statement: $ => choice($._semicolon, $._newline)
   }
 })
 
