@@ -622,7 +622,7 @@ module.exports = grammar({
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       // Strictly, only `class` can be unlimited polymorphic
-      choice($._intrinsic_type, $._type_name, $.unlimited_polymorphic),
+      choice(prec.dynamic(1, $._intrinsic_type), $._type_name, $.unlimited_polymorphic),
       ')'
     ),
 
