@@ -1057,6 +1057,11 @@
     }
   },
   {
+    "type": "character_length",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "close_statement",
     "named": true,
     "fields": {},
@@ -7178,6 +7183,10 @@
           "named": true
         },
         {
+          "type": "character_length",
+          "named": true
+        },
+        {
           "type": "derived_type",
           "named": true
         },
@@ -7241,6 +7250,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "character_length",
           "named": true
         },
         {

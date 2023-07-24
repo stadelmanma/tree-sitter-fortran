@@ -597,6 +597,8 @@ module.exports = grammar({
 
     _declaration_targets: $ => commaSep1(choice(
       $.identifier,
+      // Only valid for characters
+      prec.right(1, seq($.identifier, $.character_length)),
       $.call_expression,
       $.assignment_statement,
       $.pointer_association_statement
@@ -632,6 +634,8 @@ module.exports = grammar({
       seq(optional(alias('*', $.assumed_size)), $.argument_list),
       seq('*', choice(/\d+/, $.parenthesized_expression))
     ),
+
+    character_length: $ => seq('*', /\d+/),
 
     type_qualifier: $ => choice(
       caseInsensitive('abstract'),
