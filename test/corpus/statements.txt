@@ -1566,3 +1566,39 @@ end program test
       (call_expression (identifier) (argument_list (identifier)))
       (number_literal))
     (end_program_statement (name))))
+
+============================================
+File Position Statments
+============================================
+
+program test
+  backspace 2
+  backspace (10, iostat=N)
+
+  endfile k
+  endfile (unit=self%scratch, iostat=error)
+
+  rewind(11)
+  rewind(lu_prof(N))
+
+  pause 'this is deleted'
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (file_position_statement (unit_identifier (number_literal)))
+    (file_position_statement
+      (unit_identifier (number_literal))
+      (keyword_argument (identifier) (identifier)))
+    (file_position_statement (unit_identifier (identifier)))
+    (file_position_statement
+      (keyword_argument (identifier) (derived_type_member_expression (identifier) (type_member)))
+      (keyword_argument (identifier) (identifier)))
+    (file_position_statement (unit_identifier (parenthesized_expression (number_literal))))
+    (file_position_statement (unit_identifier
+      (parenthesized_expression (call_expression (identifier) (argument_list (identifier))))))
+    (file_position_statement (string_literal))
+    (end_program_statement)))

@@ -735,7 +735,8 @@ module.exports = grammar({
       $.read_statement,
       $.stop_statement,
       $.block_construct,
-      $.associate_statement
+      $.associate_statement,
+      $.file_position_statement,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1264,6 +1265,20 @@ module.exports = grammar({
     format_identifier: $ => choice(
       $.statement_label_reference,
       $._io_expressions
+    ),
+
+    _file_position_spec: $ => choice(
+      $.unit_identifier,
+      seq('(', $.unit_identifier, ',', commaSep1($.keyword_argument), ')'),
+      seq('(', commaSep1($.keyword_argument), ')'),
+    ),
+
+    file_position_statement: $ => choice(
+      seq(caseInsensitive('backspace'), $._file_position_spec),
+      seq(caseInsensitive('endfile'), $._file_position_spec),
+      seq(caseInsensitive('rewind'), $._file_position_spec),
+      // Deleted feature -- not quite file position statement
+      seq(caseInsensitive('pause'), optional($.string_literal)),
     ),
 
     // This is a limited set of expressions that can be used in IO statements
