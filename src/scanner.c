@@ -71,8 +71,7 @@ bool scan_number(TSLexer *lexer) {
         // exclude decimal if followed by any letter other than d/D and e/E
         // if no leading digits are present and a non-digit follows
         // the decimal it's a nonmatch.
-        if (digits && (is_exp_sentinel(lexer->lookahead) ||
-                       !iswalnum(lexer->lookahead))) {
+        if (digits && !iswalnum(lexer->lookahead)) {
             lexer->mark_end(lexer); // add decimal to token
         }
         lexer->result_symbol = FLOAT_LITERAL;

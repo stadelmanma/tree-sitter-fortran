@@ -351,6 +351,7 @@ PROGRAM TEST
     val = .NOT. x
     val = (.NOT. x == y)
     val = ((x > y) .AND. (y <= z)) .eqv. .true.
+    val = 1.eq.0
 END PROGRAM
 
 ----
@@ -405,6 +406,8 @@ END PROGRAM
             (parenthesized_expression
               (relational_expression (identifier) (identifier)))))
         (boolean_literal)))
+    (assignment_statement (identifier)
+      (relational_expression (number_literal) (number_literal)))
   (end_program_statement)))
 
 ============================================
