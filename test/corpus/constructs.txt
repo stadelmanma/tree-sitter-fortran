@@ -19,6 +19,18 @@ END PROGRAM TEST
     (end_program_statement (name))))
 
 ============================================
+Shortest Program
+============================================
+
+END
+
+---
+
+(translation_unit
+  (program
+    (end_program_statement)))
+
+============================================
 Interface (explicit)
 ============================================
 

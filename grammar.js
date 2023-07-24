@@ -95,24 +95,28 @@ module.exports = grammar({
     [$.stop_statement, $.identifier],
     [$.type_qualifier, $.identifier],
     [$.type_statement],
+    [$.translation_unit],
   ],
 
   rules: {
-    translation_unit: $ => repeat($._top_level_item),
+    translation_unit: $ => seq(
+      repeat($._top_level_item),
+      optional($.program),
+    ),
 
-    _top_level_item: $ => choice(
+    _top_level_item: $ => prec(2, choice(
       $.program,
       $.module,
       $.submodule,
       $.interface,
       $.subroutine,
       $.function
-    ),
+    )),
 
     // Block level structures
 
     program: $ => seq(
-      $.program_statement,
+      optional($.program_statement),
       repeat($._specification_part),
       repeat($._statement),
       optional($.internal_procedures),
@@ -255,14 +259,14 @@ module.exports = grammar({
     ),
 
     _callable_interface_qualifers: $ => repeat1(
-      choice(
+      prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
         $._intrinsic_type,
         $.derived_type
-      )),
+      ))),
 
-    procedure_attributes: $ => seq(
+    procedure_attributes: $ => prec(1, seq(
       caseInsensitive('attributes'),
       '(',
       commaSep1(choice(
@@ -271,7 +275,7 @@ module.exports = grammar({
         caseInsensitive('host'),
         caseInsensitive('grid_global'))),
       ')'
-    ),
+    )),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
 
@@ -309,7 +313,7 @@ module.exports = grammar({
 
     // Variable Declarations
 
-    _specification_part: $ => choice(
+    _specification_part: $ => prec(1, choice(
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
@@ -328,7 +332,7 @@ module.exports = grammar({
       seq($.equivalence_statement, $._end_of_statement),
       seq($.data_statement, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
-    ),
+    )),
 
     use_statement: $ => seq(
       caseInsensitive('use'),
