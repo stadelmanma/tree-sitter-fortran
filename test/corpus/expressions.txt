@@ -124,6 +124,7 @@ program test
   integer :: n(3) = (/ 1, 2, 3  /)
   real(8) :: x(3) = (/2.0**3, REAL(n(1)), SIN(3.1)/)
   real(8) :: z(3) = [-1.0, 0.0, 1.0]
+  call append(list, (/ real(1) /))
 end program
 
 ----
@@ -152,8 +153,14 @@ end program
           (unary_expression argument: (number_literal))
           (number_literal)
           (number_literal))))
+    (subroutine_call
+      subroutine: (identifier)
+      (argument_list
+        (identifier)
+        (array_literal
+          (call_expression (identifier)
+            (argument_list (number_literal))))))
     (end_program_statement)))
-
 
 ============================================
 Array Slicing

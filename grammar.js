@@ -1543,6 +1543,7 @@ module.exports = grammar({
     identifier: $ => choice(
       /[a-zA-Z_]\w*/,
       caseInsensitive('byte'),
+      caseInsensitive('cycle'),
       caseInsensitive('data'),
       caseInsensitive('double'),
       caseInsensitive('elseif'),
@@ -1552,6 +1553,7 @@ module.exports = grammar({
       caseInsensitive('exit'),
       caseInsensitive('if'),
       caseInsensitive('read'),
+      caseInsensitive('real'),
       caseInsensitive('select'),
       caseInsensitive('stop'),
       caseInsensitive('target'),

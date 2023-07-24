@@ -10393,6 +10393,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[cC][yY][cC][lL][eE]"
+          },
+          "named": false,
+          "value": "cycle"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[dD][aA][tT][aA]"
           },
           "named": false,
@@ -10469,6 +10478,15 @@
           },
           "named": false,
           "value": "read"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[rR][eE][aA][lL]"
+          },
+          "named": false,
+          "value": "real"
         },
         {
           "type": "ALIAS",
