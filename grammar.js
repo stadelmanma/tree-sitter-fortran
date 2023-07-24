@@ -635,7 +635,11 @@ module.exports = grammar({
       seq('*', choice(/\d+/, $.parenthesized_expression))
     ),
 
-    character_length: $ => seq('*', /\d+/),
+    character_length: $ => seq(
+      '*',
+      optional(/\d+/),
+      optional(seq('(', '*', ')'))
+    ),
 
     type_qualifier: $ => choice(
       caseInsensitive('abstract'),
