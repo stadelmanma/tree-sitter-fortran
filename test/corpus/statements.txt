@@ -507,6 +507,7 @@ Computed Goto (Obsolescent)
 
 program test
   goto (10, 20, 30) M
+  goto (10, 20, 30) ISAVE(1)
 end program
 
 ---
@@ -515,6 +516,8 @@ end program
   (program
     (program_statement (name))
     (keyword_statement (statement_label) (statement_label) (statement_label) (identifier))
+    (keyword_statement (statement_label) (statement_label) (statement_label)
+                       (call_expression (identifier) (argument_list (number_literal))))
     (end_program_statement)))
 
 ============================================

@@ -804,7 +804,7 @@ module.exports = grammar({
           seq(
             '(', commaSep1($.statement_label), ')',
             optional(','),
-            $.identifier,
+            $._expression,
           )
         )
       ),

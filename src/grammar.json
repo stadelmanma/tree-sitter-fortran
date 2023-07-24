@@ -5264,7 +5264,7 @@
                     },
                     {
                       "type": "SYMBOL",
-                      "name": "identifier"
+                      "name": "_expression"
                     }
                   ]
                 }
