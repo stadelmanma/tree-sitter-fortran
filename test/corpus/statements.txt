@@ -305,6 +305,7 @@ PROGRAM TEST
   TARGET :: i
   PARAMETER (MAXLEN = 255, PI = 3.1415, SCALE_FACTOR = SIN(2 * PI))
   EQUIVALENCE (a, b, c), (d, e, f, r(1))
+  SAVE A, B, /BLOCKC/, D
 END PROGRAM
 
 ----
@@ -330,6 +331,7 @@ END PROGRAM
         (identifier)
         (identifier)
         (call_expression (identifier) (argument_list (number_literal)))))
+    (save_statement (identifier) (identifier) (identifier) (identifier))
   (end_program_statement)))
 
 ============================================

@@ -396,8 +396,11 @@ module.exports = grammar({
     save_statement: $ => prec(1, seq(
       caseInsensitive('save'),
       optional(seq(
-        '::',
-        commaSep1($.identifier)
+        optional('::'),
+        commaSep1(choice(
+          $.identifier,
+          seq('/', $.identifier, '/'),
+        )),
       ))
     )),
 
