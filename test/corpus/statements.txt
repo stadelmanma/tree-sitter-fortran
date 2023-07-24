@@ -911,6 +911,7 @@ PROGRAM TEST
 2 FORMAT(2F8.3, F6.2, //, :)
 3 FORMAT(I0, A(2X, I3), 'test')
 4 FORMAT(*(G15.8,:,','))
+5 FORMAT(/1X,'NUMBER OF DATA Total/ACCEPTED'/1X,i10/1X)
 END PROGRAM
 
 ----
@@ -943,6 +944,13 @@ END PROGRAM
         (edit_descriptor)
         (edit_descriptor)
         (string_literal)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (string_literal)
+        (edit_descriptor)
+        (edit_descriptor)))
   (end_program_statement)))
 
 ============================================

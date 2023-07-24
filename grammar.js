@@ -1151,11 +1151,18 @@ module.exports = grammar({
       ')'
     ),
 
-    _transfer_items: $ => commaSep1(choice(
+    _transfer_item: $ => choice(
       $.string_literal,
       $.edit_descriptor,
-      seq(optional($.edit_descriptor), '(', $._transfer_items, ')')
-    )),
+      seq('(', $._transfer_items, ')')
+    ),
+
+    // Comma is technically only optional in certain circumstances,
+    // but capturing all of those is complicated!
+    _transfer_items: $ => seq(
+      $._transfer_item,
+      repeat(seq(optional(','), $._transfer_item))
+    ),
 
     edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
 
