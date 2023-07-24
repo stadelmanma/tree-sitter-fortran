@@ -5390,6 +5390,10 @@
                     },
                     {
                       "type": "SYMBOL",
+                      "name": "complex_literal"
+                    },
+                    {
+                      "type": "SYMBOL",
                       "name": "string_literal"
                     },
                     {
@@ -5482,6 +5486,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "number_literal"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "complex_literal"
                           },
                           {
                             "type": "SYMBOL",

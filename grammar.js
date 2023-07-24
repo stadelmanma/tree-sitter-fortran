@@ -828,6 +828,7 @@ module.exports = grammar({
         optional(prec(1, seq(field('repeat', $.number_literal), '*'))),
         choice(
           $.number_literal,
+          $.complex_literal,
           $.string_literal,
           $.boolean_literal,
           $.unary_expression,

@@ -1773,6 +1773,10 @@
           "named": true
         },
         {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
           "type": "null_literal",
           "named": true
         },
