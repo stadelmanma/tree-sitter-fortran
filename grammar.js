@@ -1464,7 +1464,7 @@ module.exports = grammar({
     extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
-      optional($._expression), // stop
+      optional(choice($._expression, $.assumed_size)), // stop
       optional(seq(':', $._expression)) // stride
     ),
 

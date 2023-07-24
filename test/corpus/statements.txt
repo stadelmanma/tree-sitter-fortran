@@ -133,7 +133,7 @@ Intrinsic Variable Declarations
 PROGRAM TEST
   INTEGER, PARAMETER :: N = 100, MXLN = 255
   INTEGER :: i, j, k, l(*)
-  REAL(16) :: data(0:N**2), rhs(N)
+  REAL(16) :: data(0:N**2), rhs(N), lhs(0:*)
   REAL*8, TARGET :: tmp
   REAL(KIND=8), CONTIGUOUS, POINTER :: nxt => tmp
   LOGICAL, DIMENSION(:), ALLOCATABLE :: mask
@@ -161,7 +161,9 @@ END PROGRAM
       (call_expression (identifier)
         (argument_list
           (extent_specifier (number_literal) (math_expression (identifier) (number_literal)))))
-      (call_expression (identifier) (argument_list (identifier))))
+      (call_expression (identifier) (argument_list (identifier)))
+      (call_expression (identifier) (argument_list
+          (extent_specifier (number_literal) (assumed_size)))))
     (variable_declaration (intrinsic_type) (size) (type_qualifier) (identifier))
     (variable_declaration
       (intrinsic_type) (size (argument_list (keyword_argument (identifier) (number_literal))))
