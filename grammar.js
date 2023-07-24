@@ -784,9 +784,18 @@ module.exports = grammar({
       caseInsensitive('continue'),
       seq(caseInsensitive('cycle'), optional($.identifier)),
       seq(caseInsensitive('exit'), optional($.identifier)),
-      seq(whiteSpacedKeyword('go', 'to'), $.statement_label),
+      seq(
+        whiteSpacedKeyword('go', 'to'),
+        choice(
+          $.statement_label,
+          // Computed goto (obsolete)
+          seq(
+            '(', commaSep1($.statement_label), ')',
+            $.identifier,
+          )
+        )
+      ),
       caseInsensitive('return'),
-      // seq(caseInsensitive('stop'), optional($._expression))
     ),
 
     include_statement: $ => seq(
