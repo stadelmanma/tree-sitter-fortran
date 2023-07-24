@@ -133,7 +133,7 @@ Intrinsic Variable Declarations
 PROGRAM TEST
   INTEGER, PARAMETER :: N = 100, MXLN = 255
   INTEGER :: i, j, k, l(*)
-  REAL(16) :: data(0:N**2), rhs(N)
+  REAL(16) :: data(0:N**2), rhs(N), lhs(0:*)
   REAL*8, TARGET :: tmp
   REAL(KIND=8), CONTIGUOUS, POINTER :: nxt => tmp
   LOGICAL, DIMENSION(:), ALLOCATABLE :: mask
@@ -161,7 +161,9 @@ END PROGRAM
       (call_expression (identifier)
         (argument_list
           (extent_specifier (number_literal) (math_expression (identifier) (number_literal)))))
-      (call_expression (identifier) (argument_list (identifier))))
+      (call_expression (identifier) (argument_list (identifier)))
+      (call_expression (identifier) (argument_list
+          (extent_specifier (number_literal) (assumed_size)))))
     (variable_declaration (intrinsic_type) (size) (type_qualifier) (identifier))
     (variable_declaration
       (intrinsic_type) (size (argument_list (keyword_argument (identifier) (number_literal))))
@@ -463,6 +465,35 @@ END PROGRAM TEST
       (end_do_loop_statement))
     (print_statement (format_identifier)
       (output_item_list (identifier) (identifier)))
+    (end_program_statement (name))))
+
+============================================
+Do Label Statement (Obsolescent)
+============================================
+
+program test
+  do 10 i = 1, 10
+    do 10, j = 1, 10
+      foo(i, j) = i * j
+10 continue
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression (identifier) (number_literal) (number_literal)))
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression (identifier) (number_literal) (number_literal)))
+    (assignment_statement
+      (call_expression (identifier) (argument_list (identifier) (identifier)))
+      (math_expression (identifier) (identifier)))
+    (statement_label)
+    (keyword_statement)
     (end_program_statement (name))))
 
 ============================================
@@ -886,6 +917,7 @@ PROGRAM TEST
 2 FORMAT(2F8.3, F6.2, //, :)
 3 FORMAT(I0, A(2X, I3), 'test')
 4 FORMAT(*(G15.8,:,','))
+5 FORMAT(/1X,'NUMBER OF DATA Total/ACCEPTED'/1X,i10/1X)
 END PROGRAM
 
 ----
@@ -918,6 +950,13 @@ END PROGRAM
         (edit_descriptor)
         (edit_descriptor)
         (string_literal)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (string_literal)
+        (edit_descriptor)
+        (edit_descriptor)))
   (end_program_statement)))
 
 ============================================
@@ -1541,3 +1580,39 @@ end program test
       (call_expression (identifier) (argument_list (identifier)))
       (number_literal))
     (end_program_statement (name))))
+
+============================================
+File Position Statments
+============================================
+
+program test
+  backspace 2
+  backspace (10, iostat=N)
+
+  endfile k
+  endfile (unit=self%scratch, iostat=error)
+
+  rewind(11)
+  rewind(lu_prof(N))
+
+  pause 'this is deleted'
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (file_position_statement (unit_identifier (number_literal)))
+    (file_position_statement
+      (unit_identifier (number_literal))
+      (keyword_argument (identifier) (identifier)))
+    (file_position_statement (unit_identifier (identifier)))
+    (file_position_statement
+      (keyword_argument (identifier) (derived_type_member_expression (identifier) (type_member)))
+      (keyword_argument (identifier) (identifier)))
+    (file_position_statement (unit_identifier (parenthesized_expression (number_literal))))
+    (file_position_statement (unit_identifier
+      (parenthesized_expression (call_expression (identifier) (argument_list (identifier))))))
+    (file_position_statement (string_literal))
+    (end_program_statement)))

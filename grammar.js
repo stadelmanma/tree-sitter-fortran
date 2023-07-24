@@ -622,7 +622,7 @@ module.exports = grammar({
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       // Strictly, only `class` can be unlimited polymorphic
-      choice($._intrinsic_type, $._type_name, $.unlimited_polymorphic),
+      choice(prec.dynamic(1, $._intrinsic_type), $._type_name, $.unlimited_polymorphic),
       ')'
     ),
 
@@ -726,6 +726,7 @@ module.exports = grammar({
       $.select_type_statement,
       $.select_rank_statement,
       $.do_loop_statement,
+      $.do_label_statement,
       $.format_statement,
       $.open_statement,
       $.close_statement,
@@ -734,7 +735,8 @@ module.exports = grammar({
       $.read_statement,
       $.stop_statement,
       $.block_construct,
-      $.associate_statement
+      $.associate_statement,
+      $.file_position_statement,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -838,6 +840,14 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement),
       $.end_do_loop_statement
+    ),
+
+    // Deleted feature
+    do_label_statement: $ => seq(
+      caseInsensitive('do'),
+      $.statement_label_reference,
+      optional(','),
+      $.loop_control_expression
     ),
 
     end_do_loop_statement: $ => seq(
@@ -1142,11 +1152,18 @@ module.exports = grammar({
       ')'
     ),
 
-    _transfer_items: $ => commaSep1(choice(
+    _transfer_item: $ => choice(
       $.string_literal,
       $.edit_descriptor,
-      seq(optional($.edit_descriptor), '(', $._transfer_items, ')')
-    )),
+      seq('(', $._transfer_items, ')')
+    ),
+
+    // Comma is technically only optional in certain circumstances,
+    // but capturing all of those is complicated!
+    _transfer_items: $ => seq(
+      $._transfer_item,
+      repeat(seq(optional(','), $._transfer_item))
+    ),
 
     edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
 
@@ -1256,6 +1273,20 @@ module.exports = grammar({
     format_identifier: $ => choice(
       $.statement_label_reference,
       $._io_expressions
+    ),
+
+    _file_position_spec: $ => choice(
+      $.unit_identifier,
+      seq('(', $.unit_identifier, ',', commaSep1($.keyword_argument), ')'),
+      seq('(', commaSep1($.keyword_argument), ')'),
+    ),
+
+    file_position_statement: $ => choice(
+      seq(caseInsensitive('backspace'), $._file_position_spec),
+      seq(caseInsensitive('endfile'), $._file_position_spec),
+      seq(caseInsensitive('rewind'), $._file_position_spec),
+      // Deleted feature -- not quite file position statement
+      seq(caseInsensitive('pause'), optional($.string_literal)),
     ),
 
     // This is a limited set of expressions that can be used in IO statements
@@ -1433,7 +1464,7 @@ module.exports = grammar({
     extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
-      optional($._expression), // stop
+      optional(choice($._expression, $.assumed_size)), // stop
       optional(seq(':', $._expression)) // stride
     ),
 
@@ -1513,6 +1544,7 @@ module.exports = grammar({
     identifier: $ => choice(
       /[a-zA-Z_]\w*/,
       caseInsensitive('byte'),
+      caseInsensitive('cycle'),
       caseInsensitive('data'),
       caseInsensitive('double'),
       caseInsensitive('elseif'),
@@ -1522,6 +1554,7 @@ module.exports = grammar({
       caseInsensitive('exit'),
       caseInsensitive('if'),
       caseInsensitive('read'),
+      caseInsensitive('real'),
       caseInsensitive('select'),
       caseInsensitive('stop'),
       caseInsensitive('target'),
