@@ -803,6 +803,7 @@ module.exports = grammar({
           // Computed goto (obsolete)
           seq(
             '(', commaSep1($.statement_label), ')',
+            optional(','),
             $.identifier,
           )
         )
