@@ -10597,6 +10597,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[bB][lL][oO][cC][kK]"
+          },
+          "named": false,
+          "value": "block"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[bB][yY][tT][eE]"
           },
           "named": false,
