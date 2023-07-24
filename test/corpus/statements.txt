@@ -471,7 +471,8 @@ Do Label Statement (Obsolescent)
 
 program test
   do 10 i = 1, 10
-    foo(i) = i
+    do 10, j = 1, 10
+      foo(i, j) = i * j
 10 continue
 end program test
 
@@ -483,9 +484,12 @@ end program test
     (do_label_statement
       (statement_label_reference)
       (loop_control_expression (identifier) (number_literal) (number_literal)))
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression (identifier) (number_literal) (number_literal)))
     (assignment_statement
-      (call_expression (identifier) (argument_list (identifier)))
-      (identifier))
+      (call_expression (identifier) (argument_list (identifier) (identifier)))
+      (math_expression (identifier) (identifier)))
     (statement_label)
     (keyword_statement)
     (end_program_statement (name))))

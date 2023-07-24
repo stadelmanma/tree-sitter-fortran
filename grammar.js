@@ -846,6 +846,7 @@ module.exports = grammar({
     do_label_statement: $ => seq(
       caseInsensitive('do'),
       $.statement_label_reference,
+      optional(','),
       $.loop_control_expression
     ),
 
