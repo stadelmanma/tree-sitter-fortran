@@ -466,6 +466,31 @@ END PROGRAM TEST
     (end_program_statement (name))))
 
 ============================================
+Do Label Statement (Obsolescent)
+============================================
+
+program test
+  do 10 i = 1, 10
+    foo(i) = i
+10 continue
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression (identifier) (number_literal) (number_literal)))
+    (assignment_statement
+      (call_expression (identifier) (argument_list (identifier)))
+      (identifier))
+    (statement_label)
+    (keyword_statement)
+    (end_program_statement (name))))
+
+============================================
 If Statements
 ============================================
 

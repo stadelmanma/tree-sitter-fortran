@@ -4698,6 +4698,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "do_label_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "format_statement"
         },
         {
@@ -5510,6 +5514,28 @@
         {
           "type": "SYMBOL",
           "name": "end_do_loop_statement"
+        }
+      ]
+    },
+    "do_label_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "do"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "statement_label_reference"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "loop_control_expression"
         }
       ]
     },

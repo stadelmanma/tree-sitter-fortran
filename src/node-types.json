@@ -370,6 +370,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -627,6 +631,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -880,6 +888,10 @@
         },
         {
           "type": "default",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -1993,6 +2005,25 @@
     }
   },
   {
+    "type": "do_label_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "loop_control_expression",
+          "named": true
+        },
+        {
+          "type": "statement_label_reference",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "do_loop_statement",
     "named": true,
     "fields": {},
@@ -2026,6 +2057,10 @@
         },
         {
           "type": "concurrent_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -2148,6 +2183,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -2252,6 +2291,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -2363,6 +2406,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -2881,6 +2928,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -3067,6 +3118,10 @@
         },
         {
           "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -3330,6 +3385,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -4524,6 +4583,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -5272,6 +5335,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -5490,6 +5557,10 @@
         },
         {
           "type": "default",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -6237,6 +6308,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -6731,6 +6806,10 @@
           "named": true
         },
         {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
           "type": "do_loop_statement",
           "named": true
         },
@@ -7126,6 +7205,10 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
           "named": true
         },
         {
@@ -7803,11 +7886,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

@@ -726,6 +726,7 @@ module.exports = grammar({
       $.select_type_statement,
       $.select_rank_statement,
       $.do_loop_statement,
+      $.do_label_statement,
       $.format_statement,
       $.open_statement,
       $.close_statement,
@@ -838,6 +839,13 @@ module.exports = grammar({
       $._end_of_statement,
       repeat($._statement),
       $.end_do_loop_statement
+    ),
+
+    // Deleted feature
+    do_label_statement: $ => seq(
+      caseInsensitive('do'),
+      $.statement_label_reference,
+      $.loop_control_expression
     ),
 
     end_do_loop_statement: $ => seq(
