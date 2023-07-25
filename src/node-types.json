@@ -402,6 +402,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "keyword_statement",
           "named": true
         },
@@ -683,6 +687,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -924,6 +932,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -2117,6 +2129,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "keyword_statement",
           "named": true
         },
@@ -2240,6 +2256,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "keyword_statement",
           "named": true
         },
@@ -2352,6 +2372,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -2471,6 +2495,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -3028,6 +3056,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "keyword_statement",
           "named": true
         },
@@ -3242,6 +3274,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -3501,6 +3537,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -3797,6 +3837,33 @@
         },
         {
           "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "inquire_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "format_identifier",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
+          "named": true
+        },
+        {
+          "type": "output_item_list",
+          "named": true
+        },
+        {
+          "type": "unit_identifier",
           "named": true
         }
       ]
@@ -4767,6 +4834,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -5523,6 +5594,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -5729,6 +5804,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -6516,6 +6595,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -7002,6 +7085,10 @@
           "named": true
         },
         {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
           "type": "keyword_statement",
           "named": true
         },
@@ -7421,6 +7508,10 @@
         },
         {
           "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
           "named": true
         },
         {
@@ -8026,6 +8117,10 @@
   },
   {
     "type": "inout",
+    "named": false
+  },
+  {
+    "type": "inquire",
     "named": false
   },
   {

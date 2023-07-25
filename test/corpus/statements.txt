@@ -1674,3 +1674,31 @@ end program
       (parenthesized_expression (call_expression (identifier) (argument_list (identifier))))))
     (file_position_statement (string_literal))
     (end_program_statement)))
+
+========================================
+Inquire Statements
+========================================
+
+program test
+  INQUIRE (IOLENGTH = IOL) A (1:N)
+  INQUIRE (UNIT = JOAN, OPENED = LOG_01, NAMED = LOG_02, &
+           FORM = CHAR_VAR, IOSTAT = IOS)
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (inquire_statement
+      (keyword_argument (identifier) (identifier))
+      (output_item_list
+        (call_expression (identifier)
+          (argument_list (extent_specifier (number_literal) (identifier))))))
+    (inquire_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier)))
+    (end_program_statement (name))))

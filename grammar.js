@@ -89,6 +89,7 @@ module.exports = grammar({
     [$.elsewhere_clause],
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],
+    [$.inquire_statement, $.identifier],
     [$.module_statement, $.procedure_qualifier],
     [$.procedure_declaration],
     [$.rank_statement],
@@ -749,6 +750,7 @@ module.exports = grammar({
       $.print_statement,
       $.write_statement,
       $.read_statement,
+      $.inquire_statement,
       $.stop_statement,
       $.block_construct,
       $.associate_statement,
@@ -1201,6 +1203,18 @@ module.exports = grammar({
 
     edit_descriptor: $ => /[a-zA-Z0-9/:.*$]+/,
 
+    _io_arguments: $ => seq(
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')'
+    ),
+
     read_statement: $ => prec(1, choice(
       $._simple_read_statement,
       $._parameterized_read_statement
@@ -1214,15 +1228,7 @@ module.exports = grammar({
 
     _parameterized_read_statement: $ => prec(1, seq(
       caseInsensitive('read'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       optional($.input_item_list)
     )),
 
@@ -1234,15 +1240,7 @@ module.exports = grammar({
 
     open_statement: $ => seq(
       caseInsensitive('open'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       optional($.output_item_list)
     ),
 
@@ -1260,18 +1258,16 @@ module.exports = grammar({
 
     write_statement: $ => prec(1, seq(
       caseInsensitive('write'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       // Trailing comma here is a legacy extension to gfortran
       optional(','),
       optional($.output_item_list)
+    )),
+
+    inquire_statement: $ => prec(1, seq(
+      caseInsensitive('inquire'),
+      $._io_arguments,
+      optional($.output_item_list),
     )),
 
     enum: $ => seq(
@@ -1588,6 +1584,7 @@ module.exports = grammar({
       caseInsensitive('error'),
       caseInsensitive('exit'),
       caseInsensitive('if'),
+      caseInsensitive('inquire'),
       caseInsensitive('read'),
       caseInsensitive('real'),
       caseInsensitive('select'),
