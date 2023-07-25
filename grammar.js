@@ -1300,7 +1300,10 @@ module.exports = grammar({
       optional('::'),
       commaSep1(choice(
         $.identifier,
-        seq($.identifier, '=', $.number_literal)
+        seq($.identifier, '=', choice(
+          $.number_literal,
+          $.unary_expression,
+        ))
       ))
     ),
 

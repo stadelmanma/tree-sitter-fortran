@@ -2902,6 +2902,10 @@
         {
           "type": "number_literal",
           "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
         }
       ]
     }

@@ -1209,6 +1209,9 @@ PROGRAM test
         ENUMERATOR :: red = 1
         ENUMERATOR blue, green
     END ENUM
+    ENUM, BIND(C)
+        ENUMERATOR :: minus_one = -1
+    END ENUM
 END PROGRAM test
 
 ----
@@ -1220,6 +1223,10 @@ END PROGRAM test
       (enum_statement (language_binding (identifier)))
       (enumerator_statement (identifier) (number_literal))
       (enumerator_statement (identifier) (identifier))
+      (end_enum_statement))
+    (enum
+      (enum_statement (language_binding (identifier)))
+      (enumerator_statement (identifier) (unary_expression (number_literal)))
       (end_enum_statement))
     (end_program_statement (name))))
 
