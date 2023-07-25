@@ -3318,30 +3318,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "STRING",
-                      "value": "::"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "binding_name"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "=>"
-                    }
-                  ]
-                },
-                {
-                  "type": "STRING",
-                  "value": "::"
-                }
-              ]
+              "type": "STRING",
+              "value": "::"
             },
             {
               "type": "BLANK"
@@ -3352,8 +3330,30 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_method_name"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "method_name"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "binding_name"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "=>"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "method_name"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "REPEAT",
@@ -3365,8 +3365,30 @@
                     "value": ","
                   },
                   {
-                    "type": "SYMBOL",
-                    "name": "_method_name"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SYMBOL",
+                        "name": "method_name"
+                      },
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "binding_name"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "=>"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "method_name"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -3388,13 +3410,13 @@
         }
       ]
     },
-    "_method_name": {
+    "method_name": {
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
         "name": "identifier"
       },
-      "named": true,
+      "named": false,
       "value": "method_name"
     },
     "_procedure_kind": {
