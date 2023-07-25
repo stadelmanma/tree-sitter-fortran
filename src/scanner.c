@@ -58,6 +58,21 @@ bool scan_int(TSLexer *lexer) {
         advance(lexer); // store all digits
     }
 
+    // handle line continuations
+    if (lexer->lookahead == '&') {
+      skip(lexer);
+      while (iswspace(lexer->lookahead)) {
+        skip(lexer);
+      }
+      // second '&' required to continue the literal
+      if (lexer->lookahead == '&') {
+        skip(lexer);
+        // don't return here, as we may have finished literal on first
+        // line but still have second '&'
+        scan_int(lexer);
+      }
+    }
+
     lexer->mark_end(lexer);
     return true;
 }

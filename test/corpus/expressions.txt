@@ -560,6 +560,44 @@ end program test
     (end_program_statement (name))))
 
 ============================================
+Line Continuation in Number Literals
+============================================
+
+program test
+  real, parameter :: pi = &
+    &3.14&
+    &1592&
+    &6535&
+    &8979
+  integer, dimension(2) :: foo = [1&
+    , 2]
+  real, dimension(2) :: foo = [1.e0&
+    &, 2.e0]
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier)
+      (assignment_statement
+        (identifier)
+        (number_literal)))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal)))
+      (assignment_statement
+        (identifier)
+        (array_literal (number_literal) (number_literal))))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal)))
+      (assignment_statement
+        (identifier)
+        (array_literal (number_literal) (number_literal))))
+    (end_program_statement)))
+
+============================================
 Array Constructors
 ============================================
 
