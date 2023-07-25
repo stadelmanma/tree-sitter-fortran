@@ -87,6 +87,7 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.elsewhere_clause, $.identifier],
     [$.elsewhere_clause],
+    [$.format_statement, $.identifier],
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],
     [$.inquire_statement, $.identifier],
@@ -1192,12 +1193,12 @@ module.exports = grammar({
       optional($._block_label)
     ),
 
-    format_statement: $ => seq(
+    format_statement: $ => prec(1, seq(
       caseInsensitive('format'),
       '(',
       alias($._transfer_items, $.transfer_items),
       ')'
-    ),
+    )),
 
     _transfer_item: $ => choice(
       $.string_literal,
@@ -1594,6 +1595,7 @@ module.exports = grammar({
       caseInsensitive('endif'),
       caseInsensitive('error'),
       caseInsensitive('exit'),
+      caseInsensitive('format'),
       caseInsensitive('if'),
       caseInsensitive('inquire'),
       caseInsensitive('read'),

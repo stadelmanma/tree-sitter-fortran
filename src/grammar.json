@@ -7841,35 +7841,39 @@
       ]
     },
     "format_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[fF][oO][rR][mM][aA][tT]"
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[fF][oO][rR][mM][aA][tT]"
+            },
+            "named": false,
+            "value": "format"
           },
-          "named": false,
-          "value": "format"
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_transfer_items"
+          {
+            "type": "STRING",
+            "value": "("
           },
-          "named": true,
-          "value": "transfer_items"
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_transfer_items"
+            },
+            "named": true,
+            "value": "transfer_items"
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          }
+        ]
+      }
     },
     "_transfer_item": {
       "type": "CHOICE",
@@ -10655,6 +10659,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[fF][oO][rR][mM][aA][tT]"
+          },
+          "named": false,
+          "value": "format"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[iI][fF]"
           },
           "named": false,
@@ -10835,6 +10848,10 @@
     ],
     [
       "elsewhere_clause"
+    ],
+    [
+      "format_statement",
+      "identifier"
     ],
     [
       "interface_statement"
