@@ -5285,7 +5285,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "statement_label"
+                  "name": "statement_label_reference"
                 },
                 {
                   "type": "SEQ",
@@ -5299,7 +5299,7 @@
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "statement_label"
+                          "name": "statement_label_reference"
                         },
                         {
                           "type": "REPEAT",
@@ -5312,7 +5312,7 @@
                               },
                               {
                                 "type": "SYMBOL",
-                                "name": "statement_label"
+                                "name": "statement_label_reference"
                               }
                             ]
                           }

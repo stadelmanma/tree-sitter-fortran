@@ -397,7 +397,7 @@ END PROGRAM
         (call_expression (identifier) (argument_list (identifier)))
         (identifier))
       (keyword_statement)
-      (keyword_statement (statement_label))
+      (keyword_statement (statement_label_reference))
     (end_do_loop_statement))
     (do_loop_statement
       (block_label_start_expression)
@@ -431,7 +431,7 @@ END PROGRAM
         (identifier) (number_literal) (number_literal))
       (if_statement
         (parenthesized_expression (identifier))
-        (keyword_statement (statement_label)))
+        (keyword_statement (statement_label_reference)))
       (statement_label)
       (end_do_loop_statement))
   (end_program_statement)))
@@ -536,9 +536,12 @@ end program
 (translation_unit
   (program
     (program_statement (name))
-    (keyword_statement (statement_label) (statement_label) (statement_label) (identifier))
-    (keyword_statement (statement_label) (statement_label) (statement_label)
-                       (call_expression (identifier) (argument_list (number_literal))))
+    (keyword_statement
+      (statement_label_reference) (statement_label_reference) (statement_label_reference)
+      (identifier))
+    (keyword_statement
+      (statement_label_reference) (statement_label_reference) (statement_label_reference)
+      (call_expression (identifier) (argument_list (number_literal))))
     (end_program_statement)))
 
 ============================================

@@ -4051,7 +4051,7 @@
           "named": true
         },
         {
-          "type": "statement_label",
+          "type": "statement_label_reference",
           "named": true
         },
         {
@@ -8078,11 +8078,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

@@ -803,10 +803,10 @@ module.exports = grammar({
       seq(
         whiteSpacedKeyword('go', 'to'),
         choice(
-          $.statement_label,
+          $.statement_label_reference,
           // Computed goto (obsolete)
           seq(
-            '(', commaSep1($.statement_label), ')',
+            '(', commaSep1($.statement_label_reference), ')',
             optional(','),
             $._expression,
           )
