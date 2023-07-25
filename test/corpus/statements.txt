@@ -1702,3 +1702,19 @@ end program test
       (keyword_argument (identifier) (identifier))
       (keyword_argument (identifier) (identifier)))
     (end_program_statement (name))))
+
+========================================
+Arithmetic If Statement (Deleted)
+========================================
+
+  if (d) 10, 20, 30
+end
+
+---
+
+(translation_unit
+  (program
+    (arithmetic_if_statement
+      (parenthesized_expression (identifier))
+      (statement_label_reference) (statement_label_reference) (statement_label_reference))
+    (end_program_statement)))

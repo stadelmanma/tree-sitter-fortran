@@ -737,6 +737,7 @@ module.exports = grammar({
       $.keyword_statement,
       $.include_statement,
       $.if_statement,
+      $.arithmetic_if_statement,
       $.where_statement,
       $.forall_statement,
       $.select_case_statement,
@@ -939,10 +940,20 @@ module.exports = grammar({
       $._block_if_statement
     ),
 
-    _inline_if_statement: $ => prec.right(seq(
+    _inline_if_statement: $ => prec.right(2, seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
       $._statements
+    )),
+
+    arithmetic_if_statement: $ => prec.right(seq(
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      $.statement_label_reference,
+      ',',
+      $.statement_label_reference,
+      ',',
+      $.statement_label_reference,
     )),
 
     _block_if_statement: $ => seq(

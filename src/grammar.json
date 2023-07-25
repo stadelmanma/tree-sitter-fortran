@@ -4872,6 +4872,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "arithmetic_if_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "where_statement"
         },
         {
@@ -6199,7 +6203,7 @@
     },
     "_inline_if_statement": {
       "type": "PREC_RIGHT",
-      "value": 0,
+      "value": 2,
       "content": {
         "type": "SEQ",
         "members": [
@@ -6219,6 +6223,48 @@
           {
             "type": "SYMBOL",
             "name": "_statements"
+          }
+        ]
+      }
+    },
+    "arithmetic_if_statement": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[iI][fF]"
+            },
+            "named": false,
+            "value": "if"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "parenthesized_expression"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "statement_label_reference"
+          },
+          {
+            "type": "STRING",
+            "value": ","
+          },
+          {
+            "type": "SYMBOL",
+            "name": "statement_label_reference"
+          },
+          {
+            "type": "STRING",
+            "value": ","
+          },
+          {
+            "type": "SYMBOL",
+            "name": "statement_label_reference"
           }
         ]
       }
