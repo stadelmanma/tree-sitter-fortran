@@ -6043,6 +6043,10 @@
         {
           "type": "selector",
           "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
         }
       ]
     }
@@ -6070,6 +6074,10 @@
         {
           "type": "selector",
           "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
         }
       ]
     }
@@ -6092,6 +6100,10 @@
         },
         {
           "type": "selector",
+          "named": true
+        },
+        {
+          "type": "statement_label",
           "named": true
         },
         {

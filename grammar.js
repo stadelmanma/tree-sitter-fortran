@@ -867,6 +867,7 @@ module.exports = grammar({
       )),
       $._end_of_statement,
       repeat($._statement),
+      optional($.statement_label),
       $.end_do_loop_statement
     ),
 
@@ -952,6 +953,7 @@ module.exports = grammar({
       repeat($._statement),
       repeat($.elseif_clause),
       optional($.else_clause),
+      optional($.statement_label),
       $.end_if_statement
     ),
 
@@ -1045,6 +1047,7 @@ module.exports = grammar({
       $._forall_control_expression,
       $._end_of_statement,
       repeat($._statement),
+      optional($.statement_label),
       $.end_forall_statement
     ),
 
@@ -1059,6 +1062,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 
@@ -1068,6 +1072,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.type_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 
@@ -1077,6 +1082,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.rank_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 

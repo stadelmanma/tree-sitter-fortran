@@ -365,6 +365,11 @@ PROGRAM TEST
     DO WHILE (is_true)
         j = 0
     END DO
+
+    do i = 1, 10
+      if (diff) go to 100
+100 end do
+
 END PROGRAM
 
 ----
@@ -420,6 +425,14 @@ END PROGRAM
           (identifier )))
       (assignment_statement
         (identifier) (number_literal))
+      (end_do_loop_statement))
+    (do_loop_statement
+      (loop_control_expression
+        (identifier) (number_literal) (number_literal))
+      (if_statement
+        (parenthesized_expression (identifier))
+        (keyword_statement (statement_label)))
+      (statement_label)
       (end_do_loop_statement))
   (end_program_statement)))
 
