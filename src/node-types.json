@@ -3702,7 +3702,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "assignment",
@@ -8058,11 +8058,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",

@@ -31,6 +31,8 @@ PROGRAM TEST
   use my_module, only: func2 => foo
   use, intrinsic:: iso_fortran_env, stderr => error_unit
   use :: some_mod
+  use some_mod, only:
+  use some_mod, func2 => foo
 END PROGRAM
 
 ----
@@ -50,6 +52,10 @@ END PROGRAM
     (use_statement (module_name)
       (use_alias (local_name) (identifier)))
     (use_statement (module_name))
+    (use_statement (module_name)
+      (included_items))
+    (use_statement (module_name)
+      (use_alias (local_name) (identifier)))
   (end_program_statement)))
 
 ============================================

@@ -355,12 +355,12 @@ module.exports = grammar({
       ',',
       caseInsensitive('only'),
       ':',
-      commaSep1(
+      optional(commaSep1(
         choice(
           $.use_alias,
           $.identifier,
           $._generic_procedure)
-      )
+      ))
     ),
 
     use_alias: $ => seq(
