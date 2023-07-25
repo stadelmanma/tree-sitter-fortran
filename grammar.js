@@ -1192,7 +1192,7 @@ module.exports = grammar({
       repeat(seq(optional(','), $._transfer_item))
     ),
 
-    edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
+    edit_descriptor: $ => /[a-zA-Z0-9/:.*$]+/,
 
     read_statement: $ => prec(1, choice(
       $._simple_read_statement,
