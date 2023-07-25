@@ -5579,6 +5579,10 @@
                     },
                     {
                       "type": "SYMBOL",
+                      "name": "identifier"
+                    },
+                    {
+                      "type": "SYMBOL",
                       "name": "call_expression"
                     }
                   ]
@@ -5675,6 +5679,10 @@
                                 "value": ")"
                               }
                             ]
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "identifier"
                           },
                           {
                             "type": "SYMBOL",

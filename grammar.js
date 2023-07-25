@@ -848,6 +848,7 @@ module.exports = grammar({
             alias(caseInsensitive('null'), $.null_literal),
             '(', ')'
           ),
+          $.identifier,
           $.call_expression
         )
       )),

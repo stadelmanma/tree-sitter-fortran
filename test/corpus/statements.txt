@@ -1549,6 +1549,7 @@ program test
   DATA array(:, N) / &
     54.45_fp, 200.01_fp /
   DATA complex_array / ( 0, 1 ), ( 1, 0 ) /
+  data params/ param1, param2/
 
   ! This is awful, but this makes sure the specification part has
   ! finished, as is a hacky workaround to make sure the next part is
@@ -1609,6 +1610,9 @@ end program test
         (identifier)
         (data_value (complex_literal (number_literal) (number_literal))
                     (complex_literal (number_literal) (number_literal)))))
+    (data_statement
+      (data_set (identifier)
+        (data_value (identifier) (identifier))))
     (comment)
     (comment)
     (comment)
