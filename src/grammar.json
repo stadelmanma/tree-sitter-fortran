@@ -3689,13 +3689,21 @@
                   "value": "("
                 },
                 {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  },
-                  "named": true,
-                  "value": "procedure_interface"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      },
+                      "named": true,
+                      "value": "procedure_interface"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 },
                 {
                   "type": "STRING",
@@ -5572,31 +5580,8 @@
                       "name": "unary_expression"
                     },
                     {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "ALIAS",
-                          "content": {
-                            "type": "ALIAS",
-                            "content": {
-                              "type": "PATTERN",
-                              "value": "[nN][uU][lL][lL]"
-                            },
-                            "named": false,
-                            "value": "null"
-                          },
-                          "named": true,
-                          "value": "null_literal"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "("
-                        },
-                        {
-                          "type": "STRING",
-                          "value": ")"
-                        }
-                      ]
+                      "type": "SYMBOL",
+                      "name": "null_literal"
                     },
                     {
                       "type": "SYMBOL",
@@ -5675,31 +5660,8 @@
                             "name": "unary_expression"
                           },
                           {
-                            "type": "SEQ",
-                            "members": [
-                              {
-                                "type": "ALIAS",
-                                "content": {
-                                  "type": "ALIAS",
-                                  "content": {
-                                    "type": "PATTERN",
-                                    "value": "[nN][uU][lL][lL]"
-                                  },
-                                  "named": false,
-                                  "value": "null"
-                                },
-                                "named": true,
-                                "value": "null_literal"
-                              },
-                              {
-                                "type": "STRING",
-                                "value": "("
-                              },
-                              {
-                                "type": "STRING",
-                                "value": ")"
-                              }
-                            ]
+                            "type": "SYMBOL",
+                            "name": "null_literal"
                           },
                           {
                             "type": "SYMBOL",
@@ -8949,6 +8911,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "null_literal"
+        },
+        {
+          "type": "SYMBOL",
           "name": "identifier"
         },
         {
@@ -10533,6 +10499,32 @@
         ]
       }
     },
+    "null_literal": {
+      "type": "PREC",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[nN][uU][lL][lL]"
+            },
+            "named": false,
+            "value": "null"
+          },
+          {
+            "type": "STRING",
+            "value": "("
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          }
+        ]
+      }
+    },
     "preproc_file_line": {
       "type": "SEQ",
       "members": [
@@ -10699,6 +10691,15 @@
           },
           "named": false,
           "value": "inquire"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[nN][uU][lL][lL]"
+          },
+          "named": false,
+          "value": "null"
         },
         {
           "type": "ALIAS",
@@ -10885,6 +10886,10 @@
     [
       "module_statement",
       "procedure_qualifier"
+    ],
+    [
+      "null_literal",
+      "identifier"
     ],
     [
       "procedure_declaration"

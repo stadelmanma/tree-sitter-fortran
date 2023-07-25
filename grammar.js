@@ -92,6 +92,7 @@ module.exports = grammar({
     [$.intrinsic_type, $.identifier],
     [$.inquire_statement, $.identifier],
     [$.module_statement, $.procedure_qualifier],
+    [$.null_literal, $.identifier],
     [$.procedure_declaration],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
@@ -526,7 +527,7 @@ module.exports = grammar({
     procedure_statement: $ => seq(
       $._procedure_kind,
       optional(seq(
-        '(', alias($.identifier,$.procedure_interface),')'
+        '(', alias($.identifier, $.procedure_interface), ')'
       )),
       optional(seq(
         ',',
@@ -536,7 +537,7 @@ module.exports = grammar({
         seq('::', $.binding_name, '=>'),
         '::'
       )),
-      commaSep1($._method_name)
+      commaSep1($._method_name),
     ),
 
     binding_name: $ => choice(
@@ -578,7 +579,7 @@ module.exports = grammar({
     procedure_declaration: $ => seq(
       caseInsensitive('procedure'),
       optional(seq(
-        '(', alias($.identifier, $.procedure_interface), ')'
+        '(', optional(alias($.identifier, $.procedure_interface)), ')'
       )),
       optional(seq(',', commaSep1($.procedure_attribute))),
     ),
@@ -849,10 +850,7 @@ module.exports = grammar({
           $.string_literal,
           $.boolean_literal,
           $.unary_expression,
-          seq(
-            alias(caseInsensitive('null'), $.null_literal),
-            '(', ')'
-          ),
+          $.null_literal,
           $.identifier,
           $.call_expression
         )
@@ -1359,6 +1357,7 @@ module.exports = grammar({
       $.string_literal,
       $.boolean_literal,
       $.array_literal,
+      $.null_literal,
       $.identifier,
       $.derived_type_member_expression,
       $.logical_expression,
@@ -1572,6 +1571,10 @@ module.exports = grammar({
       optional(seq('_', /\w+/))
     )),
 
+    null_literal: $ => prec(1, seq(
+      caseInsensitive('null'), '(', ')'
+    )),
+
     // This handles files preprocessed by gfortran -E
     // Other preprocessors may use different syntax
     preproc_file_line: $ => seq(
@@ -1601,6 +1604,7 @@ module.exports = grammar({
       caseInsensitive('format'),
       caseInsensitive('if'),
       caseInsensitive('inquire'),
+      caseInsensitive('null'),
       caseInsensitive('read'),
       caseInsensitive('real'),
       caseInsensitive('select'),
