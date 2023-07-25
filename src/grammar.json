@@ -32,6 +32,19 @@
         "type": "CHOICE",
         "members": [
           {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "include_statement"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_end_of_statement"
+              }
+            ]
+          },
+          {
             "type": "SYMBOL",
             "name": "program"
           },
