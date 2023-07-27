@@ -75,9 +75,6 @@ module.exports = grammar({
   conflicts: $ => [
     [$._expression, $.complex_literal],
     [$._inline_if_statement, $._block_if_statement, $.identifier],
-    [$._simple_read_statement, $._parameterized_read_statement, $.identifier],
-    [$._simple_read_statement, $.identifier],
-    [$.write_statement, $.identifier],
     [$.argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.data_set, $._expression],
@@ -85,7 +82,6 @@ module.exports = grammar({
     [$.else_clause],
     [$.elseif_clause, $.identifier],
     [$.elseif_clause],
-    [$.elsewhere_clause, $.identifier],
     [$.elsewhere_clause],
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],

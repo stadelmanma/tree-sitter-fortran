@@ -10618,19 +10618,6 @@
       "identifier"
     ],
     [
-      "_simple_read_statement",
-      "_parameterized_read_statement",
-      "identifier"
-    ],
-    [
-      "_simple_read_statement",
-      "identifier"
-    ],
-    [
-      "write_statement",
-      "identifier"
-    ],
-    [
       "argument_list",
       "parenthesized_expression"
     ],
@@ -10654,10 +10641,6 @@
     ],
     [
       "elseif_clause"
-    ],
-    [
-      "elsewhere_clause",
-      "identifier"
     ],
     [
       "elsewhere_clause"
