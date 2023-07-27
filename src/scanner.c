@@ -21,9 +21,9 @@ static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 // ignore current character and advance
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
-bool is_ident_char(char chr) { return iswalnum(chr) || chr == '_'; }
+static bool is_ident_char(char chr) { return iswalnum(chr) || chr == '_'; }
 
-bool is_boz_sentinel(char chr) {
+static bool is_boz_sentinel(char chr) {
     switch (chr) {
         case 'B':
         case 'b':
@@ -37,7 +37,7 @@ bool is_boz_sentinel(char chr) {
     }
 }
 
-bool is_exp_sentinel(char chr) {
+static bool is_exp_sentinel(char chr) {
     switch (chr) {
         case 'D':
         case 'd':
@@ -49,7 +49,7 @@ bool is_exp_sentinel(char chr) {
     }
 }
 
-bool scan_int(TSLexer *lexer) {
+static bool scan_int(TSLexer *lexer) {
     if (!iswdigit(lexer->lookahead)) {
         return false;
     }
@@ -63,7 +63,7 @@ bool scan_int(TSLexer *lexer) {
 }
 
 /// Scan a number of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, etc.
-bool scan_number(TSLexer *lexer) {
+static bool scan_number(TSLexer *lexer) {
     lexer->result_symbol = INTEGER_LITERAL;
     bool digits = scan_int(lexer);
     if (lexer->lookahead == '.') {
@@ -109,7 +109,7 @@ bool scan_number(TSLexer *lexer) {
     return digits;
 }
 
-bool scan_boz(TSLexer *lexer) {
+static bool scan_boz(TSLexer *lexer) {
     lexer->result_symbol = BOZ_LITERAL;
     bool boz_prefix = false;
     char quote = '\0';
@@ -139,7 +139,7 @@ bool scan_boz(TSLexer *lexer) {
     return false;
 }
 
-bool scan_end_of_statement(Scanner *scanner, TSLexer *lexer) {
+static bool scan_end_of_statement(Scanner *scanner, TSLexer *lexer) {
     // Things that end statements in Fortran:
     //
     // - semicolons
@@ -184,7 +184,7 @@ bool scan_end_of_statement(Scanner *scanner, TSLexer *lexer) {
     return true;
 }
 
-bool scan_start_line_continuation(Scanner *scanner, TSLexer *lexer) {
+static bool scan_start_line_continuation(Scanner *scanner, TSLexer *lexer) {
     // Now see if we should start a line continuation
     scanner->in_line_continuation = (lexer->lookahead == '&');
     if (!scanner->in_line_continuation) {
@@ -196,7 +196,7 @@ bool scan_start_line_continuation(Scanner *scanner, TSLexer *lexer) {
     return true;
 }
 
-bool scan_end_line_continuation(Scanner *scanner, TSLexer *lexer) {
+static bool scan_end_line_continuation(Scanner *scanner, TSLexer *lexer) {
     if (!scanner->in_line_continuation) {
         return false;
     }
@@ -215,7 +215,7 @@ bool scan_end_line_continuation(Scanner *scanner, TSLexer *lexer) {
     return true;
 }
 
-bool scan_string_literal(TSLexer *lexer) {
+static bool scan_string_literal(TSLexer *lexer) {
     const char opening_quote = lexer->lookahead;
 
     if (opening_quote != '"' && opening_quote != '\'') {
@@ -275,7 +275,7 @@ bool scan_string_literal(TSLexer *lexer) {
     return false;
 }
 
-bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     // Consume any leading whitespace except newlines
     while (iswblank(lexer->lookahead)) {
         skip(lexer);
