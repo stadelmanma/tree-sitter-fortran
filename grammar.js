@@ -1201,6 +1201,7 @@ module.exports = grammar({
     _transfer_item: $ => choice(
       $.string_literal,
       $.edit_descriptor,
+      $.hollerith_constant,
       seq('(', $._transfer_items, ')')
     ),
 
@@ -1211,7 +1212,9 @@ module.exports = grammar({
       repeat(seq(optional(','), $._transfer_item))
     ),
 
-    edit_descriptor: $ => /[a-zA-Z0-9/:.*$]+/,
+    // H is not a valid edit descriptor because it clashes with Hollerith constants
+    edit_descriptor: $ => /[a-gi-zA-GI-Z0-9/:.*$]+/,
+    hollerith_constant: $ => prec.right(10, /[0-9]+H[^/,)]+/),
 
     _io_arguments: $ => seq(
       '(',

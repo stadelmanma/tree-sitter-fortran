@@ -7871,6 +7871,10 @@
           "name": "edit_descriptor"
         },
         {
+          "type": "SYMBOL",
+          "name": "hollerith_constant"
+        },
+        {
           "type": "SEQ",
           "members": [
             {
@@ -7924,7 +7928,15 @@
     },
     "edit_descriptor": {
       "type": "PATTERN",
-      "value": "[a-zA-Z0-9/:.*$]+"
+      "value": "[a-gi-zA-GI-Z0-9/:.*$]+"
+    },
+    "hollerith_constant": {
+      "type": "PREC_RIGHT",
+      "value": 10,
+      "content": {
+        "type": "PATTERN",
+        "value": "[0-9]+H[^/,)]+"
+      }
     },
     "_io_arguments": {
       "type": "SEQ",

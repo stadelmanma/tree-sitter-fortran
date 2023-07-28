@@ -3582,6 +3582,11 @@
     }
   },
   {
+    "type": "hollerith_constant",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "identifier",
     "named": true,
     "fields": {}
@@ -7081,6 +7086,10 @@
       "types": [
         {
           "type": "edit_descriptor",
+          "named": true
+        },
+        {
+          "type": "hollerith_constant",
           "named": true
         },
         {
