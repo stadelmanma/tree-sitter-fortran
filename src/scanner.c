@@ -263,7 +263,7 @@ bool scan_string_literal(TSLexer *lexer) {
             }
             // If we hit the end of the line, consume all whitespace,
             // including new lines
-            if (lexer->lookahead == '\n') {
+            if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
                 while (iswspace(lexer->lookahead)) {
                     advance(lexer);
                 }
