@@ -6518,7 +6518,7 @@
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "size"
+                          "name": "kind"
                         },
                         {
                           "type": "BLANK"
@@ -6581,7 +6581,7 @@
                             "members": [
                               {
                                 "type": "SYMBOL",
-                                "name": "size"
+                                "name": "kind"
                               },
                               {
                                 "type": "BLANK"
@@ -8493,7 +8493,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "size"
+                "name": "kind"
               },
               {
                 "type": "BLANK"
@@ -8677,7 +8677,7 @@
       "type": "STRING",
       "value": "*"
     },
-    "size": {
+    "kind": {
       "type": "CHOICE",
       "members": [
         {

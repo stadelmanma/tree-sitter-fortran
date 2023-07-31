@@ -75,8 +75,8 @@ END PROGRAM
     (program_statement (name))
     (implicit_statement
       (intrinsic_type) (implicit_range)
-      (intrinsic_type) (size (argument_list (number_literal))) (implicit_range)
-      (intrinsic_type) (size) (implicit_range) (implicit_range) (implicit_range))
+      (intrinsic_type) (kind (argument_list (number_literal))) (implicit_range)
+      (intrinsic_type) (kind) (implicit_range) (implicit_range) (implicit_range))
     (implicit_statement (none))
     (implicit_statement (none))
   (end_program_statement)))
@@ -164,16 +164,16 @@ END PROGRAM
       (identifier)
       (identifier)
       (call_expression (identifier) (argument_list (assumed_size))))
-    (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
+    (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
       (call_expression (identifier)
         (argument_list
           (extent_specifier (number_literal) (math_expression (identifier) (number_literal)))))
       (call_expression (identifier) (argument_list (identifier)))
       (call_expression (identifier) (argument_list
           (extent_specifier (number_literal) (assumed_size)))))
-    (variable_declaration (intrinsic_type) (size) (type_qualifier) (identifier))
+    (variable_declaration (intrinsic_type) (kind) (type_qualifier) (identifier))
     (variable_declaration
-      (intrinsic_type) (size (argument_list (keyword_argument (identifier) (number_literal))))
+      (intrinsic_type) (kind (argument_list (keyword_argument (identifier) (number_literal))))
       (type_qualifier)
       (type_qualifier)
       (pointer_association_statement (identifier) (identifier)))
@@ -182,18 +182,16 @@ END PROGRAM
       (type_qualifier (argument_list (extent_specifier)))
       (type_qualifier) (identifier))
     (variable_declaration
-      (intrinsic_type)
-        (size (argument_list (keyword_argument (identifier) (assumed_shape))))
+      (intrinsic_type) (kind (argument_list (keyword_argument (identifier) (assumed_shape))))
       (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (size (argument_list (keyword_argument (identifier) (assumed_size))))
+      (intrinsic_type) (kind (argument_list (keyword_argument (identifier) (assumed_size))))
       (identifier))
     (variable_declaration
-      (intrinsic_type) (size (assumed_size) (argument_list (identifier)))
+      (intrinsic_type) (kind (assumed_size) (argument_list (identifier)))
       (identifier))
     (variable_declaration
-      (intrinsic_type) (size (argument_list (assumed_size)))
+      (intrinsic_type) (kind (argument_list (assumed_size)))
       (identifier))
     (variable_declaration
       (intrinsic_type)
@@ -226,12 +224,12 @@ END PROGRAM
     (variable_declaration (derived_type (intrinsic_type)) (identifier))
     (variable_declaration
       (derived_type
-        (intrinsic_type) (size (argument_list (identifier))))
+        (intrinsic_type) (kind (argument_list (identifier))))
       (identifier))
     (variable_declaration
       (derived_type
         (intrinsic_type)
-        (size (argument_list (call_expression (identifier) (argument_list (number_literal))))))
+        (kind (argument_list (call_expression (identifier) (argument_list (number_literal))))))
       (identifier))
     (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
     (variable_declaration
@@ -285,7 +283,7 @@ end module foo
           (derived_type (type_name)) (type_qualifier) (identifier))
         (variable_declaration
           (derived_type (intrinsic_type)
-            (size (argument_list (identifier))))
+            (kind (argument_list (identifier))))
           (type_qualifier) (identifier))
         (end_subroutine_statement (name)))
       (subroutine
@@ -295,7 +293,7 @@ end module foo
           (derived_type (unlimited_polymorphic)) (type_qualifier) (identifier))
         (variable_declaration
           (derived_type (intrinsic_type)
-            (size (argument_list
+            (kind (argument_list
                 (call_expression (identifier) (argument_list (number_literal))))))
           (type_qualifier) (identifier))
         (end_subroutine_statement (name))))
@@ -1275,11 +1273,11 @@ end subroutine print_decorated_numbers
         (write_statement (unit_identifier) (format_identifier (string_literal))
           (output_item_list (identifier))))
       (type_statement (intrinsic_type)
-        (size (argument_list (call_expression (identifier) (argument_list (number_literal)))))
+        (kind (argument_list (call_expression (identifier) (argument_list (number_literal)))))
         (write_statement (unit_identifier) (format_identifier (string_literal))
           (output_item_list (identifier))))
       (type_statement (intrinsic_type)
-        (size (argument_list (call_expression (identifier) (argument_list (number_literal)))))
+        (kind (argument_list (call_expression (identifier) (argument_list (number_literal)))))
         (write_statement (unit_identifier) (format_identifier (string_literal))
           (output_item_list (identifier))))
       (type_statement (intrinsic_type)

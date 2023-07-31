@@ -33,7 +33,7 @@ end function
 (translation_unit
   (function
     (function_statement
-      (procedure_attributes) (intrinsic_type) (size (argument_list (number_literal)))
+      (procedure_attributes) (intrinsic_type) (kind (argument_list (number_literal)))
       (name))
     (comment)
     (use_statement (module_name))

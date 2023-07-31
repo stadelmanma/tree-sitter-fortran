@@ -148,7 +148,7 @@
             "named": true
           },
           {
-            "type": "size",
+            "type": "kind",
             "named": true
           }
         ]
@@ -1845,7 +1845,7 @@
             "named": true
           },
           {
-            "type": "size",
+            "type": "kind",
             "named": true
           }
         ]
@@ -2178,7 +2178,7 @@
           "named": true
         },
         {
-          "type": "size",
+          "type": "kind",
           "named": true
         },
         {
@@ -3932,6 +3932,10 @@
           "named": true
         },
         {
+          "type": "kind",
+          "named": true
+        },
+        {
           "type": "language_binding",
           "named": true
         },
@@ -3941,10 +3945,6 @@
         },
         {
           "type": "procedure_qualifier",
-          "named": true
-        },
-        {
-          "type": "size",
           "named": true
         }
       ]
@@ -4141,11 +4141,11 @@
           "named": true
         },
         {
-          "type": "none",
+          "type": "kind",
           "named": true
         },
         {
-          "type": "size",
+          "type": "none",
           "named": true
         }
       ]
@@ -4684,6 +4684,29 @@
         },
         {
           "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "kind",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "assumed_size",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
           "named": true
         }
       ]
@@ -5597,15 +5620,15 @@
           "named": true
         },
         {
+          "type": "kind",
+          "named": true
+        },
+        {
           "type": "procedure_attributes",
           "named": true
         },
         {
           "type": "procedure_qualifier",
-          "named": true
-        },
-        {
-          "type": "size",
           "named": true
         }
       ]
@@ -8499,29 +8522,6 @@
     }
   },
   {
-    "type": "size",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "argument_list",
-          "named": true
-        },
-        {
-          "type": "assumed_size",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "statement_label",
     "named": true,
     "fields": {}
@@ -9120,6 +9120,10 @@
           "named": true
         },
         {
+          "type": "kind",
+          "named": true
+        },
+        {
           "type": "language_binding",
           "named": true
         },
@@ -9129,10 +9133,6 @@
         },
         {
           "type": "procedure_qualifier",
-          "named": true
-        },
-        {
-          "type": "size",
           "named": true
         }
       ]
@@ -9341,7 +9341,7 @@
             "named": true
           },
           {
-            "type": "size",
+            "type": "kind",
             "named": true
           }
         ]
@@ -9721,15 +9721,15 @@
           "named": true
         },
         {
+          "type": "kind",
+          "named": true
+        },
+        {
           "type": "pointer_association_statement",
           "named": true
         },
         {
           "type": "procedure",
-          "named": true
-        },
-        {
-          "type": "size",
           "named": true
         },
         {
@@ -10632,11 +10632,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

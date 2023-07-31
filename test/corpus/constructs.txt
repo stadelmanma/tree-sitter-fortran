@@ -77,7 +77,7 @@ end module
       (end_interface_statement))
     (variable_declaration
       (intrinsic_type)
-      (size (argument_list (number_literal)))
+      (kind (argument_list (number_literal)))
       (type_qualifier)
       (assignment_statement
         (identifier)
@@ -89,21 +89,21 @@ end module
     (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
     (variable_declaration
       (intrinsic_type)
-      (size (argument_list (number_literal)))
+      (kind (argument_list (number_literal)))
       (assignment_statement (identifier)
         (concatenation_expression
           (call_expression (identifier) (argument_list (number_literal)))
           (string_literal))))
     (comment)
     (variable_declaration
-      (intrinsic_type) (size (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (assignment_statement (identifier)
         (concatenation_expression
           (call_expression (identifier) (argument_list (number_literal)))
           (string_literal))))
     (comment)
     (variable_declaration
-      (intrinsic_type) (size (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (assignment_statement
         (identifier)
         (concatenation_expression
@@ -118,7 +118,7 @@ end module
         (function_statement (name) (parameters (identifier) (identifier)) (function_result (identifier)))
         (variable_declaration
           (intrinsic_type)
-          (size (argument_list  (number_literal)))
+          (kind (argument_list  (number_literal)))
           (identifier)
           (identifier))
       (end_function_statement))
@@ -345,7 +345,7 @@ END SUBROUTINE
       (parameters (identifier)))
     (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
     (variable_declaration
-      (intrinsic_type) (size (argument_list (number_literal))) (type_qualifier) (identifier))
+      (intrinsic_type) (kind (argument_list (number_literal))) (type_qualifier) (identifier))
     (assignment_statement
       (identifier) (math_expression (identifier) (identifier)))
     (end_subroutine_statement (name)))
@@ -372,11 +372,11 @@ END SUBROUTINE
         (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
         (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
         (variable_declaration
-          (intrinsic_type) (size (argument_list (assumed_size)))
+          (intrinsic_type) (kind (argument_list (assumed_size)))
           (type_qualifier)
           (identifier))
         (variable_declaration
-          (intrinsic_type) (size (assumed_size) (argument_list (assumed_size)))
+          (intrinsic_type) (kind (assumed_size) (argument_list (assumed_size)))
           (type_qualifier)
           (identifier))
         (assignment_statement (identifier)
@@ -420,7 +420,7 @@ end function
 (translation_unit
   (function
     (function_statement
-      (intrinsic_type) (size (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (name))
     (comment)
     (use_statement (module_name))
@@ -438,14 +438,14 @@ end function
   (end_function_statement))
   (function
     (function_statement
-      (intrinsic_type) (size (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (name)
       (parameters (identifier) (identifier))
        (language_binding (identifier)))
     (end_function_statement))
   (function
     (function_statement
-      (intrinsic_type) (size (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (name)
       (language_binding
         (identifier)
@@ -497,7 +497,7 @@ end function test
       (parameters (identifier) (identifier))
       (function_result (identifier)))
     (variable_declaration
-      (intrinsic_type) (size (argument_list  (number_literal)))
+      (intrinsic_type) (kind (argument_list  (number_literal)))
       (identifier)
       (identifier))
     (variable_declaration
@@ -514,7 +514,7 @@ end function test
           (name)
           (function_result (identifier)))
         (variable_declaration
-          (intrinsic_type) (size (argument_list (number_literal)))
+          (intrinsic_type) (kind (argument_list (number_literal)))
           (assignment_statement (identifier) (number_literal)))
         (end_function_statement))
         (subroutine
@@ -564,7 +564,7 @@ end program
        (access_specifier)
        (type_name))
       (sequence_statement)
-      (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
+      (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
         (identifier)
         (identifier)
         (identifier))
@@ -573,7 +573,7 @@ end program
         (identifier)
         (identifier))
       (variable_declaration
-        (intrinsic_type) (size (argument_list (identifier)))
+        (intrinsic_type) (kind (argument_list (identifier)))
         (type_qualifier)
         (type_qualifier
           (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))

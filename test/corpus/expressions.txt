@@ -138,7 +138,7 @@ end program
         left: (call_expression (identifier)  (argument_list (number_literal)))
         right: (array_literal (number_literal) (number_literal) (number_literal))))
     (variable_declaration
-      (intrinsic_type)  (size (argument_list (number_literal)))
+      (intrinsic_type)  (kind (argument_list (number_literal)))
       (assignment_statement
         left: (call_expression (identifier)  (argument_list (number_literal)))
         right: (array_literal
@@ -146,7 +146,7 @@ end program
           (call_expression (identifier)
             (argument_list (call_expression (identifier) (argument_list (number_literal)))))
           (call_expression (identifier) (argument_list (number_literal))))))
-    (variable_declaration (intrinsic_type) (size (argument_list (number_literal)))
+    (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
       (assignment_statement
         left: (call_expression (identifier) (argument_list (number_literal)))
         right: (array_literal
@@ -651,7 +651,7 @@ end program array_constructors
           (argument_list
             (array_literal
               (intrinsic_type)
-              (size (argument_list (identifier)))
+              (kind (argument_list (identifier)))
               (number_literal)
               (number_literal)
               (number_literal)
@@ -669,7 +669,7 @@ end program array_constructors
       (output_item_list
         (array_literal
           (intrinsic_type)
-          (size (argument_list
+          (kind (argument_list
               (keyword_argument (identifier) (number_literal))))
           (string_literal)
           (string_literal)
