@@ -1,6 +1,6 @@
-============================================
+================================================================================
 Program
-============================================
+================================================================================
 
 PROGRAM TEST
 END PROGRAM
@@ -8,31 +8,34 @@ END PROGRAM
 PROGRAM TEST
 END PROGRAM TEST
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (end_program_statement))
   (program
-    (program_statement (name))
-    (end_program_statement (name))))
+    (program_statement
+      (name))
+    (end_program_statement
+      (name))))
 
-============================================
+================================================================================
 Shortest Program
-============================================
+================================================================================
 
 END
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
     (end_program_statement)))
 
-============================================
+================================================================================
 Interface (explicit)
-============================================
+================================================================================
 
 module unit_test_module
   private
@@ -64,74 +67,137 @@ module unit_test_module
   end function
 end module
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
-  (module (module_statement (name))
+  (module
+    (module_statement
+      (name))
     (private_statement)
-    (use_statement (module_name))
+    (use_statement
+      (module_name))
     (interface
-      (interface_statement (name))
-      (procedure_statement (method_name))
-      (procedure_statement (method_name))
+      (interface_statement
+        (name))
+      (procedure_statement
+        (method_name))
+      (procedure_statement
+        (method_name))
       (end_interface_statement))
     (variable_declaration
       (intrinsic_type)
-      (kind (argument_list (number_literal)))
+      (kind
+        (argument_list
+          (number_literal)))
       (type_qualifier)
       (assignment_statement
-        (identifier)
+        (variable
+          (identifier))
         (math_expression
-          (call_expression (identifier)
-            (argument_list (number_literal)))
-          (call_expression (identifier)
-            (argument_list (number_literal))))))
-    (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal))))))
     (variable_declaration
       (intrinsic_type)
-      (kind (argument_list (number_literal)))
-      (assignment_statement (identifier)
-        (concatenation_expression
-          (call_expression (identifier) (argument_list (number_literal)))
-          (string_literal))))
-    (comment)
+      (type_qualifier)
+      (variable
+        (identifier))
+      (variable
+        (identifier)))
     (variable_declaration
-      (intrinsic_type) (kind (argument_list (number_literal)))
-      (assignment_statement (identifier)
-        (concatenation_expression
-          (call_expression (identifier) (argument_list (number_literal)))
-          (string_literal))))
-    (comment)
-    (variable_declaration
-      (intrinsic_type) (kind (argument_list (number_literal)))
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
       (assignment_statement
-        (identifier)
+        (variable
+          (identifier))
         (concatenation_expression
-          (call_expression (identifier) (argument_list (number_literal)))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
           (string_literal))))
     (comment)
-    (public_statement (identifier))
-    (public_statement (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
+      (assignment_statement
+        (variable
+          (identifier))
+        (concatenation_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (string_literal))))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
+      (assignment_statement
+        (variable
+          (identifier))
+        (concatenation_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))
+          (string_literal))))
+    (comment)
+    (public_statement
+      (identifier))
+    (public_statement
+      (identifier))
     (internal_procedures
       (contains_statement)
       (function
-        (function_statement (name) (parameters (identifier) (identifier)) (function_result (identifier)))
+        (function_statement
+          (name)
+          (parameters
+            (identifier)
+            (identifier))
+          (function_result
+            (identifier)))
         (variable_declaration
           (intrinsic_type)
-          (kind (argument_list  (number_literal)))
-          (identifier)
-          (identifier))
-      (end_function_statement))
+          (kind
+            (argument_list
+              (number_literal)))
+          (variable
+            (identifier))
+          (variable
+            (identifier)))
+        (end_function_statement))
       (function
-        (function_statement (name) (parameters (identifier) (identifier)) (function_result (identifier)))
-        (variable_declaration (intrinsic_type) (identifier) (identifier))
-      (end_function_statement)))
-  (end_module_statement)))
+        (function_statement
+          (name)
+          (parameters
+            (identifier)
+            (identifier))
+          (function_result
+            (identifier)))
+        (variable_declaration
+          (intrinsic_type)
+          (variable
+            (identifier))
+          (variable
+            (identifier)))
+        (end_function_statement)))
+    (end_module_statement)))
 
-
-============================================
+================================================================================
 Interface (explicit)
-============================================
+================================================================================
 
 interface
   subroutine ex(a,b,c)
@@ -146,31 +212,61 @@ interface
   end function why
 end interface
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
-    (interface
-      (interface_statement)
-      (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
-        (implicit_statement (none))
-        (variable_declaration
-          (intrinsic_type)
+  (interface
+    (interface_statement)
+    (subroutine
+      (subroutine_statement
+        (name)
+        (parameters
           (identifier)
-          (identifier) (size (number_literal) (number_literal)))
-        (variable_declaration (intrinsic_type) (identifier))
-      (end_subroutine_statement (name)))
-      (function
-        (function_statement (name) (parameters (identifier) (identifier)))
-        (implicit_statement (none))
-        (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
-        (variable_declaration (intrinsic_type) (identifier))
-      (end_function_statement (name)))
+          (identifier)
+          (identifier)))
+      (implicit_statement
+        (none))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier))
+        (variable
+          (identifier)
+          (size
+            (number_literal)
+            (number_literal))))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier)))
+      (end_subroutine_statement
+        (name)))
+    (function
+      (function_statement
+        (name)
+        (parameters
+          (identifier)
+          (identifier)))
+      (implicit_statement
+        (none))
+      (variable_declaration
+        (intrinsic_type)
+        (type_qualifier)
+        (variable
+          (identifier))
+        (variable
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier)))
+      (end_function_statement
+        (name)))
     (end_interface_statement)))
 
-============================================
+================================================================================
 Interface (abstract)
-============================================
+================================================================================
 
 abstract interface
   subroutine ex(a,b,c)
@@ -185,48 +281,83 @@ abstract interface
   end function why
 end interface
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
-    (interface
-      (interface_statement (abstract_specifier))
-      (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
-        (implicit_statement (none))
-        (variable_declaration
-          (intrinsic_type)
+  (interface
+    (interface_statement
+      (abstract_specifier))
+    (subroutine
+      (subroutine_statement
+        (name)
+        (parameters
           (identifier)
-          (identifier) (size (number_literal) (number_literal)))
-        (variable_declaration (intrinsic_type) (identifier))
-      (end_subroutine_statement (name)))
-      (function
-        (function_statement (name) (parameters (identifier) (identifier)))
-        (implicit_statement (none))
-        (variable_declaration (intrinsic_type) (type_qualifier) (identifier) (identifier))
-        (variable_declaration (intrinsic_type) (identifier))
-      (end_function_statement (name)))
+          (identifier)
+          (identifier)))
+      (implicit_statement
+        (none))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier))
+        (variable
+          (identifier)
+          (size
+            (number_literal)
+            (number_literal))))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier)))
+      (end_subroutine_statement
+        (name)))
+    (function
+      (function_statement
+        (name)
+        (parameters
+          (identifier)
+          (identifier)))
+      (implicit_statement
+        (none))
+      (variable_declaration
+        (intrinsic_type)
+        (type_qualifier)
+        (variable
+          (identifier))
+        (variable
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier)))
+      (end_function_statement
+        (name)))
     (end_interface_statement)))
 
-============================================
+================================================================================
 Interface (generic)
-============================================
+================================================================================
 
 interface swap
   module procedure complex_swap
   module procedure logical_swap
 end interface
 
-----
-(translation_unit
-    (interface
-      (interface_statement (name))
-      (procedure_statement (method_name))
-      (procedure_statement (method_name))
-      (end_interface_statement)))
+--------------------------------------------------------------------------------
 
-============================================
+(translation_unit
+  (interface
+    (interface_statement
+      (name))
+    (procedure_statement
+      (method_name))
+    (procedure_statement
+      (method_name))
+    (end_interface_statement)))
+
+================================================================================
 Interface (operator)
-============================================
+================================================================================
 
 interface operator (+)
   module procedure char_plus_int
@@ -241,43 +372,63 @@ interface operator (.not.)
   end function
 end interface operator (.not.)
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (interface
-    (interface_statement (operator))
-    (procedure_statement (method_name))
-    (procedure_statement (method_name))
-  (end_interface_statement (operator)))
+    (interface_statement
+      (operator))
+    (procedure_statement
+      (method_name))
+    (procedure_statement
+      (method_name))
+    (end_interface_statement
+      (operator)))
   (interface
-    (interface_statement (operator))
-    (procedure_statement (method_name))
+    (interface_statement
+      (operator))
+    (procedure_statement
+      (method_name))
     (function
-      (function_statement (name) (parameters (identifier)))
-      (variable_declaration (intrinsic_type) (identifier))
-      (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
-    (end_function_statement))
-  (end_interface_statement (operator))))
+      (function_statement
+        (name)
+        (parameters
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (type_qualifier)
+        (variable
+          (identifier)))
+      (end_function_statement))
+    (end_interface_statement
+      (operator))))
 
-============================================
+================================================================================
 Interface (assignment)
-============================================
+================================================================================
 
 interface assignment (=)
   module procedure int_equals_char
 end interface assignment (=)
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (interface
-    (interface_statement (assignment))
-    (procedure_statement (method_name))
-  (end_interface_statement (assignment))))
+    (interface_statement
+      (assignment))
+    (procedure_statement
+      (method_name))
+    (end_interface_statement
+      (assignment))))
 
-============================================
+================================================================================
 Use Operator and Assignment
-============================================
+================================================================================
 
 module test
   use other, only: operator(==), assignment(=)
@@ -285,20 +436,26 @@ module test
   private :: operator(==)
 end module
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (module
-    (module_statement (name))
-    (use_statement (module_name)
-      (included_items (operator) (assignment)))
-    (public_statement (assignment))
-    (private_statement (operator))
+    (module_statement
+      (name))
+    (use_statement
+      (module_name)
+      (included_items
+        (operator)
+        (assignment)))
+    (public_statement
+      (assignment))
+    (private_statement
+      (operator))
     (end_module_statement)))
 
-============================================
+================================================================================
 Subroutine
-============================================
+================================================================================
 
 pure recursive subroutine static_method(arg)
    integer, intent(in) :: arg
@@ -330,7 +487,7 @@ SUBROUTINE WITH_INTERNAL_PROC
     END SUBROUTINE
 END SUBROUTINE
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (subroutine
@@ -338,52 +495,106 @@ END SUBROUTINE
       (procedure_qualifier)
       (procedure_qualifier)
       (name)
-      (parameters (identifier)))
-    (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+      (parameters
+        (identifier)))
     (variable_declaration
-      (intrinsic_type) (kind (argument_list (number_literal))) (type_qualifier) (identifier))
+      (intrinsic_type)
+      (type_qualifier)
+      (variable
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
+      (type_qualifier)
+      (variable
+        (identifier)))
     (assignment_statement
-      (identifier) (math_expression (identifier) (identifier)))
-    (end_subroutine_statement (name)))
+      (identifier)
+      (math_expression
+        (identifier)
+        (identifier)))
+    (end_subroutine_statement
+      (name)))
   (subroutine
-    (subroutine_statement (name))
+    (subroutine_statement
+      (name))
     (end_subroutine_statement))
   (subroutine
-    (subroutine_statement (name)
-      (parameters (identifier) (identifier))
-      (language_binding (identifier)))
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)
+        (identifier))
+      (language_binding
+        (identifier)))
     (end_subroutine_statement))
   (subroutine
-    (subroutine_statement (name)
+    (subroutine_statement
+      (name)
       (language_binding
         (identifier)
-        (keyword_argument (identifier) (string_literal))))
+        (keyword_argument
+          (identifier)
+          (string_literal))))
     (end_subroutine_statement))
-  (subroutine (subroutine_statement (name))
-    (variable_declaration (intrinsic_type) (identifier))
-    (subroutine_call (identifier) (argument_list (string_literal) (identifier)))
+  (subroutine
+    (subroutine_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (variable
+        (identifier)))
+    (subroutine_call
+      (identifier)
+      (argument_list
+        (string_literal)
+        (identifier)))
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier) (identifier)))
-        (variable_declaration (intrinsic_type) (type_qualifier) (identifier))
+        (subroutine_statement
+          (name)
+          (parameters
+            (identifier)
+            (identifier)
+            (identifier)))
         (variable_declaration
-          (intrinsic_type) (kind (argument_list (assumed_size)))
+          (intrinsic_type)
           (type_qualifier)
-          (identifier))
+          (variable
+            (identifier)))
         (variable_declaration
-          (intrinsic_type) (kind (assumed_size) (argument_list (assumed_size)))
+          (intrinsic_type)
+          (kind
+            (argument_list
+              (assumed_size)))
           (type_qualifier)
-          (identifier))
-        (assignment_statement (identifier)
-          (call_expression (identifier) (argument_list (identifier))))
+          (variable
+            (identifier)))
+        (variable_declaration
+          (intrinsic_type)
+          (kind
+            (assumed_size)
+            (argument_list
+              (assumed_size)))
+          (type_qualifier)
+          (variable
+            (identifier)))
+        (assignment_statement
+          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier))))
         (keyword_statement)
+        (end_subroutine_statement)))
     (end_subroutine_statement)))
-  (end_subroutine_statement)))
 
-============================================
+================================================================================
 Functions (simple)
-============================================
+================================================================================
 
 real(8) function current_time()
   ! returns the wall clock time in seconds.
@@ -411,58 +622,97 @@ function exported_fun4() bind(c, name="fun3") result(res)
 end function
 
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (function
     (function_statement
-      (intrinsic_type) (kind (argument_list (number_literal)))
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
       (name))
     (comment)
-    (use_statement (module_name))
-    (assignment_statement (identifier) (call_expression (identifier) (argument_list)))
-  (end_function_statement))
-  (function
-    (function_statement (derived_type (type_name))
-      (name))
-    (comment)
-    (variable_declaration (derived_type (type_name)) (identifier))
+    (use_statement
+      (module_name))
     (assignment_statement
-      (derived_type_member_expression (identifier) (type_member))
-      (number_literal))
-    (assignment_statement (identifier) (identifier))
-  (end_function_statement))
-  (function
-    (function_statement
-      (intrinsic_type) (kind (argument_list (number_literal)))
-      (name)
-      (parameters (identifier) (identifier))
-       (language_binding (identifier)))
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list)))
     (end_function_statement))
   (function
     (function_statement
-      (intrinsic_type) (kind (argument_list (number_literal)))
+      (derived_type
+        (type_name))
+      (name))
+    (comment)
+    (variable_declaration
+      (derived_type
+        (type_name))
+      (variable
+        (identifier)))
+    (assignment_statement
+      (derived_type_member_expression
+        (identifier)
+        (type_member))
+      (number_literal))
+    (assignment_statement
+      (identifier)
+      (identifier))
+    (end_function_statement))
+  (function
+    (function_statement
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
+      (name)
+      (parameters
+        (identifier)
+        (identifier))
+      (language_binding
+        (identifier)))
+    (end_function_statement))
+  (function
+    (function_statement
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
       (name)
       (language_binding
         (identifier)
-        (keyword_argument (identifier) (string_literal))))
+        (keyword_argument
+          (identifier)
+          (string_literal))))
     (end_function_statement))
   (function
-    (function_statement (name)
-      (function_result (identifier))
-      (language_binding (identifier)
-        (keyword_argument (identifier) (string_literal))))
+    (function_statement
+      (name)
+      (function_result
+        (identifier))
+      (language_binding
+        (identifier)
+        (keyword_argument
+          (identifier)
+          (string_literal))))
     (end_function_statement))
   (function
-    (function_statement (name)
-      (language_binding (identifier)
-        (keyword_argument (identifier) (string_literal)))
-      (function_result (identifier)))
+    (function_statement
+      (name)
+      (language_binding
+        (identifier)
+        (keyword_argument
+          (identifier)
+          (string_literal)))
+      (function_result
+        (identifier)))
     (end_function_statement)))
 
-============================================
+================================================================================
 Functions (complex)
-============================================
+================================================================================
 
 pure elemental logical function test(x, y) result(value)
   REAL(8) :: x, y
@@ -481,7 +731,7 @@ contains
 
 end function test
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (function
@@ -490,17 +740,29 @@ end function test
       (procedure_qualifier)
       (intrinsic_type)
       (name)
-      (parameters (identifier) (identifier))
-      (function_result (identifier)))
+      (parameters
+        (identifier)
+        (identifier))
+      (function_result
+        (identifier)))
     (variable_declaration
-      (intrinsic_type) (kind (argument_list  (number_literal)))
-      (identifier)
-      (identifier))
+      (intrinsic_type)
+      (kind
+        (argument_list
+          (number_literal)))
+      (variable
+        (identifier))
+      (variable
+        (identifier)))
     (variable_declaration
       (intrinsic_type)
       (assignment_statement
-        (identifier)
-        (parenthesized_expression  (relational_expression (identifier) (identifier)))))
+        (variable
+          (identifier))
+        (parenthesized_expression
+          (relational_expression
+            (identifier)
+            (identifier)))))
     (internal_procedures
       (contains_statement)
       (function
@@ -508,23 +770,39 @@ end function test
           (intrinsic_type)
           (procedure_qualifier)
           (name)
-          (function_result (identifier)))
+          (function_result
+            (identifier)))
         (variable_declaration
-          (intrinsic_type) (kind (argument_list (number_literal)))
-          (assignment_statement (identifier) (number_literal)))
-        (end_function_statement))
-        (subroutine
-          (subroutine_statement (name) (parameters (identifier)))
-          (variable_declaration (intrinsic_type) (identifier))
+          (intrinsic_type)
+          (kind
+            (argument_list
+              (number_literal)))
           (assignment_statement
+            (variable
+              (identifier))
+            (number_literal)))
+        (end_function_statement))
+      (subroutine
+        (subroutine_statement
+          (name)
+          (parameters
+            (identifier)))
+        (variable_declaration
+          (intrinsic_type)
+          (variable
+            (identifier)))
+        (assignment_statement
+          (identifier)
+          (math_expression
             (identifier)
-            (math_expression (identifier) (number_literal)))
+            (number_literal)))
         (end_subroutine_statement)))
-      (end_function_statement (name))))
+    (end_function_statement
+      (name))))
 
-============================================
+================================================================================
 Derived Type Variable Declarations
-============================================
+================================================================================
 
 program test
   type simple
@@ -547,55 +825,106 @@ program test
   end type custom_type
 end program
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (derived_type_definition
-      (derived_type_statement (type_name))
+      (derived_type_statement
+        (type_name))
       (end_type_statement))
     (derived_type_definition
       (derived_type_statement
-       (access_specifier)
-       (type_name))
+        (access_specifier)
+        (type_name))
       (sequence_statement)
-      (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
-        (identifier)
-        (identifier)
-        (identifier))
-      (variable_declaration (intrinsic_type)
-        (identifier)
-        (identifier)
-        (identifier))
       (variable_declaration
-        (intrinsic_type) (kind (argument_list (identifier)))
+        (intrinsic_type)
+        (kind
+          (argument_list
+            (number_literal)))
+        (variable
+          (identifier))
+        (variable
+          (identifier))
+        (variable
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (variable
+          (identifier))
+        (variable
+          (identifier))
+        (variable
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (kind
+          (argument_list
+            (identifier)))
         (type_qualifier)
         (type_qualifier
-          (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
-        (identifier))
+          (argument_list
+            (extent_specifier)
+            (extent_specifier)
+            (extent_specifier)))
+        (variable
+          (identifier)))
       (variable_declaration
         (procedure
-          (procedure_attribute) (procedure_attribute))
-        (pointer_association_statement (identifier) (null_literal)))
+          (procedure_attribute)
+          (procedure_attribute))
+        (pointer_association_statement
+          (variable
+            (identifier))
+          (null_literal)))
       (derived_type_procedures
-          (contains_statement)
-          (procedure_statement (procedure_attribute) (procedure_attribute) (method_name))
-          (comment)
-          (procedure_statement (method_name))
-          (comment)
-          (procedure_statement (procedure_attribute) (procedure_attribute (identifier)) (method_name))
-          (procedure_statement (procedure_attribute) (binding_name (identifier)) (method_name) (method_name))
-          (procedure_statement (procedure_attribute) (binding_name (assignment)) (method_name))
-          (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name))          
-          (procedure_statement (method_name) (binding_name (identifier)) (method_name))
-          (procedure_statement (method_name)))
-      (end_type_statement (name)))
-  (end_program_statement)))
+        (contains_statement)
+        (procedure_statement
+          (procedure_attribute)
+          (procedure_attribute)
+          (method_name))
+        (comment)
+        (procedure_statement
+          (method_name))
+        (comment)
+        (procedure_statement
+          (procedure_attribute)
+          (procedure_attribute
+            (identifier))
+          (method_name))
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name
+            (identifier))
+          (method_name)
+          (method_name))
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name
+            (assignment))
+          (method_name))
+        (procedure_statement
+          (procedure_attribute)
+          (binding_name
+            (operator))
+          (method_name))
+        (procedure_statement
+          (method_name)
+          (binding_name
+            (identifier))
+          (method_name))
+        (procedure_statement
+          (method_name)))
+      (end_type_statement
+        (name)))
+    (end_program_statement)))
 
-============================================
+================================================================================
 Derived Type Attributes
-============================================
+================================================================================
 
 program test
   type, private, abstract :: abstract_type
@@ -604,28 +933,32 @@ program test
   end type concrete_type
 end program
 
-----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (derived_type_definition
       (derived_type_statement
         access: (access_specifier)
         (abstract_specifier)
         (type_name))
-      (end_type_statement (name)))
+      (end_type_statement
+        (name)))
     (derived_type_definition
       (derived_type_statement
         access: (access_specifier)
-        base: (base_type_specifier (identifier))
+        base: (base_type_specifier
+          (identifier))
         (type_name))
-      (end_type_statement (name)))
-  (end_program_statement)))
+      (end_type_statement
+        (name)))
+    (end_program_statement)))
 
-============================================
+================================================================================
 Deferred binding
-============================================
+================================================================================
 
 program test
   type foo
@@ -638,28 +971,35 @@ program test
   end interface
 end program
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (derived_type_definition
-      (derived_type_statement (type_name))
+      (derived_type_statement
+        (type_name))
       (derived_type_procedures
         (contains_statement)
-        (procedure_statement (procedure_interface) (procedure_attribute) (method_name)))
+        (procedure_statement
+          (procedure_interface)
+          (procedure_attribute)
+          (method_name)))
       (end_type_statement))
     (interface
-      (interface_statement (abstract_specifier))
-        (subroutine
-          (subroutine_statement (name))
-          (end_subroutine_statement))
+      (interface_statement
+        (abstract_specifier))
+      (subroutine
+        (subroutine_statement
+          (name))
+        (end_subroutine_statement))
       (end_interface_statement))
     (end_program_statement)))
-      
-============================================
+
+================================================================================
 Derived Type Private Type-Bound Procedures
-============================================
+================================================================================
 
 program test
   type foo
@@ -670,24 +1010,31 @@ program test
   end type foo
 end program test
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (derived_type_definition
-      (derived_type_statement (type_name))
+      (derived_type_statement
+        (type_name))
       (derived_type_procedures
         (contains_statement)
         (private_statement)
-        (procedure_statement (method_name))
-        (procedure_statement (procedure_attribute) (method_name)))
-      (end_type_statement (name)))
-    (end_program_statement (name))))
+        (procedure_statement
+          (method_name))
+        (procedure_statement
+          (procedure_attribute)
+          (method_name)))
+      (end_type_statement
+        (name)))
+    (end_program_statement
+      (name))))
 
-============================================
+================================================================================
 Derived Type Procedure Pointer Components
-============================================
+================================================================================
 
 program test
   type foo
@@ -696,25 +1043,38 @@ program test
   end type foo
 end program test
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
+    (program_statement
+      (name))
     (derived_type_definition
-      (derived_type_statement (type_name))
+      (derived_type_statement
+        (type_name))
       (variable_declaration
-        (procedure (procedure_interface) (procedure_attribute))
-        (pointer_association_statement (identifier) (null_literal)))
+        (procedure
+          (procedure_interface)
+          (procedure_attribute))
+        (pointer_association_statement
+          (variable
+            (identifier))
+          (null_literal)))
       (variable_declaration
-        (procedure (procedure_interface) (procedure_attribute) (procedure_attribute))
-        (identifier))
-      (end_type_statement (name)))
-    (end_program_statement (name))))
+        (procedure
+          (procedure_interface)
+          (procedure_attribute)
+          (procedure_attribute))
+        (variable
+          (identifier)))
+      (end_type_statement
+        (name)))
+    (end_program_statement
+      (name))))
 
-============================================
+================================================================================
 Submodule definition (simple)
-============================================
+================================================================================
 
 SUBMODULE(BoundingBox_Method) ConstructorMethods
 IMPLICIT NONE
@@ -728,25 +1088,37 @@ CONTAINS
 
 END SUBMODULE ConstructorMethods_child
 
------
+--------------------------------------------------------------------------------
 
 (translation_unit
   (submodule
-    (submodule_statement (module_name (name)) (name))
-    (implicit_statement (none))
+    (submodule_statement
+      (module_name
+        (name))
+      (name))
+    (implicit_statement
+      (none))
     (internal_procedures
       (contains_statement))
-    (end_submodule_statement (name)))
+    (end_submodule_statement
+      (name)))
   (submodule
-    (submodule_statement (module_name (name)) (module_name (name)) (name))
-    (implicit_statement (none))
+    (submodule_statement
+      (module_name
+        (name))
+      (module_name
+        (name))
+      (name))
+    (implicit_statement
+      (none))
     (internal_procedures
       (contains_statement))
-    (end_submodule_statement (name))))
+    (end_submodule_statement
+      (name))))
 
-===============================================
+================================================================================
 Module definition (with internal module procedures)
-===============================================
+================================================================================
 
 MODULE BoundingBox_Method
 
@@ -766,31 +1138,58 @@ END INTERFACE
 
 END MODULE BoundingBox_Method
 
------
+--------------------------------------------------------------------------------
 
 (translation_unit
   (module
-    (module_statement (name))
+    (module_statement
+      (name))
     (private_statement)
     (interface
       (interface_statement)
       (subroutine
-        (subroutine_statement (procedure_qualifier) (procedure_qualifier) (name) (parameters (identifier) (identifier) (identifier)))
-        (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
-      (end_subroutine_statement (name)))
-    (end_interface_statement))
+        (subroutine_statement
+          (procedure_qualifier)
+          (procedure_qualifier)
+          (name)
+          (parameters
+            (identifier)
+            (identifier)
+            (identifier)))
+        (variable_declaration
+          (derived_type
+            (type_name))
+          (type_qualifier)
+          (variable
+            (identifier)))
+        (end_subroutine_statement
+          (name)))
+      (end_interface_statement))
     (interface
       (interface_statement)
       (function
-        (function_statement (procedure_qualifier) (name) (parameters (identifier)) (function_result (identifier)))
-        (variable_declaration (derived_type (type_name)) (type_qualifier) (identifier))
-      (end_function_statement (name)))
-    (end_interface_statement))
-  (end_module_statement (name))))
+        (function_statement
+          (procedure_qualifier)
+          (name)
+          (parameters
+            (identifier))
+          (function_result
+            (identifier)))
+        (variable_declaration
+          (derived_type
+            (type_name))
+          (type_qualifier)
+          (variable
+            (identifier)))
+        (end_function_statement
+          (name)))
+      (end_interface_statement))
+    (end_module_statement
+      (name))))
 
-============================================
+================================================================================
 Procedure as argument
-============================================
+================================================================================
 
 module test
   abstract interface
@@ -805,30 +1204,51 @@ contains
   end subroutine apply
 end module test
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (module
-    (module_statement (name))
+    (module_statement
+      (name))
     (interface
-      (interface_statement (abstract_specifier))
+      (interface_statement
+        (abstract_specifier))
       (subroutine
-        (subroutine_statement (name))
-        (end_subroutine_statement (name)))
+        (subroutine_statement
+          (name))
+        (end_subroutine_statement
+          (name)))
       (end_interface_statement))
     (internal_procedures
       (contains_statement)
       (subroutine
-        (subroutine_statement (name) (parameters (identifier) (identifier)))
-        (variable_declaration (procedure (procedure_interface)) (identifier))
-        (variable_declaration (procedure (procedure_interface)) (type_qualifier) (identifier))
-        (subroutine_call (identifier) (argument_list))
-        (end_subroutine_statement (name))))
-    (end_module_statement (name))))
+        (subroutine_statement
+          (name)
+          (parameters
+            (identifier)
+            (identifier)))
+        (variable_declaration
+          (procedure
+            (procedure_interface))
+          (variable
+            (identifier)))
+        (variable_declaration
+          (procedure
+            (procedure_interface))
+          (type_qualifier)
+          (variable
+            (identifier)))
+        (subroutine_call
+          (identifier)
+          (argument_list))
+        (end_subroutine_statement
+          (name))))
+    (end_module_statement
+      (name))))
 
-============================================
+================================================================================
 Block Construct
-============================================
+================================================================================
 
 program block_demo
   implicit none
@@ -848,31 +1268,56 @@ program block_demo
   print*, y
 end program block_demo
 
----
+--------------------------------------------------------------------------------
 
 (translation_unit
   (program
-    (program_statement (name))
-    (implicit_statement (none))
+    (program_statement
+      (name))
+    (implicit_statement
+      (none))
     (variable_declaration
       (intrinsic_type)
-      (assignment_statement (identifier) (number_literal)))
-    (print_statement (format_identifier)
-        (output_item_list (identifier)))
+      (assignment_statement
+        (variable
+          (identifier))
+        (number_literal)))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (identifier)))
     (block_construct
       (variable_declaration
         (intrinsic_type)
-        (assignment_statement (identifier) (number_literal)))
-      (print_statement (format_identifier)
-        (output_item_list (identifier)))
-      (assignment_statement (identifier) (identifier))
-      (block_construct (block_label_start_expression)
-        (variable_declaration (intrinsic_type)
-          (assignment_statement (identifier) (number_literal)))
-        (print_statement (format_identifier)
-          (output_item_list (identifier)))
-        (end_block_construct_statement (block_label)))
+        (assignment_statement
+          (variable
+            (identifier))
+          (number_literal)))
+      (print_statement
+        (format_identifier)
+        (output_item_list
+          (identifier)))
+      (assignment_statement
+        (identifier)
+        (identifier))
+      (block_construct
+        (block_label_start_expression)
+        (variable_declaration
+          (intrinsic_type)
+          (assignment_statement
+            (variable
+              (identifier))
+            (number_literal)))
+        (print_statement
+          (format_identifier)
+          (output_item_list
+            (identifier)))
+        (end_block_construct_statement
+          (block_label)))
       (end_block_construct_statement))
-    (print_statement (format_identifier)
-        (output_item_list (identifier)))
-    (end_program_statement (name))))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (identifier)))
+    (end_program_statement
+      (name))))
