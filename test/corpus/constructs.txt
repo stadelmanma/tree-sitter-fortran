@@ -157,9 +157,7 @@ end interface
         (variable_declaration
           (intrinsic_type)
           (identifier)
-          (call_expression
-            (identifier)
-            (argument_list (number_literal) (number_literal))))
+          (identifier) (size (number_literal) (number_literal)))
         (variable_declaration (intrinsic_type) (identifier))
       (end_subroutine_statement (name)))
       (function
@@ -198,9 +196,7 @@ end interface
         (variable_declaration
           (intrinsic_type)
           (identifier)
-          (call_expression
-            (identifier)
-            (argument_list (number_literal) (number_literal))))
+          (identifier) (size (number_literal) (number_literal)))
         (variable_declaration (intrinsic_type) (identifier))
       (end_subroutine_statement (name)))
       (function

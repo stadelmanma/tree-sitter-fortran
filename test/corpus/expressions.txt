@@ -135,12 +135,12 @@ end program
     (variable_declaration
       (intrinsic_type)
       (assignment_statement
-        left: (call_expression (identifier)  (argument_list (number_literal)))
+        left: (identifier) left: (size (number_literal))
         right: (array_literal (number_literal) (number_literal) (number_literal))))
     (variable_declaration
-      (intrinsic_type)  (kind (argument_list (number_literal)))
+      (intrinsic_type) (kind (argument_list (number_literal)))
       (assignment_statement
-        left: (call_expression (identifier)  (argument_list (number_literal)))
+        left: (identifier) left: (size (number_literal))
         right: (array_literal
           (math_expression left: (number_literal) right: (number_literal))
           (call_expression (identifier)
@@ -148,7 +148,7 @@ end program
           (call_expression (identifier) (argument_list (number_literal))))))
     (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
       (assignment_statement
-        left: (call_expression (identifier) (argument_list (number_literal)))
+        left: (identifier) left: (size (number_literal))
         right: (array_literal
           (unary_expression argument: (number_literal))
           (number_literal)

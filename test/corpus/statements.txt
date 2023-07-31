@@ -163,14 +163,11 @@ END PROGRAM
       (identifier)
       (identifier)
       (identifier)
-      (call_expression (identifier) (argument_list (assumed_size))))
+      (identifier) (size (assumed_size)))
     (variable_declaration (intrinsic_type) (kind (argument_list (number_literal)))
-      (call_expression (identifier)
-        (argument_list
-          (extent_specifier (number_literal) (math_expression (identifier) (number_literal)))))
-      (call_expression (identifier) (argument_list (identifier)))
-      (call_expression (identifier) (argument_list
-          (extent_specifier (number_literal) (assumed_size)))))
+      (identifier) (size (extent_specifier (number_literal) (math_expression (identifier) (number_literal))))
+      (identifier) (size (identifier))
+      (identifier) (size (extent_specifier (number_literal) (assumed_size))))
     (variable_declaration (intrinsic_type) (kind) (type_qualifier) (identifier))
     (variable_declaration
       (intrinsic_type) (kind (argument_list (keyword_argument (identifier) (number_literal))))
@@ -319,8 +316,8 @@ END PROGRAM
     (program_statement (name))
     (variable_modification (type_qualifier) (identifier))
     (variable_modification (type_qualifier)
-      (call_expression (identifier) (argument_list (extent_specifier) (extent_specifier)))
-      (call_expression (identifier) (argument_list (number_literal))))
+      (identifier) (size (extent_specifier) (extent_specifier))
+      (identifier) (size (number_literal)))
     (variable_modification (type_qualifier) (identifier))
     (parameter_statement
       (parameter_assignment (identifier) (number_literal))
@@ -1359,7 +1356,7 @@ end subroutine assumed_rank
       (parameters (identifier)))
     (variable_declaration (intrinsic_type)
       (type_qualifier)
-      (call_expression (identifier) (argument_list (assumed_rank))))
+      (identifier) (size (assumed_rank)))
     (select_rank_statement (selector (identifier))
       (rank_statement
         (case_value_range_list (number_literal))

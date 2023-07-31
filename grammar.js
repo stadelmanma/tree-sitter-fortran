@@ -772,13 +772,31 @@ module.exports = grammar({
       ')'
     ),
 
+    _sized_identifier: $ => prec.right(1, seq(
+        $.identifier,
+        optional(choice(
+          alias($.argument_list, $.size),
+          $.character_length
+        ))
+    )),
+
+    // These put any (size) nodes as an extra 'left' field which is probably not desired
+    _declaration_assignment: $ => seq(
+      field('left', $._sized_identifier),
+      '=',
+      field('right', $._expression)
+    ),
+    _declaration_pointer_association: $ => seq(
+      field('left', $._sized_identifier),
+      '=>',
+      field('right', $._expression)
+    ),
+
     _declaration_targets: $ => commaSep1(choice(
-      $.identifier,
-      // Only valid for characters
-      prec.right(1, seq($.identifier, $.character_length)),
+      $._sized_identifier,
       $.call_expression,
-      $.assignment_statement,
-      $.pointer_association_statement
+      alias($._declaration_assignment, $.assignment_statement),
+      alias($._declaration_pointer_association, $.pointer_association_statement),
     )),
 
     _intrinsic_type: $ => prec.right(seq(
