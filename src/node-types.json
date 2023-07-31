@@ -1039,6 +1039,26 @@
     "fields": {}
   },
   {
+    "type": "boolean_literal",
+    "named": true,
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "call_expression",
     "named": true,
     "fields": {
@@ -5634,7 +5654,22 @@
   {
     "type": "number_literal",
     "named": true,
-    "fields": {}
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "open_statement",
@@ -10144,6 +10179,10 @@
     "named": false
   },
   {
+    "type": "\\.false\\.",
+    "named": false
+  },
+  {
     "type": "\\.ge\\.",
     "named": false
   },
@@ -10176,11 +10215,19 @@
     "named": false
   },
   {
+    "type": "\\.true\\.",
+    "named": false
+  },
+  {
     "type": "]",
     "named": false
   },
   {
     "type": "^",
+    "named": false
+  },
+  {
+    "type": "_",
     "named": false
   },
   {
@@ -10226,10 +10273,6 @@
   {
     "type": "block",
     "named": false
-  },
-  {
-    "type": "boolean_literal",
-    "named": true
   },
   {
     "type": "byte",

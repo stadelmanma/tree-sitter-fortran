@@ -1615,7 +1615,7 @@ end program test
       (data_set
         (call_expression (identifier) (argument_list (extent_specifier) (identifier)))
         (data_value
-          (number_literal) (number_literal))))
+          (number_literal (identifier)) (number_literal (identifier)))))
     (data_statement
       (data_set
         (identifier)

@@ -515,12 +515,12 @@ end module foo
         (variable_declaration (intrinsic_type) (identifier))
         (assignment_statement
           left: (identifier)
-          right: (number_literal))
+          right: (number_literal kind: (identifier)))
         (preproc_ifdef
           name: (identifier)
           (assignment_statement
             left: (identifier)
-            right: (number_literal))
+            right: (number_literal kind: (identifier)))
           )
         (end_subroutine_statement (name)))
       (subroutine

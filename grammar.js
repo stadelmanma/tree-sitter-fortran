@@ -1732,19 +1732,33 @@ module.exports = grammar({
       ')'
     ),
 
-    number_literal: $ => choice(
-      $._integer_literal,
-      $._float_literal,
-      $._boz_literal
+    number_literal: $ => seq(
+      choice(
+        $._integer_literal,
+        $._float_literal,
+        $._boz_literal
+      ),
+      optional($._kind)
     ),
 
-    boolean_literal: $ => token(seq(
+    boolean_literal: $ => seq(
       choice(
         caseInsensitive('\\.true\\.'),
         caseInsensitive('\\.false\\.')
       ),
-      optional(seq('_', /\w+/))
-    )),
+      optional($._kind)
+    ),
+
+    _kind: $ => seq(
+        token.immediate('_'),
+        field(
+          'kind',
+          choice(
+            alias(token.immediate(/[a-zA-Z]\w+/), $.identifier),
+            alias(token.immediate(/\d+/), $.number_literal)
+          )
+        )
+    ),
 
     null_literal: $ => prec(1, seq(
       caseInsensitive('null'), '(', ')'

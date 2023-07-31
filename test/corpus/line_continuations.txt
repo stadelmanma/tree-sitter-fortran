@@ -144,7 +144,7 @@ end program ! comment
     (program_statement (name))
     (assignment_statement (identifier) (number_literal))
     (comment)
-    (assignment_statement (identifier) (number_literal))
+    (assignment_statement (identifier) (number_literal (identifier)))
     (comment)
     (internal_procedures
       (contains_statement)

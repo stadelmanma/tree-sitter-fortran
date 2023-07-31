@@ -110,17 +110,6 @@ static bool scan_number(TSLexer *lexer) {
             lexer->mark_end(lexer);
             lexer->result_symbol = FLOAT_LITERAL;
         }
-        // get size qualifer
-        if (lexer->lookahead == '_') {
-            advance(lexer);
-            if (!isalnum(lexer->lookahead)) {
-                return true; // valid number token with junk after it
-            }
-            while (is_ident_char(lexer->lookahead)) {
-                advance(lexer); // store all digits
-            }
-            lexer->mark_end(lexer);
-        }
     }
     return digits;
 }

@@ -14971,73 +14971,123 @@
       ]
     },
     "number_literal": {
-      "type": "CHOICE",
+      "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "_integer_literal"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_integer_literal"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_float_literal"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_boz_literal"
+            }
+          ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_float_literal"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_boz_literal"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_kind"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
     "boolean_literal": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\\.[tT][rR][uU][eE]\\."
-                },
-                "named": false,
-                "value": "\\.true\\."
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "\\.[tT][rR][uU][eE]\\."
               },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\\.[fF][aA][lL][sS][eE]\\."
-                },
-                "named": false,
-                "value": "\\.false\\."
-              }
-            ]
-          },
-          {
+              "named": false,
+              "value": "\\.true\\."
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "\\.[fF][aA][lL][sS][eE]\\."
+              },
+              "named": false,
+              "value": "\\.false\\."
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_kind"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_kind": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "_"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "kind",
+          "content": {
             "type": "CHOICE",
             "members": [
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "_"
-                  },
-                  {
+                "type": "ALIAS",
+                "content": {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
                     "type": "PATTERN",
-                    "value": "\\w+"
+                    "value": "[a-zA-Z]\\w+"
                   }
-                ]
+                },
+                "named": true,
+                "value": "identifier"
               },
               {
-                "type": "BLANK"
+                "type": "ALIAS",
+                "content": {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "\\d+"
+                  }
+                },
+                "named": true,
+                "value": "number_literal"
               }
             ]
           }
-        ]
-      }
+        }
+      ]
     },
     "null_literal": {
       "type": "PREC",
