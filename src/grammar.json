@@ -8485,10 +8485,6 @@
               "name": "variable"
             },
             {
-              "type": "SYMBOL",
-              "name": "call_expression"
-            },
-            {
               "type": "ALIAS",
               "content": {
                 "type": "SYMBOL",
@@ -8523,10 +8519,6 @@
                   {
                     "type": "SYMBOL",
                     "name": "variable"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "call_expression"
                   },
                   {
                     "type": "ALIAS",
@@ -15479,10 +15471,6 @@
     ],
     [
       "stop_statement",
-      "identifier"
-    ],
-    [
-      "type_qualifier",
       "identifier"
     ],
     [

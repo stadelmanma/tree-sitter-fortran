@@ -105,7 +105,6 @@ module.exports = grammar({
     [$.procedure_declaration],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
-    [$.type_qualifier, $.identifier],
     [$.type_statement],
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
@@ -793,7 +792,6 @@ module.exports = grammar({
 
     _declaration_targets: $ => commaSep1(choice(
       $.variable,
-      $.call_expression,
       alias($._declaration_assignment, $.assignment_statement),
       alias($._declaration_pointer_association, $.pointer_association_statement),
     )),
