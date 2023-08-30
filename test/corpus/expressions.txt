@@ -351,6 +351,7 @@ PROGRAM TEST
     val = .NOT. x
     val = (.NOT. x == y)
     val = ((x > y) .AND. (y <= z)) .eqv. .true.
+    val = 1.eq.0
 END PROGRAM
 
 ----
@@ -405,6 +406,8 @@ END PROGRAM
             (parenthesized_expression
               (relational_expression (identifier) (identifier)))))
         (boolean_literal)))
+    (assignment_statement (identifier)
+      (relational_expression (number_literal) (number_literal)))
   (end_program_statement)))
 
 ============================================
@@ -555,6 +558,44 @@ end program test
     (print_statement (format_identifier)
       (output_item_list (string_literal)))
     (end_program_statement (name))))
+
+============================================
+Line Continuation in Number Literals
+============================================
+
+program test
+  real, parameter :: pi = &
+    &3.14&
+    &1592&
+    &6535&
+    &8979
+  integer, dimension(2) :: foo = [1&
+    , 2]
+  real, dimension(2) :: foo = [1.e0&
+    &, 2.e0]
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier)
+      (assignment_statement
+        (identifier)
+        (number_literal)))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal)))
+      (assignment_statement
+        (identifier)
+        (array_literal (number_literal) (number_literal))))
+    (variable_declaration (intrinsic_type)
+      (type_qualifier (argument_list (number_literal)))
+      (assignment_statement
+        (identifier)
+        (array_literal (number_literal) (number_literal))))
+    (end_program_statement)))
 
 ============================================
 Array Constructors

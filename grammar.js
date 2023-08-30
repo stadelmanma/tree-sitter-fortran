@@ -83,32 +83,40 @@ module.exports = grammar({
     [$.elseif_clause, $.identifier],
     [$.elseif_clause],
     [$.elsewhere_clause],
+    [$.format_statement, $.identifier],
     [$.interface_statement],
     [$.intrinsic_type, $.identifier],
+    [$.inquire_statement, $.identifier],
     [$.module_statement, $.procedure_qualifier],
+    [$.null_literal, $.identifier],
     [$.procedure_declaration],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
     [$.type_qualifier, $.identifier],
     [$.type_statement],
+    [$.translation_unit],
   ],
 
   rules: {
-    translation_unit: $ => repeat($._top_level_item),
+    translation_unit: $ => seq(
+      repeat($._top_level_item),
+      optional($.program),
+    ),
 
-    _top_level_item: $ => choice(
+    _top_level_item: $ => prec(2, choice(
+      seq($.include_statement, $._end_of_statement),
       $.program,
       $.module,
       $.submodule,
       $.interface,
       $.subroutine,
       $.function
-    ),
+    )),
 
     // Block level structures
 
     program: $ => seq(
-      $.program_statement,
+      optional($.program_statement),
       repeat($._specification_part),
       repeat($._statement),
       optional($.internal_procedures),
@@ -251,14 +259,14 @@ module.exports = grammar({
     ),
 
     _callable_interface_qualifers: $ => repeat1(
-      choice(
+      prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
         $._intrinsic_type,
         $.derived_type
-      )),
+      ))),
 
-    procedure_attributes: $ => seq(
+    procedure_attributes: $ => prec(1, seq(
       caseInsensitive('attributes'),
       '(',
       commaSep1(choice(
@@ -267,7 +275,7 @@ module.exports = grammar({
         caseInsensitive('host'),
         caseInsensitive('grid_global'))),
       ')'
-    ),
+    )),
 
     end_function_statement: $ => blockStructureEnding($, 'function'),
 
@@ -305,7 +313,7 @@ module.exports = grammar({
 
     // Variable Declarations
 
-    _specification_part: $ => choice(
+    _specification_part: $ => prec(1, choice(
       prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
@@ -324,7 +332,7 @@ module.exports = grammar({
       seq($.equivalence_statement, $._end_of_statement),
       seq($.data_statement, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
-    ),
+    )),
 
     use_statement: $ => seq(
       caseInsensitive('use'),
@@ -347,12 +355,12 @@ module.exports = grammar({
       ',',
       caseInsensitive('only'),
       ':',
-      commaSep1(
+      optional(commaSep1(
         choice(
           $.use_alias,
           $.identifier,
           $._generic_procedure)
-      )
+      ))
     ),
 
     use_alias: $ => seq(
@@ -388,8 +396,11 @@ module.exports = grammar({
     save_statement: $ => prec(1, seq(
       caseInsensitive('save'),
       optional(seq(
-        '::',
-        commaSep1($.identifier)
+        optional('::'),
+        commaSep1(choice(
+          $.identifier,
+          seq('/', $.identifier, '/'),
+        )),
       ))
     )),
 
@@ -512,24 +523,24 @@ module.exports = grammar({
     procedure_statement: $ => seq(
       $._procedure_kind,
       optional(seq(
-        '(', alias($.identifier,$.procedure_interface),')'
+        '(', alias($.identifier, $.procedure_interface), ')'
       )),
       optional(seq(
         ',',
         commaSep1($.procedure_attribute)
       )),
-      optional(choice(
-        seq('::', $.binding_name, '=>'),
-        '::'
+      optional('::'),
+      commaSep1(choice(
+        $.method_name,
+        seq($.binding_name, '=>', $.method_name),
       )),
-      commaSep1($._method_name)
     ),
 
     binding_name: $ => choice(
       $.identifier,
       $._generic_procedure
     ),
-    _method_name: $ => alias($.identifier, $.method_name),
+    method_name: $ => alias($.identifier, 'method_name'),
 
     _procedure_kind: $ => choice(
       caseInsensitive('generic'),
@@ -564,7 +575,7 @@ module.exports = grammar({
     procedure_declaration: $ => seq(
       caseInsensitive('procedure'),
       optional(seq(
-        '(', alias($.identifier, $.procedure_interface), ')'
+        '(', optional(alias($.identifier, $.procedure_interface)), ')'
       )),
       optional(seq(',', commaSep1($.procedure_attribute))),
     ),
@@ -593,6 +604,8 @@ module.exports = grammar({
 
     _declaration_targets: $ => commaSep1(choice(
       $.identifier,
+      // Only valid for characters
+      prec.right(1, seq($.identifier, $.character_length)),
       $.call_expression,
       $.assignment_statement,
       $.pointer_association_statement
@@ -627,6 +640,12 @@ module.exports = grammar({
     size: $ => choice(
       seq(optional(alias('*', $.assumed_size)), $.argument_list),
       seq('*', choice(/\d+/, $.parenthesized_expression))
+    ),
+
+    character_length: $ => seq(
+      '*',
+      optional(/\d+/),
+      optional(seq('(', '*', ')'))
     ),
 
     type_qualifier: $ => choice(
@@ -716,6 +735,7 @@ module.exports = grammar({
       $.keyword_statement,
       $.include_statement,
       $.if_statement,
+      $.arithmetic_if_statement,
       $.where_statement,
       $.forall_statement,
       $.select_case_statement,
@@ -729,6 +749,7 @@ module.exports = grammar({
       $.print_statement,
       $.write_statement,
       $.read_statement,
+      $.inquire_statement,
       $.stop_statement,
       $.block_construct,
       $.associate_statement,
@@ -780,9 +801,19 @@ module.exports = grammar({
       caseInsensitive('continue'),
       seq(caseInsensitive('cycle'), optional($.identifier)),
       seq(caseInsensitive('exit'), optional($.identifier)),
-      seq(whiteSpacedKeyword('go', 'to'), $.statement_label),
+      seq(
+        whiteSpacedKeyword('go', 'to'),
+        choice(
+          $.statement_label_reference,
+          // Computed goto (obsolete)
+          seq(
+            '(', commaSep1($.statement_label_reference), ')',
+            optional(','),
+            $._expression,
+          )
+        )
+      ),
       caseInsensitive('return'),
-      // seq(caseInsensitive('stop'), optional($._expression))
     ),
 
     include_statement: $ => seq(
@@ -811,13 +842,12 @@ module.exports = grammar({
         optional(prec(1, seq(field('repeat', $.number_literal), '*'))),
         choice(
           $.number_literal,
+          $.complex_literal,
           $.string_literal,
           $.boolean_literal,
           $.unary_expression,
-          seq(
-            alias(caseInsensitive('null'), $.null_literal),
-            '(', ')'
-          ),
+          $.null_literal,
+          $.identifier,
           $.call_expression
         )
       )),
@@ -835,6 +865,7 @@ module.exports = grammar({
       )),
       $._end_of_statement,
       repeat($._statement),
+      optional($.statement_label),
       $.end_do_loop_statement
     ),
 
@@ -904,10 +935,20 @@ module.exports = grammar({
       $._block_if_statement
     ),
 
-    _inline_if_statement: $ => prec.right(seq(
+    _inline_if_statement: $ => prec.right(2, seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
       $._statements
+    )),
+
+    arithmetic_if_statement: $ => prec.right(seq(
+      caseInsensitive('if'),
+      $.parenthesized_expression,
+      $.statement_label_reference,
+      ',',
+      $.statement_label_reference,
+      ',',
+      $.statement_label_reference,
     )),
 
     _block_if_statement: $ => seq(
@@ -920,6 +961,7 @@ module.exports = grammar({
       repeat($._statement),
       repeat($.elseif_clause),
       optional($.else_clause),
+      optional($.statement_label),
       $.end_if_statement
     ),
 
@@ -1013,6 +1055,7 @@ module.exports = grammar({
       $._forall_control_expression,
       $._end_of_statement,
       repeat($._statement),
+      optional($.statement_label),
       $.end_forall_statement
     ),
 
@@ -1027,6 +1070,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.case_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 
@@ -1036,6 +1080,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.type_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 
@@ -1045,6 +1090,7 @@ module.exports = grammar({
       $.selector,
       $._end_of_statement,
       repeat1($.rank_statement),
+      optional($.statement_label),
       $.end_select_statement
     ),
 
@@ -1141,16 +1187,17 @@ module.exports = grammar({
       optional($._block_label)
     ),
 
-    format_statement: $ => seq(
+    format_statement: $ => prec(1, seq(
       caseInsensitive('format'),
       '(',
       alias($._transfer_items, $.transfer_items),
       ')'
-    ),
+    )),
 
     _transfer_item: $ => choice(
       $.string_literal,
       $.edit_descriptor,
+      $.hollerith_constant,
       seq('(', $._transfer_items, ')')
     ),
 
@@ -1161,7 +1208,21 @@ module.exports = grammar({
       repeat(seq(optional(','), $._transfer_item))
     ),
 
-    edit_descriptor: $ => /[a-zA-Z0-9/:.*]+/,
+    // H is not a valid edit descriptor because it clashes with Hollerith constants
+    edit_descriptor: $ => /[a-gi-zA-GI-Z0-9/:.*$]+/,
+    hollerith_constant: $ => prec.right(10, /[0-9]+H[^/,)]+/),
+
+    _io_arguments: $ => seq(
+      '(',
+      choice(
+        $.unit_identifier,
+        seq($.unit_identifier, ',', $.format_identifier),
+        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
+        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
+        commaSep1($.keyword_argument)
+      ),
+      ')'
+    ),
 
     read_statement: $ => prec(1, choice(
       $._simple_read_statement,
@@ -1176,15 +1237,7 @@ module.exports = grammar({
 
     _parameterized_read_statement: $ => prec(1, seq(
       caseInsensitive('read'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       optional($.input_item_list)
     )),
 
@@ -1196,15 +1249,7 @@ module.exports = grammar({
 
     open_statement: $ => seq(
       caseInsensitive('open'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       optional($.output_item_list)
     ),
 
@@ -1222,18 +1267,16 @@ module.exports = grammar({
 
     write_statement: $ => prec(1, seq(
       caseInsensitive('write'),
-      '(',
-      choice(
-        $.unit_identifier,
-        seq($.unit_identifier, ',', $.format_identifier),
-        seq($.unit_identifier, ',', $.format_identifier, ',', commaSep1($.keyword_argument)),
-        seq($.unit_identifier, ',', commaSep1($.keyword_argument)),
-        commaSep1($.keyword_argument)
-      ),
-      ')',
+      $._io_arguments,
       // Trailing comma here is a legacy extension to gfortran
       optional(','),
       optional($.output_item_list)
+    )),
+
+    inquire_statement: $ => prec(1, seq(
+      caseInsensitive('inquire'),
+      $._io_arguments,
+      optional($.output_item_list),
     )),
 
     enum: $ => seq(
@@ -1254,7 +1297,10 @@ module.exports = grammar({
       optional('::'),
       commaSep1(choice(
         $.identifier,
-        seq($.identifier, '=', $.number_literal)
+        seq($.identifier, '=', choice(
+          $.number_literal,
+          $.unary_expression,
+        ))
       ))
     ),
 
@@ -1310,6 +1356,7 @@ module.exports = grammar({
       $.string_literal,
       $.boolean_literal,
       $.array_literal,
+      $.null_literal,
       $.identifier,
       $.derived_type_member_expression,
       $.logical_expression,
@@ -1523,6 +1570,10 @@ module.exports = grammar({
       optional(seq('_', /\w+/))
     )),
 
+    null_literal: $ => prec(1, seq(
+      caseInsensitive('null'), '(', ')'
+    )),
+
     // This handles files preprocessed by gfortran -E
     // Other preprocessors may use different syntax
     preproc_file_line: $ => seq(
@@ -1539,6 +1590,7 @@ module.exports = grammar({
     // add the keywords here -- and possibly in `conflicts` too.
     identifier: $ => choice(
       /[a-zA-Z_]\w*/,
+      caseInsensitive('block'),
       caseInsensitive('byte'),
       caseInsensitive('cycle'),
       caseInsensitive('data'),
@@ -1548,7 +1600,10 @@ module.exports = grammar({
       caseInsensitive('endif'),
       caseInsensitive('error'),
       caseInsensitive('exit'),
+      caseInsensitive('format'),
       caseInsensitive('if'),
+      caseInsensitive('inquire'),
+      caseInsensitive('null'),
       caseInsensitive('read'),
       caseInsensitive('real'),
       caseInsensitive('select'),

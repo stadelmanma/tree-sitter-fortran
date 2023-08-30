@@ -19,6 +19,18 @@ END PROGRAM TEST
     (end_program_statement (name))))
 
 ============================================
+Shortest Program
+============================================
+
+END
+
+---
+
+(translation_unit
+  (program
+    (end_program_statement)))
+
+============================================
 Interface (explicit)
 ============================================
 
@@ -526,6 +538,7 @@ program test
     real(8) :: x,y,z
     integer :: w,h,l
     real(eb), allocatable, dimension(:, :, :) :: vals
+    procedure(), pointer, nopass :: do_nothing => null()
     contains
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
@@ -533,6 +546,7 @@ program test
        generic, pass :: binding_name => method_name, method_name2
        generic, private :: assignment(=) => assign_method
        generic, private :: operator(+) => add_method
+       procedure :: one, two => three
        final :: finalize
   end type custom_type
 end program
@@ -564,6 +578,10 @@ end program
         (type_qualifier
           (argument_list (extent_specifier) (extent_specifier) (extent_specifier)))
         (identifier))
+      (variable_declaration
+        (procedure
+          (procedure_attribute) (procedure_attribute))
+        (pointer_association_statement (identifier) (null_literal)))
       (derived_type_procedures
           (contains_statement)
           (procedure_statement (procedure_attribute) (procedure_attribute) (method_name))
@@ -573,7 +591,8 @@ end program
           (procedure_statement (procedure_attribute) (procedure_attribute (identifier)) (method_name))
           (procedure_statement (procedure_attribute) (binding_name (identifier)) (method_name) (method_name))
           (procedure_statement (procedure_attribute) (binding_name (assignment)) (method_name))
-          (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name))
+          (procedure_statement (procedure_attribute) (binding_name (operator)) (method_name))          
+          (procedure_statement (method_name) (binding_name (identifier)) (method_name))
           (procedure_statement (method_name)))
       (end_type_statement (name)))
   (end_program_statement)))
@@ -690,7 +709,7 @@ end program test
       (derived_type_statement (type_name))
       (variable_declaration
         (procedure (procedure_interface) (procedure_attribute))
-        (pointer_association_statement (identifier) (call_expression (identifier) (argument_list))))
+        (pointer_association_statement (identifier) (null_literal)))
       (variable_declaration
         (procedure (procedure_interface) (procedure_attribute) (procedure_attribute))
         (identifier))

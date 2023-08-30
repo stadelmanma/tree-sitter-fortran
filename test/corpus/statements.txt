@@ -31,6 +31,8 @@ PROGRAM TEST
   use my_module, only: func2 => foo
   use, intrinsic:: iso_fortran_env, stderr => error_unit
   use :: some_mod
+  use some_mod, only:
+  use some_mod, func2 => foo
 END PROGRAM
 
 ----
@@ -50,6 +52,10 @@ END PROGRAM
     (use_statement (module_name)
       (use_alias (local_name) (identifier)))
     (use_statement (module_name))
+    (use_statement (module_name)
+      (included_items))
+    (use_statement (module_name)
+      (use_alias (local_name) (identifier)))
   (end_program_statement)))
 
 ============================================
@@ -141,6 +147,7 @@ PROGRAM TEST
   CHARACTER(LEN=*) :: options
   CHARACTER*(MXLN) :: errflag
   CHARACTER(*) :: thing
+  CHARACTER   FMAT*22, OTHER*(*)
   integer::no_whitespace=1
 END PROGRAM
 
@@ -188,6 +195,10 @@ END PROGRAM
     (variable_declaration
       (intrinsic_type) (size (argument_list (assumed_size)))
       (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier) (character_length)
+      (identifier) (character_length))
     (variable_declaration
       (intrinsic_type)
       (assignment_statement (identifier) (number_literal)))
@@ -300,6 +311,7 @@ PROGRAM TEST
   TARGET :: i
   PARAMETER (MAXLEN = 255, PI = 3.1415, SCALE_FACTOR = SIN(2 * PI))
   EQUIVALENCE (a, b, c), (d, e, f, r(1))
+  SAVE A, B, /BLOCKC/, D
 END PROGRAM
 
 ----
@@ -325,6 +337,7 @@ END PROGRAM
         (identifier)
         (identifier)
         (call_expression (identifier) (argument_list (number_literal)))))
+    (save_statement (identifier) (identifier) (identifier) (identifier))
   (end_program_statement)))
 
 ============================================
@@ -352,6 +365,11 @@ PROGRAM TEST
     DO WHILE (is_true)
         j = 0
     END DO
+
+    do i = 1, 10
+      if (diff) go to 100
+100 end do
+
 END PROGRAM
 
 ----
@@ -379,7 +397,7 @@ END PROGRAM
         (call_expression (identifier) (argument_list (identifier)))
         (identifier))
       (keyword_statement)
-      (keyword_statement (statement_label))
+      (keyword_statement (statement_label_reference))
     (end_do_loop_statement))
     (do_loop_statement
       (block_label_start_expression)
@@ -407,6 +425,14 @@ END PROGRAM
           (identifier )))
       (assignment_statement
         (identifier) (number_literal))
+      (end_do_loop_statement))
+    (do_loop_statement
+      (loop_control_expression
+        (identifier) (number_literal) (number_literal))
+      (if_statement
+        (parenthesized_expression (identifier))
+        (keyword_statement (statement_label_reference)))
+      (statement_label)
       (end_do_loop_statement))
   (end_program_statement)))
 
@@ -495,6 +521,28 @@ end program test
     (statement_label)
     (keyword_statement)
     (end_program_statement (name))))
+
+============================================
+Computed Goto (Obsolescent)
+============================================
+
+program test
+  goto (10, 20, 30) M
+  goto (10, 20, 30) ISAVE(1)
+end program
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (keyword_statement
+      (statement_label_reference) (statement_label_reference) (statement_label_reference)
+      (identifier))
+    (keyword_statement
+      (statement_label_reference) (statement_label_reference) (statement_label_reference)
+      (call_expression (identifier) (argument_list (number_literal))))
+    (end_program_statement)))
 
 ============================================
 If Statements
@@ -918,6 +966,7 @@ PROGRAM TEST
 3 FORMAT(I0, A(2X, I3), 'test')
 4 FORMAT(*(G15.8,:,','))
 5 FORMAT(/1X,'NUMBER OF DATA Total/ACCEPTED'/1X,i10/1X)
+6 FORMAT(3(1H-), 2HOK, 10H SOLUTION // 5D15.7)
 END PROGRAM
 
 ----
@@ -955,6 +1004,15 @@ END PROGRAM
       (transfer_items
         (edit_descriptor)
         (string_literal)
+        (edit_descriptor)
+        (edit_descriptor)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (hollerith_constant)
+        (hollerith_constant)
+        (hollerith_constant)
         (edit_descriptor)
         (edit_descriptor)))
   (end_program_statement)))
@@ -1161,6 +1219,9 @@ PROGRAM test
         ENUMERATOR :: red = 1
         ENUMERATOR blue, green
     END ENUM
+    ENUM, BIND(C)
+        ENUMERATOR :: minus_one = -1
+    END ENUM
 END PROGRAM test
 
 ----
@@ -1172,6 +1233,10 @@ END PROGRAM test
       (enum_statement (language_binding (identifier)))
       (enumerator_statement (identifier) (number_literal))
       (enumerator_statement (identifier) (identifier))
+      (end_enum_statement))
+    (enum
+      (enum_statement (language_binding (identifier)))
+      (enumerator_statement (identifier) (unary_expression (number_literal)))
       (end_enum_statement))
     (end_program_statement (name))))
 
@@ -1516,6 +1581,8 @@ program test
   DATA (array(1,k),k=1,n) /3.14e-3, -42.5/
   DATA array(:, N) / &
     54.45_fp, 200.01_fp /
+  DATA complex_array / ( 0, 1 ), ( 1, 0 ) /
+  data params/ param1, param2/
 
   ! This is awful, but this makes sure the specification part has
   ! finished, as is a hacky workaround to make sure the next part is
@@ -1571,6 +1638,14 @@ end program test
         (call_expression (identifier) (argument_list (extent_specifier) (identifier)))
         (data_value
           (number_literal) (number_literal))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value (complex_literal (number_literal) (number_literal))
+                    (complex_literal (number_literal) (number_literal)))))
+    (data_statement
+      (data_set (identifier)
+        (data_value (identifier) (identifier))))
     (comment)
     (comment)
     (comment)
@@ -1615,4 +1690,48 @@ end program
     (file_position_statement (unit_identifier
       (parenthesized_expression (call_expression (identifier) (argument_list (identifier))))))
     (file_position_statement (string_literal))
+    (end_program_statement)))
+
+========================================
+Inquire Statements
+========================================
+
+program test
+  INQUIRE (IOLENGTH = IOL) A (1:N)
+  INQUIRE (UNIT = JOAN, OPENED = LOG_01, NAMED = LOG_02, &
+           FORM = CHAR_VAR, IOSTAT = IOS)
+end program test
+
+---
+
+(translation_unit
+  (program
+    (program_statement (name))
+    (inquire_statement
+      (keyword_argument (identifier) (identifier))
+      (output_item_list
+        (call_expression (identifier)
+          (argument_list (extent_specifier (number_literal) (identifier))))))
+    (inquire_statement
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier))
+      (keyword_argument (identifier) (identifier)))
+    (end_program_statement (name))))
+
+========================================
+Arithmetic If Statement (Deleted)
+========================================
+
+  if (d) 10, 20, 30
+end
+
+---
+
+(translation_unit
+  (program
+    (arithmetic_if_statement
+      (parenthesized_expression (identifier))
+      (statement_label_reference) (statement_label_reference) (statement_label_reference))
     (end_program_statement)))
