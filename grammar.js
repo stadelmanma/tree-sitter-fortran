@@ -374,7 +374,7 @@ module.exports = grammar({
       choice(
         commaSep1(seq(
           $.intrinsic_type,
-          optional($.size),
+          optional($.kind),
           '(',
           commaSep1($.implicit_range),
           ')'
@@ -602,18 +602,34 @@ module.exports = grammar({
       ')'
     ),
 
+    variable: $ => prec.right(1, seq(
+        $.identifier,
+        optional(choice(
+          alias($.argument_list, $.size),
+          $.character_length
+        ))
+    )),
+
+    _declaration_assignment: $ => seq(
+      field('left', $.variable),
+      '=',
+      field('right', $._expression)
+    ),
+    _declaration_pointer_association: $ => seq(
+      field('left', $.variable),
+      '=>',
+      field('right', $._expression)
+    ),
+
     _declaration_targets: $ => commaSep1(choice(
-      $.identifier,
-      // Only valid for characters
-      prec.right(1, seq($.identifier, $.character_length)),
-      $.call_expression,
-      $.assignment_statement,
-      $.pointer_association_statement
+      $.variable,
+      alias($._declaration_assignment, $.assignment_statement),
+      alias($._declaration_pointer_association, $.pointer_association_statement),
     )),
 
     _intrinsic_type: $ => prec.right(seq(
       $.intrinsic_type,
-      optional($.size)
+      optional($.kind)
     )),
 
     intrinsic_type: $ => choice(
@@ -637,7 +653,7 @@ module.exports = grammar({
 
     unlimited_polymorphic: $ => '*',
 
-    size: $ => choice(
+    kind: $ => choice(
       seq(optional(alias('*', $.assumed_size)), $.argument_list),
       seq('*', choice(/\d+/, $.parenthesized_expression))
     ),
@@ -1556,19 +1572,33 @@ module.exports = grammar({
       ')'
     ),
 
-    number_literal: $ => choice(
-      $._integer_literal,
-      $._float_literal,
-      $._boz_literal
+    number_literal: $ => seq(
+      choice(
+        $._integer_literal,
+        $._float_literal,
+        $._boz_literal
+      ),
+      optional($._kind)
     ),
 
-    boolean_literal: $ => token(seq(
+    boolean_literal: $ => seq(
       choice(
         caseInsensitive('\\.true\\.'),
         caseInsensitive('\\.false\\.')
       ),
-      optional(seq('_', /\w+/))
-    )),
+      optional($._kind)
+    ),
+
+    _kind: $ => seq(
+        token.immediate('_'),
+        field(
+          'kind',
+          choice(
+            alias(token.immediate(/[a-zA-Z]\w+/), $.identifier),
+            alias(token.immediate(/\d+/), $.number_literal)
+          )
+        )
+    ),
 
     null_literal: $ => prec(1, seq(
       caseInsensitive('null'), '(', ')'
