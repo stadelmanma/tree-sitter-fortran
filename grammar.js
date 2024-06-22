@@ -52,7 +52,7 @@ module.exports = grammar({
   name: 'fortran',
 
   externals: $ => [
-    $._line_continuation,
+    '&',
     $._integer_literal,
     $._float_literal,
     $._boz_literal,
@@ -63,7 +63,7 @@ module.exports = grammar({
   extras: $ => [
     /[ \t\r\n]/,
     $.comment,
-    $._line_continuation,
+    '&',
     $.preproc_file_line
   ],
 
@@ -1609,8 +1609,6 @@ module.exports = grammar({
     ),
 
     comment: $ => token(seq('!', /.*/)),
-
-    _line_continuation: $ => '&',
 
     _semicolon: $ => ';',
 
