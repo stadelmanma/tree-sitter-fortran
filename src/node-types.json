@@ -7865,10 +7865,6 @@
     }
   },
   {
-    "type": "\n",
-    "named": false
-  },
-  {
     "type": "#",
     "named": false
   },
@@ -7938,10 +7934,6 @@
   },
   {
     "type": "::",
-    "named": false
-  },
-  {
-    "type": ";",
     "named": false
   },
   {
@@ -8434,11 +8426,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
