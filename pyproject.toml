@@ -19,7 +19,7 @@ license.text = "MIT"
 readme = "README.md"
 
 [project.urls]
-Homepage = "https://github.com/tree-sitter/tree-sitter-fortran"
+Homepage = "https://github.com/stadelmanma/tree-sitter-fortran"
 
 [project.optional-dependencies]
 core = ["tree-sitter~=0.21"]
