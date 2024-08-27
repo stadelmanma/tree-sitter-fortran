@@ -1,0 +1,50 @@
+name: Build/publish Python Package
+
+on:
+  push:
+    tags: ["*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install build twine
+      - name: Build package
+        run: |
+          python -m build --sdist
+      - name: Check package
+        run: |
+          python -m twine check dist/*
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+
+  publish-to-pypi:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/tree-sitter-fortran
+    permissions:
+      id-token: write  # IMPORTANT: mandatory for trusted publishing
+    steps:
+      - name: Download distribution packages
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
