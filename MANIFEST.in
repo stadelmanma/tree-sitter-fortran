@@ -1,0 +1,2 @@
+# Include the tree_sitter header files in the source distribution
+graft src/tree_sitter
