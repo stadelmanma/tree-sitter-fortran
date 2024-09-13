@@ -106,6 +106,8 @@ module.exports = grammar({
     [$.stop_statement, $.identifier],
     [$.type_qualifier, $.identifier],
     [$.type_statement],
+    [$.preproc_ifdef_in_specification_part, $.program],
+    [$.preproc_else_in_specification_part, $.program],
   ],
 
   rules: {
@@ -122,6 +124,8 @@ module.exports = grammar({
       $.interface,
       $.subroutine,
       $.function,
+      $.preproc_if,
+      $.preproc_ifdef,
       $.preproc_include,
       $.preproc_def,
       $.preproc_function_def,
@@ -138,7 +142,7 @@ module.exports = grammar({
         $.system_lib_string,
         alias($.preproc_call_expression, $.call_expression),
       )),
-      token.immediate(/\r?\n/),
+      /\r?\n/,
     ),
 
     preproc_def: $ => seq(
@@ -165,6 +169,23 @@ module.exports = grammar({
       field('argument', optional($.preproc_arg)),
       token.immediate(/\r?\n/),
     ),
+
+    ...preprocIf('', $ => repeat($._top_level_item)),
+    ...preprocIf('_in_module', $ => seq(
+      repeat($._specification_part),
+      optional($.internal_procedures)
+    )),
+    ...preprocIf('_in_specification_part', $ => seq(
+      repeat($._specification_part),
+      repeat($._statement),
+      optional($.internal_procedures)
+    ), 3),
+    ...preprocIf('_in_statements', $ => seq(
+      repeat($._statement),
+      optional($.internal_procedures)
+    ), 2),
+    ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
+    ...preprocIf('_in_derived_type', $ => repeat($.variable_declaration)),
 
     // This doesn't capture multiline arguments, probably because our
     // scanner isn't aware of preprocessor statements yet
@@ -209,6 +230,8 @@ module.exports = grammar({
       ')',
     ),
 
+    preproc_comment: $ => /\/\*.*\*\//,
+
     preproc_binary_expression: $ => {
       const table = [
         ['+', PREPROC_PREC.ADD],
@@ -251,7 +274,13 @@ module.exports = grammar({
 
     program: $ => seq(
       optional($.program_statement),
-      repeat($._specification_part),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_specification_part, $.preproc_if),
+          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
+        ),
+      ),
       repeat($._statement),
       optional($.internal_procedures),
       $.end_program_statement
@@ -262,7 +291,13 @@ module.exports = grammar({
 
     module: $ => seq(
       $.module_statement,
-      repeat($._specification_part),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_module, $.preproc_if),
+          alias($.preproc_ifdef_in_module, $.preproc_ifdef)
+        ),
+      ),
       optional($.internal_procedures),
       $.end_module_statement
     ),
@@ -270,10 +305,15 @@ module.exports = grammar({
     module_statement: $ => seq(caseInsensitive('module'), $._name),
     end_module_statement: $ => blockStructureEnding($, 'module'),
 
-
     submodule: $ => seq(
       $.submodule_statement,
-      repeat($._specification_part),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_module, $.preproc_if),
+          alias($.preproc_ifdef_in_module, $.preproc_ifdef)
+        ),
+      ),
       optional($.internal_procedures),
       $.end_submodule_statement
     ),
@@ -331,8 +371,20 @@ module.exports = grammar({
     subroutine: $ => seq(
       $.subroutine_statement,
       $._end_of_statement,
-      repeat($._specification_part),
-      repeat($._statement),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_specification_part, $.preproc_if),
+          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
+        ),
+      ),
+      repeat(
+        choice(
+          $._statement,
+          alias($.preproc_if_in_statements, $.preproc_if),
+          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
+        ),
+      ),
       optional($.internal_procedures),
       $.end_subroutine_statement
     ),
@@ -350,8 +402,20 @@ module.exports = grammar({
     module_procedure: $ => seq(
       $.module_procedure_statement,
       $._end_of_statement,
-      repeat($._specification_part),
-      repeat($._statement),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_specification_part, $.preproc_if),
+          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
+        ),
+      ),
+      repeat(
+        choice(
+          $._statement,
+          alias($.preproc_if_in_statements, $.preproc_if),
+          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
+        ),
+      ),
       optional($.internal_procedures),
       $.end_module_procedure_statement
     ),
@@ -367,8 +431,20 @@ module.exports = grammar({
     function: $ => seq(
       $.function_statement,
       $._end_of_statement,
-      repeat($._specification_part),
-      repeat($._statement),
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_specification_part, $.preproc_if),
+          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
+        ),
+      ),
+      repeat(
+        choice(
+          $._statement,
+          alias($.preproc_if_in_statements, $.preproc_if),
+          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
+        ),
+      ),
       optional($.internal_procedures),
       $.end_function_statement
     ),
@@ -436,18 +512,22 @@ module.exports = grammar({
     internal_procedures: $ => seq(
       $.contains_statement,
       $._end_of_statement,
-      repeat(choice(
-        $.function,
-        $.module_procedure,
-        $.subroutine,
-        $.preproc_include,
-        $.preproc_def,
-        $.preproc_function_def,
-        $.preproc_call,
-      ))
+      repeat($._internal_procedures)
     ),
 
     contains_statement: $ => caseInsensitive('contains'),
+
+    _internal_procedures: $ => choice(
+      $.function,
+      $.module_procedure,
+      $.subroutine,
+      alias($.preproc_if_in_internal_procedures, $.preproc_if),
+      alias($.preproc_ifdef_in_internal_procedures, $.preproc_ifdef),
+      $.preproc_include,
+      $.preproc_def,
+      $.preproc_function_def,
+      $.preproc_call,
+    ),
 
     // Variable Declarations
 
@@ -612,9 +692,11 @@ module.exports = grammar({
           $._end_of_statement
         )
       ),
-      repeat(seq(
-        choice($.include_statement, $.variable_declaration),
-        $._end_of_statement
+      repeat(choice(
+        seq($.include_statement, $._end_of_statement),
+        seq($.variable_declaration, $._end_of_statement),
+        alias($.preproc_if_in_derived_type, $.preproc_if),
+        alias($.preproc_ifdef_in_derived_type, $.preproc_ifdef),
       )),
       optional($.derived_type_procedures),
       $.end_type_statement
@@ -1810,6 +1892,79 @@ function blockStructureEnding ($, structType) {
     $._end_of_statement
   ))
   return obj
+}
+
+/**
+ *
+ * @param {string} suffix
+ *
+ * @param {RuleBuilder<string>} content
+ *
+ * @param {number} precedence
+ *
+ * @return {RuleBuilders<string, string>}
+ */
+function preprocIf(suffix, content, precedence = 0) {
+  /**
+    *
+    * @param {GrammarSymbols<string>} $
+    *
+    * @return {ChoiceRule}
+    *
+    */
+  function alternativeBlock($) {
+    return choice(
+      suffix ? alias($['preproc_else' + suffix], $.preproc_else) : $.preproc_else,
+      suffix ? alias($['preproc_elif' + suffix], $.preproc_elif) : $.preproc_elif,
+      suffix ? alias($['preproc_elifdef' + suffix], $.preproc_elifdef) : $.preproc_elifdef,
+    );
+  }
+
+  return {
+    ['preproc_if' + suffix]: $ => prec(precedence, seq(
+      preprocessor('if'),
+      field('condition', $._preproc_expression),
+      optional($.preproc_comment),
+      '\n',
+      content($),
+      field('alternative', optional(alternativeBlock($))),
+      preprocessor('endif'),
+      optional($.preproc_comment),
+    )),
+
+    ['preproc_ifdef' + suffix]: $ => prec(precedence, seq(
+      choice(preprocessor('ifdef'), preprocessor('ifndef')),
+      field('name', $.identifier),
+      optional($.preproc_comment),
+      content($),
+      field('alternative', optional(alternativeBlock($))),
+      preprocessor('endif'),
+      optional($.preproc_comment),
+    )),
+
+    ['preproc_else' + suffix]: $ => prec(precedence, seq(
+      preprocessor('else'),
+      optional($.preproc_comment),
+      content($),
+    )),
+
+    ['preproc_elif' + suffix]: $ => prec(precedence, seq(
+      preprocessor('elif'),
+      optional($.preproc_comment),
+      field('condition', $._preproc_expression),
+      '\n',
+      content($),
+      field('alternative', optional(alternativeBlock($))),
+    )),
+
+    ['preproc_elifdef' + suffix]: $ => prec(precedence, seq(
+      choice(preprocessor('elifdef'), preprocessor('elifndef')),
+      field('name', $.identifier),
+      optional($.preproc_comment),
+      content($),
+      field('alternative', optional(alternativeBlock($))),
+    )),
+  };
 }
 
 /**

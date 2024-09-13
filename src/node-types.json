@@ -2197,6 +2197,14 @@
           "named": true
         },
         {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
           "type": "private_statement",
           "named": true
         },
@@ -3761,6 +3769,14 @@
           "named": true
         },
         {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
           "type": "preproc_include",
           "named": true
         },
@@ -4454,6 +4470,14 @@
         },
         {
           "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -5249,6 +5273,14 @@
           "named": true
         },
         {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
           "type": "preproc_include",
           "named": true
         },
@@ -5436,6 +5468,14 @@
         },
         {
           "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -6034,6 +6074,809 @@
     }
   },
   {
+    "type": "preproc_elif",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preproc_elif",
+            "named": true
+          },
+          {
+            "type": "preproc_elifdef",
+            "named": true
+          },
+          {
+            "type": "preproc_else",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "preproc_defined",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "function",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module",
+          "named": true
+        },
+        {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_comment",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "program",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "submodule",
+          "named": true
+        },
+        {
+          "type": "subroutine",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "preproc_elifdef",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preproc_elif",
+            "named": true
+          },
+          {
+            "type": "preproc_elifdef",
+            "named": true
+          },
+          {
+            "type": "preproc_else",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "function",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module",
+          "named": true
+        },
+        {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_comment",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "program",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "submodule",
+          "named": true
+        },
+        {
+          "type": "subroutine",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "preproc_else",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "function",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module",
+          "named": true
+        },
+        {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_comment",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "program",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "submodule",
+          "named": true
+        },
+        {
+          "type": "subroutine",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "preproc_function_def",
     "named": true,
     "fields": {
@@ -6067,6 +6910,570 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "preproc_if",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preproc_elif",
+            "named": true
+          },
+          {
+            "type": "preproc_elifdef",
+            "named": true
+          },
+          {
+            "type": "preproc_else",
+            "named": true
+          }
+        ]
+      },
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binary_expression",
+            "named": true
+          },
+          {
+            "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number_literal",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "preproc_defined",
+            "named": true
+          },
+          {
+            "type": "string_literal",
+            "named": true
+          },
+          {
+            "type": "unary_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "function",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module",
+          "named": true
+        },
+        {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_comment",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "program",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "submodule",
+          "named": true
+        },
+        {
+          "type": "subroutine",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "preproc_ifdef",
+    "named": true,
+    "fields": {
+      "alternative": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "preproc_elif",
+            "named": true
+          },
+          {
+            "type": "preproc_elifdef",
+            "named": true
+          },
+          {
+            "type": "preproc_else",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "function",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "internal_procedures",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "module",
+          "named": true
+        },
+        {
+          "type": "module_procedure",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_comment",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "program",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "submodule",
+          "named": true
+        },
+        {
+          "type": "subroutine",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -6368,6 +7775,14 @@
         },
         {
           "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -7233,6 +8648,14 @@
           "named": true
         },
         {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
           "type": "preproc_include",
           "named": true
         },
@@ -7441,6 +8864,14 @@
         },
         {
           "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -7729,6 +9160,14 @@
         },
         {
           "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -8525,6 +9964,10 @@
     }
   },
   {
+    "type": "\n",
+    "named": false
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -8534,6 +9977,38 @@
   },
   {
     "type": "#define",
+    "named": false
+  },
+  {
+    "type": "#elif",
+    "named": false
+  },
+  {
+    "type": "#elifdef",
+    "named": false
+  },
+  {
+    "type": "#elifndef",
+    "named": false
+  },
+  {
+    "type": "#else",
+    "named": false
+  },
+  {
+    "type": "#endif",
+    "named": false
+  },
+  {
+    "type": "#if",
+    "named": false
+  },
+  {
+    "type": "#ifdef",
+    "named": false
+  },
+  {
+    "type": "#ifndef",
     "named": false
   },
   {
@@ -9178,6 +10653,10 @@
   },
   {
     "type": "preproc_arg",
+    "named": true
+  },
+  {
+    "type": "preproc_comment",
     "named": true
   },
   {
