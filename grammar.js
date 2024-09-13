@@ -48,6 +48,23 @@ const PREC = {
   TYPE_MEMBER: 100
 }
 
+const PREPROC_PREC = {
+  DEFAULT: 0,
+  LOGICAL_OR: 1,
+  LOGICAL_AND: 2,
+  INCLUSIVE_OR: 3,
+  EXCLUSIVE_OR: 4,
+  BITWISE_AND: 5,
+  EQUAL: 6,
+  RELATIONAL: 7,
+  OFFSETOF: 8,
+  SHIFT: 9,
+  ADD: 10,
+  MULTIPLY: 11,
+  UNARY: 14,
+  CALL: 15,
+};
+
 module.exports = grammar({
   name: 'fortran',
 
@@ -64,7 +81,6 @@ module.exports = grammar({
     /[ \t\r\n]/,
     $.comment,
     '&',
-    $.preproc_file_line
   ],
 
   inline: $ => [
@@ -105,7 +121,130 @@ module.exports = grammar({
       $.submodule,
       $.interface,
       $.subroutine,
-      $.function
+      $.function,
+      $.preproc_include,
+      $.preproc_def,
+      $.preproc_function_def,
+      $.preproc_call,
+    )),
+
+    // Preprocessor
+
+    preproc_include: $ => seq(
+      preprocessor('include'),
+      field('path', choice(
+        $.string_literal,
+        $.identifier,
+        $.system_lib_string,
+        alias($.preproc_call_expression, $.call_expression),
+      )),
+      token.immediate(/\r?\n/),
+    ),
+
+    preproc_def: $ => seq(
+      preprocessor('define'),
+      field('name', $.identifier),
+      field('value', optional($.preproc_arg)),
+      token.immediate(/\r?\n/),
+    ),
+
+    preproc_function_def: $ => seq(
+      preprocessor('define'),
+      field('name', $.identifier),
+      field('parameters', $.preproc_params),
+      field('value', optional($.preproc_arg)),
+      token.immediate(/\r?\n/),
+    ),
+
+    preproc_params: $ => seq(
+      token.immediate('('), commaSep(choice($.identifier, '...')), ')',
+    ),
+
+    preproc_call: $ => seq(
+      field('directive', $.preproc_directive),
+      field('argument', optional($.preproc_arg)),
+      token.immediate(/\r?\n/),
+    ),
+
+    // This doesn't capture multiline arguments, probably because our
+    // scanner isn't aware of preprocessor statements yet
+    preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
+    preproc_directive: _ => /#[ \t]*[a-zA-Z0-9]\w*/,
+
+    _preproc_expression: $ => choice(
+      $.identifier,
+      alias($.preproc_call_expression, $.call_expression),
+      $.number_literal,
+      $.string_literal,
+      $.preproc_defined,
+      alias($.preproc_unary_expression, $.unary_expression),
+      alias($.preproc_binary_expression, $.binary_expression),
+      alias($.preproc_parenthesized_expression, $.parenthesized_expression),
+    ),
+
+    preproc_parenthesized_expression: $ => seq(
+      '(',
+      $._preproc_expression,
+      ')',
+    ),
+
+    preproc_defined: $ => choice(
+      prec(PREPROC_PREC.CALL, seq('defined', '(', $.identifier, ')')),
+      seq('defined', $.identifier),
+    ),
+
+    preproc_unary_expression: $ => prec.left(PREPROC_PREC.UNARY, seq(
+      field('operator', choice('!', '~', '-', '+')),
+      field('argument', $._preproc_expression),
+    )),
+
+    preproc_call_expression: $ => prec(PREPROC_PREC.CALL, seq(
+      field('function', $.identifier),
+      field('arguments', alias($.preproc_argument_list, $.argument_list)),
+    )),
+
+    preproc_argument_list: $ => seq(
+      '(',
+      commaSep($._preproc_expression),
+      ')',
+    ),
+
+    preproc_binary_expression: $ => {
+      const table = [
+        ['+', PREPROC_PREC.ADD],
+        ['-', PREPROC_PREC.ADD],
+        ['*', PREPROC_PREC.MULTIPLY],
+        ['/', PREPROC_PREC.MULTIPLY],
+        ['%', PREPROC_PREC.MULTIPLY],
+        ['||', PREPROC_PREC.LOGICAL_OR],
+        ['&&', PREPROC_PREC.LOGICAL_AND],
+        ['|', PREPROC_PREC.INCLUSIVE_OR],
+        ['^', PREPROC_PREC.EXCLUSIVE_OR],
+        ['&', PREPROC_PREC.BITWISE_AND],
+        ['==', PREPROC_PREC.EQUAL],
+        ['!=', PREPROC_PREC.EQUAL],
+        ['>', PREPROC_PREC.RELATIONAL],
+        ['>=', PREPROC_PREC.RELATIONAL],
+        ['<=', PREPROC_PREC.RELATIONAL],
+        ['<', PREPROC_PREC.RELATIONAL],
+        ['<<', PREPROC_PREC.SHIFT],
+        ['>>', PREPROC_PREC.SHIFT],
+      ];
+
+      return choice(...table.map(([operator, precedence]) => {
+        return prec.left(precedence, seq(
+          field('left', $._preproc_expression),
+          // @ts-ignore
+          field('operator', operator),
+          field('right', $._preproc_expression),
+        ));
+      }));
+    },
+
+    system_lib_string: _ => token(seq(
+      '<',
+      repeat(choice(/[^>\n]/, '\\>')),
+      '>',
     )),
 
     // Block level structures
@@ -301,6 +440,10 @@ module.exports = grammar({
         $.function,
         $.module_procedure,
         $.subroutine,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
       ))
     ),
 
@@ -326,7 +469,11 @@ module.exports = grammar({
       seq($.parameter_statement, $._end_of_statement),
       seq($.equivalence_statement, $._end_of_statement),
       seq($.data_statement, $._end_of_statement),
-      prec(1, seq($.statement_label, $.format_statement, $._end_of_statement))
+      prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
+      $.preproc_include,
+      $.preproc_def,
+      $.preproc_function_def,
+      $.preproc_call,
     )),
 
     use_statement: $ => seq(
@@ -716,10 +863,16 @@ module.exports = grammar({
 
     // Statements
 
-    _statement: $ => seq(
-      optional($.statement_label),
-      $._statements,
-      $._end_of_statement
+    _statement: $ => choice(
+      $.preproc_include,
+      $.preproc_def,
+      $.preproc_function_def,
+      $.preproc_call,
+      seq(
+        optional($.statement_label),
+        $._statements,
+        $._end_of_statement
+      )
     ),
 
     _statements: $ => choice(
@@ -1569,16 +1722,6 @@ module.exports = grammar({
       caseInsensitive('null'), '(', ')'
     )),
 
-    // This handles files preprocessed by gfortran -E
-    // Other preprocessors may use different syntax
-    preproc_file_line: $ => seq(
-      '#',
-      alias(/\d+/, $.preproc_line_number),
-      alias(/"[^"\n]*"/, $.preproc_filename),
-      optional(/\d+/),
-      $._newline
-    ),
-
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens
     // correctly as either a keyword or a plain identifier, we must
@@ -1667,4 +1810,15 @@ function blockStructureEnding ($, structType) {
     $._end_of_statement
   ))
   return obj
+}
+
+/**
+  * Creates a preprocessor regex rule
+  *
+  * @param {RegExp|Rule|String} command
+  *
+  * @return {AliasRule}
+  */
+function preprocessor(command) {
+  return alias(new RegExp('#[ \t]*' + command), '#' + command);
 }

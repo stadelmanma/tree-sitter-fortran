@@ -1,0 +1,141 @@
+================================================================================
+Include directives
+================================================================================
+
+#include "some/path.h"
+#include <some/path>
+#include MACRO
+#include MACRO(arg1, arg2)
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_include
+    path: (string_literal))
+  (preproc_include
+    path: (system_lib_string))
+  (preproc_include
+    path: (identifier))
+  (preproc_include
+    path: (call_expression
+      function: (identifier)
+      arguments: (argument_list
+        (identifier)
+        (identifier)))))
+
+================================================================================
+Object-like macro definitions
+================================================================================
+
+#define ONE
+#define TWO int a = b;
+#define FOUR (mno * pq)
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_def
+    name: (identifier))
+  (preproc_def
+    name: (identifier)
+    value: (preproc_arg))
+  (preproc_def
+    name: (identifier)
+    value: (preproc_arg))
+)
+
+================================================================================
+Function-like macro definitions
+================================================================================
+
+#define ONE() a
+#define TWO(b) c
+#define THREE(d, e) f
+#define FOUR(...) g
+#define FIVE(h, i, ...) j
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params)
+    value: (preproc_arg))
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params
+      (identifier))
+    value: (preproc_arg))
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params
+      (identifier)
+      (identifier))
+    value: (preproc_arg))
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params)
+    value: (preproc_arg))
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params
+      (identifier)
+      (identifier))
+    value: (preproc_arg)))
+
+================================================================================
+Unknown preprocessor directives
+================================================================================
+
+#pragma mark - UIViewController
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_call
+    directive: (preproc_directive)
+    argument: (preproc_arg)))
+
+============================================
+Preprocessed Files
+============================================
+
+# 1 "/path/some/file.F90"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/path/some/file.F90" 1
+program test
+# 1 "/path/some/file.F90" 4
+contains
+# 1 "other.f90" 1
+subroutine foo
+
+# 1 "internals.f90" 1
+  integer :: bar
+# 3 "other.F90" 2
+end subroutine foo
+# 30 "preproc.F90" 2
+end program test
+
+---
+
+(translation_unit
+  (preproc_call (preproc_directive) (preproc_arg))
+  (preproc_call (preproc_directive) (preproc_arg))
+  (preproc_call (preproc_directive) (preproc_arg))
+  (preproc_call (preproc_directive) (preproc_arg))
+  (program
+    (program_statement (name))
+    (preproc_call (preproc_directive) (preproc_arg))
+    (internal_procedures
+      (contains_statement)
+      (preproc_call (preproc_directive) (preproc_arg))
+      (subroutine
+        (subroutine_statement (name))
+          (preproc_call (preproc_directive) (preproc_arg))
+          (variable_declaration (intrinsic_type) (identifier))
+          (preproc_call (preproc_directive) (preproc_arg))
+        (end_subroutine_statement (name)))
+      (preproc_call (preproc_directive) (preproc_arg)))
+    (end_program_statement (name))))
+
