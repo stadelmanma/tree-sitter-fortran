@@ -9535,12 +9535,8 @@
       },
       "operator": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
-          {
-            "type": "!",
-            "named": false
-          },
           {
             "type": "+",
             "named": false
@@ -9552,10 +9548,6 @@
           {
             "type": "user_defined_operator",
             "named": true
-          },
-          {
-            "type": "~",
-            "named": false
           }
         ]
       }
@@ -9965,10 +9957,6 @@
   },
   {
     "type": "\n",
-    "named": false
-  },
-  {
-    "type": "!",
     "named": false
   },
   {
@@ -10841,10 +10829,6 @@
   },
   {
     "type": "||",
-    "named": false
-  },
-  {
-    "type": "~",
     "named": false
   }
 ]

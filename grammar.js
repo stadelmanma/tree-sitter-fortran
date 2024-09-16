@@ -74,7 +74,8 @@ module.exports = grammar({
     $._float_literal,
     $._boz_literal,
     $.string_literal,
-    $._end_of_statement
+    $._end_of_statement,
+    $._preproc_unary_operator,
   ],
 
   extras: $ => [
@@ -214,8 +215,10 @@ module.exports = grammar({
       seq('defined', $.identifier),
     ),
 
+    // Preprocessor unary operator uses an external scanner to catch
+    // '!' before its parsed as a comment
     preproc_unary_expression: $ => prec.left(PREPROC_PREC.UNARY, seq(
-      field('operator', choice('!', '~', '-', '+')),
+      field('operator', $._preproc_unary_operator),
       field('argument', $._preproc_expression),
     )),
 

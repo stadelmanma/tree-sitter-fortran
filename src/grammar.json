@@ -3542,25 +3542,8 @@
             "type": "FIELD",
             "name": "operator",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "!"
-                },
-                {
-                  "type": "STRING",
-                  "value": "~"
-                },
-                {
-                  "type": "STRING",
-                  "value": "-"
-                },
-                {
-                  "type": "STRING",
-                  "value": "+"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_preproc_unary_operator"
             }
           },
           {
@@ -15414,6 +15397,10 @@
     {
       "type": "SYMBOL",
       "name": "_end_of_statement"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_preproc_unary_operator"
     }
   ],
   "inline": [
