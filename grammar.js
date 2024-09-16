@@ -371,26 +371,7 @@ module.exports = grammar({
         $.defined_io_procedure,
     ),
 
-    subroutine: $ => seq(
-      $.subroutine_statement,
-      $._end_of_statement,
-      repeat(
-        choice(
-          $._specification_part,
-          alias($.preproc_if_in_specification_part, $.preproc_if),
-          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
-        ),
-      ),
-      repeat(
-        choice(
-          $._statement,
-          alias($.preproc_if_in_statements, $.preproc_if),
-          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
-        ),
-      ),
-      optional($.internal_procedures),
-      $.end_subroutine_statement
-    ),
+    subroutine: $ => procedure($, $.subroutine_statement, $.end_subroutine_statement),
 
     subroutine_statement: $ => seq(
       optional($._callable_interface_qualifers),
@@ -402,26 +383,7 @@ module.exports = grammar({
 
     end_subroutine_statement: $ => blockStructureEnding($, 'subroutine'),
 
-    module_procedure: $ => seq(
-      $.module_procedure_statement,
-      $._end_of_statement,
-      repeat(
-        choice(
-          $._specification_part,
-          alias($.preproc_if_in_specification_part, $.preproc_if),
-          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
-        ),
-      ),
-      repeat(
-        choice(
-          $._statement,
-          alias($.preproc_if_in_statements, $.preproc_if),
-          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
-        ),
-      ),
-      optional($.internal_procedures),
-      $.end_module_procedure_statement
-    ),
+    module_procedure: $ => procedure($, $.module_procedure_statement, $.end_module_procedure_statement),
 
     module_procedure_statement: $ => seq(
       optional($._callable_interface_qualifers),
@@ -431,26 +393,7 @@ module.exports = grammar({
 
     end_module_procedure_statement: $ => blockStructureEnding($, 'procedure'),
 
-    function: $ => seq(
-      $.function_statement,
-      $._end_of_statement,
-      repeat(
-        choice(
-          $._specification_part,
-          alias($.preproc_if_in_specification_part, $.preproc_if),
-          alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
-        ),
-      ),
-      repeat(
-        choice(
-          $._statement,
-          alias($.preproc_if_in_statements, $.preproc_if),
-          alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
-        ),
-      ),
-      optional($.internal_procedures),
-      $.end_function_statement
-    ),
+    function: $ => procedure($, $.function_statement, $.end_function_statement),
 
     function_statement: $ => seq(
       optional($._callable_interface_qualifers),
@@ -1979,4 +1922,36 @@ function preprocIf(suffix, content, precedence = 0) {
   */
 function preprocessor(command) {
   return alias(new RegExp('#[ \t]*' + command), '#' + command);
+}
+
+/**
+ * Common rule for procedures (function, subroutine, module procedure)
+ *
+ * @param {GrammarSymbols<string>} $
+ * @param {Rule} start_statement
+ * @param {Rule} end_statement
+ *
+ * @return {Rule}
+ */
+function procedure($, start_statement, end_statement) {
+  return seq(
+    start_statement,
+    $._end_of_statement,
+    repeat(
+      choice(
+        $._specification_part,
+        alias($.preproc_if_in_specification_part, $.preproc_if),
+        alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef)
+      ),
+    ),
+    repeat(
+      choice(
+        $._statement,
+        alias($.preproc_if_in_statements, $.preproc_if),
+        alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
+      ),
+    ),
+    optional($.internal_procedures),
+    end_statement
+  );
 }
