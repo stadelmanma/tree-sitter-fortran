@@ -1807,12 +1807,6 @@ function whiteSpacedKeyword (prefix, suffix, aliasAsWord = true) {
   return result
 }
 
-/* TODO
-function preprocessor (command) {
-  return alias(new RegExp('#[ \t]*' + command), '#' + command)
-}
-*/
-
 function commaSep (rule) {
   return optional(commaSep1(rule))
 }
