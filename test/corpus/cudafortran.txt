@@ -17,16 +17,13 @@ end program test
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_modification
       (variable_attributes)
-      (variable
-        (identifier)))
+      (identifier))
     (end_program_statement
       (name))))
 

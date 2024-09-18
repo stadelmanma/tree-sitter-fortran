@@ -387,8 +387,7 @@ end program test
           (preproc_arg))
         (variable_declaration
           (intrinsic_type)
-          (variable
-            (identifier)))
+          (identifier))
         (preproc_call
           (preproc_directive)
           (preproc_arg))
@@ -455,14 +454,12 @@ end module foo
         (type_name))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (preproc_if
         (identifier)
         (variable_declaration
           (intrinsic_type)
-          (variable
-            (identifier))))
+          (identifier)))
       (end_type_statement
         (name)))
     (end_module_statement
@@ -550,15 +547,13 @@ end module foo
         (subroutine_statement
           name: (name))
         (variable_declaration
-          (intrinsic_type)
-          (variable
-            (identifier)))
+          type: (intrinsic_type)
+          declarator: (identifier))
         (preproc_ifdef
           name: (identifier)
           (variable_declaration
-            (intrinsic_type)
-            (variable
-              (identifier)))
+            type: (intrinsic_type)
+            declarator: (identifier))
           (assignment_statement
             left: (identifier)
             right: (math_expression
@@ -612,9 +607,8 @@ end module foo
         (subroutine_statement
           name: (name))
         (variable_declaration
-          (intrinsic_type)
-          (variable
-            (identifier)))
+          type: (intrinsic_type)
+          declarator: (identifier))
         (assignment_statement
           left: (identifier)
           right: (number_literal

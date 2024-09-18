@@ -90,9 +90,8 @@ end module
         (argument_list
           (number_literal)))
       (type_qualifier)
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (math_expression
           (call_expression
             (identifier)
@@ -105,18 +104,15 @@ end module
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier))
     (variable_declaration
       (intrinsic_type)
       (kind
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
@@ -129,9 +125,8 @@ end module
       (kind
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
@@ -144,9 +139,8 @@ end module
       (kind
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
@@ -173,10 +167,8 @@ end module
           (kind
             (argument_list
               (number_literal)))
-          (variable
-            (identifier))
-          (variable
-            (identifier)))
+          (identifier)
+          (identifier))
         (end_function_statement))
       (function
         (function_statement
@@ -188,10 +180,8 @@ end module
             (identifier)))
         (variable_declaration
           (intrinsic_type)
-          (variable
-            (identifier))
-          (variable
-            (identifier)))
+          (identifier)
+          (identifier))
         (end_function_statement)))
     (end_module_statement)))
 
@@ -228,17 +218,15 @@ end interface
         (none))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier))
-        (variable
+        (identifier)
+        (sized_declarator
           (identifier)
           (size
             (number_literal)
             (number_literal))))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (end_subroutine_statement
         (name)))
     (function
@@ -252,14 +240,11 @@ end interface
       (variable_declaration
         (intrinsic_type)
         (type_qualifier)
-        (variable
-          (identifier))
-        (variable
-          (identifier)))
+        (identifier)
+        (identifier))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (end_function_statement
         (name)))
     (end_interface_statement)))
@@ -298,17 +283,15 @@ end interface
         (none))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier))
-        (variable
+        (identifier)
+        (sized_declarator
           (identifier)
           (size
             (number_literal)
             (number_literal))))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (end_subroutine_statement
         (name)))
     (function
@@ -322,14 +305,11 @@ end interface
       (variable_declaration
         (intrinsic_type)
         (type_qualifier)
-        (variable
-          (identifier))
-        (variable
-          (identifier)))
+        (identifier)
+        (identifier))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (end_function_statement
         (name)))
     (end_interface_statement)))
@@ -396,13 +376,11 @@ end interface operator (.not.)
           (identifier)))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier)))
+        (identifier))
       (variable_declaration
         (intrinsic_type)
         (type_qualifier)
-        (variable
-          (identifier)))
+        (identifier))
       (end_function_statement))
     (end_interface_statement
       (operator))))
@@ -500,16 +478,14 @@ END SUBROUTINE
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (intrinsic_type)
       (kind
         (argument_list
           (number_literal)))
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (assignment_statement
       (identifier)
       (math_expression
@@ -544,8 +520,7 @@ END SUBROUTINE
       (name))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier)))
+      (identifier))
     (subroutine_call
       (identifier)
       (argument_list
@@ -563,16 +538,14 @@ END SUBROUTINE
         (variable_declaration
           (intrinsic_type)
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (intrinsic_type)
           (kind
             (argument_list
               (assumed_size)))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (intrinsic_type)
           (kind
@@ -580,8 +553,7 @@ END SUBROUTINE
             (argument_list
               (assumed_size)))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (assignment_statement
           (identifier)
           (call_expression
@@ -650,8 +622,7 @@ end function
     (variable_declaration
       (derived_type
         (type_name))
-      (variable
-        (identifier)))
+      (identifier))
     (assignment_statement
       (derived_type_member_expression
         (identifier)
@@ -750,15 +721,12 @@ end function test
       (kind
         (argument_list
           (number_literal)))
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier))
     (variable_declaration
       (intrinsic_type)
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (parenthesized_expression
           (relational_expression
             (identifier)
@@ -777,9 +745,8 @@ end function test
           (kind
             (argument_list
               (number_literal)))
-          (assignment_statement
-            (variable
-              (identifier))
+          (init_declarator
+            (identifier)
             (number_literal)))
         (end_function_statement))
       (subroutine
@@ -789,8 +756,7 @@ end function test
             (identifier)))
         (variable_declaration
           (intrinsic_type)
-          (variable
-            (identifier)))
+          (identifier))
         (assignment_statement
           (identifier)
           (math_expression
@@ -845,20 +811,14 @@ end program
         (kind
           (argument_list
             (number_literal)))
-        (variable
-          (identifier))
-        (variable
-          (identifier))
-        (variable
-          (identifier)))
+        (identifier)
+        (identifier)
+        (identifier))
       (variable_declaration
         (intrinsic_type)
-        (variable
-          (identifier))
-        (variable
-          (identifier))
-        (variable
-          (identifier)))
+        (identifier)
+        (identifier)
+        (identifier))
       (variable_declaration
         (intrinsic_type)
         (kind
@@ -870,15 +830,13 @@ end program
             (extent_specifier)
             (extent_specifier)
             (extent_specifier)))
-        (variable
-          (identifier)))
+        (identifier))
       (variable_declaration
         (procedure
           (procedure_attribute)
           (procedure_attribute))
-        (pointer_association_statement
-          (variable
-            (identifier))
+        (pointer_init_declarator
+          (identifier)
           (null_literal)))
       (derived_type_procedures
         (contains_statement)
@@ -1056,17 +1014,15 @@ end program test
         (procedure
           (procedure_interface)
           (procedure_attribute))
-        (pointer_association_statement
-          (variable
-            (identifier))
+        (pointer_init_declarator
+          (identifier)
           (null_literal)))
       (variable_declaration
         (procedure
           (procedure_interface)
           (procedure_attribute)
           (procedure_attribute))
-        (variable
-          (identifier)))
+        (identifier))
       (end_type_statement
         (name)))
     (end_program_statement
@@ -1160,8 +1116,7 @@ END MODULE BoundingBox_Method
           (derived_type
             (type_name))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_subroutine_statement
           (name)))
       (end_interface_statement))
@@ -1179,8 +1134,7 @@ END MODULE BoundingBox_Method
           (derived_type
             (type_name))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_function_statement
           (name)))
       (end_interface_statement))
@@ -1230,14 +1184,12 @@ end module test
         (variable_declaration
           (procedure
             (procedure_interface))
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (procedure
             (procedure_interface))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (subroutine_call
           (identifier)
           (argument_list))
@@ -1278,9 +1230,8 @@ end program block_demo
       (none))
     (variable_declaration
       (intrinsic_type)
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (number_literal)))
     (print_statement
       (format_identifier)
@@ -1289,9 +1240,8 @@ end program block_demo
     (block_construct
       (variable_declaration
         (intrinsic_type)
-        (assignment_statement
-          (variable
-            (identifier))
+        (init_declarator
+          (identifier)
           (number_literal)))
       (print_statement
         (format_identifier)
@@ -1304,9 +1254,8 @@ end program block_demo
         (block_label_start_expression)
         (variable_declaration
           (intrinsic_type)
-          (assignment_statement
-            (variable
-              (identifier))
+          (init_declarator
+            (identifier)
             (number_literal)))
         (print_statement
           (format_identifier)

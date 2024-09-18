@@ -735,8 +735,12 @@ module.exports = grammar({
     )),
 
     variable_declaration: $ => seq(
-      choice($._intrinsic_type, $.derived_type, alias($.procedure_declaration, $.procedure)),
-      optional(seq(',', commaSep1($.type_qualifier))),
+      field('type', choice(
+        $._intrinsic_type,
+        $.derived_type,
+        alias($.procedure_declaration, $.procedure)
+      )),
+      optional(seq(',', commaSep1(field('attribute', $.type_qualifier)))),
       optional('::'),
       $._declaration_targets
     ),
@@ -771,30 +775,35 @@ module.exports = grammar({
       ')'
     ),
 
-    variable: $ => prec.right(1, seq(
+    _variable_declarator: $ => choice(
+      $.identifier,
+      $.sized_declarator,
+    ),
+
+    sized_declarator: $ => prec.right(1, seq(
         $.identifier,
-        optional(choice(
+        choice(
           alias($.argument_list, $.size),
           $.character_length
-        ))
+        )
     )),
 
     _declaration_assignment: $ => seq(
-      field('left', $.variable),
+      field('left', $._variable_declarator),
       '=',
       field('right', $._expression)
     ),
     _declaration_pointer_association: $ => seq(
-      field('left', $.variable),
+      field('left', $._variable_declarator),
       '=>',
       field('right', $._expression)
     ),
 
-    _declaration_targets: $ => commaSep1(choice(
-      $.variable,
-      alias($._declaration_assignment, $.assignment_statement),
-      alias($._declaration_pointer_association, $.pointer_association_statement),
-    )),
+    _declaration_targets: $ => commaSep1(field('declarator', choice(
+      $._variable_declarator,
+      alias($._declaration_assignment, $.init_declarator),
+      alias($._declaration_pointer_association, $.pointer_init_declarator),
+    ))),
 
     _intrinsic_type: $ => prec.right(seq(
       $.intrinsic_type,

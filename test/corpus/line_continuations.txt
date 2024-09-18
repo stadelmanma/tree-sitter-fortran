@@ -79,11 +79,9 @@ end program test
       (name))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier))
+      (identifier)
       (comment)
-      (variable
-        (identifier)))
+      (identifier))
     (end_program_statement
       (name))))
 
@@ -118,8 +116,7 @@ end program test
             (identifier)))
         (variable_declaration
           (intrinsic_type)
-          (variable
-            (identifier)))
+          (identifier))
         (end_function_statement
           (name))))
     (end_program_statement

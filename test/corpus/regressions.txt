@@ -39,7 +39,7 @@ end program example_padl
     (variable_declaration
       (derived_type
         (type_name))
-      (variable (identifier)))
+      (identifier))
     (assignment_statement
       (identifier)
       (string_literal))

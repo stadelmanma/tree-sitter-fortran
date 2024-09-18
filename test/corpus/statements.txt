@@ -214,125 +214,112 @@ END PROGRAM
     (program_statement
       (name))
     (variable_declaration
-      (intrinsic_type)
-      (type_qualifier)
-      (assignment_statement
-        (variable
-          (identifier))
-        (number_literal))
-      (assignment_statement
-        (variable
-          (identifier))
-        (number_literal)))
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      declarator: (init_declarator
+        left: (identifier)
+        right: (number_literal))
+      declarator: (init_declarator
+        left: (identifier)
+        right: (number_literal)))
     (variable_declaration
-      (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier))
-      (variable
-        (identifier))
-      (variable
+      type: (intrinsic_type)
+      declarator: (identifier)
+      declarator: (identifier)
+      declarator: (identifier)
+      declarator: (sized_declarator
         (identifier)
         (size
           (assumed_size))))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (number_literal)))
-      (variable
+      declarator: (sized_declarator
         (identifier)
         (size
           (extent_specifier
             (number_literal)
             (math_expression
-              (identifier)
-              (number_literal)))))
-      (variable
+              left: (identifier)
+              right: (number_literal)))))
+      declarator: (sized_declarator
         (identifier)
         (size
           (identifier)))
-      (variable
+      declarator: (sized_declarator
         (identifier)
         (size
           (extent_specifier
             (number_literal)
             (assumed_size)))))
     (variable_declaration
-      (intrinsic_type)
-      (kind)
-      (type_qualifier)
-      (variable
-        (identifier)))
+      type: (intrinsic_type)
+      type: (kind)
+      attribute: (type_qualifier)
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (keyword_argument
-            (identifier)
-            (number_literal))))
-      (type_qualifier)
-      (type_qualifier)
-      (pointer_association_statement
-        (variable
-          (identifier))
-        (identifier)))
+            name: (identifier)
+            value: (number_literal))))
+      attribute: (type_qualifier)
+      attribute: (type_qualifier)
+      declarator: (pointer_init_declarator
+        left: (identifier)
+        right: (identifier)))
     (variable_declaration
-      (intrinsic_type)
-      (type_qualifier
+      type: (intrinsic_type)
+      attribute: (type_qualifier
         (argument_list
           (extent_specifier)))
-      (type_qualifier)
-      (variable
-        (identifier)))
+      attribute: (type_qualifier)
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (keyword_argument
-            (identifier)
-            (assumed_shape))))
-      (variable
-        (identifier)))
+            name: (identifier)
+            value: (assumed_shape))))
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (keyword_argument
-            (identifier)
-            (assumed_size))))
-      (variable
-        (identifier)))
+            name: (identifier)
+            value: (assumed_size))))
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (assumed_size)
         (argument_list
           (identifier)))
-      (variable
-        (identifier)))
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (assumed_size)))
-      (variable
-        (identifier)))
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (variable
+      type: (intrinsic_type)
+      declarator: (sized_declarator
         (identifier)
         (character_length))
-      (variable
+      declarator: (sized_declarator
         (identifier)
         (character_length)))
     (variable_declaration
-      (intrinsic_type)
-      (assignment_statement
-        (variable
-          (identifier))
-        (number_literal)))
+      type: (intrinsic_type)
+      declarator: (init_declarator
+        left: (identifier)
+        right: (number_literal)))
     (end_program_statement)))
 
 ================================================================================
@@ -357,21 +344,18 @@ END PROGRAM
     (variable_declaration
       (derived_type
         (type_name))
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (derived_type
         (intrinsic_type))
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (derived_type
         (intrinsic_type)
         (kind
           (argument_list
             (identifier))))
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (derived_type
         (intrinsic_type)
@@ -381,20 +365,17 @@ END PROGRAM
               (identifier)
               (argument_list
                 (number_literal))))))
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (derived_type
         (type_name))
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (derived_type
         (unlimited_polymorphic))
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (end_program_statement)))
 
 ================================================================================
@@ -439,14 +420,12 @@ end module foo
           (derived_type
             (type_name))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (derived_type
             (intrinsic_type))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_subroutine_statement
           (name)))
       (subroutine
@@ -459,8 +438,7 @@ end module foo
           (derived_type
             (type_name))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (derived_type
             (intrinsic_type)
@@ -468,8 +446,7 @@ end module foo
               (argument_list
                 (identifier))))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_subroutine_statement
           (name)))
       (subroutine
@@ -482,8 +459,7 @@ end module foo
           (derived_type
             (unlimited_polymorphic))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (variable_declaration
           (derived_type
             (intrinsic_type)
@@ -494,8 +470,7 @@ end module foo
                   (argument_list
                     (number_literal))))))
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_subroutine_statement
           (name))))
     (end_module_statement
@@ -522,23 +497,21 @@ END PROGRAM
       (name))
     (variable_modification
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_modification
       (type_qualifier)
-      (variable
+      (sized_declarator
         (identifier)
         (size
           (extent_specifier)
           (extent_specifier)))
-      (variable
+      (sized_declarator
         (identifier)
         (size
           (number_literal))))
     (variable_modification
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (parameter_statement
       (parameter_assignment
         (identifier)
@@ -720,20 +693,16 @@ END PROGRAM TEST
     (program_statement
       (name))
     (variable_declaration
-      (intrinsic_type)
-      (type_qualifier
+      type: (intrinsic_type)
+      attribute: (type_qualifier
         (argument_list
           (identifier)))
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      declarator: (identifier)
+      declarator: (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      type: (intrinsic_type)
+      declarator: (identifier)
+      declarator: (identifier))
     (assignment_statement
       left: (identifier)
       right: (number_literal))
@@ -1709,8 +1678,7 @@ end function test4
       (derived_type
         (type_name))
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (end_function_statement
       (name)))
   (function
@@ -1766,16 +1734,12 @@ END PROGRAM
       (name))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier))
     (namelist_statement
       (variable_group
         (name)
@@ -1865,8 +1829,7 @@ end subroutine print_decorated_numbers
       (derived_type
         (unlimited_polymorphic))
       (type_qualifier)
-      (variable
-        (identifier)))
+      (identifier))
     (select_type_statement
       (selector
         (identifier))
@@ -1959,8 +1922,7 @@ end program test
       (name))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier)))
+      (identifier))
     (open_statement
       (keyword_argument
         (identifier)
@@ -2027,7 +1989,7 @@ end subroutine assumed_rank
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
-      (variable
+      (sized_declarator
         (identifier)
         (size
           (assumed_rank))))
@@ -2151,8 +2113,7 @@ end program
         (variable_declaration
           (intrinsic_type)
           (type_qualifier)
-          (variable
-            (identifier)))
+          (identifier))
         (end_function_statement
           (name)))
       (end_interface_statement))
@@ -2169,19 +2130,15 @@ end program
         (variable_declaration
           (intrinsic_type)
           (type_qualifier)
-          (variable
-            (identifier))
-          (variable
-            (identifier)))
+          (identifier)
+          (identifier))
         (end_function_statement
           (name)))
       (end_interface_statement))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier))
     (print_statement
       (format_identifier)
       (output_item_list

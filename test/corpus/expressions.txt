@@ -228,9 +228,9 @@ end program
     (program_statement
       (name))
     (variable_declaration
-      (intrinsic_type)
-      (assignment_statement
-        left: (variable
+      type: (intrinsic_type)
+      declarator: (init_declarator
+        left: (sized_declarator
           (identifier)
           (size
             (number_literal)))
@@ -239,12 +239,12 @@ end program
           (number_literal)
           (number_literal))))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (number_literal)))
-      (assignment_statement
-        left: (variable
+      declarator: (init_declarator
+        left: (sized_declarator
           (identifier)
           (size
             (number_literal)))
@@ -264,12 +264,12 @@ end program
             (argument_list
               (number_literal))))))
     (variable_declaration
-      (intrinsic_type)
-      (kind
+      type: (intrinsic_type)
+      type: (kind
         (argument_list
           (number_literal)))
-      (assignment_statement
-        left: (variable
+      declarator: (init_declarator
+        left: (sized_declarator
           (identifier)
           (size
             (number_literal)))
@@ -898,18 +898,16 @@ end program
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (number_literal)))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (array_literal
           (number_literal)
           (number_literal))))
@@ -918,9 +916,8 @@ end program
       (type_qualifier
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (array_literal
           (number_literal)
           (number_literal))))
@@ -954,16 +951,14 @@ end program array_constructors
       (none))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier)))
+      (identifier))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier
         (argument_list
           (number_literal)))
-      (assignment_statement
-        (variable
-          (identifier))
+      (init_declarator
+        (identifier)
         (array_literal
           (implied_do_loop_expression
             (identifier)
@@ -976,8 +971,7 @@ end program array_constructors
       (type_qualifier
         (argument_list
           (number_literal)))
-      (variable
-        (identifier)))
+      (identifier))
     (assignment_statement
       (identifier)
       (array_literal
@@ -1067,21 +1061,16 @@ end program
       (name))
     (variable_declaration
       (intrinsic_type)
-      (variable
-        (identifier))
-      (variable
-        (identifier))
-      (variable
-        (identifier))
-      (variable
-        (identifier)))
+      (identifier)
+      (identifier)
+      (identifier)
+      (identifier))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier
         (argument_list
           (number_literal)))
-      (variable
-        (identifier)))
+      (identifier))
     (assignment_statement
       (identifier)
       (number_literal))
