@@ -1,33 +1,44 @@
 name: CI
 
 on:
-  pull_request:
-    branches:
-      - "**"
   push:
-    branches:
-      - "master"
+    branches: [master]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Test parser
+    runs-on: ${{matrix.os}}
     strategy:
-      fail-fast: true
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v1
+      - name: Run tests
+        uses: tree-sitter/parser-test-action@v2
         with:
-          node-version: 20
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
-      - uses: actions/cache@v3
-        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+          test-rust: ${{runner.os == 'Linux'}}
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v4
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node
-      - run: npm install
-      - run: npm test
+          files: examples/*
