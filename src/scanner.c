@@ -9,6 +9,7 @@ enum TokenType {
     FLOAT_LITERAL,
     BOZ_LITERAL,
     STRING_LITERAL,
+    STRING_LITERAL_KIND,
     END_OF_STATEMENT,
     PREPROC_UNARY_OPERATOR,
 };
@@ -23,7 +24,8 @@ static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 // ignore current character and advance
 static inline void skip(TSLexer *lexer) { lexer->advance(lexer, true); }
 
-static bool is_ident_char(char chr) { return iswalnum(chr) || chr == '_'; }
+// is `chr` ok for an identifier?
+static bool is_identifier_char(char chr) { return iswalnum(chr) || chr == '_'; }
 
 static bool is_boz_sentinel(char chr) {
     switch (chr) {
@@ -220,6 +222,34 @@ static bool scan_end_line_continuation(Scanner *scanner, TSLexer *lexer) {
     return true;
 }
 
+static bool scan_string_literal_kind(TSLexer *lexer) {
+  // Strictly, it's allowed for the kind to be an integer literal, in
+  // practice I've not seen it
+  if (!iswalpha(lexer->lookahead)) {
+    return false;
+  }
+
+  lexer->result_symbol = STRING_LITERAL_KIND;
+
+  // We need two characters of lookahead to see `_"`
+  char current_char = '\0';
+
+  while (is_identifier_char(lexer->lookahead) && !lexer->eof(lexer)) {
+      current_char = lexer->lookahead;
+      // Don't capture the trailing underscore as part of the kind identifier
+      if (lexer->lookahead == '_') {
+          lexer->mark_end(lexer);
+      }
+      advance(lexer);
+  }
+
+  if ((current_char != '_') || (lexer->lookahead != '"' && lexer->lookahead != '\'')) {
+    return false;
+  }
+
+  return true;
+}
+
 static bool scan_string_literal(TSLexer *lexer) {
     const char opening_quote = lexer->lookahead;
 
@@ -340,6 +370,14 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
 
     if (scan_start_line_continuation(scanner, lexer)) {
         return true;
+    }
+
+    if (valid_symbols[STRING_LITERAL_KIND]) {
+      // This may need a lot of lookahead, so should (probably) always
+      // be the last token to look for
+      if (scan_string_literal_kind(lexer)) {
+        return true;
+      }
     }
 
     return false;

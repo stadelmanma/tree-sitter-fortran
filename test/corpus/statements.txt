@@ -1537,6 +1537,7 @@ PROGRAM TEST
   PRINT *
   PRINT *, 'test'
   PRINT IUNIT, x, y, z
+  print'(a)', "hello"
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1558,6 +1559,11 @@ END PROGRAM
         (identifier)
         (identifier)
         (identifier)))
+    (print_statement
+      (format_identifier
+        (string_literal))
+      (output_item_list
+        (string_literal)))
     (end_program_statement)))
 
 ================================================================================

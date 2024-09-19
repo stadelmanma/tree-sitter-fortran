@@ -144,6 +144,8 @@ PROGRAM TEST
     sngl_qt = '"double in single quotes"'
 
     val = "one"//'two'//sngl_qt//dble_qt
+
+    with_kind = ck_"string with kind"
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -153,38 +155,41 @@ END PROGRAM
     (program_statement
       (name))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (concatenation_expression
-        (string_literal)
-        (concatenation_expression
-          (string_literal)
-          (concatenation_expression
-            (identifier)
-            (identifier)))))
+      left: (identifier)
+      right: (concatenation_expression
+        left: (string_literal)
+        right: (concatenation_expression
+          left: (string_literal)
+          right: (concatenation_expression
+            left: (identifier)
+            right: (identifier)))))
+    (assignment_statement
+      left: (identifier)
+      right: (string_literal kind: (identifier)))
     (end_program_statement)))
 
 ================================================================================

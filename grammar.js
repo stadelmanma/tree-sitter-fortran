@@ -73,7 +73,8 @@ module.exports = grammar({
     $._integer_literal,
     $._float_literal,
     $._boz_literal,
-    $.string_literal,
+    $._string_literal,
+    $._string_literal_kind,
     $._end_of_statement,
     $._preproc_unary_operator,
   ],
@@ -1787,6 +1788,19 @@ module.exports = grammar({
     null_literal: $ => prec(1, seq(
       caseInsensitive('null'), '(', ')'
     )),
+
+    string_literal: $ => seq(
+      // Having a kind _prefix_, with an underscore and no whitespace,
+      // is _really_ hard to parse without breaking other things, so
+      // we have to rely on an external scanner
+      optional(seq(
+        field('kind', alias($._string_literal_kind, $.identifier)),
+        // Although external scanner enforces trailing underscore, we
+        // also need to *capture* it here
+        token.immediate('_'),
+      )),
+      $._string_literal,
+    ),
 
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens

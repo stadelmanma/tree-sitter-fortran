@@ -3436,6 +3436,22 @@
     }
   },
   {
+    "type": "filename",
+    "named": true,
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "forall_statement",
     "named": true,
     "fields": {},
@@ -8901,6 +8917,22 @@
     }
   },
   {
+    "type": "string_literal",
+    "named": true,
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "submodule",
     "named": true,
     "fields": {},
@@ -10809,10 +10841,6 @@
     "named": false
   },
   {
-    "type": "filename",
-    "named": true
-  },
-  {
     "type": "final",
     "named": false
   },
@@ -10938,11 +10966,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
@@ -11111,10 +11139,6 @@
   {
     "type": "stop",
     "named": false
-  },
-  {
-    "type": "string_literal",
-    "named": true
   },
   {
     "type": "submodule",
