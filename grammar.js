@@ -630,15 +630,13 @@ module.exports = grammar({
 
     derived_type_definition: $ => seq(
       $.derived_type_statement,
-      optional($.public_statement),
-      optional($.private_statement),
-      optional(
-        seq(
-          alias(caseInsensitive('sequence'), $.sequence_statement),
-          $._end_of_statement
-        )
-      ),
       repeat(choice(
+        $.public_statement,
+        $.private_statement,
+        seq(
+            alias(caseInsensitive('sequence'), $.sequence_statement),
+            $._end_of_statement
+        ),
         seq($.include_statement, $._end_of_statement),
         seq($.variable_declaration, $._end_of_statement),
         alias($.preproc_if_in_derived_type, $.preproc_if),

@@ -762,6 +762,7 @@ program test
   end type
   type, public :: custom_type
     sequence
+    private
     real(8) :: x,y,z
     integer :: w,h,l
     real(eb), allocatable, dimension(:, :, :) :: vals
@@ -800,6 +801,7 @@ end program
         (access_specifier)
         (type_name))
       (sequence_statement)
+      (private_statement)
       (variable_declaration
         (intrinsic_type)
         (kind
