@@ -7606,6 +7606,23 @@
           ]
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "argument_list"
+              },
+              "named": true,
+              "value": "derived_type_parameter_list"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "_end_of_statement"
         }
@@ -8750,8 +8767,25 @@
               }
             },
             {
-              "type": "SYMBOL",
-              "name": "_type_name"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_type_name"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "kind"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
             },
             {
               "type": "SYMBOL",
@@ -9044,6 +9078,32 @@
           },
           "named": false,
           "value": "intrinsic"
+        },
+        {
+          "type": "FIELD",
+          "name": "type_param",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[kK][iI][nN][dD]"
+            },
+            "named": false,
+            "value": "kind"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_param",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[lL][eE][nN]"
+            },
+            "named": false,
+            "value": "len"
+          }
         },
         {
           "type": "ALIAS",

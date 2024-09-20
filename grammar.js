@@ -676,6 +676,7 @@ module.exports = grammar({
         seq(optional('::'), $._type_name),
         seq(',', commaSep1($._derived_type_qualifier), '::', $._type_name)
       ),
+      optional(alias($.argument_list, $.derived_type_parameter_list)),
       $._end_of_statement
     ),
 
@@ -826,7 +827,14 @@ module.exports = grammar({
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       // Strictly, only `class` can be unlimited polymorphic
-      choice(prec.dynamic(1, $._intrinsic_type), $._type_name, $.unlimited_polymorphic),
+      choice(
+        prec.dynamic(1, $._intrinsic_type),
+        seq(
+          $._type_name,
+          optional($.kind),
+        ),
+        $.unlimited_polymorphic
+      ),
       ')'
     ),
 
@@ -866,6 +874,9 @@ module.exports = grammar({
         ')'
       ),
       caseInsensitive('intrinsic'),
+      // Next two technically only valid on derived type components
+      field('type_param', caseInsensitive('kind')),
+      field('type_param', caseInsensitive('len')),
       caseInsensitive('managed'),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),

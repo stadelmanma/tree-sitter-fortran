@@ -776,6 +776,13 @@ program test
        procedure :: one, two => three
        final :: finalize
   end type custom_type
+
+  type, abstract :: matrix(k, d)
+    integer, kind :: k = kind(0.0)
+    integer (selected_int_kind(12)), len :: d
+    real(k) :: element(d, d)
+  end type
+    
 end program
 
 --------------------------------------------------------------------------------
@@ -863,6 +870,41 @@ end program
           (method_name)))
       (end_type_statement
         (name)))
+    (derived_type_definition
+      (derived_type_statement
+        (abstract_specifier)
+        (type_name)
+        (derived_type_parameter_list
+          (identifier)
+          (identifier)))
+      (variable_declaration
+        (intrinsic_type)
+        (type_qualifier)
+        (init_declarator
+          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
+      (variable_declaration
+        (intrinsic_type)
+        (kind
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal))))
+        (type_qualifier)
+        (identifier))
+      (variable_declaration
+        (intrinsic_type)
+        (kind
+          (identifier))
+        (sized_declarator
+          (identifier)
+          (size
+            (identifier)
+            (identifier))))
+      (end_type_statement))
     (end_program_statement)))
 
 ================================================================================
