@@ -189,7 +189,8 @@ END PROGRAM
             right: (identifier)))))
     (assignment_statement
       left: (identifier)
-      right: (string_literal kind: (identifier)))
+      right: (string_literal
+        kind: (identifier)))
     (end_program_statement)))
 
 ================================================================================
@@ -246,8 +247,7 @@ end program
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (number_literal)))
+        (number_literal))
       declarator: (init_declarator
         left: (sized_declarator
           (identifier)
@@ -271,8 +271,7 @@ end program
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (number_literal)))
+        (number_literal))
       declarator: (init_declarator
         left: (sized_declarator
           (identifier)
@@ -1007,8 +1006,7 @@ end program array_constructors
             (array_literal
               (intrinsic_type)
               (kind
-                (argument_list
-                  (identifier)))
+                (identifier))
               (number_literal)
               (number_literal)
               (number_literal)
@@ -1030,10 +1028,9 @@ end program array_constructors
         (array_literal
           (intrinsic_type)
           (kind
-            (argument_list
-              (keyword_argument
-                (identifier)
-                (number_literal))))
+            (keyword_argument
+              (identifier)
+              (number_literal)))
           (string_literal)
           (string_literal)
           (string_literal))))

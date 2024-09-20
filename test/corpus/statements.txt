@@ -105,8 +105,7 @@ END PROGRAM
       (implicit_range)
       (intrinsic_type)
       (kind
-        (argument_list
-          (number_literal)))
+        (number_literal))
       (implicit_range)
       (intrinsic_type)
       (kind)
@@ -234,8 +233,7 @@ END PROGRAM
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (number_literal)))
+        (number_literal))
       declarator: (sized_declarator
         (identifier)
         (size
@@ -262,10 +260,9 @@ END PROGRAM
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (keyword_argument
-            name: (identifier)
-            value: (number_literal))))
+        (keyword_argument
+          name: (identifier)
+          value: (number_literal)))
       attribute: (type_qualifier)
       attribute: (type_qualifier)
       declarator: (pointer_init_declarator
@@ -281,31 +278,27 @@ END PROGRAM
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (keyword_argument
-            name: (identifier)
-            value: (assumed_shape))))
+        (keyword_argument
+          name: (identifier)
+          value: (assumed_shape)))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (keyword_argument
-            name: (identifier)
-            value: (assumed_size))))
+        (keyword_argument
+          name: (identifier)
+          value: (assumed_size)))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
         (assumed_size)
-        (argument_list
-          (identifier)))
+        (identifier))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
       type: (kind
-        (argument_list
-          (assumed_size)))
+        (assumed_size))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
@@ -353,18 +346,16 @@ END PROGRAM
       (derived_type
         (intrinsic_type)
         (kind
-          (argument_list
-            (identifier))))
+          (identifier)))
       (identifier))
     (variable_declaration
       (derived_type
         (intrinsic_type)
         (kind
-          (argument_list
-            (call_expression
-              (identifier)
-              (argument_list
-                (number_literal))))))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
       (identifier))
     (variable_declaration
       (derived_type
@@ -443,8 +434,7 @@ end module foo
           (derived_type
             (intrinsic_type)
             (kind
-              (argument_list
-                (identifier))))
+              (identifier)))
           (type_qualifier)
           (identifier))
         (end_subroutine_statement
@@ -464,11 +454,10 @@ end module foo
           (derived_type
             (intrinsic_type)
             (kind
-              (argument_list
-                (call_expression
-                  (identifier)
-                  (argument_list
-                    (number_literal))))))
+              (call_expression
+                (identifier)
+                (argument_list
+                  (number_literal)))))
           (type_qualifier)
           (identifier))
         (end_subroutine_statement
@@ -1850,11 +1839,10 @@ end subroutine print_decorated_numbers
       (type_statement
         (intrinsic_type)
         (kind
-          (argument_list
-            (call_expression
-              (identifier)
-              (argument_list
-                (number_literal)))))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal))))
         (write_statement
           (unit_identifier)
           (format_identifier
@@ -1864,11 +1852,10 @@ end subroutine print_decorated_numbers
       (type_statement
         (intrinsic_type)
         (kind
-          (argument_list
-            (call_expression
-              (identifier)
-              (argument_list
-                (number_literal)))))
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal))))
         (write_statement
           (unit_identifier)
           (format_identifier

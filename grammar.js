@@ -92,7 +92,7 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$._expression, $.complex_literal],
-    [$.argument_list, $.parenthesized_expression],
+    [$._argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.data_set, $._expression],
     [$.data_value, $._expression],
@@ -833,7 +833,7 @@ module.exports = grammar({
     unlimited_polymorphic: $ => '*',
 
     kind: $ => choice(
-      seq(optional(alias('*', $.assumed_size)), $.argument_list),
+      seq(optional(alias('*', $.assumed_size)), $._argument_list),
       seq('*', choice(/\d+/, $.parenthesized_expression))
     ),
 
@@ -1683,7 +1683,8 @@ module.exports = grammar({
       ')'
     ),
 
-    argument_list: $ => prec.dynamic(
+    // Unnamed node so we can reuse it for e.g. kind
+    _argument_list: $ => prec.dynamic(
       1,
       seq(
         '(',
@@ -1697,6 +1698,8 @@ module.exports = grammar({
         ')'
       )
     ),
+
+    argument_list: $ => $._argument_list,
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(

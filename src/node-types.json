@@ -4804,7 +4804,11 @@
       "required": false,
       "types": [
         {
-          "type": "argument_list",
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "assumed_rank",
           "named": true
         },
         {
@@ -4812,7 +4816,71 @@
           "named": true
         },
         {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "extent_specifier",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
           "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
           "named": true
         }
       ]
@@ -10966,11 +11034,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",

@@ -8794,7 +8794,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "argument_list"
+              "name": "_argument_list"
             }
           ]
         },
@@ -14601,7 +14601,7 @@
         }
       ]
     },
-    "argument_list": {
+    "_argument_list": {
       "type": "PREC_DYNAMIC",
       "value": 1,
       "content": {
@@ -14692,6 +14692,10 @@
           }
         ]
       }
+    },
+    "argument_list": {
+      "type": "SYMBOL",
+      "name": "_argument_list"
     },
     "keyword_argument": {
       "type": "PREC",
@@ -15492,7 +15496,7 @@
       "complex_literal"
     ],
     [
-      "argument_list",
+      "_argument_list",
       "parenthesized_expression"
     ],
     [
