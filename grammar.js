@@ -101,6 +101,7 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.elsewhere_clause],
     [$.interface_statement],
+    [$.intrinsic_type],
     [$.intrinsic_type, $.identifier],
     [$.module_statement, $.procedure_qualifier],
     [$.procedure_declaration],
@@ -418,7 +419,7 @@ module.exports = grammar({
       prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
-        $._intrinsic_type,
+        $.intrinsic_type,
         $.derived_type
       ))),
 
@@ -542,7 +543,6 @@ module.exports = grammar({
       choice(
         commaSep1(seq(
           $.intrinsic_type,
-          optional($.kind),
           '(',
           commaSep1($.implicit_range),
           ')'
@@ -736,7 +736,7 @@ module.exports = grammar({
 
     variable_declaration: $ => seq(
       field('type', choice(
-        $._intrinsic_type,
+        $.intrinsic_type,
         $.derived_type,
         alias($.procedure_declaration, $.procedure)
       )),
@@ -805,20 +805,18 @@ module.exports = grammar({
       alias($._declaration_pointer_association, $.pointer_init_declarator),
     ))),
 
-    _intrinsic_type: $ => prec.right(seq(
-      $.intrinsic_type,
-      optional($.kind)
-    )),
-
-    intrinsic_type: $ => choice(
-      caseInsensitive('byte'),
-      caseInsensitive('integer'),
-      caseInsensitive('real'),
-      whiteSpacedKeyword('double', 'precision'),
-      caseInsensitive('complex'),
-      whiteSpacedKeyword('double', 'complex'),
-      caseInsensitive('logical'),
-      caseInsensitive('character')
+    intrinsic_type: $ => seq(
+      choice(
+        caseInsensitive('byte'),
+        caseInsensitive('integer'),
+        caseInsensitive('real'),
+        whiteSpacedKeyword('double', 'precision'),
+        caseInsensitive('complex'),
+        whiteSpacedKeyword('double', 'complex'),
+        caseInsensitive('logical'),
+        caseInsensitive('character'),
+      ),
+      optional(field('kind', $.kind)),
     ),
 
     derived_type: $ => seq(
@@ -826,10 +824,10 @@ module.exports = grammar({
       '(',
       // Strictly, only `class` can be unlimited polymorphic
       choice(
-        prec.dynamic(1, $._intrinsic_type),
+        prec.dynamic(1, $.intrinsic_type),
         seq(
           $._type_name,
-          optional($.kind),
+          optional(field('kind', $.kind)),
         ),
         $.unlimited_polymorphic
       ),
@@ -840,7 +838,7 @@ module.exports = grammar({
 
     kind: $ => choice(
       seq(optional(alias('*', $.assumed_size)), $._argument_list),
-      seq('*', choice(/\d+/, $.parenthesized_expression))
+      seq('*', choice(alias(/\d+/, $.number_literal), $.parenthesized_expression))
     ),
 
     character_length: $ => seq(
@@ -1105,7 +1103,7 @@ module.exports = grammar({
       '(',
       optional(seq(
         // This is actually limited to integer types only
-        field('type', $._intrinsic_type),
+        field('type', $.intrinsic_type),
         '::'
       )),
       commaSep1($.concurrent_control),
@@ -1332,7 +1330,7 @@ module.exports = grammar({
             whiteSpacedKeyword('class', 'is')
           ),
           choice(
-            seq('(', field('type', choice($._intrinsic_type, $.identifier)), ')'),
+            seq('(', field('type', choice($.intrinsic_type, $.identifier)), ')'),
           ),
         ),
         alias($._class_default, $.default)
@@ -1751,7 +1749,7 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _type_spec: $ => seq(choice($._intrinsic_type, $.derived_type), '::'),
+    _type_spec: $ => seq(choice($.intrinsic_type, $.derived_type), '::'),
 
     _ac_value_list: $ => choice(
       field('type', $._type_spec),

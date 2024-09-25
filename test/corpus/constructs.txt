@@ -85,9 +85,9 @@ end module
         (method_name))
       (end_interface_statement))
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (type_qualifier)
       (init_declarator
         (identifier)
@@ -106,9 +106,9 @@ end module
       (identifier)
       (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (init_declarator
         (identifier)
         (concatenation_expression
@@ -119,9 +119,9 @@ end module
           (string_literal))))
     (comment)
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (init_declarator
         (identifier)
         (concatenation_expression
@@ -132,9 +132,9 @@ end module
           (string_literal))))
     (comment)
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (init_declarator
         (identifier)
         (concatenation_expression
@@ -159,9 +159,9 @@ end module
           (function_result
             (identifier)))
         (variable_declaration
-          (intrinsic_type)
-          (kind
-            (number_literal))
+          (intrinsic_type
+            (kind
+              (number_literal)))
           (identifier)
           (identifier))
         (end_function_statement))
@@ -475,9 +475,9 @@ END SUBROUTINE
       (type_qualifier)
       (identifier))
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (type_qualifier)
       (identifier))
     (assignment_statement
@@ -534,16 +534,16 @@ END SUBROUTINE
           (type_qualifier)
           (identifier))
         (variable_declaration
-          (intrinsic_type)
-          (kind
-            (assumed_size))
+          (intrinsic_type
+            (kind
+              (assumed_size)))
           (type_qualifier)
           (identifier))
         (variable_declaration
-          (intrinsic_type)
-          (kind
-            (assumed_size)
-            (assumed_size))
+          (intrinsic_type
+            (kind
+              (assumed_size)
+              (assumed_size)))
           (type_qualifier)
           (identifier))
         (assignment_statement
@@ -591,9 +591,9 @@ end function
 (translation_unit
   (function
     (function_statement
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (name))
     (comment)
     (use_statement
@@ -625,9 +625,9 @@ end function
     (end_function_statement))
   (function
     (function_statement
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (name)
       (parameters
         (identifier)
@@ -637,9 +637,9 @@ end function
     (end_function_statement))
   (function
     (function_statement
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (name)
       (language_binding
         (identifier)
@@ -706,9 +706,9 @@ end function test
       (function_result
         (identifier)))
     (variable_declaration
-      (intrinsic_type)
-      (kind
-        (number_literal))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (identifier)
       (identifier))
     (variable_declaration
@@ -729,9 +729,9 @@ end function test
           (function_result
             (identifier)))
         (variable_declaration
-          (intrinsic_type)
-          (kind
-            (number_literal))
+          (intrinsic_type
+            (kind
+              (number_literal)))
           (init_declarator
             (identifier)
             (number_literal)))
@@ -803,9 +803,9 @@ end program
       (sequence_statement)
       (private_statement)
       (variable_declaration
-        (intrinsic_type)
-        (kind
-          (number_literal))
+        (intrinsic_type
+          (kind
+            (number_literal)))
         (identifier)
         (identifier)
         (identifier))
@@ -815,9 +815,9 @@ end program
         (identifier)
         (identifier))
       (variable_declaration
-        (intrinsic_type)
-        (kind
-          (identifier))
+        (intrinsic_type
+          (kind
+            (identifier)))
         (type_qualifier)
         (type_qualifier
           (argument_list
@@ -889,18 +889,18 @@ end program
             (argument_list
               (number_literal)))))
       (variable_declaration
-        (intrinsic_type)
-        (kind
-          (call_expression
-            (identifier)
-            (argument_list
-              (number_literal))))
+        (intrinsic_type
+          (kind
+            (call_expression
+              (identifier)
+              (argument_list
+                (number_literal)))))
         (type_qualifier)
         (identifier))
       (variable_declaration
-        (intrinsic_type)
-        (kind
-          (identifier))
+        (intrinsic_type
+          (kind
+            (identifier)))
         (sized_declarator
           (identifier)
           (size

@@ -146,10 +146,6 @@
           {
             "type": "intrinsic_type",
             "named": true
-          },
-          {
-            "type": "kind",
-            "named": true
           }
         ]
       }
@@ -1837,15 +1833,11 @@
     "named": true,
     "fields": {
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
             "type": "intrinsic_type",
-            "named": true
-          },
-          {
-            "type": "kind",
             "named": true
           }
         ]
@@ -2168,17 +2160,24 @@
   {
     "type": "derived_type",
     "named": true,
-    "fields": {},
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "kind",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "types": [
         {
           "type": "intrinsic_type",
-          "named": true
-        },
-        {
-          "type": "kind",
           "named": true
         },
         {
@@ -4043,10 +4042,6 @@
           "named": true
         },
         {
-          "type": "kind",
-          "named": true
-        },
-        {
           "type": "language_binding",
           "named": true
         },
@@ -4249,10 +4244,6 @@
         },
         {
           "type": "intrinsic_type",
-          "named": true
-        },
-        {
-          "type": "kind",
           "named": true
         },
         {
@@ -4715,7 +4706,18 @@
   {
     "type": "intrinsic_type",
     "named": true,
-    "fields": {}
+    "fields": {
+      "kind": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "kind",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "keyword_argument",
@@ -5886,10 +5888,6 @@
         },
         {
           "type": "intrinsic_type",
-          "named": true
-        },
-        {
-          "type": "kind",
           "named": true
         },
         {
@@ -9609,10 +9607,6 @@
           "named": true
         },
         {
-          "type": "kind",
-          "named": true
-        },
-        {
           "type": "language_binding",
           "named": true
         },
@@ -9833,7 +9827,7 @@
     "named": true,
     "fields": {
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
@@ -9842,10 +9836,6 @@
           },
           {
             "type": "intrinsic_type",
-            "named": true
-          },
-          {
-            "type": "kind",
             "named": true
           }
         ]
@@ -10229,7 +10219,7 @@
         ]
       },
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
@@ -10238,10 +10228,6 @@
           },
           {
             "type": "intrinsic_type",
-            "named": true
-          },
-          {
-            "type": "kind",
             "named": true
           },
           {
@@ -11152,11 +11138,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

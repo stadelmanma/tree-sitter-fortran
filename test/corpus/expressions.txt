@@ -245,9 +245,9 @@ end program
           (number_literal)
           (number_literal))))
     (variable_declaration
-      type: (intrinsic_type)
-      type: (kind
-        (number_literal))
+      type: (intrinsic_type
+        kind: (kind
+          (number_literal)))
       declarator: (init_declarator
         left: (sized_declarator
           (identifier)
@@ -269,9 +269,9 @@ end program
             (argument_list
               (number_literal))))))
     (variable_declaration
-      type: (intrinsic_type)
-      type: (kind
-        (number_literal))
+      type: (intrinsic_type
+        kind: (kind
+          (number_literal)))
       declarator: (init_declarator
         left: (sized_declarator
           (identifier)
@@ -1004,9 +1004,9 @@ end program array_constructors
           (identifier)
           (argument_list
             (array_literal
-              (intrinsic_type)
-              (kind
-                (identifier))
+              (intrinsic_type
+                (kind
+                  (identifier)))
               (number_literal)
               (number_literal)
               (number_literal)
@@ -1026,11 +1026,11 @@ end program array_constructors
       (format_identifier)
       (output_item_list
         (array_literal
-          (intrinsic_type)
-          (kind
-            (keyword_argument
-              (identifier)
-              (number_literal)))
+          (intrinsic_type
+            (kind
+              (keyword_argument
+                (identifier)
+                (number_literal))))
           (string_literal)
           (string_literal)
           (string_literal))))
