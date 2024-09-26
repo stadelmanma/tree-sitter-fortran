@@ -73,7 +73,8 @@ module.exports = grammar({
     $._integer_literal,
     $._float_literal,
     $._boz_literal,
-    $.string_literal,
+    $._string_literal,
+    $._string_literal_kind,
     $._end_of_statement,
     $._preproc_unary_operator,
   ],
@@ -91,7 +92,7 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$._expression, $.complex_literal],
-    [$.argument_list, $.parenthesized_expression],
+    [$._argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.data_set, $._expression],
     [$.data_value, $._expression],
@@ -100,12 +101,12 @@ module.exports = grammar({
     [$.elseif_clause],
     [$.elsewhere_clause],
     [$.interface_statement],
-    [$.intrinsic_type, $.identifier],
+    [$.intrinsic_type],
+    [$._intrinsic_type, $.identifier],
     [$.module_statement, $.procedure_qualifier],
     [$.procedure_declaration],
     [$.rank_statement],
     [$.stop_statement, $.identifier],
-    [$.type_qualifier, $.identifier],
     [$.type_statement],
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
@@ -418,8 +419,8 @@ module.exports = grammar({
       prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
-        $._intrinsic_type,
-        $.derived_type
+        field('type', $.intrinsic_type),
+        field('type', $.derived_type)
       ))),
 
     procedure_attributes: $ => prec(1, seq(
@@ -542,7 +543,6 @@ module.exports = grammar({
       choice(
         commaSep1(seq(
           $.intrinsic_type,
-          optional($.size),
           '(',
           commaSep1($.implicit_range),
           ')'
@@ -630,15 +630,13 @@ module.exports = grammar({
 
     derived_type_definition: $ => seq(
       $.derived_type_statement,
-      optional($.public_statement),
-      optional($.private_statement),
-      optional(
-        seq(
-          alias(caseInsensitive('sequence'), $.sequence_statement),
-          $._end_of_statement
-        )
-      ),
       repeat(choice(
+        $.public_statement,
+        $.private_statement,
+        seq(
+            alias(caseInsensitive('sequence'), $.sequence_statement),
+            $._end_of_statement
+        ),
         seq($.include_statement, $._end_of_statement),
         seq($.variable_declaration, $._end_of_statement),
         alias($.preproc_if_in_derived_type, $.preproc_if),
@@ -676,6 +674,7 @@ module.exports = grammar({
         seq(optional('::'), $._type_name),
         seq(',', commaSep1($._derived_type_qualifier), '::', $._type_name)
       ),
+      optional(alias($.argument_list, $.derived_type_parameter_list)),
       $._end_of_statement
     ),
 
@@ -736,8 +735,12 @@ module.exports = grammar({
     )),
 
     variable_declaration: $ => seq(
-      choice($._intrinsic_type, $.derived_type, alias($.procedure_declaration, $.procedure)),
-      optional(seq(',', commaSep1($.type_qualifier))),
+      field('type', choice(
+        $.intrinsic_type,
+        $.derived_type,
+        alias($.procedure_declaration, $.procedure)
+      )),
+      optional(seq(',', commaSep1(field('attribute', $.type_qualifier)))),
       optional('::'),
       $._declaration_targets
     ),
@@ -772,44 +775,74 @@ module.exports = grammar({
       ')'
     ),
 
-    _declaration_targets: $ => commaSep1(choice(
+    _variable_declarator: $ => choice(
       $.identifier,
-      // Only valid for characters
-      prec.right(1, seq($.identifier, $.character_length)),
-      $.call_expression,
-      $.assignment_statement,
-      $.pointer_association_statement
+      $.sized_declarator,
+    ),
+
+    sized_declarator: $ => prec.right(1, seq(
+        $.identifier,
+        choice(
+          alias($.argument_list, $.size),
+          $.character_length
+        )
     )),
 
-    _intrinsic_type: $ => prec.right(seq(
-      $.intrinsic_type,
-      optional($.size)
-    )),
+    _declaration_assignment: $ => seq(
+      field('left', $._variable_declarator),
+      '=',
+      field('right', $._expression)
+    ),
+    _declaration_pointer_association: $ => seq(
+      field('left', $._variable_declarator),
+      '=>',
+      field('right', $._expression)
+    ),
 
-    intrinsic_type: $ => choice(
-      caseInsensitive('byte'),
-      caseInsensitive('integer'),
-      caseInsensitive('real'),
-      whiteSpacedKeyword('double', 'precision'),
-      caseInsensitive('complex'),
-      whiteSpacedKeyword('double', 'complex'),
-      caseInsensitive('logical'),
-      caseInsensitive('character')
+    _declaration_targets: $ => commaSep1(field('declarator', choice(
+      $._variable_declarator,
+      alias($._declaration_assignment, $.init_declarator),
+      alias($._declaration_pointer_association, $.pointer_init_declarator),
+    ))),
+
+    _intrinsic_type: $ => choice(
+        caseInsensitive('byte'),
+        caseInsensitive('integer'),
+        caseInsensitive('real'),
+        whiteSpacedKeyword('double', 'precision'),
+        caseInsensitive('complex'),
+        whiteSpacedKeyword('double', 'complex'),
+        caseInsensitive('logical'),
+        caseInsensitive('character'),
+    ),
+
+    intrinsic_type: $ => seq(
+      $._intrinsic_type,
+      optional(field('kind', $.kind)),
     ),
 
     derived_type: $ => seq(
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       // Strictly, only `class` can be unlimited polymorphic
-      choice(prec.dynamic(1, $._intrinsic_type), $._type_name, $.unlimited_polymorphic),
+      choice(
+        seq(
+          field('name', choice(
+            prec.dynamic(1, alias($._intrinsic_type, $.intrinsic_type)),
+            $._type_name,
+          )),
+          optional(field('kind', $.kind)),
+        ),
+        $.unlimited_polymorphic
+      ),
       ')'
     ),
 
     unlimited_polymorphic: $ => '*',
 
-    size: $ => choice(
-      seq(optional(alias('*', $.assumed_size)), $.argument_list),
-      seq('*', choice(/\d+/, $.parenthesized_expression))
+    kind: $ => choice(
+      seq(optional(alias('*', $.assumed_size)), $._argument_list),
+      seq('*', choice(alias(/\d+/, $.number_literal), $.parenthesized_expression))
     ),
 
     character_length: $ => seq(
@@ -841,6 +874,9 @@ module.exports = grammar({
         ')'
       ),
       caseInsensitive('intrinsic'),
+      // Next two technically only valid on derived type components
+      field('type_param', caseInsensitive('kind')),
+      field('type_param', caseInsensitive('len')),
       caseInsensitive('managed'),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
@@ -1071,7 +1107,7 @@ module.exports = grammar({
       '(',
       optional(seq(
         // This is actually limited to integer types only
-        field('type', $._intrinsic_type),
+        field('type', $.intrinsic_type),
         '::'
       )),
       commaSep1($.concurrent_control),
@@ -1298,7 +1334,7 @@ module.exports = grammar({
             whiteSpacedKeyword('class', 'is')
           ),
           choice(
-            seq('(', field('type', choice($._intrinsic_type, $.identifier)), ')'),
+            seq('(', field('type', choice($.intrinsic_type, $.identifier)), ')'),
           ),
         ),
         alias($._class_default, $.default)
@@ -1658,7 +1694,8 @@ module.exports = grammar({
       ')'
     ),
 
-    argument_list: $ => prec.dynamic(
+    // Unnamed node so we can reuse it for e.g. kind
+    _argument_list: $ => prec.dynamic(
       1,
       seq(
         '(',
@@ -1672,6 +1709,8 @@ module.exports = grammar({
         ')'
       )
     ),
+
+    argument_list: $ => $._argument_list,
 
     // precedence is used to prevent conflict with assignment expression
     keyword_argument: $ => prec(1, seq(
@@ -1714,7 +1753,7 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _type_spec: $ => seq(choice($._intrinsic_type, $.derived_type), '::'),
+    _type_spec: $ => seq(choice($.intrinsic_type, $.derived_type), '::'),
 
     _ac_value_list: $ => choice(
       field('type', $._type_spec),
@@ -1732,23 +1771,50 @@ module.exports = grammar({
       ')'
     ),
 
-    number_literal: $ => choice(
-      $._integer_literal,
-      $._float_literal,
-      $._boz_literal
+    number_literal: $ => seq(
+      choice(
+        $._integer_literal,
+        $._float_literal,
+        $._boz_literal
+      ),
+      optional($._kind)
     ),
 
-    boolean_literal: $ => token(seq(
+    boolean_literal: $ => seq(
       choice(
         caseInsensitive('\\.true\\.'),
         caseInsensitive('\\.false\\.')
       ),
-      optional(seq('_', /\w+/))
-    )),
+      optional($._kind)
+    ),
+
+    _kind: $ => seq(
+        token.immediate('_'),
+        field(
+          'kind',
+          choice(
+            alias(token.immediate(/[a-zA-Z]\w+/), $.identifier),
+            alias(token.immediate(/\d+/), $.number_literal)
+          )
+        )
+    ),
 
     null_literal: $ => prec(1, seq(
       caseInsensitive('null'), '(', ')'
     )),
+
+    string_literal: $ => seq(
+      // Having a kind _prefix_, with an underscore and no whitespace,
+      // is _really_ hard to parse without breaking other things, so
+      // we have to rely on an external scanner
+      optional(seq(
+        field('kind', alias($._string_literal_kind, $.identifier)),
+        // Although external scanner enforces trailing underscore, we
+        // also need to *capture* it here
+        token.immediate('_'),
+      )),
+      $._string_literal,
+    ),
 
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens
