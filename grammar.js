@@ -102,7 +102,7 @@ module.exports = grammar({
     [$.elsewhere_clause],
     [$.interface_statement],
     [$.intrinsic_type],
-    [$.intrinsic_type, $.identifier],
+    [$._intrinsic_type, $.identifier],
     [$.module_statement, $.procedure_qualifier],
     [$.procedure_declaration],
     [$.rank_statement],
@@ -805,8 +805,7 @@ module.exports = grammar({
       alias($._declaration_pointer_association, $.pointer_init_declarator),
     ))),
 
-    intrinsic_type: $ => seq(
-      choice(
+    _intrinsic_type: $ => choice(
         caseInsensitive('byte'),
         caseInsensitive('integer'),
         caseInsensitive('real'),
@@ -815,7 +814,10 @@ module.exports = grammar({
         whiteSpacedKeyword('double', 'complex'),
         caseInsensitive('logical'),
         caseInsensitive('character'),
-      ),
+    ),
+
+    intrinsic_type: $ => seq(
+      $._intrinsic_type,
       optional(field('kind', $.kind)),
     ),
 
@@ -824,9 +826,11 @@ module.exports = grammar({
       '(',
       // Strictly, only `class` can be unlimited polymorphic
       choice(
-        prec.dynamic(1, $.intrinsic_type),
         seq(
-          $._type_name,
+          field('name', choice(
+            prec.dynamic(1, alias($._intrinsic_type, $.intrinsic_type)),
+            $._type_name,
+          )),
           optional(field('kind', $.kind)),
         ),
         $.unlimited_polymorphic

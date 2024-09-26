@@ -107,7 +107,9 @@ END PROGRAM
         (kind
           (number_literal)))
       (implicit_range)
-      (intrinsic_type (kind (number_literal)))
+      (intrinsic_type
+        (kind
+          (number_literal)))
       (implicit_range)
       (implicit_range)
       (implicit_range))
@@ -345,18 +347,18 @@ END PROGRAM
       (identifier))
     (variable_declaration
       (derived_type
-        (intrinsic_type
-          (kind
-            (identifier))))
+        (intrinsic_type)
+        (kind
+          (identifier)))
       (identifier))
     (variable_declaration
       (derived_type
-        (intrinsic_type
-          (kind
-            (call_expression
-              (identifier)
-              (argument_list
-                (number_literal))))))
+        (intrinsic_type)
+        (kind
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)))))
       (identifier))
     (variable_declaration
       (derived_type
@@ -440,9 +442,9 @@ end module foo
           (identifier))
         (variable_declaration
           (derived_type
-            (intrinsic_type
-              (kind
-                (identifier))))
+            (intrinsic_type)
+            (kind
+              (identifier)))
           (type_qualifier)
           (identifier))
         (end_subroutine_statement
@@ -460,12 +462,12 @@ end module foo
           (identifier))
         (variable_declaration
           (derived_type
-            (intrinsic_type
-              (kind
-                (call_expression
-                  (identifier)
-                  (argument_list
-                    (number_literal))))))
+            (intrinsic_type)
+            (kind
+              (call_expression
+                (identifier)
+                (argument_list
+                  (number_literal)))))
           (type_qualifier)
           (identifier))
         (end_subroutine_statement
