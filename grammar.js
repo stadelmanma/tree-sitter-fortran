@@ -419,8 +419,8 @@ module.exports = grammar({
       prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
-        $.intrinsic_type,
-        $.derived_type
+        field('type', $.intrinsic_type),
+        field('type', $.derived_type)
       ))),
 
     procedure_attributes: $ => prec(1, seq(

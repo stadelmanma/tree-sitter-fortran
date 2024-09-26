@@ -4029,6 +4029,20 @@
             "named": true
           }
         ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "derived_type",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -4036,15 +4050,7 @@
       "required": false,
       "types": [
         {
-          "type": "derived_type",
-          "named": true
-        },
-        {
           "type": "function_result",
-          "named": true
-        },
-        {
-          "type": "intrinsic_type",
           "named": true
         },
         {
@@ -5882,20 +5888,26 @@
             "named": true
           }
         ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "derived_type",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "derived_type",
-          "named": true
-        },
-        {
-          "type": "intrinsic_type",
-          "named": true
-        },
         {
           "type": "procedure_attributes",
           "named": true
@@ -9598,20 +9610,26 @@
             "named": true
           }
         ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "derived_type",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
-        {
-          "type": "derived_type",
-          "named": true
-        },
-        {
-          "type": "intrinsic_type",
-          "named": true
-        },
         {
           "type": "language_binding",
           "named": true
@@ -11144,11 +11162,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",
