@@ -8278,8 +8278,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "type_qualifier"
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_standalone_type_qualifier"
+                },
+                "named": true,
+                "value": "type_qualifier"
               },
               {
                 "type": "SYMBOL",
@@ -8301,8 +8306,37 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_declaration_targets"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "declarator",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_variable_declarator"
+              }
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "declarator",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_variable_declarator"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -8898,7 +8932,7 @@
         }
       ]
     },
-    "type_qualifier": {
+    "_standalone_type_qualifier": {
       "type": "CHOICE",
       "members": [
         {
@@ -9076,32 +9110,6 @@
           "value": "intrinsic"
         },
         {
-          "type": "FIELD",
-          "name": "type_param",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[kK][iI][nN][dD]"
-            },
-            "named": false,
-            "value": "kind"
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "type_param",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "PATTERN",
-              "value": "[lL][eE][nN]"
-            },
-            "named": false,
-            "value": "len"
-          }
-        },
-        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -9244,6 +9252,41 @@
           },
           "named": false,
           "value": "volatile"
+        }
+      ]
+    },
+    "type_qualifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_standalone_type_qualifier"
+        },
+        {
+          "type": "FIELD",
+          "name": "type_param",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[kK][iI][nN][dD]"
+            },
+            "named": false,
+            "value": "kind"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "type_param",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[lL][eE][nN]"
+            },
+            "named": false,
+            "value": "len"
+          }
         }
       ]
     },

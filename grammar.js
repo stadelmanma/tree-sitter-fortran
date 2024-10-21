@@ -757,11 +757,11 @@ module.exports = grammar({
 
     variable_modification: $ => seq(
       repeat1(choice(
-        $.type_qualifier,
+        alias($._standalone_type_qualifier, $.type_qualifier),
         $.variable_attributes
       )),
       optional('::'),
-      $._declaration_targets
+      commaSep1(field('declarator', $._variable_declarator)),
     ),
 
     variable_attributes: $ => seq(
@@ -853,7 +853,7 @@ module.exports = grammar({
       optional(seq('(', '*', ')'))
     ),
 
-    type_qualifier: $ => choice(
+    _standalone_type_qualifier: $ => choice(
       caseInsensitive('abstract'),
       caseInsensitive('allocatable'),
       caseInsensitive('automatic'),
@@ -876,9 +876,6 @@ module.exports = grammar({
         ')'
       ),
       caseInsensitive('intrinsic'),
-      // Next two technically only valid on derived type components
-      field('type_param', caseInsensitive('kind')),
-      field('type_param', caseInsensitive('len')),
       caseInsensitive('managed'),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
@@ -895,6 +892,16 @@ module.exports = grammar({
       caseInsensitive('texture'),
       caseInsensitive('value'),
       caseInsensitive('volatile')
+    ),
+
+    // These are split out to avoid clash with assignment statements
+    // as it turns out `len` is more likely to be used as a variable
+    // name than any of the other qualifiers
+    type_qualifier: $ => choice(
+      $._standalone_type_qualifier,
+      // Next two technically only valid on derived type components
+      field('type_param', caseInsensitive('kind')),
+      field('type_param', caseInsensitive('len')),
     ),
 
     procedure_qualifier: $ => choice(

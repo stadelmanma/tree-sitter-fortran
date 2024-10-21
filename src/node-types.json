@@ -10516,14 +10516,6 @@
             "named": true
           },
           {
-            "type": "init_declarator",
-            "named": true
-          },
-          {
-            "type": "pointer_init_declarator",
-            "named": true
-          },
-          {
             "type": "sized_declarator",
             "named": true
           }
@@ -11388,11 +11380,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",
