@@ -2506,3 +2506,77 @@ end
       (statement_label_reference)
       (statement_label_reference))
     (end_program_statement)))
+
+================================================================================
+Statement Functions (Obsolescent)
+================================================================================
+
+      SUBROUTINE CEBCHVXX( THRESH, PATH )      
+      COMPLEX            ZDUM
+!     .. Statement Functions ..
+      REAL               CABS1
+!     ..
+!     .. Statement Function Definitions ..
+      CABS1( ZDUM ) = ABS( REAL( ZDUM ) ) + ABS( AIMAG( ZDUM ) )
+
+!     .. Parameters ..
+      INTEGER            NWISE_I, CWISE_I
+      PARAMETER          (NWISE_I = 1, CWISE_I = 1)
+
+      FACT = 'E'
+      END SUBROUTINE CEBCHVXX
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (comment)
+    (comment)
+    (statement_function
+      (identifier)
+      (argument_list
+        (identifier))
+      (math_expression
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))))
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))))))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (identifier)
+      (identifier))
+    (parameter_statement
+      (parameter_assignment
+        (identifier)
+        (number_literal))
+      (parameter_assignment
+        (identifier)
+        (number_literal)))
+    (assignment_statement
+      (identifier)
+      (string_literal))
+    (end_subroutine_statement
+      (name))))

@@ -110,6 +110,7 @@ module.exports = grammar({
     [$.type_statement],
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
+    [$.statement_function, $._expression],
   ],
 
   rules: {
@@ -496,6 +497,7 @@ module.exports = grammar({
       seq($.parameter_statement, $._end_of_statement),
       seq($.equivalence_statement, $._end_of_statement),
       seq($.data_statement, $._end_of_statement),
+      seq($.statement_function, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
       $.preproc_include,
       $.preproc_def,
@@ -1570,6 +1572,16 @@ module.exports = grammar({
     input_item_list: $ => prec.right(commaSep1($._expression)),
 
     output_item_list: $ => prec.right(commaSep1($._expression)),
+
+    // Obsolescent feature
+    statement_function: $ => prec.right(seq(
+      $.identifier,
+      alias($._statement_function_arg_list, $.argument_list),
+      '=',
+      $._expression,
+    )),
+
+    _statement_function_arg_list: $ => seq('(', commaSep1($.identifier), ')'),
 
     // Expressions
 
