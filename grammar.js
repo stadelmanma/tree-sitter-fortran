@@ -955,6 +955,7 @@ module.exports = grammar({
       $.select_rank_statement,
       $.do_loop_statement,
       $.do_label_statement,
+      $.end_do_label_statement,
       $.format_statement,
       $.open_statement,
       $.close_statement,
@@ -1081,7 +1082,14 @@ module.exports = grammar({
       $.end_do_loop_statement
     ),
 
-    // Deleted feature
+    end_do_loop_statement: $ => seq(
+      whiteSpacedKeyword('end', 'do'),
+      optional($._block_label)
+    ),
+
+    // Deleted feature: non-block `do`. Actually, labelled-do is still
+    // valid (but obsolescent), but we need to capture them separately
+    // because otherwise it's too had to capture them at all
     do_label_statement: $ => seq(
       caseInsensitive('do'),
       $.statement_label_reference,
@@ -1089,10 +1097,13 @@ module.exports = grammar({
       $.loop_control_expression
     ),
 
-    end_do_loop_statement: $ => seq(
+    // Because we've lumped together labelled-do and non-block-do in
+    // `do_label_statement`, we also need to be able to capture `end
+    // do` for a labelled-do
+    end_do_label_statement: $ => prec(-1, seq(
+      $.statement_label,
       whiteSpacedKeyword('end', 'do'),
-      optional($._block_label)
-    ),
+    )),
 
     while_statement: $ => seq(caseInsensitive('while'),
       $.parenthesized_expression),

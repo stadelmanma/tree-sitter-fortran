@@ -769,6 +769,10 @@ program test
     do 10, j = 1, 10
       foo(i, j) = i * j
 10 continue
+
+  do 10 i = 1, 10
+    bar(i) = i
+10 end do
 end program test
 
 --------------------------------------------------------------------------------
@@ -800,6 +804,20 @@ end program test
         (identifier)))
     (statement_label)
     (keyword_statement)
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression
+        (identifier)
+        (number_literal)
+        (number_literal)))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (identifier))
+    (end_do_label_statement
+      (statement_label))
     (end_program_statement
       (name))))
 

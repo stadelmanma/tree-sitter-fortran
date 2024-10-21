@@ -9575,6 +9575,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "end_do_label_statement"
+        },
+        {
+          "type": "SYMBOL",
           "name": "format_statement"
         },
         {
@@ -10439,40 +10443,6 @@
         }
       ]
     },
-    "do_label_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[dD][oO]"
-          },
-          "named": false,
-          "value": "do"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "statement_label_reference"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "loop_control_expression"
-        }
-      ]
-    },
     "end_do_loop_statement": {
       "type": "SEQ",
       "members": [
@@ -10516,6 +10486,80 @@
           ]
         }
       ]
+    },
+    "do_label_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "do"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "statement_label_reference"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ","
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "loop_control_expression"
+        }
+      ]
+    },
+    "end_do_label_statement": {
+      "type": "PREC",
+      "value": -1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "statement_label"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "PATTERN",
+                      "value": "[eE][nN][dD]"
+                    },
+                    {
+                      "type": "PATTERN",
+                      "value": "[dD][oO]"
+                    }
+                  ]
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[eE][nN][dD][dD][oO]"
+                }
+              ]
+            },
+            "named": false,
+            "value": "enddo"
+          }
+        ]
+      }
     },
     "while_statement": {
       "type": "SEQ",

@@ -425,6 +425,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -878,6 +882,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -1204,6 +1212,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -2565,6 +2577,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "end_do_loop_statement",
           "named": true
         },
@@ -2716,6 +2732,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -2852,6 +2872,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -2998,6 +3022,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -3121,6 +3149,21 @@
       "types": [
         {
           "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_do_label_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "statement_label",
           "named": true
         }
       ]
@@ -3596,6 +3639,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "end_forall_statement",
           "named": true
         },
@@ -3814,6 +3861,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -4132,6 +4183,10 @@
         },
         {
           "type": "elseif_clause",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -5709,6 +5764,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "end_module_procedure_statement",
           "named": true
         },
@@ -6616,6 +6675,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -6884,6 +6947,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -7120,6 +7187,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -7455,6 +7526,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -7720,6 +7795,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -8127,6 +8206,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "end_program_statement",
           "named": true
         },
@@ -8385,6 +8468,10 @@
         },
         {
           "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -9323,6 +9410,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "end_subroutine_statement",
           "named": true
         },
@@ -9910,6 +10001,10 @@
           "named": true
         },
         {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -10369,6 +10464,10 @@
         },
         {
           "type": "elsewhere_clause",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
           "named": true
         },
         {
@@ -11162,11 +11261,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
