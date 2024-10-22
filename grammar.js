@@ -602,7 +602,7 @@ module.exports = grammar({
       caseInsensitive('common'),
       repeat1(choice(
         $.variable_group,
-        commaSep1($.identifier)
+        commaSep1($._variable_declarator)
       ))
     ),
 
@@ -610,7 +610,7 @@ module.exports = grammar({
       '/',
       $._name,
       '/',
-      commaSep1($.identifier)
+      commaSep1($._variable_declarator)
     ),
 
     implicit_range: $ => seq(

@@ -1724,6 +1724,7 @@ Common Statement
 
 PROGRAM TEST
   COMMON /blk1/ m, n /blk2/ o
+  COMMON /blk3/ a(1), b(2, 3)
   COMMON p
 END PROGRAM
 
@@ -1741,6 +1742,18 @@ END PROGRAM
       (variable_group
         (name)
         (identifier)))
+    (common_statement
+      (variable_group
+        (name)
+        (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        (sized_declarator
+          (identifier)
+          (size
+            (number_literal)
+            (number_literal)))))
     (common_statement
       (identifier))
     (end_program_statement)))

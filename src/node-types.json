@@ -1433,6 +1433,10 @@
           "named": true
         },
         {
+          "type": "sized_declarator",
+          "named": true
+        },
+        {
           "type": "variable_group",
           "named": true
         }
@@ -10503,6 +10507,10 @@
         {
           "type": "name",
           "named": true
+        },
+        {
+          "type": "sized_declarator",
+          "named": true
         }
       ]
     }
@@ -11384,11 +11392,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",
