@@ -485,8 +485,8 @@ module.exports = grammar({
       seq($.implicit_statement, $._end_of_statement),
       seq($.save_statement, $._end_of_statement),
       seq($.import_statement, $._end_of_statement),
-      seq($.public_statement, $._end_of_statement),
-      seq($.private_statement, $._end_of_statement),
+      $.public_statement,
+      $.private_statement,
       $.enum,
       $.interface,
       $.derived_type_definition,
@@ -574,20 +574,22 @@ module.exports = grammar({
       ))
     )),
 
-    private_statement: $ => prec(1, seq(
+    private_statement: $ => prec.right(1, seq(
       caseInsensitive('private'),
       optional(seq(
-        '::',
+        optional('::'),
         commaSep1(choice($.identifier, $._generic_procedure))
-      ))
+      )),
+      $._end_of_statement,
     )),
 
-    public_statement: $ => prec(1, seq(
+    public_statement: $ => prec.right(1, seq(
       caseInsensitive('public'),
       optional(seq(
-        '::',
+        optional('::'),
         commaSep1(choice($.identifier, $._generic_procedure))
-      ))
+      )),
+      $._end_of_statement,
     )),
 
     namelist_statement: $ => seq(

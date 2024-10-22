@@ -6094,30 +6094,12 @@
             ]
           },
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "public_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_end_of_statement"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "public_statement"
           },
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "private_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_end_of_statement"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "private_statement"
           },
           {
             "type": "SYMBOL",
@@ -6844,7 +6826,7 @@
       }
     },
     "private_statement": {
-      "type": "PREC",
+      "type": "PREC_RIGHT",
       "value": 1,
       "content": {
         "type": "SEQ",
@@ -6865,8 +6847,16 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": "::"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "::"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "SEQ",
@@ -6917,12 +6907,16 @@
                 "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_end_of_statement"
           }
         ]
       }
     },
     "public_statement": {
-      "type": "PREC",
+      "type": "PREC_RIGHT",
       "value": 1,
       "content": {
         "type": "SEQ",
@@ -6943,8 +6937,16 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": "::"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "::"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "SEQ",
@@ -6995,6 +6997,10 @@
                 "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_end_of_statement"
           }
         ]
       }

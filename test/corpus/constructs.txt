@@ -422,7 +422,7 @@ Use Operator and Assignment
 module test
   use other, only: operator(==), assignment(=)
   public :: assignment(=)
-  private :: operator(==)
+  private operator(==)
 end module
 
 --------------------------------------------------------------------------------
