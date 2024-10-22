@@ -469,6 +469,7 @@ module.exports = grammar({
       $.function,
       $.module_procedure,
       $.subroutine,
+      $.include_statement,
       alias($.preproc_if_in_internal_procedures, $.preproc_if),
       alias($.preproc_ifdef_in_internal_procedures, $.preproc_ifdef),
       $.preproc_include,

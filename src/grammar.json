@@ -5983,6 +5983,10 @@
           "name": "subroutine"
         },
         {
+          "type": "SYMBOL",
+          "name": "include_statement"
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",

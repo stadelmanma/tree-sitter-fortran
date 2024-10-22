@@ -6,6 +6,8 @@ PROGRAM TEST
   INCLUDE 'fftw.f03'
   a = 1.0
   INCLUDE 'debug_point.f03'
+contains
+  include 'functions.f03'
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -21,6 +23,10 @@ END PROGRAM
       (number_literal))
     (include_statement
       (filename))
+    (internal_procedures
+      (contains_statement)
+      (include_statement
+        (filename)))
     (end_program_statement)))
 
 ================================================================================
