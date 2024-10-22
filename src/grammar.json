@@ -4808,6 +4808,10 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
@@ -7869,6 +7873,10 @@
               }
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
@@ -15733,9 +15741,6 @@
     ],
     [
       "elsewhere_clause"
-    ],
-    [
-      "interface_statement"
     ],
     [
       "intrinsic_type"

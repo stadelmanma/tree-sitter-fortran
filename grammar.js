@@ -100,7 +100,6 @@ module.exports = grammar({
     [$.elseif_clause, $.identifier],
     [$.elseif_clause],
     [$.elsewhere_clause],
-    [$.interface_statement],
     [$.intrinsic_type],
     [$._intrinsic_type, $.identifier],
     [$.module_statement, $.procedure_qualifier],
@@ -351,6 +350,7 @@ module.exports = grammar({
       optional($.abstract_specifier),
       caseInsensitive('interface'),
       optional(choice($._name, $._generic_procedure)),
+      $._end_of_statement,
     ),
 
     end_interface_statement: $ => prec.right(seq(
@@ -705,6 +705,7 @@ module.exports = grammar({
         $.method_name,
         seq($.binding_name, '=>', $.method_name),
       )),
+      $._end_of_statement,
     ),
 
     binding_name: $ => choice(
