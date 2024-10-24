@@ -6,6 +6,8 @@ PROGRAM TEST
   INCLUDE 'fftw.f03'
   a = 1.0
   INCLUDE 'debug_point.f03'
+contains
+  include 'functions.f03'
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -21,6 +23,10 @@ END PROGRAM
       (number_literal))
     (include_statement
       (filename))
+    (internal_procedures
+      (contains_statement)
+      (include_statement
+        (filename)))
     (end_program_statement)))
 
 ================================================================================
@@ -769,6 +775,10 @@ program test
     do 10, j = 1, 10
       foo(i, j) = i * j
 10 continue
+
+  do 10 i = 1, 10
+    bar(i) = i
+10 end do
 end program test
 
 --------------------------------------------------------------------------------
@@ -800,6 +810,20 @@ end program test
         (identifier)))
     (statement_label)
     (keyword_statement)
+    (do_label_statement
+      (statement_label_reference)
+      (loop_control_expression
+        (identifier)
+        (number_literal)
+        (number_literal)))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (identifier))
+    (end_do_label_statement
+      (statement_label))
     (end_program_statement
       (name))))
 
@@ -1700,6 +1724,7 @@ Common Statement
 
 PROGRAM TEST
   COMMON /blk1/ m, n /blk2/ o
+  COMMON /blk3/ a(1), b(2, 3)
   COMMON p
 END PROGRAM
 
@@ -1717,6 +1742,18 @@ END PROGRAM
       (variable_group
         (name)
         (identifier)))
+    (common_statement
+      (variable_group
+        (name)
+        (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        (sized_declarator
+          (identifier)
+          (size
+            (number_literal)
+            (number_literal)))))
     (common_statement
       (identifier))
     (end_program_statement)))
@@ -2488,3 +2525,77 @@ end
       (statement_label_reference)
       (statement_label_reference))
     (end_program_statement)))
+
+================================================================================
+Statement Functions (Obsolescent)
+================================================================================
+
+      SUBROUTINE CEBCHVXX( THRESH, PATH )      
+      COMPLEX            ZDUM
+!     .. Statement Functions ..
+      REAL               CABS1
+!     ..
+!     .. Statement Function Definitions ..
+      CABS1( ZDUM ) = ABS( REAL( ZDUM ) ) + ABS( AIMAG( ZDUM ) )
+
+!     .. Parameters ..
+      INTEGER            NWISE_I, CWISE_I
+      PARAMETER          (NWISE_I = 1, CWISE_I = 1)
+
+      FACT = 'E'
+      END SUBROUTINE CEBCHVXX
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (comment)
+    (comment)
+    (statement_function
+      (identifier)
+      (argument_list
+        (identifier))
+      (math_expression
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))))
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))))))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (identifier)
+      (identifier))
+    (parameter_statement
+      (parameter_assignment
+        (identifier)
+        (number_literal))
+      (parameter_assignment
+        (identifier)
+        (number_literal)))
+    (assignment_statement
+      (identifier)
+      (string_literal))
+    (end_subroutine_statement
+      (name))))

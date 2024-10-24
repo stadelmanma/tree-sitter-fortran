@@ -400,13 +400,29 @@ end interface assignment (=)
       (assignment))))
 
 ================================================================================
+Semicolon in interface
+================================================================================
+
+interface operator(+) ; module procedure test_plus ; end interface
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (interface
+    (interface_statement
+      (operator))
+    (procedure_statement
+      (method_name))
+    (end_interface_statement)))
+
+================================================================================
 Use Operator and Assignment
 ================================================================================
 
 module test
   use other, only: operator(==), assignment(=)
   public :: assignment(=)
-  private :: operator(==)
+  private operator(==)
 end module
 
 --------------------------------------------------------------------------------

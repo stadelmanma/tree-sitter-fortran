@@ -58,11 +58,10 @@
     {
       "scope": "source.fortran",
       "file-types": [
-        "F90",
         "f90",
-        "f",
-        "f77",
-        "f95"
+        "F90",
+        "f95",
+        "F95"
       ],
       "highlights": [
         "queries/highlights.scm"

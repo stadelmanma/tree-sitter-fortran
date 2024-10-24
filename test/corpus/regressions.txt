@@ -130,3 +130,27 @@ end program
           (boolean_literal)))
       (end_if_statement))
     (end_program_statement)))
+
+================================================================================
+Assignment/Variable modification clash
+================================================================================
+
+program test
+  integer :: len
+  len = 5
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (assignment_statement
+      (identifier)
+      (number_literal))
+    (end_program_statement
+      (name))))
