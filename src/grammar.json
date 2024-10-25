@@ -15391,7 +15391,7 @@
                   "type": "IMMEDIATE_TOKEN",
                   "content": {
                     "type": "PATTERN",
-                    "value": "[a-zA-Z]\\w+"
+                    "value": "[a-zA-Z]\\w*"
                   }
                 },
                 "named": true,

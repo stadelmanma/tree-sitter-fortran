@@ -1827,7 +1827,7 @@ module.exports = grammar({
         field(
           'kind',
           choice(
-            alias(token.immediate(/[a-zA-Z]\w+/), $.identifier),
+            alias(token.immediate(/[a-zA-Z]\w*/), $.identifier),
             alias(token.immediate(/\d+/), $.number_literal)
           )
         )
