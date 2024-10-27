@@ -429,6 +429,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -886,6 +890,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -1220,6 +1228,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -2593,6 +2605,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -2744,6 +2760,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -2884,6 +2904,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -3031,6 +3055,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -3390,6 +3418,54 @@
     }
   },
   {
+    "type": "entry_statement",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "name",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "parameters",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "function_result",
+          "named": true
+        },
+        {
+          "type": "language_binding",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "enum",
     "named": true,
     "fields": {},
@@ -3655,6 +3731,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -3877,6 +3957,10 @@
         },
         {
           "type": "end_function_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -4203,6 +4287,10 @@
         },
         {
           "type": "end_if_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -5792,6 +5880,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -6703,6 +6795,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -6979,6 +7075,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -7223,6 +7323,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -7566,6 +7670,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -7839,6 +7947,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -8258,6 +8370,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -8520,6 +8636,10 @@
         },
         {
           "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -9549,6 +9669,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "enum",
           "named": true
         },
@@ -10140,6 +10264,10 @@
           "named": true
         },
         {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
           "type": "file_position_statement",
           "named": true
         },
@@ -10603,6 +10731,10 @@
         },
         {
           "type": "end_where_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
           "named": true
         },
         {
@@ -11224,6 +11356,10 @@
   },
   {
     "type": "endwhere",
+    "named": false
+  },
+  {
+    "type": "entry",
     "named": false
   },
   {

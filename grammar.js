@@ -980,6 +980,7 @@ module.exports = grammar({
       $.block_construct,
       $.associate_statement,
       $.file_position_statement,
+      $.entry_statement,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1593,6 +1594,17 @@ module.exports = grammar({
     )),
 
     _statement_function_arg_list: $ => seq('(', commaSep1($.identifier), ')'),
+
+    // Obsolescent feature
+    entry_statement: $ => seq(
+      caseInsensitive('entry'),
+      field('name', $._name),
+      optional(field('parameters',$._parameters)),
+      optional(repeat(choice(
+        $.language_binding,
+        $.function_result
+      ))),
+    ),
 
     // Expressions
 
