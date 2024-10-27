@@ -10,6 +10,58 @@
     "fields": {}
   },
   {
+    "type": "allocate_statement",
+    "named": true,
+    "fields": {
+      "allocation": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "sized_allocation",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "::",
+            "named": false
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "intrinsic_type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_argument",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "argument_list",
     "named": true,
     "fields": {},
@@ -380,6 +432,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -834,6 +890,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -1182,6 +1242,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -2557,6 +2621,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -2720,6 +2788,10 @@
       "required": false,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -2866,6 +2938,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -3017,6 +3093,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -3687,6 +3767,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -3907,6 +3991,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -4233,6 +4321,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -5828,6 +5920,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -6747,6 +6843,10 @@
       "required": false,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -7027,6 +7127,10 @@
       "required": false,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -7277,6 +7381,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -7622,6 +7730,10 @@
       "required": false,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -7901,6 +8013,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -8318,6 +8434,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -8590,6 +8710,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -9243,6 +9367,85 @@
     }
   },
   {
+    "type": "sized_allocation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "size",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "sized_declarator",
     "named": true,
     "fields": {},
@@ -9616,6 +9819,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
         {
           "type": "arithmetic_if_statement",
           "named": true
@@ -10220,6 +10427,10 @@
       "required": false,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -10686,6 +10897,10 @@
       "required": true,
       "types": [
         {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
           "type": "arithmetic_if_statement",
           "named": true
         },
@@ -11131,6 +11346,10 @@
     "named": false
   },
   {
+    "type": "allocate",
+    "named": false
+  },
+  {
     "type": "assignment",
     "named": false
   },
@@ -11528,11 +11747,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

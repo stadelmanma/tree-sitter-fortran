@@ -980,6 +980,7 @@ module.exports = grammar({
       $.block_construct,
       $.associate_statement,
       $.file_position_statement,
+      $.allocate_statement,
       $.entry_statement,
     ),
 
@@ -1584,6 +1585,30 @@ module.exports = grammar({
     input_item_list: $ => prec.right(commaSep1($._expression)),
 
     output_item_list: $ => prec.right(commaSep1($._expression)),
+
+    allocate_statement: $ => seq(
+      caseInsensitive('allocate'),
+      '(',
+      optional(field('type', seq(
+        choice(
+          $.intrinsic_type,
+          $.identifier,
+        ),
+        '::'
+      ))),
+      commaSep1(field('allocation', choice(
+        $.identifier,
+        $.derived_type_member_expression,
+        $.sized_allocation,
+      ))),
+      optional(seq(',', commaSep1($.keyword_argument))),
+      ')',
+    ),
+
+    sized_allocation: $ => seq(
+      $._expression,
+      alias($.argument_list, $.size),
+    ),
 
     // Obsolescent feature
     statement_function: $ => prec.right(seq(
