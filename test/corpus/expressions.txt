@@ -797,7 +797,7 @@ Call Type-Bound Procedure
 
 program use_type_bound_procedures
   call foo%bar()
-  call foo%bar%quux()
+  call foo(n)%bar%quux()
 end program use_type_bound_procedures
 
 --------------------------------------------------------------------------------
@@ -814,7 +814,10 @@ end program use_type_bound_procedures
     (subroutine_call
       (derived_type_member_expression
         (derived_type_member_expression
-          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
           (type_member))
         (type_member))
       (argument_list))

@@ -2508,6 +2508,76 @@ end program test
       (name))))
 
 ================================================================================
+Allocate statements
+================================================================================
+
+program test
+    allocate(my_int(1, 2))
+    allocate(integer::foo)
+    allocate(my_type::foo, stat=stat_var)
+    allocate(double precision::foo)
+    allocate(my_type::bar(1), foo, parent%child%grandchild(1, 2), errmsg=msg)
+    allocate(parent(n)%child(x, y))
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (allocate_statement
+      allocation: (sized_allocation
+        (identifier)
+        (size
+          (number_literal)
+          (number_literal))))
+    (allocate_statement
+      type: (intrinsic_type)
+      allocation: (identifier))
+    (allocate_statement
+      type: (identifier)
+      allocation: (identifier)
+      (keyword_argument
+        name: (identifier)
+        value: (identifier)))
+    (allocate_statement
+      type: (intrinsic_type)
+      allocation: (identifier))
+    (allocate_statement
+      type: (identifier)
+      allocation: (sized_allocation
+        (identifier)
+        (size
+          (number_literal)))
+      allocation: (identifier)
+      allocation: (sized_allocation
+        (derived_type_member_expression
+          (derived_type_member_expression
+            (identifier)
+            (type_member))
+          (type_member))
+        (size
+          (number_literal)
+          (number_literal)))
+      (keyword_argument
+        name: (identifier)
+        value: (identifier)))
+    (allocate_statement
+      allocation: (sized_allocation
+        (derived_type_member_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
+          (type_member))
+        (size
+          (identifier)
+          (identifier))))
+    (end_program_statement
+      (name))))
+
+================================================================================
 Arithmetic If Statement (Deleted)
 ================================================================================
 
