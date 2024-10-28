@@ -20,6 +20,7 @@ PROGRAM TEST
     dbl_val = 1.23D+4
     dbl_val = 1.23D-4
     dbl_val = 1.23D4
+    dbl_val = 1.23e-4_d
     bin_val = B'1011'
     oct_val = O'0158'
     hex_val = Z'09AF'
@@ -92,6 +93,10 @@ END PROGRAM
     (assignment_statement
       (identifier)
       (number_literal))
+    (assignment_statement
+      (identifier)
+      (number_literal
+        (identifier)))
     (assignment_statement
       (identifier)
       (number_literal))
