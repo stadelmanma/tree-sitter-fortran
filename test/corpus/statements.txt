@@ -2718,3 +2718,279 @@ Entry statement (Obsolescent)
       (name))
     (keyword_statement)
     (end_subroutine_statement)))
+
+================================================================================
+Coarray declarations
+================================================================================
+
+program test
+ integer :: a[*]
+ integer :: i[-2:2,2,1:*]
+ integer, allocatable, codimension[:] :: co_int_scal_k1
+ integer :: a(num_local_elems)[*]=a_initial, b(num_local_elems)[*]=b_initial
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (coarray_declarator
+        (identifier)
+        (coarray_size)))
+    (variable_declaration
+      (intrinsic_type)
+      (coarray_declarator
+        (identifier)
+        (coarray_size
+          (extent_specifier
+            (unary_expression
+              (number_literal))
+            (number_literal))
+          (number_literal)
+          (extent_specifier
+            (number_literal)))))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier)
+      (type_qualifier
+        (coarray_size
+          (extent_specifier)))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (init_declarator
+        (coarray_declarator
+          (sized_declarator
+            (identifier)
+            (size
+              (identifier)))
+          (coarray_size))
+        (identifier))
+      (init_declarator
+        (coarray_declarator
+          (sized_declarator
+            (identifier)
+            (size
+              (identifier)))
+          (coarray_size))
+        (identifier)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Coarray indexing
+================================================================================
+
+program test
+  print*, a[5]
+  ok[1] = .false.
+  a(:)[right] = a(:)[right]+me
+  if(me == 1) x[2, team = initial] = me
+  allocate(a(5)[*])
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (coarray_expression
+          (identifier)
+          (coarray_index
+            (number_literal)))))
+    (assignment_statement
+      (coarray_expression
+        (identifier)
+        (coarray_index
+          (number_literal)))
+      (boolean_literal))
+    (assignment_statement
+      (coarray_expression
+        (call_expression
+          (identifier)
+          (argument_list
+            (extent_specifier)))
+        (coarray_index
+          (identifier)))
+      (math_expression
+        (coarray_expression
+          (call_expression
+            (identifier)
+            (argument_list
+              (extent_specifier)))
+          (coarray_index
+            (identifier)))
+        (identifier)))
+    (if_statement
+      (parenthesized_expression
+        (relational_expression
+          (identifier)
+          (number_literal)))
+      (assignment_statement
+        (coarray_expression
+          (identifier)
+          (coarray_index
+            (number_literal)
+            (keyword_argument
+              (identifier)
+              (identifier))))
+        (identifier)))
+    (allocate_statement
+      (coarray_allocation
+        (sized_allocation
+          (identifier)
+          (size
+            (number_literal)))
+        (coarray_size)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Coarray statements
+================================================================================
+
+program test
+  sync images(1)
+  sync images([1, 3])
+  sync all
+  form team(1, team(PARENT_TEAM))
+  sync team(team(PARENT_TEAM))
+  lock (lck[1])
+  unlock (lck[1])
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (coarray_statement
+      (argument_list
+        (number_literal)))
+    (coarray_statement
+      (argument_list
+        (array_literal
+          (number_literal)
+          (number_literal))))
+    (coarray_statement)
+    (coarray_statement
+      (argument_list
+        (number_literal)
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))))
+    (coarray_statement
+      (argument_list
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))))
+    (coarray_statement
+      (argument_list
+        (coarray_expression
+          (identifier)
+          (coarray_index
+            (number_literal)))))
+    (coarray_statement
+      (argument_list
+        (coarray_expression
+          (identifier)
+          (coarray_index
+            (number_literal)))))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Coarray Change Team
+================================================================================
+
+program test
+  form team(parent_team_number, parent)
+  change team(parent)
+    form team(child_team_number, child)
+    child_team: change team(child)
+      print*, this_image(), team_number(), team_number(child), team_number(parent)
+    end team child_team
+  end team
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (coarray_statement
+      (argument_list
+        (identifier)
+        (identifier)))
+    (coarray_team_statement
+      (argument_list
+        (identifier))
+      (coarray_statement
+        (argument_list
+          (identifier)
+          (identifier)))
+      (coarray_team_statement
+        (block_label_start_expression)
+        (argument_list
+          (identifier))
+        (print_statement
+          (format_identifier)
+          (output_item_list
+            (call_expression
+              (identifier)
+              (argument_list))
+            (call_expression
+              (identifier)
+              (argument_list))
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))
+            (call_expression
+              (identifier)
+              (argument_list
+                (identifier)))))
+        (end_coarray_team_statement
+          (block_label)))
+      (end_coarray_team_statement))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Coarray Critical
+================================================================================
+
+program test
+  critical
+    ok[1] = .false.
+  end critical
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (coarray_critical_statement
+      (assignment_statement
+        (coarray_expression
+          (identifier)
+          (coarray_index
+            (number_literal)))
+        (boolean_literal))
+      (end_coarray_critical_statement))
+    (end_program_statement
+      (name))))

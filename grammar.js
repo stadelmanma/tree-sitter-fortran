@@ -110,6 +110,7 @@ module.exports = grammar({
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
     [$.statement_function, $._expression],
+    [$.coarray_critical_statement, $.identifier],
   ],
 
   rules: {
@@ -784,6 +785,7 @@ module.exports = grammar({
     _variable_declarator: $ => choice(
       $.identifier,
       $.sized_declarator,
+      $.coarray_declarator,
     ),
 
     sized_declarator: $ => prec.right(1, seq(
@@ -861,6 +863,10 @@ module.exports = grammar({
       caseInsensitive('abstract'),
       caseInsensitive('allocatable'),
       caseInsensitive('automatic'),
+      prec.right(seq(
+        caseInsensitive('codimension'),
+        alias($.coarray_index, $.coarray_size),
+      )),
       prec.right(seq(
         caseInsensitive('dimension'),
         optional($.argument_list)
@@ -982,6 +988,9 @@ module.exports = grammar({
       $.file_position_statement,
       $.allocate_statement,
       $.entry_statement,
+      $.coarray_statement,
+      $.coarray_team_statement,
+      $.coarray_critical_statement,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1600,14 +1609,24 @@ module.exports = grammar({
         $.identifier,
         $.derived_type_member_expression,
         $.sized_allocation,
+        $.coarray_allocation,
+
       ))),
       optional(seq(',', commaSep1($.keyword_argument))),
       ')',
     ),
 
-    sized_allocation: $ => seq(
+    sized_allocation: $ => prec.right(1, seq(
       $._expression,
       alias($.argument_list, $.size),
+    )),
+
+    coarray_allocation: $ => seq(
+      choice(
+        $._expression,
+        $.sized_allocation,
+      ),
+      alias($.coarray_index, $.coarray_size),
     ),
 
     // Obsolescent feature
@@ -1650,6 +1669,7 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.call_expression,
       $.implied_do_loop_expression,
+      $.coarray_expression,
     ),
 
     parenthesized_expression: $ => seq(
@@ -1887,6 +1907,102 @@ module.exports = grammar({
       $._string_literal,
     ),
 
+    // Coarrays
+
+    coarray_index: $ => seq(
+      '[',
+      commaSep1(choice(
+        $._expression,
+        alias($._coarray_extent_specifier, $.extent_specifier),
+        '*',
+      )),
+      commaSep(seq(',', $.keyword_argument)),
+      ']'
+    ),
+
+    // Copy of `extent_specifier` but we don't want `*` to be named `assumed_size`
+    _coarray_extent_specifier: $ => seq(
+      optional($._expression), // start
+      ':',
+      optional(choice($._expression, '*')), // stop
+      optional(seq(':', $._expression)) // stride
+    ),
+
+    coarray_declarator: $ => prec.right(seq(
+      choice(
+        $.identifier,
+        $.sized_declarator,
+      ),
+      alias($.coarray_index, $.coarray_size),
+    )),
+
+    coarray_expression: $ => prec.right(seq(
+      $._expression,
+      $.coarray_index,
+    )),
+
+    coarray_statement: $ => choice(
+      seq(
+        choice(
+          caseInsensitive('sync'),
+          caseInsensitive('form'),
+        ),
+        choice(
+          caseInsensitive('all'),
+          caseInsensitive('images'),
+          caseInsensitive('memory'),
+          caseInsensitive('team'),
+        ),
+        optional($.argument_list),
+      ),
+      seq(caseInsensitive('fail'), caseInsensitive('image')),
+      seq(
+        caseInsensitive('event'),
+        choice(
+          caseInsensitive('post'),
+          caseInsensitive('wait'),
+        ),
+        $.argument_list,
+      ),
+      prec.right(1, seq(
+        choice(
+          caseInsensitive('lock'),
+          caseInsensitive('unlock'),
+        ),
+        $.argument_list,
+      )),
+    ),
+
+    coarray_team_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('change'),
+      caseInsensitive('team'),
+      $.argument_list,
+      $._end_of_statement,
+      repeat($._statement),
+      $.end_coarray_team_statement,
+    ),
+
+    end_coarray_team_statement: $ => seq(
+      whiteSpacedKeyword('end', 'team'),
+      optional($.argument_list),
+      optional($._block_label),
+    ),
+
+    coarray_critical_statement: $ => seq(
+      optional($.block_label_start_expression),
+      caseInsensitive('critical'),
+      optional($.argument_list),
+      $._end_of_statement,
+      repeat($._statement),
+      $.end_coarray_critical_statement,
+    ),
+
+    end_coarray_critical_statement: $ => seq(
+      whiteSpacedKeyword('end', 'critical'),
+      optional($._block_label),
+    ),
+
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens
     // correctly as either a keyword or a plain identifier, we must
@@ -1897,8 +2013,10 @@ module.exports = grammar({
       caseInsensitive('automatic'),
       caseInsensitive('block'),
       caseInsensitive('byte'),
+      caseInsensitive('change'),
       caseInsensitive('constant'),
       caseInsensitive('contiguous'),
+      caseInsensitive('critical'),
       caseInsensitive('cycle'),
       caseInsensitive('data'),
       caseInsensitive('device'),
@@ -1909,14 +2027,18 @@ module.exports = grammar({
       caseInsensitive('endif'),
       caseInsensitive('entry'),
       caseInsensitive('error'),
+      caseInsensitive('event'),
       caseInsensitive('exit'),
       caseInsensitive('external'),
+      caseInsensitive('fail'),
+      caseInsensitive('form'),
       caseInsensitive('format'),
       caseInsensitive('if'),
       caseInsensitive('inquire'),
       caseInsensitive('intrinsic'),
       caseInsensitive('kind'),
       caseInsensitive('len'),
+      caseInsensitive('lock'),
       caseInsensitive('null'),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
@@ -1931,8 +2053,10 @@ module.exports = grammar({
       caseInsensitive('shared'),
       caseInsensitive('static'),
       caseInsensitive('stop'),
+      caseInsensitive('sync'),
       caseInsensitive('target'),
       caseInsensitive('texture'),
+      caseInsensitive('unlock'),
       caseInsensitive('value'),
       caseInsensitive('write'),
     ),
