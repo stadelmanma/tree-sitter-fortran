@@ -747,7 +747,16 @@ module.exports = grammar({
         $.derived_type,
         alias($.procedure_declaration, $.procedure)
       )),
-      optional(seq(',', commaSep1(field('attribute', $.type_qualifier)))),
+      optional(seq(',',
+        commaSep1(
+          field(
+            'attribute',
+            choice(
+              $.type_qualifier,
+              $.language_binding
+            ))
+        )
+      )),
       optional('::'),
       $._declaration_targets
     ),
@@ -763,7 +772,8 @@ module.exports = grammar({
     variable_modification: $ => seq(
       repeat1(choice(
         alias($._standalone_type_qualifier, $.type_qualifier),
-        $.variable_attributes
+        $.variable_attributes,
+        $.language_binding,
       )),
       optional('::'),
       commaSep1(field('declarator', $._variable_declarator)),
