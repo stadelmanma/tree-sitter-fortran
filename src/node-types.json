@@ -18,6 +18,10 @@
         "required": true,
         "types": [
           {
+            "type": "coarray_allocation",
+            "named": true
+          },
+          {
             "type": "derived_type_member_expression",
             "named": true
           },
@@ -91,6 +95,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -219,6 +227,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -299,6 +311,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -366,6 +382,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -466,6 +486,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -611,6 +643,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -922,6 +958,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "common_statement",
           "named": true
         },
@@ -1180,6 +1228,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -1276,6 +1328,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -1414,6 +1478,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -1497,6 +1565,730 @@
     }
   },
   {
+    "type": "coarray_allocation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_size",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "sized_allocation",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_critical_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_declarator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "coarray_size",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "sized_declarator",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_index",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_index",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "extent_specifier",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_size",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "array_literal",
+          "named": true
+        },
+        {
+          "type": "boolean_literal",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
+          "type": "complex_literal",
+          "named": true
+        },
+        {
+          "type": "concatenation_expression",
+          "named": true
+        },
+        {
+          "type": "derived_type_member_expression",
+          "named": true
+        },
+        {
+          "type": "extent_specifier",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "implied_do_loop_expression",
+          "named": true
+        },
+        {
+          "type": "keyword_argument",
+          "named": true
+        },
+        {
+          "type": "logical_expression",
+          "named": true
+        },
+        {
+          "type": "math_expression",
+          "named": true
+        },
+        {
+          "type": "null_literal",
+          "named": true
+        },
+        {
+          "type": "number_literal",
+          "named": true
+        },
+        {
+          "type": "parenthesized_expression",
+          "named": true
+        },
+        {
+          "type": "relational_expression",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        },
+        {
+          "type": "unary_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "argument_list",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "coarray_team_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "allocate_statement",
+          "named": true
+        },
+        {
+          "type": "argument_list",
+          "named": true
+        },
+        {
+          "type": "arithmetic_if_statement",
+          "named": true
+        },
+        {
+          "type": "assignment_statement",
+          "named": true
+        },
+        {
+          "type": "associate_statement",
+          "named": true
+        },
+        {
+          "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
+          "type": "do_label_statement",
+          "named": true
+        },
+        {
+          "type": "do_loop_statement",
+          "named": true
+        },
+        {
+          "type": "end_coarray_team_statement",
+          "named": true
+        },
+        {
+          "type": "end_do_label_statement",
+          "named": true
+        },
+        {
+          "type": "entry_statement",
+          "named": true
+        },
+        {
+          "type": "file_position_statement",
+          "named": true
+        },
+        {
+          "type": "forall_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "inquire_statement",
+          "named": true
+        },
+        {
+          "type": "keyword_statement",
+          "named": true
+        },
+        {
+          "type": "open_statement",
+          "named": true
+        },
+        {
+          "type": "pointer_association_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "print_statement",
+          "named": true
+        },
+        {
+          "type": "read_statement",
+          "named": true
+        },
+        {
+          "type": "select_case_statement",
+          "named": true
+        },
+        {
+          "type": "select_rank_statement",
+          "named": true
+        },
+        {
+          "type": "select_type_statement",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "stop_statement",
+          "named": true
+        },
+        {
+          "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "where_statement",
+          "named": true
+        },
+        {
+          "type": "write_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "common_statement",
     "named": true,
     "fields": {},
@@ -1504,6 +2296,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "coarray_declarator",
+          "named": true
+        },
         {
           "type": "identifier",
           "named": true
@@ -1560,6 +2356,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -1643,6 +2443,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -1719,6 +2523,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -1789,6 +2597,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -1856,6 +2668,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -1990,6 +2806,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -2086,6 +2906,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -2365,6 +3189,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -2449,6 +3277,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -2653,6 +3485,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "concurrent_statement",
           "named": true
         },
@@ -2820,6 +3664,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "do_label_statement",
           "named": true
         },
@@ -2968,6 +3824,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -3126,6 +3994,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "do_label_statement",
           "named": true
         },
@@ -3263,6 +4143,40 @@
       "multiple": false,
       "required": false,
       "types": [
+        {
+          "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_coarray_critical_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_coarray_team_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "argument_list",
+          "named": true
+        },
         {
           "type": "block_label",
           "named": true
@@ -3665,6 +4579,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -3796,6 +4714,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -4017,6 +4947,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -4358,6 +5300,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "do_label_statement",
           "named": true
         },
@@ -4533,6 +5487,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -4662,6 +5620,10 @@
         "required": true,
         "types": [
           {
+            "type": "coarray_declarator",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -4685,6 +5647,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -4761,6 +5727,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -5021,6 +5991,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -5094,6 +6068,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -5181,6 +6159,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -5296,6 +6278,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -5388,6 +6374,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -5456,6 +6446,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -5534,6 +6528,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -5606,6 +6604,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -5706,6 +6708,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -5945,6 +6951,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -6303,6 +7321,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -6375,6 +7397,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -6487,6 +7513,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -6566,6 +7596,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -6629,6 +7663,10 @@
         "required": true,
         "types": [
           {
+            "type": "coarray_declarator",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -6652,6 +7690,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -6868,6 +7910,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -7155,6 +8209,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "common_statement",
           "named": true
         },
@@ -7407,6 +8473,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -7758,6 +8836,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "common_statement",
           "named": true
         },
@@ -8039,6 +9129,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -8462,6 +9564,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "common_statement",
           "named": true
         },
@@ -8747,6 +9861,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "default",
           "named": true
         },
@@ -8909,6 +10035,10 @@
             "named": true
           },
           {
+            "type": "coarray_expression",
+            "named": true
+          },
+          {
             "type": "complex_literal",
             "named": true
           },
@@ -9030,6 +10160,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -9217,6 +10351,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -9304,6 +10442,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -9384,6 +10526,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -9493,6 +10639,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -9575,6 +10725,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "coarray_expression",
           "named": true
         },
         {
@@ -9848,6 +11002,18 @@
           "named": true
         },
         {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
+          "named": true
+        },
+        {
           "type": "common_statement",
           "named": true
         },
@@ -10064,6 +11230,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -10309,6 +11479,10 @@
           "named": true
         },
         {
+          "type": "coarray_expression",
+          "named": true
+        },
+        {
           "type": "complex_literal",
           "named": true
         },
@@ -10399,6 +11573,10 @@
         {
           "type": "argument_list",
           "named": true
+        },
+        {
+          "type": "coarray_size",
+          "named": true
         }
       ]
     }
@@ -10456,6 +11634,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -10595,6 +11785,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "coarray_expression",
             "named": true
           },
           {
@@ -10794,6 +11988,10 @@
         "required": true,
         "types": [
           {
+            "type": "coarray_declarator",
+            "named": true
+          },
+          {
             "type": "identifier",
             "named": true
           },
@@ -10840,6 +12038,10 @@
       "required": true,
       "types": [
         {
+          "type": "coarray_declarator",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         },
@@ -10862,6 +12064,10 @@
         "multiple": true,
         "required": true,
         "types": [
+          {
+            "type": "coarray_declarator",
+            "named": true
+          },
           {
             "type": "identifier",
             "named": true
@@ -10926,6 +12132,18 @@
         },
         {
           "type": "close_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_critical_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_statement",
+          "named": true
+        },
+        {
+          "type": "coarray_team_statement",
           "named": true
         },
         {
@@ -11394,6 +12612,10 @@
     "named": false
   },
   {
+    "type": "change",
+    "named": false
+  },
+  {
     "type": "character",
     "named": false
   },
@@ -11407,6 +12629,10 @@
   },
   {
     "type": "close",
+    "named": false
+  },
+  {
+    "type": "codimension",
     "named": false
   },
   {
@@ -11439,6 +12665,10 @@
   },
   {
     "type": "continue",
+    "named": false
+  },
+  {
+    "type": "critical",
     "named": false
   },
   {
@@ -11518,6 +12748,10 @@
     "named": false
   },
   {
+    "type": "endcritical",
+    "named": false
+  },
+  {
     "type": "enddo",
     "named": false
   },
@@ -11570,6 +12804,10 @@
     "named": false
   },
   {
+    "type": "endteam",
+    "named": false
+  },
+  {
     "type": "endtype",
     "named": false
   },
@@ -11598,6 +12836,10 @@
     "named": false
   },
   {
+    "type": "event",
+    "named": false
+  },
+  {
     "type": "exit",
     "named": false
   },
@@ -11610,6 +12852,10 @@
     "named": false
   },
   {
+    "type": "fail",
+    "named": false
+  },
+  {
     "type": "family",
     "named": false
   },
@@ -11619,6 +12865,10 @@
   },
   {
     "type": "forall",
+    "named": false
+  },
+  {
+    "type": "form",
     "named": false
   },
   {
@@ -11655,6 +12905,14 @@
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "image",
+    "named": false
+  },
+  {
+    "type": "images",
     "named": false
   },
   {
@@ -11722,11 +12980,19 @@
     "named": false
   },
   {
+    "type": "lock",
+    "named": false
+  },
+  {
     "type": "logical",
     "named": false
   },
   {
     "type": "managed",
+    "named": false
+  },
+  {
+    "type": "memory",
     "named": false
   },
   {
@@ -11747,11 +13013,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",
@@ -11799,6 +13065,10 @@
   },
   {
     "type": "pointer",
+    "named": false
+  },
+  {
+    "type": "post",
     "named": false
   },
   {
@@ -11930,11 +13200,19 @@
     "named": false
   },
   {
+    "type": "sync",
+    "named": false
+  },
+  {
     "type": "system_lib_string",
     "named": true
   },
   {
     "type": "target",
+    "named": false
+  },
+  {
+    "type": "team",
     "named": false
   },
   {
@@ -11958,6 +13236,10 @@
     "named": false
   },
   {
+    "type": "unlock",
+    "named": false
+  },
+  {
     "type": "use",
     "named": false
   },
@@ -11967,6 +13249,10 @@
   },
   {
     "type": "volatile",
+    "named": false
+  },
+  {
+    "type": "wait",
     "named": false
   },
   {
