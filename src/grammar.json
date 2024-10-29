@@ -8142,8 +8142,17 @@
                       "type": "FIELD",
                       "name": "attribute",
                       "content": {
-                        "type": "SYMBOL",
-                        "name": "type_qualifier"
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "type_qualifier"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "language_binding"
+                          }
+                        ]
                       }
                     },
                     {
@@ -8159,8 +8168,17 @@
                             "type": "FIELD",
                             "name": "attribute",
                             "content": {
-                              "type": "SYMBOL",
-                              "name": "type_qualifier"
+                              "type": "CHOICE",
+                              "members": [
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "type_qualifier"
+                                },
+                                {
+                                  "type": "SYMBOL",
+                                  "name": "language_binding"
+                                }
+                              ]
                             }
                           }
                         ]
@@ -8307,6 +8325,10 @@
               {
                 "type": "SYMBOL",
                 "name": "variable_attributes"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "language_binding"
               }
             ]
           }

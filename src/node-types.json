@@ -11978,6 +11978,10 @@
         "required": false,
         "types": [
           {
+            "type": "language_binding",
+            "named": true
+          },
+          {
             "type": "type_qualifier",
             "named": true
           }
@@ -12083,6 +12087,10 @@
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "language_binding",
+          "named": true
+        },
         {
           "type": "type_qualifier",
           "named": true
