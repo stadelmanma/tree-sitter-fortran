@@ -628,3 +628,78 @@ end module foo
           (name))))
     (end_module_statement
       (name))))
+
+================================================================================
+Preprocessor in select statements
+================================================================================
+
+program case_preprocessor
+    implicit none
+    character(len=256) :: multidata_item
+    integer :: dim
+    multidata_item = "test"
+
+    select case (multidata_item)
+#ifdef UM_PHYSICS
+        case ('plant_func_types')
+                dim = 1
+#endif
+#if TEST > 0
+        case ('test')
+                dim = 1
+#endif
+        case default
+                dim = 1
+    end select
+
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (implicit_statement
+      (none))
+    (variable_declaration
+      (intrinsic_type
+        (kind
+          (keyword_argument
+            (identifier)
+            (number_literal))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (assignment_statement
+      (identifier)
+      (string_literal))
+    (select_case_statement
+      (selector
+        (identifier))
+      (preproc_ifdef
+        (identifier)
+        (case_statement
+          (case_value_range_list
+            (string_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (preproc_if
+        (binary_expression
+          (identifier)
+          (number_literal))
+        (case_statement
+          (case_value_range_list
+            (string_literal))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
+      (case_statement
+        (default)
+        (assignment_statement
+          (identifier)
+          (number_literal)))
+      (end_select_statement))
+    (end_program_statement)))

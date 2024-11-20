@@ -53,20 +53,5 @@
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
-  },
-  "tree-sitter": [
-    {
-      "scope": "source.fortran",
-      "file-types": [
-        "f90",
-        "F90",
-        "f95",
-        "F95"
-      ],
-      "highlights": [
-        "queries/highlights.scm"
-      ],
-      "injection-regex": "fortran"
-    }
-  ]
+  }
 }

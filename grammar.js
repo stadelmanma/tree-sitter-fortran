@@ -189,6 +189,9 @@ module.exports = grammar({
     ), 2),
     ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
     ...preprocIf('_in_derived_type', $ => repeat($.variable_declaration)),
+    ...preprocIf('_in_select_case', $ => $.case_statement),
+    ...preprocIf('_in_select_type', $ => $.type_statement),
+    ...preprocIf('_in_select_rank', $ => $.rank_statement),
 
     // This doesn't capture multiline arguments, probably because our
     // scanner isn't aware of preprocessor statements yet
@@ -1326,7 +1329,11 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'case'),
       $.selector,
       $._end_of_statement,
-      repeat1($.case_statement),
+      repeat1(choice(
+        $.case_statement,
+        alias($.preproc_if_in_select_case, $.preproc_if),
+        alias($.preproc_ifdef_in_select_case, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),
@@ -1336,7 +1343,11 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'type'),
       $.selector,
       $._end_of_statement,
-      repeat1($.type_statement),
+      repeat1(choice(
+        $.type_statement,
+        alias($.preproc_if_in_select_type, $.preproc_if),
+        alias($.preproc_ifdef_in_select_type, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),
@@ -1346,7 +1357,11 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'rank'),
       $.selector,
       $._end_of_statement,
-      repeat1($.rank_statement),
+      repeat1(choice(
+        $.rank_statement,
+        alias($.preproc_if_in_select_rank, $.preproc_if),
+        alias($.preproc_ifdef_in_select_rank, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),

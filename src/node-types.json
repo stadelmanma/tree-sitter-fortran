@@ -7909,6 +7909,10 @@
           "named": true
         },
         {
+          "type": "case_statement",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -8077,6 +8081,10 @@
           "named": true
         },
         {
+          "type": "rank_statement",
+          "named": true
+        },
+        {
           "type": "read_statement",
           "named": true
         },
@@ -8118,6 +8126,10 @@
         },
         {
           "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "type_statement",
           "named": true
         },
         {
@@ -8205,6 +8217,10 @@
           "named": true
         },
         {
+          "type": "case_statement",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -8373,6 +8389,10 @@
           "named": true
         },
         {
+          "type": "rank_statement",
+          "named": true
+        },
+        {
           "type": "read_statement",
           "named": true
         },
@@ -8414,6 +8434,10 @@
         },
         {
           "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "type_statement",
           "named": true
         },
         {
@@ -8472,6 +8496,10 @@
           "named": true
         },
         {
+          "type": "case_statement",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -8640,6 +8668,10 @@
           "named": true
         },
         {
+          "type": "rank_statement",
+          "named": true
+        },
+        {
           "type": "read_statement",
           "named": true
         },
@@ -8681,6 +8713,10 @@
         },
         {
           "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "type_statement",
           "named": true
         },
         {
@@ -8832,6 +8868,10 @@
           "named": true
         },
         {
+          "type": "case_statement",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -9000,6 +9040,10 @@
           "named": true
         },
         {
+          "type": "rank_statement",
+          "named": true
+        },
+        {
           "type": "read_statement",
           "named": true
         },
@@ -9041,6 +9085,10 @@
         },
         {
           "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "type_statement",
           "named": true
         },
         {
@@ -9128,6 +9176,10 @@
           "named": true
         },
         {
+          "type": "case_statement",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -9296,6 +9348,10 @@
           "named": true
         },
         {
+          "type": "rank_statement",
+          "named": true
+        },
+        {
           "type": "read_statement",
           "named": true
         },
@@ -9337,6 +9393,10 @@
         },
         {
           "type": "subroutine_call",
+          "named": true
+        },
+        {
+          "type": "type_statement",
           "named": true
         },
         {
@@ -10258,6 +10318,14 @@
           "named": true
         },
         {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
           "type": "selector",
           "named": true
         },
@@ -10282,6 +10350,14 @@
         },
         {
           "type": "end_select_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -10313,6 +10389,14 @@
         },
         {
           "type": "end_select_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
           "named": true
         },
         {
@@ -11398,6 +11482,7 @@
   {
     "type": "translation_unit",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -12444,10 +12529,6 @@
     "named": false
   },
   {
-    "type": ";",
-    "named": false
-  },
-  {
     "type": "<",
     "named": false
   },
@@ -13021,11 +13102,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
