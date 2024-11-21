@@ -188,6 +188,7 @@ module.exports = grammar({
       optional($.internal_procedures)
     ), 2),
     ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
+    ...preprocIf('_in_interface', $ => repeat($._interface_items)),
     ...preprocIf('_in_derived_type', $ => repeat($.variable_declaration)),
     ...preprocIf('_in_bound_procedures', $ => repeat($.procedure_statement)),
     ...preprocIf('_in_select_case', $ => $.case_statement),
@@ -343,12 +344,22 @@ module.exports = grammar({
     interface: $ => seq(
       $.interface_statement,
       repeat(choice(
+        $._interface_items,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
+        alias($.preproc_if_in_interface, $.preproc_if),
+        alias($.preproc_ifdef_in_interface, $.preproc_ifdef),
+      )),
+      $.end_interface_statement
+    ),
+
+    _interface_items: $ => choice(
         $.import_statement,
         $.procedure_statement,
         $.function,
         $.subroutine
-      )),
-      $.end_interface_statement
     ),
 
     interface_statement: $ => seq(

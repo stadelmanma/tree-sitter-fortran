@@ -716,3 +716,35 @@ end program
           (number_literal)))
       (end_select_statement))
     (end_program_statement)))
+
+================================================================================
+Preprocessor in interface
+================================================================================
+
+module unit_test_module
+  interface assert_equals
+    module procedure assert_equals_int
+#ifdef HAVE_REAL8
+    module procedure assert_equals_real8
+#endif
+  end interface
+end module
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (module
+    (module_statement
+      (name))
+    (interface
+      (interface_statement
+        (name))
+      (procedure_statement
+        (method_name))
+      (preproc_ifdef
+        (identifier)
+        (procedure_statement
+          (method_name)))
+      (end_interface_statement))
+    (end_module_statement)))
+
