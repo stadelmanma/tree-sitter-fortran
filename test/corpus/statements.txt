@@ -211,6 +211,7 @@ PROGRAM TEST
   CHARACTER(*) :: thing
   CHARACTER   FMAT*22, OTHER*(*)
   integer::no_whitespace=1
+  integer(kind=c_long), bind(C, name="c_fortran_var") :: c_fortran_var
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -321,6 +322,18 @@ END PROGRAM
       declarator: (init_declarator
         left: (identifier)
         right: (number_literal)))
+    (variable_declaration
+      type: (intrinsic_type
+        kind: (kind
+          (keyword_argument
+            name: (identifier)
+            value: (identifier))))
+      attribute: (language_binding
+        (identifier)
+        (keyword_argument
+          name: (identifier)
+          value: (string_literal)))
+      declarator: (identifier))
     (end_program_statement)))
 
 ================================================================================
@@ -492,6 +505,7 @@ PROGRAM TEST
   PARAMETER (MAXLEN = 255, PI = 3.1415, SCALE_FACTOR = SIN(2 * PI))
   EQUIVALENCE (a, b, c), (d, e, f, r(1))
   SAVE A, B, /BLOCKC/, D
+  BIND(C) n
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -549,6 +563,10 @@ END PROGRAM
       (identifier)
       (identifier)
       (identifier)
+      (identifier))
+    (variable_modification
+      (language_binding
+        (identifier))
       (identifier))
     (end_program_statement)))
 
