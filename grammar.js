@@ -188,7 +188,12 @@ module.exports = grammar({
       optional($.internal_procedures)
     ), 2),
     ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
+    ...preprocIf('_in_interface', $ => repeat($._interface_items)),
     ...preprocIf('_in_derived_type', $ => repeat($.variable_declaration)),
+    ...preprocIf('_in_bound_procedures', $ => repeat($.procedure_statement)),
+    ...preprocIf('_in_select_case', $ => $.case_statement),
+    ...preprocIf('_in_select_type', $ => $.type_statement),
+    ...preprocIf('_in_select_rank', $ => $.rank_statement),
 
     // This doesn't capture multiline arguments, probably because our
     // scanner isn't aware of preprocessor statements yet
@@ -339,12 +344,22 @@ module.exports = grammar({
     interface: $ => seq(
       $.interface_statement,
       repeat(choice(
+        $._interface_items,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
+        alias($.preproc_if_in_interface, $.preproc_if),
+        alias($.preproc_ifdef_in_interface, $.preproc_ifdef),
+      )),
+      $.end_interface_statement
+    ),
+
+    _interface_items: $ => choice(
         $.import_statement,
         $.procedure_statement,
         $.function,
         $.subroutine
-      )),
-      $.end_interface_statement
     ),
 
     interface_statement: $ => seq(
@@ -645,6 +660,10 @@ module.exports = grammar({
         ),
         seq($.include_statement, $._end_of_statement),
         seq($.variable_declaration, $._end_of_statement),
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
         alias($.preproc_if_in_derived_type, $.preproc_if),
         alias($.preproc_ifdef_in_derived_type, $.preproc_ifdef),
       )),
@@ -690,9 +709,13 @@ module.exports = grammar({
 
     derived_type_procedures: $ => seq(
       $.contains_statement,
-      optional($.public_statement),
-      optional($.private_statement),
-      repeat($.procedure_statement)
+      repeat(choice(
+        $.public_statement,
+        $.private_statement,
+        $.procedure_statement,
+        alias($.preproc_if_in_bound_procedures, $.preproc_if),
+        alias($.preproc_ifdef_in_bound_procedures, $.preproc_ifdef),
+      )),
     ),
 
     procedure_statement: $ => seq(
@@ -1326,7 +1349,15 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'case'),
       $.selector,
       $._end_of_statement,
-      repeat1($.case_statement),
+      repeat1(choice(
+        $.case_statement,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
+        alias($.preproc_if_in_select_case, $.preproc_if),
+        alias($.preproc_ifdef_in_select_case, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),
@@ -1336,7 +1367,15 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'type'),
       $.selector,
       $._end_of_statement,
-      repeat1($.type_statement),
+      repeat1(choice(
+        $.type_statement,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
+        alias($.preproc_if_in_select_type, $.preproc_if),
+        alias($.preproc_ifdef_in_select_type, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),
@@ -1346,7 +1385,15 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'rank'),
       $.selector,
       $._end_of_statement,
-      repeat1($.rank_statement),
+      repeat1(choice(
+        $.rank_statement,
+        $.preproc_include,
+        $.preproc_def,
+        $.preproc_function_def,
+        $.preproc_call,
+        alias($.preproc_if_in_select_rank, $.preproc_if),
+        alias($.preproc_ifdef_in_select_rank, $.preproc_ifdef),
+      )),
       optional($.statement_label),
       $.end_select_statement
     ),
