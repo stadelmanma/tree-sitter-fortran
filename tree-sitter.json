@@ -1,0 +1,48 @@
+{
+  "grammars": [
+    {
+      "name": "fortran",
+      "camelcase": "Fortran",
+      "scope": "source.fortran",
+      "path": ".",
+      "file-types": [
+        "f90",
+        "F90",
+        "f95",
+        "F95"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ],
+      "injection-regex": "fortran"
+    }
+  ],
+  "metadata": {
+    "version": "0.2.0",
+    "license": "MIT",
+    "description": "Fortran grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Matt Stadelman",
+        "email": "stadelmanma@gmail.com",
+        "url": "https://github.com/stadelmanma"
+      },
+      {
+        "name": "Peter Hill",
+        "email": "peter.hill@york.ac.uk",
+        "url": "https://github.com/ZedThree"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/stadelmanma/tree-sitter-fortran"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
