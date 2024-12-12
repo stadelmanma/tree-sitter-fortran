@@ -80,7 +80,9 @@ module.exports = grammar({
   ],
 
   extras: $ => [
-    /[ \t\r\n]/,
+    // This allows escaping newlines everywhere, although this is only valid in
+    // preprocessor statements
+    /\s|\\\r?\n/,
     $.comment,
     '&',
   ],
@@ -195,8 +197,6 @@ module.exports = grammar({
     ...preprocIf('_in_select_type', $ => $.type_statement),
     ...preprocIf('_in_select_rank', $ => $.rank_statement),
 
-    // This doesn't capture multiline arguments, probably because our
-    // scanner isn't aware of preprocessor statements yet
     preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
     preproc_directive: _ => /#[ \t]*[a-zA-Z0-9]\w*/,
 

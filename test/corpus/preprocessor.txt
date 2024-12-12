@@ -83,6 +83,24 @@ Function-like macro definitions
     value: (preproc_arg)))
 
 ================================================================================
+Multiline definitions
+================================================================================
+
+#define set_error(id, msg)  \
+  if (present(ierr)) ierr = id; \
+  if (present(errmsg)) errmsg = msg;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params
+      (identifier)
+      (identifier))
+    value: (preproc_arg)))
+
+================================================================================
 Ifdefs
 ================================================================================
 
