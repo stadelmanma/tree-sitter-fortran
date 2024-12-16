@@ -83,6 +83,24 @@ Function-like macro definitions
     value: (preproc_arg)))
 
 ================================================================================
+Multiline definitions
+================================================================================
+
+#define set_error(id, msg)  \
+  if (present(ierr)) ierr = id; \
+  if (present(errmsg)) errmsg = msg;
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (preproc_function_def
+    name: (identifier)
+    parameters: (preproc_params
+      (identifier)
+      (identifier))
+    value: (preproc_arg)))
+
+================================================================================
 Ifdefs
 ================================================================================
 
@@ -662,7 +680,9 @@ program case_preprocessor
                 dim = 1
 #endif
         case default
+#ifdef HAVE_DEFAULT_BODY
                 dim = 1
+#endif
     end select
 
 end program
@@ -711,9 +731,11 @@ end program
             (number_literal))))
       (case_statement
         (default)
-        (assignment_statement
+        (preproc_ifdef
           (identifier)
-          (number_literal)))
+          (assignment_statement
+            (identifier)
+            (number_literal))))
       (end_select_statement))
     (end_program_statement)))
 

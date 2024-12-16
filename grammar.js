@@ -80,7 +80,9 @@ module.exports = grammar({
   ],
 
   extras: $ => [
-    /[ \t\r\n]/,
+    // This allows escaping newlines everywhere, although this is only valid in
+    // preprocessor statements
+    /\s|\\\r?\n/,
     $.comment,
     '&',
   ],
@@ -186,6 +188,10 @@ module.exports = grammar({
     ...preprocIf('_in_statements', $ => seq(
       repeat($._statement),
       optional($.internal_procedures)
+    ), 1),
+    ...preprocIf('_in_procedure_statements', $ => seq(
+      repeat($._statement),
+      optional($.internal_procedures)
     ), 2),
     ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
     ...preprocIf('_in_interface', $ => repeat($._interface_items)),
@@ -195,8 +201,6 @@ module.exports = grammar({
     ...preprocIf('_in_select_type', $ => $.type_statement),
     ...preprocIf('_in_select_rank', $ => $.rank_statement),
 
-    // This doesn't capture multiline arguments, probably because our
-    // scanner isn't aware of preprocessor statements yet
     preproc_arg: _ => token(prec(-1, /\S([^/\n]|\/[^*]|\\\r?\n)*/)),
     preproc_directive: _ => /#[ \t]*[a-zA-Z0-9]\w*/,
 
@@ -980,6 +984,8 @@ module.exports = grammar({
     // Statements
 
     _statement: $ => choice(
+      alias($.preproc_if_in_statements, $.preproc_if),
+      alias($.preproc_ifdef_in_statements, $.preproc_ifdef),
       $.preproc_include,
       $.preproc_def,
       $.preproc_function_def,
@@ -2280,8 +2286,8 @@ function procedure($, start_statement, end_statement) {
     repeat(
       choice(
         $._statement,
-        alias($.preproc_if_in_statements, $.preproc_if),
-        alias($.preproc_ifdef_in_statements, $.preproc_ifdef)
+        alias($.preproc_if_in_procedure_statements, $.preproc_if),
+        alias($.preproc_ifdef_in_procedure_statements, $.preproc_ifdef)
       ),
     ),
     optional($.internal_procedures),
