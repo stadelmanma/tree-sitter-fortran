@@ -10,26 +10,9 @@
 //  http://www.personal.psu.edu/jhm/f90/statements/intrinsic.html
 //  http://earth.uni-muenster.de/~joergs/doc/f90/lrm/lrm0083.htm#data_type_declar
 //
-// Semicolons are treated exactly like newlines and can end any statement
-// or be used to chain multiple ones together with the exception of using
-// an ampersand to continue a line and comments.
-//
 // I'll need to figure out how best to add support for statement labels
 // since the parser doesn't support the ^ regex token, a using a seq
 // might work as long as the label is optional.
-//
-// The best route to handle line continuation in fortran might be using
-// an external scanner. Basically the scanner would create the "end_of_statement"
-// tokens, as well as newline tokens and if an ampersand was encounted prior to
-// a newline the EOS token would get skipped. The same scanner would then be
-// used as needed to support fixed form fortran although line truncation at
-// 72 characters would not be supported because it can be configured at
-// compile time. Additionally, I can make the line continuation token an
-// extra so it gets ignored, for free form a trailing "&" would get labeled
-// as the token, for fixed form it would be anything in column 6. Additionally,
-// when using the scanner perhaps I could define statement labels as extras
-// since they can exist almost anywhere and are only required in a small
-// subset of cases.
 //
 const PREC = {
   ASSIGNMENT: -10,
@@ -75,7 +58,7 @@ module.exports = grammar({
     $._boz_literal,
     $._string_literal,
     $._string_literal_kind,
-    $._end_of_statement,
+    $._external_end_of_statement,
     $._preproc_unary_operator,
   ],
 
@@ -994,7 +977,8 @@ module.exports = grammar({
         optional($.statement_label),
         $._statements,
         $._end_of_statement
-      )
+      ),
+      ';'
     ),
 
     _statements: $ => choice(
@@ -2126,7 +2110,7 @@ module.exports = grammar({
 
     comment: $ => token(seq('!', /.*/)),
 
-    _semicolon: $ => ';',
+    _end_of_statement: $ => choice(';', $._external_end_of_statement),
 
     _newline: $ => '\n',
   }

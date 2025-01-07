@@ -3012,3 +3012,26 @@ end program test
       (end_coarray_critical_statement))
     (end_program_statement
       (name))))
+
+================================================================================
+Extra semicolon
+================================================================================
+
+program test
+  integer :: foo; ; foo = 1
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (assignment_statement
+      (identifier)
+      (number_literal))
+    (end_program_statement
+      (name))))

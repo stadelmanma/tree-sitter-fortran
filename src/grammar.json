@@ -12585,6 +12585,10 @@
               "name": "_end_of_statement"
             }
           ]
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -20011,9 +20015,18 @@
         ]
       }
     },
-    "_semicolon": {
-      "type": "STRING",
-      "value": ";"
+    "_end_of_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ";"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_external_end_of_statement"
+        }
+      ]
     },
     "_newline": {
       "type": "STRING",
@@ -20136,7 +20149,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "_end_of_statement"
+      "name": "_external_end_of_statement"
     },
     {
       "type": "SYMBOL",
