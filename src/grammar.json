@@ -10752,30 +10752,21 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "method_name"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "binding_name"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "=>"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "method_name"
-                    }
-                  ]
-                }
-              ]
+              "type": "FIELD",
+              "name": "declarator",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "method_name"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "binding_declarator"
+                  }
+                ]
+              }
             },
             {
               "type": "REPEAT",
@@ -10787,30 +10778,21 @@
                     "value": ","
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "method_name"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "binding_name"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "=>"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "method_name"
-                          }
-                        ]
-                      }
-                    ]
+                    "type": "FIELD",
+                    "name": "declarator",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "method_name"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "binding_declarator"
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -10820,6 +10802,23 @@
         {
           "type": "SYMBOL",
           "name": "_end_of_statement"
+        }
+      ]
+    },
+    "binding_declarator": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "binding_name"
+        },
+        {
+          "type": "STRING",
+          "value": "=>"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "method_name"
         }
       ]
     },

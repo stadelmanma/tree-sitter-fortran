@@ -715,13 +715,13 @@ module.exports = grammar({
         commaSep1($.procedure_attribute)
       )),
       optional('::'),
-      commaSep1(choice(
+      commaSep1(field('declarator', choice(
         $.method_name,
-        seq($.binding_name, '=>', $.method_name),
-      )),
+        $.binding_declarator,
+      ))),
       $._end_of_statement,
     ),
-
+    binding_declarator: $ => seq($.binding_name, '=>', $.method_name),
     binding_name: $ => choice(
       $.identifier,
       $._generic_procedure

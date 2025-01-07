@@ -899,6 +899,25 @@
     }
   },
   {
+    "type": "binding_declarator",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binding_name",
+          "named": true
+        },
+        {
+          "type": "method_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binding_name",
     "named": true,
     "fields": {},
@@ -9719,19 +9738,26 @@
   {
     "type": "procedure_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "declarator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "binding_declarator",
+            "named": true
+          },
+          {
+            "type": "method_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
-        {
-          "type": "binding_name",
-          "named": true
-        },
-        {
-          "type": "method_name",
-          "named": true
-        },
         {
           "type": "procedure_attribute",
           "named": true
@@ -13334,11 +13360,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

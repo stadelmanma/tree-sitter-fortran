@@ -2278,15 +2278,17 @@ end module
         (comment)
         (procedure_statement
           (procedure_attribute)
-          (binding_name
-            (defined_io_procedure))
-          (method_name))
+          (binding_declarator
+            (binding_name
+              (defined_io_procedure))
+            (method_name)))
         (comment)
         (procedure_statement
           (procedure_attribute)
-          (binding_name
-            (identifier))
-          (method_name)))
+          (binding_declarator
+            (binding_name
+              (identifier))
+            (method_name))))
       (end_type_statement
         (name)))
     (end_module_statement)))
