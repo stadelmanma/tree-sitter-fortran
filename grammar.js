@@ -1589,13 +1589,10 @@ module.exports = grammar({
     enumerator_statement: $ => seq(
       caseInsensitive('enumerator'),
       optional('::'),
-      commaSep1(choice(
+      commaSep1(field('declarator', choice(
         $.identifier,
-        seq($.identifier, '=', choice(
-          $.number_literal,
-          $.unary_expression,
-        ))
-      ))
+        alias($._declaration_assignment, $.init_declarator),
+      )))
     ),
 
     end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),

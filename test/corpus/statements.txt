@@ -1836,20 +1836,22 @@ END PROGRAM test
         (language_binding
           (identifier)))
       (enumerator_statement
-        (identifier)
-        (number_literal))
+        declarator: (init_declarator
+          left: (identifier)
+          right: (number_literal)))
       (enumerator_statement
-        (identifier)
-        (identifier))
+        declarator: (identifier)
+        declarator: (identifier))
       (end_enum_statement))
     (enum
       (enum_statement
         (language_binding
           (identifier)))
       (enumerator_statement
-        (identifier)
-        (unary_expression
-          (number_literal)))
+        declarator: (init_declarator
+          left: (identifier)
+          right: (unary_expression
+            argument: (number_literal))))
       (end_enum_statement))
     (end_program_statement
       (name))))

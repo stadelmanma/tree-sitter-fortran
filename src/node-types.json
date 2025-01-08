@@ -4615,24 +4615,21 @@
   {
     "type": "enumerator_statement",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        }
-      ]
+    "fields": {
+      "declarator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "init_declarator",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
