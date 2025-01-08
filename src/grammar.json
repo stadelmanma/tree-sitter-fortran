@@ -10662,7 +10662,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_procedure_kind"
+          "name": "procedure_kind"
         },
         {
           "type": "CHOICE",
@@ -10844,7 +10844,7 @@
       "named": false,
       "value": "method_name"
     },
-    "_procedure_kind": {
+    "procedure_kind": {
       "type": "CHOICE",
       "members": [
         {

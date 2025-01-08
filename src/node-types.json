@@ -9728,6 +9728,11 @@
     "fields": {}
   },
   {
+    "type": "procedure_kind",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "procedure_qualifier",
     "named": true,
     "fields": {}
@@ -9753,7 +9758,7 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "procedure_attribute",
@@ -9761,6 +9766,10 @@
         },
         {
           "type": "procedure_interface",
+          "named": true
+        },
+        {
+          "type": "procedure_kind",
           "named": true
         }
       ]
@@ -13357,11 +13366,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",

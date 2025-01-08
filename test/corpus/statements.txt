@@ -2263,12 +2263,14 @@ end module
       (interface_statement
         (defined_io_procedure))
       (procedure_statement
+        (procedure_kind)
         (method_name))
       (end_interface_statement))
     (interface
       (interface_statement
         (defined_io_procedure))
       (procedure_statement
+        (procedure_kind)
         (method_name))
       (end_interface_statement
         (defined_io_procedure)))
@@ -2279,6 +2281,7 @@ end module
         (contains_statement)
         (comment)
         (procedure_statement
+          (procedure_kind)
           (procedure_attribute)
           (binding_declarator
             (binding_name
@@ -2286,6 +2289,7 @@ end module
             (method_name)))
         (comment)
         (procedure_statement
+          (procedure_kind)
           (procedure_attribute)
           (binding_declarator
             (binding_name
