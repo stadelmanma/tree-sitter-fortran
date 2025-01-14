@@ -899,6 +899,25 @@
     }
   },
   {
+    "type": "binding",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binding_name",
+          "named": true
+        },
+        {
+          "type": "method_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binding_name",
     "named": true,
     "fields": {},
@@ -4596,24 +4615,21 @@
   {
     "type": "enumerator_statement",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number_literal",
-          "named": true
-        },
-        {
-          "type": "unary_expression",
-          "named": true
-        }
-      ]
+    "fields": {
+      "declarator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "init_declarator",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -9712,6 +9728,11 @@
     "fields": {}
   },
   {
+    "type": "procedure_kind",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "procedure_qualifier",
     "named": true,
     "fields": {}
@@ -9719,25 +9740,36 @@
   {
     "type": "procedure_statement",
     "named": true,
-    "fields": {},
+    "fields": {
+      "declarator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "binding",
+            "named": true
+          },
+          {
+            "type": "method_name",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "binding_name",
-          "named": true
-        },
-        {
-          "type": "method_name",
-          "named": true
-        },
         {
           "type": "procedure_attribute",
           "named": true
         },
         {
           "type": "procedure_interface",
+          "named": true
+        },
+        {
+          "type": "procedure_kind",
           "named": true
         }
       ]
@@ -13334,11 +13366,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

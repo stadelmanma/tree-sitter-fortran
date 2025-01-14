@@ -706,7 +706,7 @@ module.exports = grammar({
     ),
 
     procedure_statement: $ => seq(
-      $._procedure_kind,
+      $.procedure_kind,
       optional(seq(
         '(', alias($.identifier, $.procedure_interface), ')'
       )),
@@ -715,20 +715,20 @@ module.exports = grammar({
         commaSep1($.procedure_attribute)
       )),
       optional('::'),
-      commaSep1(choice(
+      commaSep1(field('declarator', choice(
         $.method_name,
-        seq($.binding_name, '=>', $.method_name),
-      )),
+        $.binding,
+      ))),
       $._end_of_statement,
     ),
-
+    binding: $ => seq($.binding_name, '=>', $.method_name),
     binding_name: $ => choice(
       $.identifier,
       $._generic_procedure
     ),
     method_name: $ => alias($.identifier, 'method_name'),
 
-    _procedure_kind: $ => choice(
+    procedure_kind: $ => choice(
       caseInsensitive('generic'),
       caseInsensitive('initial'),
       caseInsensitive('procedure'),
@@ -1589,13 +1589,10 @@ module.exports = grammar({
     enumerator_statement: $ => seq(
       caseInsensitive('enumerator'),
       optional('::'),
-      commaSep1(choice(
+      commaSep1(field('declarator', choice(
         $.identifier,
-        seq($.identifier, '=', choice(
-          $.number_literal,
-          $.unary_expression,
-        ))
-      ))
+        alias($._declaration_assignment, $.init_declarator),
+      )))
     ),
 
     end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),

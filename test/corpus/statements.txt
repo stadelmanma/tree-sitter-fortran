@@ -1836,20 +1836,22 @@ END PROGRAM test
         (language_binding
           (identifier)))
       (enumerator_statement
-        (identifier)
-        (number_literal))
+        declarator: (init_declarator
+          left: (identifier)
+          right: (number_literal)))
       (enumerator_statement
-        (identifier)
-        (identifier))
+        declarator: (identifier)
+        declarator: (identifier))
       (end_enum_statement))
     (enum
       (enum_statement
         (language_binding
           (identifier)))
       (enumerator_statement
-        (identifier)
-        (unary_expression
-          (number_literal)))
+        declarator: (init_declarator
+          left: (identifier)
+          right: (unary_expression
+            argument: (number_literal))))
       (end_enum_statement))
     (end_program_statement
       (name))))
@@ -2261,12 +2263,14 @@ end module
       (interface_statement
         (defined_io_procedure))
       (procedure_statement
+        (procedure_kind)
         (method_name))
       (end_interface_statement))
     (interface
       (interface_statement
         (defined_io_procedure))
       (procedure_statement
+        (procedure_kind)
         (method_name))
       (end_interface_statement
         (defined_io_procedure)))
@@ -2277,16 +2281,20 @@ end module
         (contains_statement)
         (comment)
         (procedure_statement
+          (procedure_kind)
           (procedure_attribute)
-          (binding_name
-            (defined_io_procedure))
-          (method_name))
+          (binding
+            (binding_name
+              (defined_io_procedure))
+            (method_name)))
         (comment)
         (procedure_statement
+          (procedure_kind)
           (procedure_attribute)
-          (binding_name
-            (identifier))
-          (method_name)))
+          (binding
+            (binding_name
+              (identifier))
+            (method_name))))
       (end_type_statement
         (name)))
     (end_module_statement)))

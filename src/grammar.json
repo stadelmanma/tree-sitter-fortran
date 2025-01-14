@@ -10662,7 +10662,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_procedure_kind"
+          "name": "procedure_kind"
         },
         {
           "type": "CHOICE",
@@ -10752,30 +10752,21 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "method_name"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "binding_name"
-                    },
-                    {
-                      "type": "STRING",
-                      "value": "=>"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "method_name"
-                    }
-                  ]
-                }
-              ]
+              "type": "FIELD",
+              "name": "declarator",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "method_name"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "binding"
+                  }
+                ]
+              }
             },
             {
               "type": "REPEAT",
@@ -10787,30 +10778,21 @@
                     "value": ","
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "method_name"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
-                            "type": "SYMBOL",
-                            "name": "binding_name"
-                          },
-                          {
-                            "type": "STRING",
-                            "value": "=>"
-                          },
-                          {
-                            "type": "SYMBOL",
-                            "name": "method_name"
-                          }
-                        ]
-                      }
-                    ]
+                    "type": "FIELD",
+                    "name": "declarator",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "method_name"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "binding"
+                        }
+                      ]
+                    }
                   }
                 ]
               }
@@ -10820,6 +10802,23 @@
         {
           "type": "SYMBOL",
           "name": "_end_of_statement"
+        }
+      ]
+    },
+    "binding": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "binding_name"
+        },
+        {
+          "type": "STRING",
+          "value": "=>"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "method_name"
         }
       ]
     },
@@ -10845,7 +10844,7 @@
       "named": false,
       "value": "method_name"
     },
-    "_procedure_kind": {
+    "procedure_kind": {
       "type": "CHOICE",
       "members": [
         {
@@ -16405,39 +16404,26 @@
           "type": "SEQ",
           "members": [
             {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                },
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
+              "type": "FIELD",
+              "name": "declarator",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  },
+                  {
+                    "type": "ALIAS",
+                    "content": {
                       "type": "SYMBOL",
-                      "name": "identifier"
+                      "name": "_declaration_assignment"
                     },
-                    {
-                      "type": "STRING",
-                      "value": "="
-                    },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "number_literal"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "unary_expression"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
+                    "named": true,
+                    "value": "init_declarator"
+                  }
+                ]
+              }
             },
             {
               "type": "REPEAT",
@@ -16449,39 +16435,26 @@
                     "value": ","
                   },
                   {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "identifier"
-                      },
-                      {
-                        "type": "SEQ",
-                        "members": [
-                          {
+                    "type": "FIELD",
+                    "name": "declarator",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "identifier"
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
                             "type": "SYMBOL",
-                            "name": "identifier"
+                            "name": "_declaration_assignment"
                           },
-                          {
-                            "type": "STRING",
-                            "value": "="
-                          },
-                          {
-                            "type": "CHOICE",
-                            "members": [
-                              {
-                                "type": "SYMBOL",
-                                "name": "number_literal"
-                              },
-                              {
-                                "type": "SYMBOL",
-                                "name": "unary_expression"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                          "named": true,
+                          "value": "init_declarator"
+                        }
+                      ]
+                    }
                   }
                 ]
               }
