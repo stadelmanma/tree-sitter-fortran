@@ -878,7 +878,7 @@ end program
         (procedure_statement
           (procedure_kind)
           (procedure_attribute)
-          (binding_declarator
+          (binding
             (binding_name
               (identifier))
             (method_name))
@@ -886,21 +886,21 @@ end program
         (procedure_statement
           (procedure_kind)
           (procedure_attribute)
-          (binding_declarator
+          (binding
             (binding_name
               (assignment))
             (method_name)))
         (procedure_statement
           (procedure_kind)
           (procedure_attribute)
-          (binding_declarator
+          (binding
             (binding_name
               (operator))
             (method_name)))
         (procedure_statement
           (procedure_kind)
           (method_name)
-          (binding_declarator
+          (binding
             (binding_name
               (identifier))
             (method_name)))

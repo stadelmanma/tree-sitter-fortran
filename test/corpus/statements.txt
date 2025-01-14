@@ -2283,7 +2283,7 @@ end module
         (procedure_statement
           (procedure_kind)
           (procedure_attribute)
-          (binding_declarator
+          (binding
             (binding_name
               (defined_io_procedure))
             (method_name)))
@@ -2291,7 +2291,7 @@ end module
         (procedure_statement
           (procedure_kind)
           (procedure_attribute)
-          (binding_declarator
+          (binding
             (binding_name
               (identifier))
             (method_name))))

@@ -10763,7 +10763,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "binding_declarator"
+                    "name": "binding"
                   }
                 ]
               }
@@ -10789,7 +10789,7 @@
                         },
                         {
                           "type": "SYMBOL",
-                          "name": "binding_declarator"
+                          "name": "binding"
                         }
                       ]
                     }
@@ -10805,7 +10805,7 @@
         }
       ]
     },
-    "binding_declarator": {
+    "binding": {
       "type": "SEQ",
       "members": [
         {

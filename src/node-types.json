@@ -899,7 +899,7 @@
     }
   },
   {
-    "type": "binding_declarator",
+    "type": "binding",
     "named": true,
     "fields": {},
     "children": {
@@ -9746,7 +9746,7 @@
         "required": true,
         "types": [
           {
-            "type": "binding_declarator",
+            "type": "binding",
             "named": true
           },
           {
@@ -13366,11 +13366,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
