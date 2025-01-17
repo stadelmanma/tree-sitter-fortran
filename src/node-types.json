@@ -11032,7 +11032,7 @@
   },
   {
     "type": "statement_label_reference",
-    "named": false,
+    "named": true,
     "fields": {}
   },
   {
