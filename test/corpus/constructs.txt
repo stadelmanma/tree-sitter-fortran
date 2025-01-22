@@ -1357,3 +1357,35 @@ end program block_demo
         (identifier)))
     (end_program_statement
       (name))))
+
+================================================================================
+Enumeration type
+================================================================================
+
+module enumeration_mod
+  enumeration type, public :: v_value
+    enumerator :: v_one, v_two, v_three
+    enumerator v_four
+  end enumeration type v_value
+end module enumeration_mod
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (module
+    (module_statement
+      (name))
+    (enumeration_type
+      (enumeration_type_statement
+        (access_specifier)
+        (type_name))
+      (enumerator_statement
+        (identifier)
+        (identifier)
+        (identifier))
+      (enumerator_statement
+        (identifier))
+      (end_enumeration_type_statement
+        (name)))
+    (end_module_statement
+      (name))))

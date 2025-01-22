@@ -1066,6 +1066,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -4708,6 +4712,21 @@
     "fields": {}
   },
   {
+    "type": "end_enumeration_type_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "end_forall_statement",
     "named": true,
     "fields": {},
@@ -4980,6 +4999,48 @@
       "types": [
         {
           "type": "language_binding",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enumeration_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "end_enumeration_type_statement",
+          "named": true
+        },
+        {
+          "type": "enumeration_type_statement",
+          "named": true
+        },
+        {
+          "type": "enumerator_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "enumeration_type_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "access_specifier",
+          "named": true
+        },
+        {
+          "type": "type_name",
           "named": true
         }
       ]
@@ -5492,6 +5553,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -7389,6 +7454,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -7584,6 +7653,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -8741,6 +8814,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -9053,6 +9130,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -9333,6 +9414,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -9712,6 +9797,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -10021,6 +10110,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -10485,6 +10578,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -11823,6 +11920,10 @@
           "named": true
         },
         {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
           "type": "equivalence_statement",
           "named": true
         },
@@ -12039,6 +12140,10 @@
         },
         {
           "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
           "named": true
         },
         {
@@ -13870,6 +13975,10 @@
   },
   {
     "type": "enum",
+    "named": false
+  },
+  {
+    "type": "enumeration",
     "named": false
   },
   {

@@ -9021,6 +9021,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "enumeration_type"
+          },
+          {
+            "type": "SYMBOL",
             "name": "interface"
           },
           {
@@ -16609,6 +16613,90 @@
         }
       ]
     },
+    "enumeration_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "enumeration_type_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "enumerator_statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_enumeration_type_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        }
+      ]
+    },
+    "enumeration_type_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][uU][mM][eE][rR][aA][tT][iI][oO][nN]"
+          },
+          "named": false,
+          "value": "enumeration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[tT][yY][pP][eE]"
+          },
+          "named": false,
+          "value": "type"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "access_specifier"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "::"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_type_name"
+        }
+      ]
+    },
     "enumerator_statement": {
       "type": "SEQ",
       "members": [
@@ -16722,6 +16810,50 @@
       },
       "named": false,
       "value": "endenum"
+    },
+    "end_enumeration_type_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][dD]"
+          },
+          "named": false,
+          "value": "end"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[eE][nN][uU][mM][eE][rR][aA][tT][iI][oO][nN]"
+          },
+          "named": false,
+          "value": "enumeration"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[tT][yY][pP][eE]"
+          },
+          "named": false,
+          "value": "type"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_name"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "unit_identifier": {
       "type": "PREC",

@@ -493,6 +493,7 @@ module.exports = grammar({
       $.public_statement,
       $.private_statement,
       $.enum,
+      $.enumeration_type,
       $.interface,
       $.derived_type_definition,
       seq($.namelist_statement, $._end_of_statement),
@@ -1623,6 +1624,21 @@ module.exports = grammar({
       $.language_binding
     ),
 
+    enumeration_type: $ => seq(
+      $.enumeration_type_statement,
+      repeat($.enumerator_statement),
+      $.end_enumeration_type_statement,
+      $._end_of_statement
+    ),
+
+    enumeration_type_statement: $ => seq(
+      caseInsensitive('enumeration'),
+      caseInsensitive('type'),
+      optional(seq(',', $.access_specifier)),
+      optional('::'),
+      $._type_name,
+    ),
+
     enumerator_statement: $ => seq(
       caseInsensitive('enumerator'),
       optional('::'),
@@ -1633,6 +1649,12 @@ module.exports = grammar({
     ),
 
     end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),
+    end_enumeration_type_statement: $ => seq(
+      caseInsensitive('end'),
+      caseInsensitive('enumeration'),
+      caseInsensitive('type'),
+      optional($._name)
+    ),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(
