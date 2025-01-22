@@ -80,6 +80,7 @@ module.exports = grammar({
     [$._argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.data_set, $._expression],
+    [$.data_statement, $.identifier],
     [$.data_value, $._expression],
     [$.else_clause],
     [$.elseif_clause, $.identifier],
@@ -1081,10 +1082,10 @@ module.exports = grammar({
       field("path", alias($.string_literal, $.filename))
     ),
 
-    data_statement: $ => prec(1, seq(
+    data_statement: $ => seq(
       caseInsensitive('data'),
       commaSep1($.data_set)
-    )),
+    ),
     data_set: $ => prec(1, seq(
       commaSep1(
         choice(

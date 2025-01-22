@@ -154,3 +154,30 @@ end program test
       (number_literal))
     (end_program_statement
       (name))))
+
+================================================================================
+Data statement array subscripting clash
+================================================================================
+
+program test
+   data(1, 2) = data(2, 1)
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      left: (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      right: (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal))))
+    (end_program_statement)))
