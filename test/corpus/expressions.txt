@@ -1122,3 +1122,53 @@ end program
             (identifier))))
       (end_if_statement))
     (end_program_statement)))
+
+================================================================================
+Conditional expressions
+================================================================================
+
+subroutine test(a, b)
+  integer, intent(in) :: a
+  integer, optional, intent(in) :: b
+  a = present(b) ? b : 1
+  call sub(a > 2 ? a : .nil.)
+end subroutine test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      name: (name)
+      parameters: (parameters
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (assignment_statement
+      left: (identifier)
+      right: (conditional_expression
+        condition: (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        consequence: (identifier)
+        alternative: (number_literal)))
+    (subroutine_call
+      subroutine: (identifier)
+      (argument_list
+        (conditional_expression
+          condition: (relational_expression
+            left: (identifier)
+            right: (number_literal))
+          consequence: (identifier)
+          alternative: (nil_literal))))
+    (end_subroutine_statement
+      (name))))

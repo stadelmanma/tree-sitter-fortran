@@ -1729,6 +1729,7 @@ module.exports = grammar({
       $.call_expression,
       $.implied_do_loop_expression,
       $.coarray_expression,
+      $.conditional_expression,
     ),
 
     parenthesized_expression: $ => seq(
@@ -2061,6 +2062,18 @@ module.exports = grammar({
       whiteSpacedKeyword('end', 'critical'),
       optional($._block_label),
     ),
+
+    conditional_expression: $ => seq(
+      field('condition', $._expression),
+      '?',
+      field('consequence', choice(prec.left($._expression), $.nil_literal)),
+      ':',
+      field('alternative', choice(prec.left($._expression), $.nil_literal)),
+    ),
+
+    // Strictly only valid when used in a conditional_expression as an
+    // actual argument
+    nil_literal: $ => caseInsensitive('\\.nil\\.'),
 
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens
