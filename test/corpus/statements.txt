@@ -713,7 +713,7 @@ PROGRAM TEST
   INTEGER              :: I, M
   M = 10
   I = 15
-  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K)
+  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K) REDUCE(+:J, K) reduce(.and.:K)
      M =  MOD (K(I), J(I))
      K(I) = K(I) - M
   END DO
@@ -761,6 +761,13 @@ END PROGRAM TEST
           (identifier))
         (concurrent_locality
           (identifier)
+          (identifier))
+        (concurrent_locality
+          (binary_op)
+          (identifier)
+          (identifier))
+        (concurrent_locality
+          (binary_op)
           (identifier)))
       (assignment_statement
         left: (identifier)

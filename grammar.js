@@ -1217,7 +1217,24 @@ module.exports = grammar({
       seq(
         caseInsensitive('default'),
         '(', caseInsensitive('none'), ')'
-      )
+      ),
+      seq(
+        caseInsensitive('reduce'),
+        '(', $.binary_op, ':', commaSep1($.identifier), ')',
+      ),
+    ),
+    binary_op: $ => choice(
+      '+',
+      '*',
+      caseInsensitive('\\.and\\.'),
+      caseInsensitive('\\.or\\.'),
+      caseInsensitive('\\.eqv\\.'),
+      caseInsensitive('\\.neqv\\.'),
+      caseInsensitive('iand'),
+      caseInsensitive('ieor'),
+      caseInsensitive('ior'),
+      caseInsensitive('max'),
+      caseInsensitive('min'),
     ),
 
     if_statement: $ => choice(
