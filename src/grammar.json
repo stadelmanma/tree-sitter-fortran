@@ -12397,6 +12397,15 @@
           },
           "named": false,
           "value": "recursive"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[sS][iI][mM][pP][lL][eE]"
+          },
+          "named": false,
+          "value": "simple"
         }
       ]
     },

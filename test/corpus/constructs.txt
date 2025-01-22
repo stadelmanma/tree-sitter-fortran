@@ -714,6 +714,10 @@ contains
     i = i + 1
   end subroutine
 
+  real simple elemental function convert(a)
+    type(foo) :: a
+  end function convert
+
 end function test
 
 --------------------------------------------------------------------------------
@@ -774,7 +778,21 @@ end function test
           (math_expression
             (identifier)
             (number_literal)))
-        (end_subroutine_statement)))
+        (end_subroutine_statement))
+      (function
+        (function_statement
+          (intrinsic_type)
+          (procedure_qualifier)
+          (procedure_qualifier)
+          (name)
+          (parameters
+            (identifier)))
+        (variable_declaration
+          (derived_type
+            (type_name))
+          (identifier))
+        (end_function_statement
+          (name))))
     (end_function_statement
       (name))))
 

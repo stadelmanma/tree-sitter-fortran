@@ -954,7 +954,8 @@ module.exports = grammar({
       caseInsensitive('impure'),
       caseInsensitive('module'),
       caseInsensitive('pure'),
-      caseInsensitive('recursive')
+      caseInsensitive('recursive'),
+      caseInsensitive('simple'),
     ),
 
     parameter_statement: $ => prec(1, seq(
