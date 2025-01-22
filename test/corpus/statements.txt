@@ -2891,6 +2891,7 @@ program test
   sync team(team(PARENT_TEAM))
   lock (lck[1])
   unlock (lck[1])
+  notify wait(nx, until_count=1)
 end program test
 
 --------------------------------------------------------------------------------
@@ -2933,6 +2934,12 @@ end program test
           (identifier)
           (coarray_index
             (number_literal)))))
+    (coarray_statement
+      (argument_list
+        (identifier)
+        (keyword_argument
+          (identifier)
+          (number_literal))))
     (end_program_statement
       (name))))
 

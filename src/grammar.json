@@ -19356,6 +19356,33 @@
               }
             ]
           }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[nN][oO][tT][iI][fF][yY]"
+              },
+              "named": false,
+              "value": "notify"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[wW][aA][iI][tT]"
+              },
+              "named": false,
+              "value": "wait"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "argument_list"
+            }
+          ]
         }
       ]
     },

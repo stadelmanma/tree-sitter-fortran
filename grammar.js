@@ -2031,6 +2031,11 @@ module.exports = grammar({
         ),
         $.argument_list,
       )),
+      seq(
+        caseInsensitive('notify'),
+        caseInsensitive('wait'),
+        $.argument_list,
+      ),
     ),
 
     coarray_team_statement: $ => seq(
