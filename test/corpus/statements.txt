@@ -3043,3 +3043,26 @@ end program test
       (number_literal))
     (end_program_statement
       (name))))
+
+================================================================================
+Dollar in identifiers (extension)
+================================================================================
+
+program test
+  integer, parameter :: foo$ = 1
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier)
+      (init_declarator
+        (identifier)
+        (number_literal)))
+    (end_program_statement
+      (name))))

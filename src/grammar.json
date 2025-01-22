@@ -19514,7 +19514,7 @@
       "members": [
         {
           "type": "PATTERN",
-          "value": "[a-zA-Z_]\\w*"
+          "value": "[a-zA-Z_$][\\w$]*"
         },
         {
           "type": "ALIAS",

@@ -2052,7 +2052,7 @@ module.exports = grammar({
     // correctly as either a keyword or a plain identifier, we must
     // add the keywords here -- and possibly in `conflicts` too.
     identifier: $ => choice(
-      /[a-zA-Z_]\w*/,
+      /[a-zA-Z_$][\w$]*/,
       caseInsensitive('allocatable'),
       caseInsensitive('automatic'),
       caseInsensitive('block'),
