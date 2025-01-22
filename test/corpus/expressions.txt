@@ -1172,3 +1172,103 @@ end subroutine test
           alternative: (nil_literal))))
     (end_subroutine_statement
       (name))))
+
+================================================================================
+Multiple subscripts
+================================================================================
+
+program test
+  b = A(@[3,5])       ! Array element, equivalent to A(3, 5)
+  b = A(6, @[3,5], 1) ! Array element, equivalent to A(6, 3, 5, 1)
+  b = A(@V1, :, @V2)  ! Rank-one array section, the rank of A being
+                      ! SIZE (V1) + 1 + SIZE (V2).
+  b = A(@[3,5]:[9,10]:[2,3]) ! Equivalent to A(3:9:2, 5:10:3)
+  b = A(@[3,5]:[9,10]:2) ! Equivalent to A(3:9:2, 5:10:2)
+  b = A(@[3,5]:[9,10]) ! Equivalent to A(3:9, 5:10)
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)
+          (multiple_subscript
+            (array_literal
+              (number_literal)
+              (number_literal)))
+          (number_literal))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript
+            (identifier))
+          (extent_specifier)
+          (multiple_subscript
+            (identifier)))))
+    (comment)
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (number_literal)))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (end_program_statement
+      (name))))

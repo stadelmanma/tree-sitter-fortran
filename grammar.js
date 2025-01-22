@@ -1860,7 +1860,9 @@ module.exports = grammar({
           $.extent_specifier,
           $.assumed_size,
           $.assumed_rank,
-          $._expression
+          $._expression,
+          $.multiple_subscript,
+          $.multiple_subscript_triplet,
         )),
         ')'
       )
@@ -1875,12 +1877,16 @@ module.exports = grammar({
       field("value",choice($._expression, $.assumed_size, $.assumed_shape))
     )),
 
-    extent_specifier: $ => seq(
+    _extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
       optional(choice($._expression, $.assumed_size)), // stop
       optional(seq(':', $._expression)) // stride
     ),
+    extent_specifier: $=> $._extent_specifier,
+
+    multiple_subscript: $ => seq('@', $._expression),
+    multiple_subscript_triplet: $ => seq('@', $._extent_specifier),
 
     assumed_size: $ => '*',
 
