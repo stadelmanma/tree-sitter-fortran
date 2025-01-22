@@ -929,6 +929,10 @@ module.exports = grammar({
       caseInsensitive('private'),
       caseInsensitive('protected'),
       caseInsensitive('public'),
+      seq(
+        caseInsensitive('rank'),
+        $.argument_list
+      ),
       caseInsensitive('save'),
       caseInsensitive('sequence'),
       caseInsensitive('shared'),
@@ -1450,7 +1454,7 @@ module.exports = grammar({
       $.extent_specifier
     )),
 
-    rank_statement: $ => seq(
+    rank_statement: $ => prec(2, seq(
       caseInsensitive('rank'),
       choice(
         seq('(', $.case_value_range_list, ')'),
@@ -1459,7 +1463,7 @@ module.exports = grammar({
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
-    ),
+    )),
 
     block_construct: $ => seq(
       optional($.block_label_start_expression),
@@ -2123,6 +2127,7 @@ module.exports = grammar({
       caseInsensitive('pointer'),
       caseInsensitive('private'),
       caseInsensitive('public'),
+      prec(-1, caseInsensitive('rank')),
       caseInsensitive('read'),
       caseInsensitive('real'),
       caseInsensitive('save'),
