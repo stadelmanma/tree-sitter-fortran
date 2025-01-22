@@ -3066,3 +3066,53 @@ end program test
         (number_literal)))
     (end_program_statement
       (name))))
+
+================================================================================
+Typeof, classof declarations
+================================================================================
+
+subroutine test(a, b, c, d)
+  integer, intent(in) :: a
+  typeof(a), intent(in) :: b(size(a))
+  type(foo) :: c
+  classof(c%d) :: d
+end subroutine test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      name: (name)
+      parameters: (parameters
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (variable_declaration
+      type: (declared_type
+        name: (identifier))
+      attribute: (type_qualifier)
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier))))))
+    (variable_declaration
+      type: (derived_type
+        name: (type_name))
+      declarator: (identifier))
+    (variable_declaration
+      type: (declared_type
+        name: (derived_type_member_expression
+          (identifier)
+          (type_member)))
+      declarator: (identifier))
+    (end_subroutine_statement
+      (name))))

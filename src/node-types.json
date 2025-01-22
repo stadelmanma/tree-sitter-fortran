@@ -3127,6 +3127,26 @@
     }
   },
   {
+    "type": "declared_type",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "default",
     "named": true,
     "fields": {}
@@ -12355,6 +12375,10 @@
         "required": true,
         "types": [
           {
+            "type": "declared_type",
+            "named": true
+          },
+          {
             "type": "derived_type",
             "named": true
           },
@@ -12981,6 +13005,10 @@
     "named": false
   },
   {
+    "type": "classof",
+    "named": false
+  },
+  {
     "type": "close",
     "named": false
   },
@@ -13582,6 +13610,10 @@
   },
   {
     "type": "typeis",
+    "named": false
+  },
+  {
+    "type": "typeof",
     "named": false
   },
   {

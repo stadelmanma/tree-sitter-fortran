@@ -11053,6 +11053,10 @@
                 },
                 "named": true,
                 "value": "procedure"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "declared_type"
               }
             ]
           }
@@ -11793,6 +11797,59 @@
               "name": "unlimited_polymorphic"
             }
           ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "declared_type": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[tT][yY][pP][eE][oO][fF]"
+              },
+              "named": false,
+              "value": "typeof"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "PATTERN",
+                "value": "[cC][lL][aA][sS][sS][oO][fF]"
+              },
+              "named": false,
+              "value": "classof"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "identifier"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "derived_type_member_expression"
+              }
+            ]
+          }
         },
         {
           "type": "STRING",

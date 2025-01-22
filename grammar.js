@@ -756,7 +756,8 @@ module.exports = grammar({
       field('type', choice(
         $.intrinsic_type,
         $.derived_type,
-        alias($.procedure_declaration, $.procedure)
+        alias($.procedure_declaration, $.procedure),
+        $.declared_type,
       )),
       optional(seq(',',
         commaSep1(
@@ -864,6 +865,19 @@ module.exports = grammar({
         ),
         $.unlimited_polymorphic
       ),
+      ')'
+    ),
+
+    declared_type: $ => seq(
+      choice(
+        caseInsensitive('typeof'),
+        caseInsensitive('classof'),
+      ),
+      '(',
+      field('name', choice(
+        $.identifier,
+        $.derived_type_member_expression,
+      )),
       ')'
     ),
 
