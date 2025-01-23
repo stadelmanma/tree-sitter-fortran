@@ -14109,85 +14109,8 @@
           "value": "*"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\.[aA][nN][dD]\\."
-          },
-          "named": false,
-          "value": "\\.and\\."
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\.[oO][rR]\\."
-          },
-          "named": false,
-          "value": "\\.or\\."
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\.[eE][qQ][vV]\\."
-          },
-          "named": false,
-          "value": "\\.eqv\\."
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "\\.[nN][eE][qQ][vV]\\."
-          },
-          "named": false,
-          "value": "\\.neqv\\."
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[iI][aA][nN][dD]"
-          },
-          "named": false,
-          "value": "iand"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[iI][eE][oO][rR]"
-          },
-          "named": false,
-          "value": "ieor"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[iI][oO][rR]"
-          },
-          "named": false,
-          "value": "ior"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[mM][aA][xX]"
-          },
-          "named": false,
-          "value": "max"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[mM][iI][nN]"
-          },
-          "named": false,
-          "value": "min"
+          "type": "PATTERN",
+          "value": "(\\.\\w+\\.|\\w+)"
         }
       ]
     },

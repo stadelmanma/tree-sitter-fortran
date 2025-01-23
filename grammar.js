@@ -1224,19 +1224,7 @@ module.exports = grammar({
         '(', $.binary_op, ':', commaSep1($.identifier), ')',
       ),
     ),
-    binary_op: $ => choice(
-      '+',
-      '*',
-      caseInsensitive('\\.and\\.'),
-      caseInsensitive('\\.or\\.'),
-      caseInsensitive('\\.eqv\\.'),
-      caseInsensitive('\\.neqv\\.'),
-      caseInsensitive('iand'),
-      caseInsensitive('ieor'),
-      caseInsensitive('ior'),
-      caseInsensitive('max'),
-      caseInsensitive('min'),
-    ),
+    binary_op: $ => choice('+', '*', /(\.\w+\.|\w+)/),
 
     if_statement: $ => choice(
       $._inline_if_statement,

@@ -14062,14 +14062,6 @@
     "named": false
   },
   {
-    "type": "iand",
-    "named": false
-  },
-  {
-    "type": "ieor",
-    "named": false
-  },
-  {
     "type": "if",
     "named": false
   },
@@ -14130,10 +14122,6 @@
     "named": false
   },
   {
-    "type": "ior",
-    "named": false
-  },
-  {
     "type": "kind",
     "named": false
   },
@@ -14162,15 +14150,7 @@
     "named": false
   },
   {
-    "type": "max",
-    "named": false
-  },
-  {
     "type": "memory",
-    "named": false
-  },
-  {
-    "type": "min",
     "named": false
   },
   {
