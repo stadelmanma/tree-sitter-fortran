@@ -212,6 +212,7 @@ PROGRAM TEST
   CHARACTER   FMAT*22, OTHER*(*)
   integer::no_whitespace=1
   integer(kind=c_long), bind(C, name="c_fortran_var") :: c_fortran_var
+  logical, rank(rank(mask)), allocatable :: x1
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -333,6 +334,16 @@ END PROGRAM
         (keyword_argument
           name: (identifier)
           value: (string_literal)))
+      declarator: (identifier))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier
+        (argument_list
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))))
+      attribute: (type_qualifier)
       declarator: (identifier))
     (end_program_statement)))
 
@@ -702,7 +713,7 @@ PROGRAM TEST
   INTEGER              :: I, M
   M = 10
   I = 15
-  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K)
+  DO CONCURRENT (I = 1:N, J(I)> 0)  LOCAL (M) SHARED (J, K) REDUCE(+:J, K) reduce(.and.:K)
      M =  MOD (K(I), J(I))
      K(I) = K(I) - M
   END DO
@@ -750,6 +761,13 @@ END PROGRAM TEST
           (identifier))
         (concurrent_locality
           (identifier)
+          (identifier))
+        (concurrent_locality
+          (binary_op)
+          (identifier)
+          (identifier))
+        (concurrent_locality
+          (binary_op)
           (identifier)))
       (assignment_statement
         left: (identifier)
@@ -2891,6 +2909,7 @@ program test
   sync team(team(PARENT_TEAM))
   lock (lck[1])
   unlock (lck[1])
+  notify wait(nx, until_count=1)
 end program test
 
 --------------------------------------------------------------------------------
@@ -2933,6 +2952,12 @@ end program test
           (identifier)
           (coarray_index
             (number_literal)))))
+    (coarray_statement
+      (argument_list
+        (identifier)
+        (keyword_argument
+          (identifier)
+          (number_literal))))
     (end_program_statement
       (name))))
 
@@ -3065,4 +3090,54 @@ end program test
         (identifier)
         (number_literal)))
     (end_program_statement
+      (name))))
+
+================================================================================
+Typeof, classof declarations
+================================================================================
+
+subroutine test(a, b, c, d)
+  integer, intent(in) :: a
+  typeof(a), intent(in) :: b(size(a))
+  type(foo) :: c
+  classof(c%d) :: d
+end subroutine test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      name: (name)
+      parameters: (parameters
+        (identifier)
+        (identifier)
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (variable_declaration
+      type: (declared_type
+        name: (identifier))
+      attribute: (type_qualifier)
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier))))))
+    (variable_declaration
+      type: (derived_type
+        name: (type_name))
+      declarator: (identifier))
+    (variable_declaration
+      type: (declared_type
+        name: (derived_type_member_expression
+          (identifier)
+          (type_member)))
+      declarator: (identifier))
+    (end_subroutine_statement
       (name))))

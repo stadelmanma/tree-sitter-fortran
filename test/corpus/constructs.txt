@@ -714,6 +714,10 @@ contains
     i = i + 1
   end subroutine
 
+  real simple elemental function convert(a)
+    type(foo) :: a
+  end function convert
+
 end function test
 
 --------------------------------------------------------------------------------
@@ -774,7 +778,21 @@ end function test
           (math_expression
             (identifier)
             (number_literal)))
-        (end_subroutine_statement)))
+        (end_subroutine_statement))
+      (function
+        (function_statement
+          (intrinsic_type)
+          (procedure_qualifier)
+          (procedure_qualifier)
+          (name)
+          (parameters
+            (identifier)))
+        (variable_declaration
+          (derived_type
+            (type_name))
+          (identifier))
+        (end_function_statement
+          (name))))
     (end_function_statement
       (name))))
 
@@ -1338,4 +1356,36 @@ end program block_demo
       (output_item_list
         (identifier)))
     (end_program_statement
+      (name))))
+
+================================================================================
+Enumeration type
+================================================================================
+
+module enumeration_mod
+  enumeration type, public :: v_value
+    enumerator :: v_one, v_two, v_three
+    enumerator v_four
+  end enumeration type v_value
+end module enumeration_mod
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (module
+    (module_statement
+      (name))
+    (enumeration_type
+      (enumeration_type_statement
+        (access_specifier)
+        (type_name))
+      (enumerator_statement
+        (identifier)
+        (identifier)
+        (identifier))
+      (enumerator_statement
+        (identifier))
+      (end_enumeration_type_statement
+        (name)))
+    (end_module_statement
       (name))))

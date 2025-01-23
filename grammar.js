@@ -493,6 +493,7 @@ module.exports = grammar({
       $.public_statement,
       $.private_statement,
       $.enum,
+      $.enumeration_type,
       $.interface,
       $.derived_type_definition,
       seq($.namelist_statement, $._end_of_statement),
@@ -756,7 +757,8 @@ module.exports = grammar({
       field('type', choice(
         $.intrinsic_type,
         $.derived_type,
-        alias($.procedure_declaration, $.procedure)
+        alias($.procedure_declaration, $.procedure),
+        $.declared_type,
       )),
       optional(seq(',',
         commaSep1(
@@ -867,6 +869,19 @@ module.exports = grammar({
       ')'
     ),
 
+    declared_type: $ => seq(
+      choice(
+        caseInsensitive('typeof'),
+        caseInsensitive('classof'),
+      ),
+      '(',
+      field('name', choice(
+        $.identifier,
+        $.derived_type_member_expression,
+      )),
+      ')'
+    ),
+
     unlimited_polymorphic: $ => '*',
 
     kind: $ => choice(
@@ -915,6 +930,10 @@ module.exports = grammar({
       caseInsensitive('private'),
       caseInsensitive('protected'),
       caseInsensitive('public'),
+      seq(
+        caseInsensitive('rank'),
+        $.argument_list
+      ),
       caseInsensitive('save'),
       caseInsensitive('sequence'),
       caseInsensitive('shared'),
@@ -940,7 +959,8 @@ module.exports = grammar({
       caseInsensitive('impure'),
       caseInsensitive('module'),
       caseInsensitive('pure'),
-      caseInsensitive('recursive')
+      caseInsensitive('recursive'),
+      caseInsensitive('simple'),
     ),
 
     parameter_statement: $ => prec(1, seq(
@@ -1198,8 +1218,13 @@ module.exports = grammar({
       seq(
         caseInsensitive('default'),
         '(', caseInsensitive('none'), ')'
-      )
+      ),
+      seq(
+        caseInsensitive('reduce'),
+        '(', $.binary_op, ':', commaSep1($.identifier), ')',
+      ),
     ),
+    binary_op: $ => choice('+', '*', /(\.\w+\.|\w+)/),
 
     if_statement: $ => choice(
       $._inline_if_statement,
@@ -1435,7 +1460,7 @@ module.exports = grammar({
       $.extent_specifier
     )),
 
-    rank_statement: $ => seq(
+    rank_statement: $ => prec(2, seq(
       caseInsensitive('rank'),
       choice(
         seq('(', $.case_value_range_list, ')'),
@@ -1444,7 +1469,7 @@ module.exports = grammar({
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
-    ),
+    )),
 
     block_construct: $ => seq(
       optional($.block_label_start_expression),
@@ -1587,6 +1612,21 @@ module.exports = grammar({
       $.language_binding
     ),
 
+    enumeration_type: $ => seq(
+      $.enumeration_type_statement,
+      repeat($.enumerator_statement),
+      $.end_enumeration_type_statement,
+      $._end_of_statement
+    ),
+
+    enumeration_type_statement: $ => seq(
+      caseInsensitive('enumeration'),
+      caseInsensitive('type'),
+      optional(seq(',', $.access_specifier)),
+      optional('::'),
+      $._type_name,
+    ),
+
     enumerator_statement: $ => seq(
       caseInsensitive('enumerator'),
       optional('::'),
@@ -1597,6 +1637,12 @@ module.exports = grammar({
     ),
 
     end_enum_statement: $ => whiteSpacedKeyword('end', 'enum'),
+    end_enumeration_type_statement: $ => seq(
+      caseInsensitive('end'),
+      caseInsensitive('enumeration'),
+      caseInsensitive('type'),
+      optional($._name)
+    ),
 
     // precedence is used to override a conflict with the complex literal
     unit_identifier: $ => prec(1, choice(
@@ -1715,6 +1761,7 @@ module.exports = grammar({
       $.call_expression,
       $.implied_do_loop_expression,
       $.coarray_expression,
+      $.conditional_expression,
     ),
 
     parenthesized_expression: $ => seq(
@@ -1840,7 +1887,9 @@ module.exports = grammar({
           $.extent_specifier,
           $.assumed_size,
           $.assumed_rank,
-          $._expression
+          $._expression,
+          $.multiple_subscript,
+          $.multiple_subscript_triplet,
         )),
         ')'
       )
@@ -1855,12 +1904,16 @@ module.exports = grammar({
       field("value",choice($._expression, $.assumed_size, $.assumed_shape))
     )),
 
-    extent_specifier: $ => seq(
+    _extent_specifier: $ => seq(
       optional($._expression), // start
       ':',
       optional(choice($._expression, $.assumed_size)), // stop
       optional(seq(':', $._expression)) // stride
     ),
+    extent_specifier: $=> $._extent_specifier,
+
+    multiple_subscript: $ => seq('@', $._expression),
+    multiple_subscript_triplet: $ => seq('@', $._extent_specifier),
 
     assumed_size: $ => '*',
 
@@ -2016,6 +2069,11 @@ module.exports = grammar({
         ),
         $.argument_list,
       )),
+      seq(
+        caseInsensitive('notify'),
+        caseInsensitive('wait'),
+        $.argument_list,
+      ),
     ),
 
     coarray_team_statement: $ => seq(
@@ -2047,6 +2105,18 @@ module.exports = grammar({
       whiteSpacedKeyword('end', 'critical'),
       optional($._block_label),
     ),
+
+    conditional_expression: $ => seq(
+      field('condition', $._expression),
+      '?',
+      field('consequence', choice(prec.left($._expression), $.nil_literal)),
+      ':',
+      field('alternative', choice(prec.left($._expression), $.nil_literal)),
+    ),
+
+    // Strictly only valid when used in a conditional_expression as an
+    // actual argument
+    nil_literal: $ => caseInsensitive('\\.nil\\.'),
 
     // Fortran doesn't have reserved keywords, and to allow _just
     // enough_ ambiguity so that tree-sitter can parse tokens
@@ -2090,6 +2160,7 @@ module.exports = grammar({
       caseInsensitive('pointer'),
       caseInsensitive('private'),
       caseInsensitive('public'),
+      prec(-1, caseInsensitive('rank')),
       caseInsensitive('read'),
       caseInsensitive('real'),
       caseInsensitive('save'),

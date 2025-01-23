@@ -1122,3 +1122,153 @@ end program
             (identifier))))
       (end_if_statement))
     (end_program_statement)))
+
+================================================================================
+Conditional expressions
+================================================================================
+
+subroutine test(a, b)
+  integer, intent(in) :: a
+  integer, optional, intent(in) :: b
+  a = present(b) ? b : 1
+  call sub(a > 2 ? a : .nil.)
+end subroutine test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      name: (name)
+      parameters: (parameters
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier)
+      attribute: (type_qualifier)
+      declarator: (identifier))
+    (assignment_statement
+      left: (identifier)
+      right: (conditional_expression
+        condition: (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        consequence: (identifier)
+        alternative: (number_literal)))
+    (subroutine_call
+      subroutine: (identifier)
+      (argument_list
+        (conditional_expression
+          condition: (relational_expression
+            left: (identifier)
+            right: (number_literal))
+          consequence: (identifier)
+          alternative: (nil_literal))))
+    (end_subroutine_statement
+      (name))))
+
+================================================================================
+Multiple subscripts
+================================================================================
+
+program test
+  b = A(@[3,5])       ! Array element, equivalent to A(3, 5)
+  b = A(6, @[3,5], 1) ! Array element, equivalent to A(6, 3, 5, 1)
+  b = A(@V1, :, @V2)  ! Rank-one array section, the rank of A being
+                      ! SIZE (V1) + 1 + SIZE (V2).
+  b = A(@[3,5]:[9,10]:[2,3]) ! Equivalent to A(3:9:2, 5:10:3)
+  b = A(@[3,5]:[9,10]:2) ! Equivalent to A(3:9:2, 5:10:2)
+  b = A(@[3,5]:[9,10]) ! Equivalent to A(3:9, 5:10)
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)
+          (multiple_subscript
+            (array_literal
+              (number_literal)
+              (number_literal)))
+          (number_literal))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript
+            (identifier))
+          (extent_specifier)
+          (multiple_subscript
+            (identifier)))))
+    (comment)
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (number_literal)))))
+    (comment)
+    (assignment_statement
+      (identifier)
+      (call_expression
+        (identifier)
+        (argument_list
+          (multiple_subscript_triplet
+            (array_literal
+              (number_literal)
+              (number_literal))
+            (array_literal
+              (number_literal)
+              (number_literal))))))
+    (comment)
+    (end_program_statement
+      (name))))
