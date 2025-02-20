@@ -60,6 +60,7 @@ module.exports = grammar({
     $._string_literal_kind,
     $._external_end_of_statement,
     $._preproc_unary_operator,
+    $.hollerith_constant,
   ],
 
   extras: $ => [
@@ -1530,7 +1531,6 @@ module.exports = grammar({
 
     // H is not a valid edit descriptor because it clashes with Hollerith constants
     edit_descriptor: $ => /[a-gi-zA-GI-Z0-9/:.*$]+/,
-    hollerith_constant: $ => prec.right(10, /[0-9]+H[^/,)]+/),
 
     _io_arguments: $ => seq(
       '(',
