@@ -1455,6 +1455,7 @@ PROGRAM TEST
 4 FORMAT(*(G15.8,:,','))
 5 FORMAT(/1X,'NUMBER OF DATA Total/ACCEPTED'/1X,i10/1X)
 6 FORMAT(3(1H-), 2HOK, 10H SOLUTION // 5D15.7)
+7 FORMAT(6x, 10Hv=1, w=x/2)
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1507,6 +1508,11 @@ END PROGRAM
         (hollerith_constant)
         (edit_descriptor)
         (edit_descriptor)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (hollerith_constant)))
     (end_program_statement)))
 
 ================================================================================

@@ -1,5 +1,4 @@
 {
-  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "fortran",
   "rules": {
     "translation_unit": {
@@ -15993,14 +15992,6 @@
       "type": "PATTERN",
       "value": "[a-gi-zA-GI-Z0-9/:.*$]+"
     },
-    "hollerith_constant": {
-      "type": "PREC_RIGHT",
-      "value": 10,
-      "content": {
-        "type": "PATTERN",
-        "value": "[0-9]+H[^/,)]+"
-      }
-    },
     "_io_arguments": {
       "type": "SEQ",
       "members": [
@@ -20581,11 +20572,32 @@
     {
       "type": "SYMBOL",
       "name": "_preproc_unary_operator"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "hollerith_constant"
     }
   ],
   "inline": [
     "_top_level_item",
     "_statement"
   ],
-  "supertypes": []
+  "supertypes": [],
+  "PREC": {
+    "ASSIGNMENT": -10,
+    "DEFAULT": 0,
+    "DEFINED_OPERATOR": 2,
+    "LOGICAL_EQUIV": 5,
+    "LOGICAL_OR": 10,
+    "LOGICAL_AND": 20,
+    "LOGICAL_NOT": 30,
+    "RELATIONAL": 40,
+    "ADDITIVE": 50,
+    "MULTIPLICATIVE": 60,
+    "EXPONENT": 70,
+    "CALL": 80,
+    "UNARY": 90,
+    "TYPE_MEMBER": 100
+  }
 }
+
