@@ -217,3 +217,38 @@ end program
       (output_item_list
         (string_literal)))
     (end_program_statement)))
+
+================================================================================
+Line continuation in hollerith constants
+================================================================================
+program test
+1 format(6x, 10habcdef,&
+    &ghi)
+2 format(6x, 1&
+    &0habcdefghik)
+3 format(6x, 10&
+    &habcdefghik)
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (hollerith_constant)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (hollerith_constant)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (edit_descriptor)
+        (hollerith_constant)))
+    (end_program_statement)))

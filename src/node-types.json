@@ -5808,11 +5808,6 @@
     }
   },
   {
-    "type": "hollerith_constant",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "identifier",
     "named": true,
     "fields": {}
@@ -12499,7 +12494,6 @@
   {
     "type": "translation_unit",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -14058,6 +14052,10 @@
     "named": false
   },
   {
+    "type": "hollerith_constant",
+    "named": true
+  },
+  {
     "type": "host",
     "named": false
   },
@@ -14171,11 +14169,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",
