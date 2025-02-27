@@ -3168,3 +3168,19 @@ end subroutine test
       declarator: (identifier))
     (end_subroutine_statement
       (name))))
+
+================================================================================
+Assign Statement (Deleted)
+================================================================================
+
+  assign 4 to x
+end
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (assign_statement
+      (number_literal)
+      (identifier))
+    (end_program_statement)))

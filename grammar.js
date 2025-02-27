@@ -1035,6 +1035,7 @@ module.exports = grammar({
       $.file_position_statement,
       $.allocate_statement,
       $.entry_statement,
+      $.assign_statement,
       $.coarray_statement,
       $.coarray_team_statement,
       $.coarray_critical_statement,
@@ -1738,6 +1739,14 @@ module.exports = grammar({
         $.language_binding,
         $.function_result
       ))),
+    ),
+
+    // Deleted feature
+    assign_statement: $ => seq(
+      caseInsensitive('assign'),
+      $.number_literal,
+      caseInsensitive('to'),
+      $.identifier
     ),
 
     // Expressions
