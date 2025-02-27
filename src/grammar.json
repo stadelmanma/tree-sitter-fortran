@@ -7671,6 +7671,10 @@
         {
           "type": "SYMBOL",
           "name": "subroutine"
+        },
+        {
+          "type": "STRING",
+          "value": ";"
         }
       ]
     },
@@ -9171,6 +9175,10 @@
           {
             "type": "SYMBOL",
             "name": "preproc_call"
+          },
+          {
+            "type": "STRING",
+            "value": ";"
           }
         ]
       }

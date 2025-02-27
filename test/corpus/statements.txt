@@ -3061,9 +3061,11 @@ end program test
 Extra semicolon
 ================================================================================
 
-program test
+program test;
+        ;
+  implicit none;
   integer :: foo; ; foo = 1
-end program test
+end program test;
 
 --------------------------------------------------------------------------------
 
@@ -3071,6 +3073,8 @@ end program test
   (program
     (program_statement
       (name))
+    (implicit_statement
+      (none))
     (variable_declaration
       (intrinsic_type)
       (identifier))

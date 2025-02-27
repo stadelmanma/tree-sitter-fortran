@@ -348,7 +348,8 @@ module.exports = grammar({
         $.import_statement,
         $.procedure_statement,
         $.function,
-        $.subroutine
+        $.subroutine,
+        ';'
     ),
 
     interface_statement: $ => seq(
@@ -510,6 +511,7 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      ';',
     )),
 
     use_statement: $ => seq(
