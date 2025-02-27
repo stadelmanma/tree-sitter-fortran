@@ -1105,7 +1105,7 @@ module.exports = grammar({
 
     data_statement: $ => seq(
       caseInsensitive('data'),
-      commaSep1($.data_set)
+      sep1($.data_set, optional(','))
     ),
     data_set: $ => prec(1, seq(
       commaSep1(

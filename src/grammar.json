@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "fortran",
   "rules": {
     "translation_unit": {
@@ -13279,8 +13280,16 @@
                 "type": "SEQ",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": ","
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
                   },
                   {
                     "type": "SYMBOL",
@@ -20582,22 +20591,5 @@
     "_top_level_item",
     "_statement"
   ],
-  "supertypes": [],
-  "PREC": {
-    "ASSIGNMENT": -10,
-    "DEFAULT": 0,
-    "DEFINED_OPERATOR": 2,
-    "LOGICAL_EQUIV": 5,
-    "LOGICAL_OR": 10,
-    "LOGICAL_AND": 20,
-    "LOGICAL_NOT": 30,
-    "RELATIONAL": 40,
-    "ADDITIVE": 50,
-    "MULTIPLICATIVE": 60,
-    "EXPONENT": 70,
-    "CALL": 80,
-    "UNARY": 90,
-    "TYPE_MEMBER": 100
-  }
+  "supertypes": []
 }
-
