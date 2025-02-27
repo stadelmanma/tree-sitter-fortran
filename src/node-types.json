@@ -4092,6 +4092,11 @@
     }
   },
   {
+    "type": "edit_descriptor",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "else_clause",
     "named": true,
     "fields": {},
@@ -13865,10 +13870,6 @@
     "named": false
   },
   {
-    "type": "edit_descriptor",
-    "named": true
-  },
-  {
     "type": "elemental",
     "named": false
   },
@@ -14174,11 +14175,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

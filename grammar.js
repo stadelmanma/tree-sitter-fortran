@@ -1526,13 +1526,10 @@ module.exports = grammar({
 
     // Comma is technically only optional in certain circumstances,
     // but capturing all of those is complicated!
-    _transfer_items: $ => seq(
-      $._transfer_item,
-      repeat(seq(optional(','), $._transfer_item))
-    ),
+    _transfer_items: $ => sep1($._transfer_item, optional(',')),
 
     // H is not a valid edit descriptor because it clashes with Hollerith constants
-    edit_descriptor: $ => /[a-gi-zA-GI-Z0-9/:.*$]+/,
+    edit_descriptor: $ => choice('/', /[a-gi-zA-GI-Z0-9:.*$]+/),
 
     _io_arguments: $ => seq(
       '(',

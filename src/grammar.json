@@ -16006,8 +16006,17 @@
       ]
     },
     "edit_descriptor": {
-      "type": "PATTERN",
-      "value": "[a-gi-zA-GI-Z0-9/:.*$]+"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[a-gi-zA-GI-Z0-9:.*$]+"
+        }
+      ]
     },
     "_io_arguments": {
       "type": "SEQ",
