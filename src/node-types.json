@@ -14045,6 +14045,10 @@
     "named": false
   },
   {
+    "type": "go",
+    "named": false
+  },
+  {
     "type": "goto",
     "named": false
   },
@@ -14170,11 +14174,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",

@@ -19998,6 +19998,19 @@
           "value": "byte"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[cC][aA][lL][lL]"
+            },
+            "named": false,
+            "value": "call"
+          }
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -20185,6 +20198,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[gG][oO]"
+          },
+          "named": false,
+          "value": "go"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[iI][fF]"
           },
           "named": false,
@@ -20243,6 +20265,19 @@
           },
           "named": false,
           "value": "null"
+        },
+        {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[oO][pP][eE][nN]"
+            },
+            "named": false,
+            "value": "open"
+          }
         },
         {
           "type": "ALIAS",
