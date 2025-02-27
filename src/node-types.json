@@ -1252,6 +1252,148 @@
     }
   },
   {
+    "type": "block_data",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "block_data_statement",
+          "named": true
+        },
+        {
+          "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "data_statement",
+          "named": true
+        },
+        {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
+          "type": "end_block_data_statement",
+          "named": true
+        },
+        {
+          "type": "enum",
+          "named": true
+        },
+        {
+          "type": "enumeration_type",
+          "named": true
+        },
+        {
+          "type": "equivalence_statement",
+          "named": true
+        },
+        {
+          "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "implicit_statement",
+          "named": true
+        },
+        {
+          "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
+          "named": true
+        },
+        {
+          "type": "namelist_statement",
+          "named": true
+        },
+        {
+          "type": "parameter_statement",
+          "named": true
+        },
+        {
+          "type": "preproc_call",
+          "named": true
+        },
+        {
+          "type": "preproc_def",
+          "named": true
+        },
+        {
+          "type": "preproc_function_def",
+          "named": true
+        },
+        {
+          "type": "preproc_if",
+          "named": true
+        },
+        {
+          "type": "preproc_ifdef",
+          "named": true
+        },
+        {
+          "type": "preproc_include",
+          "named": true
+        },
+        {
+          "type": "private_statement",
+          "named": true
+        },
+        {
+          "type": "public_statement",
+          "named": true
+        },
+        {
+          "type": "save_statement",
+          "named": true
+        },
+        {
+          "type": "statement_function",
+          "named": true
+        },
+        {
+          "type": "statement_label",
+          "named": true
+        },
+        {
+          "type": "use_statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        },
+        {
+          "type": "variable_modification",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "block_data_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "block_label",
     "named": true,
     "fields": {}
@@ -4697,6 +4839,21 @@
       "types": [
         {
           "type": "block_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "end_block_data_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
           "named": true
         }
       ]
@@ -8833,6 +8990,10 @@
           "named": true
         },
         {
+          "type": "block_data",
+          "named": true
+        },
+        {
           "type": "call_expression",
           "named": true
         },
@@ -9153,6 +9314,10 @@
           "named": true
         },
         {
+          "type": "block_data",
+          "named": true
+        },
+        {
           "type": "call_expression",
           "named": true
         },
@@ -9441,6 +9606,10 @@
         },
         {
           "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "block_data",
           "named": true
         },
         {
@@ -9828,6 +9997,10 @@
           "named": true
         },
         {
+          "type": "block_data",
+          "named": true
+        },
+        {
           "type": "call_expression",
           "named": true
         },
@@ -10145,6 +10318,10 @@
         },
         {
           "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "block_data",
           "named": true
         },
         {
@@ -12609,6 +12786,10 @@
       "required": false,
       "types": [
         {
+          "type": "block_data",
+          "named": true
+        },
+        {
           "type": "function",
           "named": true
         },
@@ -13865,6 +14046,10 @@
     "named": false
   },
   {
+    "type": "blockdata",
+    "named": false
+  },
+  {
     "type": "byte",
     "named": false
   },
@@ -14002,6 +14187,10 @@
   },
   {
     "type": "end",
+    "named": false
+  },
+  {
+    "type": "end[object Object]",
     "named": false
   },
   {

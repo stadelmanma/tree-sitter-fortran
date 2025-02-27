@@ -114,6 +114,7 @@ module.exports = grammar({
       $.interface,
       $.subroutine,
       $.function,
+      $.block_data,
       $.preproc_if,
       $.preproc_ifdef,
       $.preproc_include,
@@ -364,6 +365,39 @@ module.exports = grammar({
       optional(choice($._name, $._generic_procedure)),
       $._end_of_statement
     )),
+
+    // Obsolescent feature
+    block_data: $ => seq(
+      $.block_data_statement,
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_module, $.preproc_if),
+          alias($.preproc_ifdef_in_module, $.preproc_ifdef)
+        ),
+      ),
+      $.end_block_data_statement
+    ),
+
+    block_data_statement: $ => seq(
+      whiteSpacedKeyword('block', 'data'),
+      optional($._name),
+      $._end_of_statement
+    ),
+
+    // Can't use `blockStructureEnding` because it's two keywords
+    end_block_data_statement: $ => {
+      const structType = whiteSpacedKeyword('block', 'data', false)
+      return prec.right(seq(
+        alias(choice(
+            seq(
+              caseInsensitive('end', false),
+              optional(structType)),
+            caseInsensitive('end' + structType, false)),
+          'end' + structType),
+        optional($._name),
+        $._end_of_statement))
+    },
 
     assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
     operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
