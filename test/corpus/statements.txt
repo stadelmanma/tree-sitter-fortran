@@ -3199,3 +3199,24 @@ end
     (keyword_statement
       (number_literal))
     (end_program_statement)))
+
+================================================================================
+Assigned Goto (Deleted)
+================================================================================
+
+program test
+  goto NEXT, (10, 20, 30)
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (keyword_statement
+      (identifier)
+      (statement_label_reference)
+      (statement_label_reference)
+      (statement_label_reference))
+    (end_program_statement)))

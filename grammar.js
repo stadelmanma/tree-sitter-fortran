@@ -1095,7 +1095,13 @@ module.exports = grammar({
             '(', commaSep1($.statement_label_reference), ')',
             optional(','),
             $._expression,
-          )
+          ),
+          // Assigned goto (deleted)
+          seq(
+            $._expression,
+            optional(','),
+            '(', commaSep1($.statement_label_reference), ')',
+          ),
         )
       ),
       seq(
