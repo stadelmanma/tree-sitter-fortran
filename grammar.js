@@ -1098,7 +1098,11 @@ module.exports = grammar({
           )
         )
       ),
-      caseInsensitive('return'),
+      seq(
+        caseInsensitive('return'),
+        // Obsolescent alternate return
+        optional($._expression),
+      )
     ),
 
     include_statement: $ => seq(

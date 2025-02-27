@@ -3184,3 +3184,18 @@ end
       (number_literal)
       (identifier))
     (end_program_statement)))
+
+================================================================================
+Alternate Return Statement (Obsolescent)
+================================================================================
+
+  return 1
+end
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (keyword_statement
+      (number_literal))
+    (end_program_statement)))
