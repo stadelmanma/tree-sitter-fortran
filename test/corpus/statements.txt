@@ -2700,10 +2700,11 @@ Statement Functions (Obsolescent)
       (identifier))
     (comment)
     (comment)
-    (statement_function
-      (identifier)
-      (argument_list
-        (identifier))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
       (math_expression
         (call_expression
           (identifier)

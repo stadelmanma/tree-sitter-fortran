@@ -9304,7 +9304,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "statement_function"
+                "name": "assignment_statement"
               },
               {
                 "type": "SYMBOL",
@@ -17564,74 +17564,6 @@
         }
       ]
     },
-    "statement_function": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "identifier"
-          },
-          {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_statement_function_arg_list"
-            },
-            "named": true,
-            "value": "argument_list"
-          },
-          {
-            "type": "STRING",
-            "value": "="
-          },
-          {
-            "type": "SYMBOL",
-            "name": "_expression"
-          }
-        ]
-      }
-    },
-    "_statement_function_arg_list": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                ]
-              }
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
-    },
     "entry_statement": {
       "type": "SEQ",
       "members": [
@@ -20869,10 +20801,6 @@
     [
       "preproc_else_in_specification_part",
       "program"
-    ],
-    [
-      "statement_function",
-      "_expression"
     ],
     [
       "coarray_critical_statement",
