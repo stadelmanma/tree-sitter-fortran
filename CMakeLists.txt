@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-fortran
-        VERSION "0.4.0"
+        VERSION "0.5.0"
         DESCRIPTION "Fortran grammar for tree-sitter"
         HOMEPAGE_URL "https://github.com/stadelmanma/tree-sitter-fortran"
         LANGUAGES C)
