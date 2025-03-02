@@ -96,7 +96,6 @@ module.exports = grammar({
     [$.type_statement],
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
-    [$.statement_function, $._expression],
     [$.coarray_critical_statement, $.identifier],
   ],
 
@@ -114,6 +113,7 @@ module.exports = grammar({
       $.interface,
       $.subroutine,
       $.function,
+      $.block_data,
       $.preproc_if,
       $.preproc_ifdef,
       $.preproc_include,
@@ -348,7 +348,8 @@ module.exports = grammar({
         $.import_statement,
         $.procedure_statement,
         $.function,
-        $.subroutine
+        $.subroutine,
+        ';'
     ),
 
     interface_statement: $ => seq(
@@ -363,6 +364,39 @@ module.exports = grammar({
       optional(choice($._name, $._generic_procedure)),
       $._end_of_statement
     )),
+
+    // Obsolescent feature
+    block_data: $ => seq(
+      $.block_data_statement,
+      repeat(
+        choice(
+          $._specification_part,
+          alias($.preproc_if_in_module, $.preproc_if),
+          alias($.preproc_ifdef_in_module, $.preproc_ifdef)
+        ),
+      ),
+      $.end_block_data_statement
+    ),
+
+    block_data_statement: $ => seq(
+      whiteSpacedKeyword('block', 'data'),
+      optional($._name),
+      $._end_of_statement
+    ),
+
+    // Can't use `blockStructureEnding` because it's two keywords
+    end_block_data_statement: $ => {
+      const structType = whiteSpacedKeyword('block', 'data', false)
+      return prec.right(seq(
+        alias(choice(
+            seq(
+              caseInsensitive('end', false),
+              optional(structType)),
+            caseInsensitive('end' + structType, false)),
+          'end' + structType),
+        optional($._name),
+        $._end_of_statement))
+    },
 
     assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
     operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
@@ -504,12 +538,13 @@ module.exports = grammar({
       seq($.parameter_statement, $._end_of_statement),
       seq($.equivalence_statement, $._end_of_statement),
       seq($.data_statement, $._end_of_statement),
-      seq($.statement_function, $._end_of_statement),
+      seq($.assignment_statement, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
       $.preproc_include,
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      ';',
     )),
 
     use_statement: $ => seq(
@@ -1033,6 +1068,7 @@ module.exports = grammar({
       $.file_position_statement,
       $.allocate_statement,
       $.entry_statement,
+      $.assign_statement,
       $.coarray_statement,
       $.coarray_team_statement,
       $.coarray_critical_statement,
@@ -1092,10 +1128,20 @@ module.exports = grammar({
             '(', commaSep1($.statement_label_reference), ')',
             optional(','),
             $._expression,
-          )
+          ),
+          // Assigned goto (deleted)
+          seq(
+            $._expression,
+            optional(','),
+            '(', commaSep1($.statement_label_reference), ')',
+          ),
         )
       ),
-      caseInsensitive('return'),
+      seq(
+        caseInsensitive('return'),
+        // Obsolescent alternate return
+        optional($._expression),
+      )
     ),
 
     include_statement: $ => seq(
@@ -1105,7 +1151,7 @@ module.exports = grammar({
 
     data_statement: $ => seq(
       caseInsensitive('data'),
-      commaSep1($.data_set)
+      sep1($.data_set, optional(','))
     ),
     data_set: $ => prec(1, seq(
       commaSep1(
@@ -1524,13 +1570,10 @@ module.exports = grammar({
 
     // Comma is technically only optional in certain circumstances,
     // but capturing all of those is complicated!
-    _transfer_items: $ => seq(
-      $._transfer_item,
-      repeat(seq(optional(','), $._transfer_item))
-    ),
+    _transfer_items: $ => sep1($._transfer_item, optional(',')),
 
     // H is not a valid edit descriptor because it clashes with Hollerith constants
-    edit_descriptor: $ => /[a-gi-zA-GI-Z0-9/:.*$]+/,
+    edit_descriptor: $ => choice('/', /[a-gi-zA-GI-Z0-9:.*$]+/),
 
     _io_arguments: $ => seq(
       '(',
@@ -1721,16 +1764,6 @@ module.exports = grammar({
     ),
 
     // Obsolescent feature
-    statement_function: $ => prec.right(seq(
-      $.identifier,
-      alias($._statement_function_arg_list, $.argument_list),
-      '=',
-      $._expression,
-    )),
-
-    _statement_function_arg_list: $ => seq('(', commaSep1($.identifier), ')'),
-
-    // Obsolescent feature
     entry_statement: $ => seq(
       caseInsensitive('entry'),
       field('name', $._name),
@@ -1739,6 +1772,14 @@ module.exports = grammar({
         $.language_binding,
         $.function_result
       ))),
+    ),
+
+    // Deleted feature
+    assign_statement: $ => seq(
+      caseInsensitive('assign'),
+      $.number_literal,
+      caseInsensitive('to'),
+      $.identifier
     ),
 
     // Expressions
@@ -2128,6 +2169,7 @@ module.exports = grammar({
       caseInsensitive('automatic'),
       caseInsensitive('block'),
       caseInsensitive('byte'),
+      prec(-1, caseInsensitive('call')),
       caseInsensitive('change'),
       caseInsensitive('constant'),
       caseInsensitive('contiguous'),
@@ -2148,6 +2190,7 @@ module.exports = grammar({
       caseInsensitive('fail'),
       caseInsensitive('form'),
       caseInsensitive('format'),
+      caseInsensitive('go'),
       caseInsensitive('if'),
       caseInsensitive('inquire'),
       caseInsensitive('intrinsic'),
@@ -2155,6 +2198,7 @@ module.exports = grammar({
       caseInsensitive('len'),
       caseInsensitive('lock'),
       caseInsensitive('null'),
+      prec(-1, caseInsensitive('open')),
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
       caseInsensitive('pointer'),

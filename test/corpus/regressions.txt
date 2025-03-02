@@ -181,3 +181,103 @@ end program
           (number_literal)
           (number_literal))))
     (end_program_statement)))
+
+================================================================================
+Multiple array assignments
+================================================================================
+
+  ! Too many assignment expressions and the first one gets parsed as a
+  ! statement function
+  SUBROUTINE mpi_error_handler(comm, error_code)
+    CHARACTER(LEN=29) :: errstring(0:MPI_ERR_LASTCODE)
+
+    errstring(MPI_SUCCESS                  ) = 'MPI_SUCCESS                  '
+    errstring(MPI_ERR_BUFFER               ) = 'MPI_ERR_BUFFER               '
+    errstring(MPI_ERR_COUNT                ) = 'MPI_ERR_COUNT                '
+    errstring(MPI_ERR_TYPE                 ) = 'MPI_ERR_TYPE                 '
+    errstring(MPI_ERR_TAG                  ) = 'MPI_ERR_TAG                  '
+    errstring(MPI_ERR_COMM                 ) = 'MPI_ERR_COMM                 '
+    errstring(MPI_ERR_RANK                 ) = 'MPI_ERR_RANK                 '
+    errstring(MPI_ERR_REQUEST              ) = 'MPI_ERR_REQUEST              '
+
+    print*, x
+
+  END SUBROUTINE mpi_error_handler
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (comment)
+  (comment)
+  (subroutine
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type
+        (kind
+          (keyword_argument
+            (identifier)
+            (number_literal))))
+      (sized_declarator
+        (identifier)
+        (size
+          (extent_specifier
+            (number_literal)
+            (identifier)))))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (identifier)))
+      (string_literal))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (identifier)))
+    (end_subroutine_statement
+      (name))))

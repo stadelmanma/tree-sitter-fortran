@@ -200,6 +200,10 @@ program test
   print*, "12&bar"
   print*, "&
     &hello"
+  print*, "this is "&
+    &"one string"
+  print*, "this is "&
+    & // "two strings"
 end program
 
 --------------------------------------------------------------------------------
@@ -216,6 +220,16 @@ end program
       (format_identifier)
       (output_item_list
         (string_literal)))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal)))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (concatenation_expression
+          (string_literal)
+          (string_literal))))
     (end_program_statement)))
 
 ================================================================================

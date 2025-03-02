@@ -1389,3 +1389,31 @@ end module enumeration_mod
         (name)))
     (end_module_statement
       (name))))
+
+================================================================================
+Block Data (Obsolescent)
+================================================================================
+
+      BLOCK DATA combla
+      COMMON /COMBLA/ ICASE, N, INCX
+      DATA ICASE /4/
+      END
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (block_data
+    (block_data_statement
+      (name))
+    (common_statement
+      (variable_group
+        (name)
+        (identifier)
+        (identifier)
+        (identifier)))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value
+          (number_literal))))
+    (end_block_data_statement)))
