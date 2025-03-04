@@ -33,19 +33,6 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "include_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_end_of_statement"
-              }
-            ]
-          },
-          {
             "type": "SYMBOL",
             "name": "program"
           },
@@ -9070,10 +9057,6 @@
           "name": "subroutine"
         },
         {
-          "type": "SYMBOL",
-          "name": "include_statement"
-        },
-        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
@@ -9115,23 +9098,6 @@
       "content": {
         "type": "CHOICE",
         "members": [
-          {
-            "type": "PREC",
-            "value": 1,
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "include_statement"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_end_of_statement"
-                }
-              ]
-            }
-          },
           {
             "type": "SEQ",
             "members": [
@@ -10436,19 +10402,6 @@
                     },
                     "named": true,
                     "value": "sequence_statement"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_end_of_statement"
-                  }
-                ]
-              },
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "include_statement"
                   },
                   {
                     "type": "SYMBOL",
@@ -12885,10 +12838,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "include_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "if_statement"
         },
         {
@@ -13508,6 +13457,10 @@
             "named": true,
             "value": "filename"
           }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
@@ -20731,6 +20684,10 @@
     {
       "type": "STRING",
       "value": "&"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "include_statement"
     }
   ],
   "conflicts": [
