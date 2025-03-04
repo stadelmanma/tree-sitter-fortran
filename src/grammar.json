@@ -16751,6 +16751,10 @@
         {
           "type": "SYMBOL",
           "name": "language_binding"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },

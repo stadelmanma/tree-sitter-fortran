@@ -1649,7 +1649,8 @@ module.exports = grammar({
     enum_statement: $ => seq(
       caseInsensitive('enum'),
       ',',
-      $.language_binding
+      $.language_binding,
+      $._end_of_statement,
     ),
 
     enumeration_type: $ => seq(
