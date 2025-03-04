@@ -2199,6 +2199,7 @@ module.exports = grammar({
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
       caseInsensitive('pointer'),
+      prec(-1, caseInsensitive('print')),
       caseInsensitive('private'),
       caseInsensitive('public'),
       prec(-1, caseInsensitive('rank')),
@@ -2213,8 +2214,10 @@ module.exports = grammar({
       caseInsensitive('sync'),
       caseInsensitive('target'),
       caseInsensitive('texture'),
+      prec(-1, caseInsensitive('type')),
       caseInsensitive('unlock'),
       caseInsensitive('value'),
+      prec(-1, caseInsensitive('where')),
       caseInsensitive('write'),
     ),
 

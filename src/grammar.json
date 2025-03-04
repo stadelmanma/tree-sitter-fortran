@@ -20480,6 +20480,19 @@
           "value": "pointer"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][rR][iI][nN][tT]"
+            },
+            "named": false,
+            "value": "print"
+          }
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -20610,6 +20623,19 @@
           "value": "texture"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[tT][yY][pP][eE]"
+            },
+            "named": false,
+            "value": "type"
+          }
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -20626,6 +20652,19 @@
           },
           "named": false,
           "value": "value"
+        },
+        {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[wW][hH][eE][rR][eE]"
+            },
+            "named": false,
+            "value": "where"
+          }
         },
         {
           "type": "ALIAS",
