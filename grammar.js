@@ -69,6 +69,7 @@ module.exports = grammar({
     /\s|\\\r?\n/,
     $.comment,
     '&',
+    $.include_statement,
   ],
 
   inline: $ => [
@@ -106,7 +107,6 @@ module.exports = grammar({
     ),
 
     _top_level_item: $ => prec(2, choice(
-      seq($.include_statement, $._end_of_statement),
       $.program,
       $.module,
       $.submodule,
@@ -508,7 +508,6 @@ module.exports = grammar({
       $.function,
       $.module_procedure,
       $.subroutine,
-      $.include_statement,
       alias($.preproc_if_in_internal_procedures, $.preproc_if),
       alias($.preproc_ifdef_in_internal_procedures, $.preproc_ifdef),
       $.preproc_include,
@@ -520,7 +519,6 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => prec(1, choice(
-      prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
       seq($.save_statement, $._end_of_statement),
@@ -544,6 +542,8 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      alias($.preproc_if_in_specification_part, $.preproc_if),
+      alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef),
       ';',
     )),
 
@@ -683,7 +683,6 @@ module.exports = grammar({
             alias(caseInsensitive('sequence'), $.sequence_statement),
             $._end_of_statement
         ),
-        seq($.include_statement, $._end_of_statement),
         seq($.variable_declaration, $._end_of_statement),
         $.preproc_include,
         $.preproc_def,
@@ -1044,7 +1043,6 @@ module.exports = grammar({
       $.call_expression,
       $.subroutine_call,
       $.keyword_statement,
-      $.include_statement,
       $.if_statement,
       $.arithmetic_if_statement,
       $.where_statement,
@@ -1146,7 +1144,8 @@ module.exports = grammar({
 
     include_statement: $ => seq(
       caseInsensitive('include'),
-      field("path", alias($.string_literal, $.filename))
+      field("path", alias($.string_literal, $.filename)),
+      $._end_of_statement,
     ),
 
     data_statement: $ => seq(
@@ -1652,7 +1651,8 @@ module.exports = grammar({
     enum_statement: $ => seq(
       caseInsensitive('enum'),
       ',',
-      $.language_binding
+      $.language_binding,
+      $._end_of_statement,
     ),
 
     enumeration_type: $ => seq(
@@ -2202,6 +2202,7 @@ module.exports = grammar({
       caseInsensitive('optional'),
       caseInsensitive('parameter'),
       caseInsensitive('pointer'),
+      prec(-1, caseInsensitive('print')),
       caseInsensitive('private'),
       caseInsensitive('public'),
       prec(-1, caseInsensitive('rank')),
@@ -2216,8 +2217,10 @@ module.exports = grammar({
       caseInsensitive('sync'),
       caseInsensitive('target'),
       caseInsensitive('texture'),
+      prec(-1, caseInsensitive('type')),
       caseInsensitive('unlock'),
       caseInsensitive('value'),
+      prec(-1, caseInsensitive('where')),
       caseInsensitive('write'),
     ),
 

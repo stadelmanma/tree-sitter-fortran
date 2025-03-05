@@ -33,19 +33,6 @@
         "type": "CHOICE",
         "members": [
           {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "include_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_end_of_statement"
-              }
-            ]
-          },
-          {
             "type": "SYMBOL",
             "name": "program"
           },
@@ -9070,10 +9057,6 @@
           "name": "subroutine"
         },
         {
-          "type": "SYMBOL",
-          "name": "include_statement"
-        },
-        {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
@@ -9115,23 +9098,6 @@
       "content": {
         "type": "CHOICE",
         "members": [
-          {
-            "type": "PREC",
-            "value": 1,
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "include_statement"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_end_of_statement"
-                }
-              ]
-            }
-          },
           {
             "type": "SEQ",
             "members": [
@@ -9348,6 +9314,24 @@
           {
             "type": "SYMBOL",
             "name": "preproc_call"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "preproc_if_in_specification_part"
+            },
+            "named": true,
+            "value": "preproc_if"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "preproc_ifdef_in_specification_part"
+            },
+            "named": true,
+            "value": "preproc_ifdef"
           },
           {
             "type": "STRING",
@@ -10436,19 +10420,6 @@
                     },
                     "named": true,
                     "value": "sequence_statement"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_end_of_statement"
-                  }
-                ]
-              },
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "include_statement"
                   },
                   {
                     "type": "SYMBOL",
@@ -12885,10 +12856,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "include_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "if_statement"
         },
         {
@@ -13508,6 +13475,10 @@
             "named": true,
             "value": "filename"
           }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
@@ -16798,6 +16769,10 @@
         {
           "type": "SYMBOL",
           "name": "language_binding"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
@@ -20527,6 +20502,19 @@
           "value": "pointer"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[pP][rR][iI][nN][tT]"
+            },
+            "named": false,
+            "value": "print"
+          }
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -20657,6 +20645,19 @@
           "value": "texture"
         },
         {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[tT][yY][pP][eE]"
+            },
+            "named": false,
+            "value": "type"
+          }
+        },
+        {
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
@@ -20673,6 +20674,19 @@
           },
           "named": false,
           "value": "value"
+        },
+        {
+          "type": "PREC",
+          "value": -1,
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[wW][hH][eE][rR][eE]"
+            },
+            "named": false,
+            "value": "where"
+          }
         },
         {
           "type": "ALIAS",
@@ -20731,6 +20745,10 @@
     {
       "type": "STRING",
       "value": "&"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "include_statement"
     }
   ],
   "conflicts": [

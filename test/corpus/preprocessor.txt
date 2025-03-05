@@ -772,3 +772,97 @@ end module
           (method_name)))
       (end_interface_statement))
     (end_module_statement)))
+
+================================================================================
+Preprocessor in specification part
+================================================================================
+
+  subroutine foo()
+    implicit none
+#ifdef THINGY
+#ifndef MAJIG
+#ifdef stuff
+    integer(kind=8) :: signal
+    integer(kind=8) :: handler
+    integer(kind=8) :: minus_one = -1
+#else
+    integer :: signal
+    integer :: handler
+    integer :: minus_one = -1
+#endif
+    handler = signal(2,signal_handler,minus_one)
+    handler = signal(15,signal_handler,minus_one)
+
+#endif
+#endif
+  end subroutine foo
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      (name))
+    (implicit_statement
+      (none))
+    (preproc_ifdef
+      (identifier)
+      (preproc_ifdef
+        (identifier)
+        (preproc_ifdef
+          (identifier)
+          (variable_declaration
+            (intrinsic_type
+              (kind
+                (keyword_argument
+                  (identifier)
+                  (number_literal))))
+            (identifier))
+          (variable_declaration
+            (intrinsic_type
+              (kind
+                (keyword_argument
+                  (identifier)
+                  (number_literal))))
+            (identifier))
+          (variable_declaration
+            (intrinsic_type
+              (kind
+                (keyword_argument
+                  (identifier)
+                  (number_literal))))
+            (init_declarator
+              (identifier)
+              (unary_expression
+                (number_literal))))
+          (preproc_else
+            (variable_declaration
+              (intrinsic_type)
+              (identifier))
+            (variable_declaration
+              (intrinsic_type)
+              (identifier))
+            (variable_declaration
+              (intrinsic_type)
+              (init_declarator
+                (identifier)
+                (unary_expression
+                  (number_literal))))))
+        (assignment_statement
+          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)
+              (identifier)
+              (identifier))))
+        (assignment_statement
+          (identifier)
+          (call_expression
+            (identifier)
+            (argument_list
+              (number_literal)
+              (identifier)
+              (identifier))))))
+    (end_subroutine_statement
+      (name))))
