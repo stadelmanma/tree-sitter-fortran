@@ -542,6 +542,8 @@ module.exports = grammar({
       $.preproc_def,
       $.preproc_function_def,
       $.preproc_call,
+      alias($.preproc_if_in_specification_part, $.preproc_if),
+      alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef),
       ';',
     )),
 

@@ -9316,6 +9316,24 @@
             "name": "preproc_call"
           },
           {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "preproc_if_in_specification_part"
+            },
+            "named": true,
+            "value": "preproc_if"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "preproc_ifdef_in_specification_part"
+            },
+            "named": true,
+            "value": "preproc_ifdef"
+          },
+          {
             "type": "STRING",
             "value": ";"
           }
