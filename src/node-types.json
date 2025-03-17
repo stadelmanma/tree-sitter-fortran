@@ -3988,6 +3988,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "preproc_if",
           "named": true
         },
@@ -6631,6 +6635,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {

@@ -3,12 +3,31 @@ Include Statements
 ================================================================================
 
 PROGRAM TEST
-  INCLUDE 'fftw.f03'
+  INCLUDE 'fftw.f03'   ! comment
+  include 'other_file.h'
+  interface
+    include "interface.inc"
+  end interface
   a = 1.0
   INCLUDE 'debug_point.f03'
 contains
   include 'functions.f03'
+  subroutine foo
+    include "sub_body.inc.f90"
+  end subroutine foo
 END PROGRAM
+
+! Check for keyword/identifier clash
+module include
+end module include
+
+subroutine foo
+  include 'debug.h'
+  ! comment
+  logical initv
+  integer, parameter :: include = 1
+
+end subroutine foo
 
 --------------------------------------------------------------------------------
 
@@ -18,6 +37,14 @@ END PROGRAM
       (name))
     (include_statement
       (filename))
+    (comment)
+    (include_statement
+      (filename))
+    (interface
+      (interface_statement)
+      (include_statement
+        (filename))
+      (end_interface_statement))
     (assignment_statement
       (identifier)
       (number_literal))
@@ -26,8 +53,38 @@ END PROGRAM
     (internal_procedures
       (contains_statement)
       (include_statement
-        (filename)))
-    (end_program_statement)))
+        (filename))
+      (subroutine
+        (subroutine_statement
+          (name))
+        (include_statement
+          (filename))
+        (end_subroutine_statement
+          (name))))
+    (end_program_statement))
+  (comment)
+  (module
+    (module_statement
+      (name))
+    (end_module_statement
+      (name)))
+  (subroutine
+    (subroutine_statement
+      (name))
+    (include_statement
+      (filename))
+    (comment)
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier)
+      (init_declarator
+        (identifier)
+        (number_literal)))
+    (end_subroutine_statement
+      (name))))
 
 ================================================================================
 Use Statements
@@ -209,7 +266,7 @@ PROGRAM TEST
   CHARACTER(LEN=*) :: options
   CHARACTER*(MXLN) :: errflag
   CHARACTER(*) :: thing
-  CHARACTER   FMAT*22, OTHER*(*)
+  CHARACTER   FMAT*22, OTHER*(*), LIST(12)*12
   integer::no_whitespace=1
   integer(kind=c_long), bind(C, name="c_fortran_var") :: c_fortran_var
   logical, rank(rank(mask)), allocatable :: x1
@@ -317,6 +374,11 @@ END PROGRAM
         (character_length))
       declarator: (sized_declarator
         (identifier)
+        (character_length))
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (number_literal))
         (character_length)))
     (variable_declaration
       type: (intrinsic_type)
