@@ -12879,6 +12879,10 @@
           ]
         },
         {
+          "type": "SYMBOL",
+          "name": "include_statement"
+        },
+        {
           "type": "STRING",
           "value": ";"
         }
@@ -12906,10 +12910,6 @@
         {
           "type": "SYMBOL",
           "name": "keyword_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "include_statement"
         },
         {
           "type": "SYMBOL",
@@ -13537,8 +13537,8 @@
             }
           },
           {
-            "type": "PATTERN",
-            "value": "\\r?\\n|;"
+            "type": "SYMBOL",
+            "name": "_end_of_statement"
           }
         ]
       }

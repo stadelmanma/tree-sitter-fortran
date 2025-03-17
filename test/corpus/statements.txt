@@ -23,7 +23,7 @@ end module include
 
 subroutine foo
   include 'debug.h'
-
+  ! comment
   logical initv
   integer, parameter :: include = 1
 
@@ -36,8 +36,8 @@ end subroutine foo
     (program_statement
       (name))
     (include_statement
-      (filename)
-      (comment))
+      (filename))
+    (comment)
     (include_statement
       (filename))
     (interface
@@ -73,6 +73,7 @@ end subroutine foo
       (name))
     (include_statement
       (filename))
+    (comment)
     (variable_declaration
       (intrinsic_type)
       (identifier))

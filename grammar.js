@@ -1046,6 +1046,7 @@ module.exports = grammar({
         $._statements,
         $._end_of_statement
       ),
+      $.include_statement,
       ';'
     ),
 
@@ -1055,7 +1056,6 @@ module.exports = grammar({
       $.call_expression,
       $.subroutine_call,
       $.keyword_statement,
-      $.include_statement,
       $.if_statement,
       $.arithmetic_if_statement,
       $.where_statement,
@@ -1158,8 +1158,7 @@ module.exports = grammar({
     include_statement: $ => prec(1, seq(
       caseInsensitive('include'),
       field("path", alias($.string_literal, $.filename)),
-      // I do _not_ understand, but we can't use $._end_of_statement here for some reason
-      /\r?\n|;/
+      $._end_of_statement,
     )),
 
     data_statement: $ => seq(
