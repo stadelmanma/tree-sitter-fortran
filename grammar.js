@@ -858,7 +858,10 @@ module.exports = grammar({
     sized_declarator: $ => prec.right(1, seq(
         $.identifier,
         choice(
-          alias($.argument_list, $.size),
+          seq(
+            alias($.argument_list, $.size),
+            optional($.character_length),
+          ),
           $.character_length
         )
     )),
