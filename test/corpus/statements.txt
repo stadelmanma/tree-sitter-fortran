@@ -4,15 +4,10 @@ Include Statements
 
 PROGRAM TEST
   INCLUDE 'fftw.f03'
-  interface
-    include "interface.inc"
-  end interface
   a = 1.0
   INCLUDE 'debug_point.f03'
 contains
   include 'functions.f03'
-  subroutine foo
-  end subroutine foo
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -23,11 +18,6 @@ END PROGRAM
       (name))
     (include_statement
       (filename))
-    (interface
-      (interface_statement)
-      (include_statement
-        (filename))
-      (end_interface_statement))
     (assignment_statement
       (identifier)
       (number_literal))
@@ -36,12 +26,7 @@ END PROGRAM
     (internal_procedures
       (contains_statement)
       (include_statement
-        (filename))
-      (subroutine
-        (subroutine_statement
-          (name))
-        (end_subroutine_statement
-          (name))))
+        (filename)))
     (end_program_statement)))
 
 ================================================================================

@@ -69,7 +69,6 @@ module.exports = grammar({
     /\s|\\\r?\n/,
     $.comment,
     '&',
-    $.include_statement,
   ],
 
   inline: $ => [
@@ -107,6 +106,7 @@ module.exports = grammar({
     ),
 
     _top_level_item: $ => prec(2, choice(
+      seq($.include_statement, $._end_of_statement),
       $.program,
       $.module,
       $.submodule,
@@ -508,6 +508,7 @@ module.exports = grammar({
       $.function,
       $.module_procedure,
       $.subroutine,
+      $.include_statement,
       alias($.preproc_if_in_internal_procedures, $.preproc_if),
       alias($.preproc_ifdef_in_internal_procedures, $.preproc_ifdef),
       $.preproc_include,
@@ -519,6 +520,7 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => prec(1, choice(
+      prec(1, seq($.include_statement, $._end_of_statement)),
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
       seq($.save_statement, $._end_of_statement),
@@ -683,6 +685,7 @@ module.exports = grammar({
             alias(caseInsensitive('sequence'), $.sequence_statement),
             $._end_of_statement
         ),
+        seq($.include_statement, $._end_of_statement),
         seq($.variable_declaration, $._end_of_statement),
         $.preproc_include,
         $.preproc_def,
@@ -1043,6 +1046,7 @@ module.exports = grammar({
       $.call_expression,
       $.subroutine_call,
       $.keyword_statement,
+      $.include_statement,
       $.if_statement,
       $.arithmetic_if_statement,
       $.where_statement,
@@ -1144,8 +1148,7 @@ module.exports = grammar({
 
     include_statement: $ => seq(
       caseInsensitive('include'),
-      field("path", alias($.string_literal, $.filename)),
-      $._end_of_statement,
+      field("path", alias($.string_literal, $.filename))
     ),
 
     data_statement: $ => seq(

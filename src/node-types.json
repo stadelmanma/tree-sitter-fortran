@@ -584,6 +584,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -1121,6 +1125,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -1293,6 +1301,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -1609,6 +1621,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -1990,6 +2006,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -2476,6 +2496,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -3711,6 +3735,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "preproc_call",
           "named": true
         },
@@ -4150,6 +4178,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -4334,6 +4366,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -4502,6 +4538,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -4677,6 +4717,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -5488,6 +5532,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -5762,6 +5810,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -6079,6 +6131,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -6661,6 +6717,10 @@
         },
         {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -7634,6 +7694,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -7841,6 +7905,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -9006,6 +9074,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -9322,6 +9394,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -9606,6 +9682,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -9989,6 +10069,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -10302,6 +10386,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -10765,6 +10853,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "inquire_statement",
           "named": true
         },
@@ -11027,6 +11119,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -12001,6 +12097,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -12229,6 +12329,10 @@
         },
         {
           "type": "import_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -12563,6 +12667,10 @@
           "named": true
         },
         {
+          "type": "include_statement",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -12841,6 +12949,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
@@ -13367,6 +13479,10 @@
         },
         {
           "type": "if_statement",
+          "named": true
+        },
+        {
+          "type": "include_statement",
           "named": true
         },
         {
