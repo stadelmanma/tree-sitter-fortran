@@ -106,7 +106,7 @@ module.exports = grammar({
     ),
 
     _top_level_item: $ => prec(2, choice(
-      seq($.include_statement, $._end_of_statement),
+      $.include_statement,
       $.program,
       $.module,
       $.submodule,
@@ -285,7 +285,7 @@ module.exports = grammar({
       $.end_program_statement
     ),
 
-    program_statement: $ => seq(caseInsensitive('program'), $._name),
+    program_statement: $ => seq(caseInsensitive('program'), $._name, $._end_of_statement),
     end_program_statement: $ => blockStructureEnding($, 'program'),
 
     module: $ => seq(
@@ -301,7 +301,7 @@ module.exports = grammar({
       $.end_module_statement
     ),
 
-    module_statement: $ => seq(caseInsensitive('module'), $._name),
+    module_statement: $ => seq(caseInsensitive('module'), $._name, $._end_of_statement),
     end_module_statement: $ => blockStructureEnding($, 'module'),
 
     submodule: $ => seq(
@@ -325,7 +325,8 @@ module.exports = grammar({
         ':', field('parent', $.module_name)
       )),
       ')',
-      $._name
+      $._name,
+      $._end_of_statement,
     ),
     end_submodule_statement: $ => blockStructureEnding($, 'submodule'),
     module_name: $ => $._name,
@@ -334,6 +335,7 @@ module.exports = grammar({
       $.interface_statement,
       repeat(choice(
         $._interface_items,
+        $.include_statement,
         $.preproc_include,
         $.preproc_def,
         $.preproc_function_def,
@@ -419,7 +421,8 @@ module.exports = grammar({
       caseInsensitive('subroutine'),
       field('name', $._name),
       optional(field('parameters',$._parameters)),
-      optional($.language_binding)
+      optional($.language_binding),
+      $._end_of_statement,
     ),
 
     end_subroutine_statement: $ => blockStructureEnding($, 'subroutine'),
@@ -429,7 +432,8 @@ module.exports = grammar({
     module_procedure_statement: $ => seq(
       optional($._callable_interface_qualifers),
       seq(caseInsensitive('module'), caseInsensitive('procedure')),
-      field('name', $._name)
+      field('name', $._name),
+      $._end_of_statement,
     ),
 
     end_module_procedure_statement: $ => blockStructureEnding($, 'procedure'),
@@ -444,7 +448,8 @@ module.exports = grammar({
       optional(repeat(choice(
         $.language_binding,
         $.function_result
-      )))
+      ))),
+      $._end_of_statement,
     ),
 
     language_binding: $ => seq(
@@ -520,7 +525,7 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => prec(1, choice(
-      prec(1, seq($.include_statement, $._end_of_statement)),
+      $.include_statement,
       seq($.use_statement, $._end_of_statement),
       seq($.implicit_statement, $._end_of_statement),
       seq($.save_statement, $._end_of_statement),
@@ -685,7 +690,7 @@ module.exports = grammar({
             alias(caseInsensitive('sequence'), $.sequence_statement),
             $._end_of_statement
         ),
-        seq($.include_statement, $._end_of_statement),
+        $.include_statement,
         seq($.variable_declaration, $._end_of_statement),
         $.preproc_include,
         $.preproc_def,
@@ -740,6 +745,7 @@ module.exports = grammar({
         $.public_statement,
         $.private_statement,
         $.procedure_statement,
+        $.include_statement,
         alias($.preproc_if_in_bound_procedures, $.preproc_if),
         alias($.preproc_ifdef_in_bound_procedures, $.preproc_ifdef),
       )),
@@ -1146,10 +1152,12 @@ module.exports = grammar({
       )
     ),
 
-    include_statement: $ => seq(
+    include_statement: $ => prec(1, seq(
       caseInsensitive('include'),
-      field("path", alias($.string_literal, $.filename))
-    ),
+      field("path", alias($.string_literal, $.filename)),
+      // I do _not_ understand, but we can't use $._end_of_statement here for some reason
+      /\r?\n|;/
+    )),
 
     data_statement: $ => seq(
       caseInsensitive('data'),
@@ -2195,6 +2203,7 @@ module.exports = grammar({
       caseInsensitive('format'),
       caseInsensitive('go'),
       caseInsensitive('if'),
+      prec(-1, caseInsensitive('include')),
       caseInsensitive('inquire'),
       caseInsensitive('intrinsic'),
       caseInsensitive('kind'),
@@ -2378,7 +2387,6 @@ function preprocessor(command) {
 function procedure($, start_statement, end_statement) {
   return seq(
     start_statement,
-    $._end_of_statement,
     repeat(
       choice(
         $._specification_part,

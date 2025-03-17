@@ -3,12 +3,31 @@ Include Statements
 ================================================================================
 
 PROGRAM TEST
-  INCLUDE 'fftw.f03'
+  INCLUDE 'fftw.f03'   ! comment
+  include 'other_file.h'
+  interface
+    include "interface.inc"
+  end interface
   a = 1.0
   INCLUDE 'debug_point.f03'
 contains
   include 'functions.f03'
+  subroutine foo
+    include "sub_body.inc.f90"
+  end subroutine foo
 END PROGRAM
+
+! Check for keyword/identifier clash
+module include
+end module include
+
+subroutine foo
+  include 'debug.h'
+
+  logical initv
+  integer, parameter :: include = 1
+
+end subroutine foo
 
 --------------------------------------------------------------------------------
 
@@ -17,7 +36,15 @@ END PROGRAM
     (program_statement
       (name))
     (include_statement
+      (filename)
+      (comment))
+    (include_statement
       (filename))
+    (interface
+      (interface_statement)
+      (include_statement
+        (filename))
+      (end_interface_statement))
     (assignment_statement
       (identifier)
       (number_literal))
@@ -26,8 +53,37 @@ END PROGRAM
     (internal_procedures
       (contains_statement)
       (include_statement
-        (filename)))
-    (end_program_statement)))
+        (filename))
+      (subroutine
+        (subroutine_statement
+          (name))
+        (include_statement
+          (filename))
+        (end_subroutine_statement
+          (name))))
+    (end_program_statement))
+  (comment)
+  (module
+    (module_statement
+      (name))
+    (end_module_statement
+      (name)))
+  (subroutine
+    (subroutine_statement
+      (name))
+    (include_statement
+      (filename))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (variable_declaration
+      (intrinsic_type)
+      (type_qualifier)
+      (init_declarator
+        (identifier)
+        (number_literal)))
+    (end_subroutine_statement
+      (name))))
 
 ================================================================================
 Use Statements
