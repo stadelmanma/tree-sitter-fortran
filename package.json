@@ -2,17 +2,28 @@
   "name": "tree-sitter-fortran",
   "version": "0.5.1",
   "description": "Fortran grammar for tree-sitter",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/stadelmanma/tree-sitter-fortran"
-  },
-  "main": "bindings/node",
-  "types": "bindings/node",
   "keywords": [
     "parser",
     "fortran",
     "tree-sitter"
   ],
+  "homepage": "https://github.com/stadelmanma/tree-sitter-fortran#readme",
+  "bugs": {
+    "url": "https://github.com/stadelmanma/tree-sitter-fortran/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stadelmanma/tree-sitter-fortran.git"
+  },
+  "license": "MIT",
+  "author": "Matt Stadelman <stadelmanma@gmail.com> (https://github.com/stadelmanma)",
+  "type": "commonjs",
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "directories": {
+    "example": "examples",
+    "test": "test"
+  },
   "files": [
     "grammar.js",
     "binding.gyp",
@@ -21,23 +32,15 @@
     "queries/*",
     "src/**"
   ],
-  "author": "Matt Stadelman <stadelmanma@gmail.com> (https://github.com/stadelmanma)",
-  "bugs": {
-    "url": "https://github.com/stadelmanma/tree-sitter-fortran/issues"
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
   },
-  "homepage": "https://github.com/stadelmanma/tree-sitter-fortran#readme",
-  "license": "MIT",
   "dependencies": {
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
-  },
-  "peerDependencies": {
-    "tree-sitter": "^0.21.0"
-  },
-  "peerDependenciesMeta": {
-    "tree_sitter": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "eslint": "^7.13.0",
@@ -45,13 +48,15 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "tree-sitter-cli": "^0.20.0",
-    "prebuildify": "^6.0.0"
+    "prebuildify": "^6.0.0",
+    "tree-sitter-cli": "^0.24.7"
   },
-  "scripts": {
-    "install": "node-gyp-build",
-    "prestart": "tree-sitter build --wasm",
-    "start": "tree-sitter playground",
-    "test": "node --test bindings/node/*_test.js"
+  "peerDependencies": {
+    "tree-sitter": "^0.22.4"
+  },
+  "peerDependenciesMeta": {
+    "tree_sitter": {
+      "optional": true
+    }
   }
 }
