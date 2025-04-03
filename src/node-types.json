@@ -14311,6 +14311,10 @@
     "named": false
   },
   {
+    "type": "is",
+    "named": false
+  },
+  {
     "type": "kind",
     "named": false
   },
@@ -14420,6 +14424,10 @@
   },
   {
     "type": "post",
+    "named": false
+  },
+  {
+    "type": "precision",
     "named": false
   },
   {
