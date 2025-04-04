@@ -390,12 +390,11 @@ module.exports = grammar({
     end_block_data_statement: $ => {
       const structType = whiteSpacedKeyword('block', 'data', false)
       return prec.right(seq(
-        alias(choice(
-            seq(
-              caseInsensitive('end', false),
-              optional(structType)),
-            caseInsensitive('end' + structType, false)),
-          'end' + structType),
+        choice(
+          seq(
+            alias(caseInsensitive('end', false), 'end'),
+            optional(alias(structType, 'blockdata'))),
+          alias(caseInsensitive('end' + structType, false), 'endblockdata')),
         optional($._name),
         $._end_of_statement))
     },
@@ -2259,11 +2258,18 @@ function caseInsensitive (keyword, aliasAsWord = true) {
 }
 
 function whiteSpacedKeyword (prefix, suffix, aliasAsWord = true) {
-  let result = choice(
-    seq(caseInsensitive(prefix, false), caseInsensitive(suffix, false)),
-    caseInsensitive(prefix + suffix, false))
-  if (aliasAsWord) result = alias(result, prefix + suffix)
-  return result
+  let prefix_bit = caseInsensitive(prefix, false)
+  let suffix_bit = caseInsensitive(suffix, false)
+  let both_bits = caseInsensitive(prefix + suffix, false)
+  if (aliasAsWord) {
+    prefix_bit = alias(prefix_bit, prefix)
+    suffix_bit = alias(suffix_bit, suffix)
+    both_bits = alias(both_bits, prefix + suffix)
+  }
+  return choice(
+    seq(prefix_bit, suffix_bit),
+    both_bits
+  )
 }
 
 function commaSep (rule) {
@@ -2281,12 +2287,11 @@ function sep1 (rule, separator) {
 // This can be merged with whiteSpacedKeyword, keeping for now.
 function blockStructureEnding ($, structType) {
   const obj = prec.right(seq(
-    alias(choice(
+    choice(
       seq(
-        caseInsensitive('end', false),
-        optional(caseInsensitive(structType, false))),
-      caseInsensitive('end' + structType, false)),
-    'end' + structType),
+        alias(caseInsensitive('end', false), 'end'),
+        optional(alias(caseInsensitive(structType, false), structType))),
+      alias(caseInsensitive('end' + structType, false), 'end' + structType)),
     optional($._name),
     $._end_of_statement
   ))
