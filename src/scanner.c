@@ -197,7 +197,7 @@ static bool scan_hollerith_constant(TSLexer *lexer) {
     advance(lexer);
 
     // Read exactly 'n' characters
-    for (int i = 0; i < length; i++) {
+    for (unsigned i = 0; i < length; i++) {
         if (!lexer->lookahead || lexer->eof(lexer)) {
             return false;
         }
