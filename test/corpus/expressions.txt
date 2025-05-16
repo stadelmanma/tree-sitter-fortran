@@ -1063,6 +1063,14 @@ program demo
    endif
 end program
 
+subroutine foo
+  integer :: if(1), elseif, else, format(1)
+  character(len=32) :: format
+  character(len=1) :: width
+  format(7:9) = width//'.'//width
+  if(1) = 5
+end subroutine foo
+
 --------------------------------------------------------------------------------
 
 (translation_unit
@@ -1121,7 +1129,56 @@ end program
           (output_item_list
             (identifier))))
       (end_if_statement))
-    (end_program_statement)))
+    (end_program_statement))
+  (subroutine
+    (subroutine_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (sized_declarator
+        (identifier)
+        (size
+          (number_literal)))
+      (identifier)
+      (identifier)
+      (sized_declarator
+        (identifier)
+        (size
+          (number_literal))))
+    (variable_declaration
+      (intrinsic_type
+        (kind
+          (keyword_argument
+            (identifier)
+            (number_literal))))
+      (identifier))
+    (variable_declaration
+      (intrinsic_type
+        (kind
+          (keyword_argument
+            (identifier)
+            (number_literal))))
+      (identifier))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (extent_specifier
+            (number_literal)
+            (number_literal))))
+      (concatenation_expression
+        (identifier)
+        (concatenation_expression
+          (string_literal)
+          (identifier))))
+    (assignment_statement
+      (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)))
+      (number_literal))
+    (end_subroutine_statement
+      (name))))
 
 ================================================================================
 Conditional expressions

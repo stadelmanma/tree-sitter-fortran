@@ -97,6 +97,8 @@ module.exports = grammar({
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
     [$.coarray_critical_statement, $.identifier],
+    [$.format_statement, $.identifier],
+    [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
   ],
 
   rules: {
@@ -1052,7 +1054,6 @@ module.exports = grammar({
     _statements: $ => choice(
       $.assignment_statement,
       $.pointer_association_statement,
-      $.call_expression,
       $.subroutine_call,
       $.keyword_statement,
       $.if_statement,
@@ -1289,11 +1290,11 @@ module.exports = grammar({
       $._block_if_statement
     ),
 
-    _inline_if_statement: $ => prec.right(2, seq(
+    _inline_if_statement: $ => seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
       $._statements
-    )),
+    ),
 
     arithmetic_if_statement: $ => prec.right(seq(
       caseInsensitive('if'),
@@ -1565,12 +1566,12 @@ module.exports = grammar({
       optional($._block_label)
     ),
 
-    format_statement: $ => prec(1, seq(
+    format_statement: $ => seq(
       caseInsensitive('format'),
       '(',
       alias($._transfer_items, $.transfer_items),
       ')'
-    )),
+    ),
 
     _transfer_item: $ => choice(
       $.string_literal,
@@ -2191,6 +2192,7 @@ module.exports = grammar({
       caseInsensitive('device'),
       prec(-1, caseInsensitive('dimension')),
       caseInsensitive('double'),
+      caseInsensitive('else'),
       caseInsensitive('elseif'),
       caseInsensitive('end'),
       caseInsensitive('endif'),
