@@ -3283,3 +3283,100 @@ end program
       (statement_label_reference)
       (statement_label_reference))
     (end_program_statement)))
+
+================================================================================
+Cray pointer (extension)
+================================================================================
+
+SUBROUTINE  sub ( n )
+  COMMON pool(100000)
+  INTEGER blk(128), word64
+  REAL a(1000), b(n), c(100000-n-1000)
+  POINTER ( pblk, blk ), (ia, a(10:100) ), ( ib, b ), &
+          ( ic, c ), ( address, word64 )
+END SUBROUTINE sub
+
+subroutine pointer_name_clash
+  integer, dimension(2) :: pointer
+  pointer(1, 1) = 4
+end subroutine pointer_name_clash
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (subroutine
+    (subroutine_statement
+      name: (name)
+      parameters: (parameters
+        (identifier)))
+    (common_statement
+      (sized_declarator
+        (identifier)
+        (size
+          (number_literal))))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (number_literal)))
+      declarator: (identifier))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (number_literal)))
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (identifier)))
+      declarator: (sized_declarator
+        (identifier)
+        (size
+          (math_expression
+            left: (math_expression
+              left: (number_literal)
+              right: (identifier))
+            right: (number_literal)))))
+    (cray_pointer_declaration
+      (cray_pointer_pair
+        pointer: (identifier)
+        target: (identifier))
+      (cray_pointer_pair
+        pointer: (identifier)
+        target: (sized_declarator
+          (identifier)
+          (size
+            (extent_specifier
+              (number_literal)
+              (number_literal)))))
+      (cray_pointer_pair
+        pointer: (identifier)
+        target: (identifier))
+      (cray_pointer_pair
+        pointer: (identifier)
+        target: (identifier))
+      (cray_pointer_pair
+        pointer: (identifier)
+        target: (identifier)))
+    (end_subroutine_statement
+      (name)))
+  (subroutine
+    (subroutine_statement
+      name: (name))
+    (variable_declaration
+      type: (intrinsic_type)
+      attribute: (type_qualifier
+        (argument_list
+          (number_literal)))
+      declarator: (identifier))
+    (assignment_statement
+      left: (call_expression
+        (identifier)
+        (argument_list
+          (number_literal)
+          (number_literal)))
+      right: (number_literal))
+    (end_subroutine_statement
+      (name))))
