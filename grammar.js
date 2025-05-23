@@ -103,6 +103,11 @@ module.exports = grammar({
     [$.cray_pointer_declaration, $.identifier],
   ],
 
+  supertypes: $ => [
+    $._expression,
+    $._statements,
+  ],
+
   rules: {
     translation_unit: $ => seq(
       repeat($._top_level_item),
