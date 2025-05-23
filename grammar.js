@@ -99,6 +99,7 @@ module.exports = grammar({
     [$.coarray_critical_statement, $.identifier],
     [$.format_statement, $.identifier],
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
+    [$.cray_pointer_declaration, $.identifier],
   ],
 
   rules: {
@@ -546,6 +547,7 @@ module.exports = grammar({
       seq($.data_statement, $._end_of_statement),
       seq($.assignment_statement, $._end_of_statement),
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
+      $.cray_pointer_declaration,
       $.preproc_include,
       $.preproc_def,
       $.preproc_function_def,
@@ -1031,6 +1033,19 @@ module.exports = grammar({
       ',',
       commaSep1(choice($.identifier, $.call_expression)),
       ')'
+    ),
+
+    cray_pointer_declaration: $ => seq(
+      caseInsensitive('pointer'),
+      commaSep1($.cray_pointer_pair),
+      $._end_of_statement
+    ),
+    cray_pointer_pair: $ => seq(
+      '(',
+      field('pointer', $.identifier),
+      ',',
+      field('target', $._variable_declarator),
+      ')',
     ),
 
     // Statements
