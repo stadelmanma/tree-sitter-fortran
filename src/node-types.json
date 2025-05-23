@@ -1069,6 +1069,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -1281,6 +1285,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -3500,6 +3508,55 @@
     "type": "contains_statement",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "cray_pointer_declaration",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "cray_pointer_pair",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "cray_pointer_pair",
+    "named": true,
+    "fields": {
+      "pointer": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "coarray_declarator",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "sized_declarator",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "cuda_kernel_argument_list",
@@ -5852,6 +5909,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -7785,6 +7846,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -7968,6 +8033,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -9164,6 +9233,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -9492,6 +9565,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -9788,6 +9865,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -10183,6 +10264,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -10508,6 +10593,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -10980,6 +11069,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -12271,6 +12364,10 @@
           "named": true
         },
         {
+          "type": "cray_pointer_declaration",
+          "named": true
+        },
+        {
           "type": "data_statement",
           "named": true
         },
@@ -12475,6 +12572,10 @@
         },
         {
           "type": "common_statement",
+          "named": true
+        },
+        {
+          "type": "cray_pointer_declaration",
           "named": true
         },
         {
@@ -14600,11 +14701,11 @@
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "nopass",

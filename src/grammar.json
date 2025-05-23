@@ -9419,6 +9419,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "cray_pointer_declaration"
+          },
+          {
+            "type": "SYMBOL",
             "name": "preproc_include"
           },
           {
@@ -12939,6 +12943,82 @@
               }
             }
           ]
+        },
+        {
+          "type": "STRING",
+          "value": ")"
+        }
+      ]
+    },
+    "cray_pointer_declaration": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[pP][oO][iI][nN][tT][eE][rR]"
+          },
+          "named": false,
+          "value": "pointer"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "cray_pointer_pair"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "cray_pointer_pair"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        }
+      ]
+    },
+    "cray_pointer_pair": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "FIELD",
+          "name": "pointer",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ","
+        },
+        {
+          "type": "FIELD",
+          "name": "target",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_variable_declarator"
+          }
         },
         {
           "type": "STRING",
@@ -21434,6 +21514,10 @@
     ],
     [
       "file_position_statement",
+      "identifier"
+    ],
+    [
+      "cray_pointer_declaration",
       "identifier"
     ]
   ],
