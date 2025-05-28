@@ -8073,8 +8073,13 @@
           "value": "("
         },
         {
-          "type": "PATTERN",
-          "value": "[^()]+"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[^()]+"
+          },
+          "named": true,
+          "value": "operator_name"
         },
         {
           "type": "STRING",

@@ -8518,7 +8518,17 @@
   {
     "type": "operator",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "operator_name",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "output_item_list",
@@ -14642,6 +14652,10 @@
   {
     "type": "operator",
     "named": false
+  },
+  {
+    "type": "operator_name",
+    "named": true
   },
   {
     "type": "optional",

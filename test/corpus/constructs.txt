@@ -356,7 +356,8 @@ end interface operator (.not.)
 (translation_unit
   (interface
     (interface_statement
-      (operator))
+      (operator
+        (operator_name)))
     (procedure_statement
       (procedure_kind)
       (method_name))
@@ -364,10 +365,12 @@ end interface operator (.not.)
       (procedure_kind)
       (method_name))
     (end_interface_statement
-      (operator)))
+      (operator
+        (operator_name))))
   (interface
     (interface_statement
-      (operator))
+      (operator
+        (operator_name)))
     (procedure_statement
       (procedure_kind)
       (method_name))
@@ -385,7 +388,8 @@ end interface operator (.not.)
         (identifier))
       (end_function_statement))
     (end_interface_statement
-      (operator))))
+      (operator
+        (operator_name)))))
 
 ================================================================================
 Interface (assignment)
@@ -418,7 +422,8 @@ interface operator(+) ; module procedure test_plus ; end interface
 (translation_unit
   (interface
     (interface_statement
-      (operator))
+      (operator
+        (operator_name)))
     (procedure_statement
       (procedure_kind)
       (method_name))
@@ -443,12 +448,14 @@ end module
     (use_statement
       (module_name)
       (included_items
-        (operator)
+        (operator
+          (operator_name))
         (assignment)))
     (public_statement
       (assignment))
     (private_statement
-      (operator))
+      (operator
+        (operator_name)))
     (end_module_statement)))
 
 ================================================================================
@@ -913,7 +920,8 @@ end program
           (procedure_attribute)
           (binding
             (binding_name
-              (operator))
+              (operator
+                (operator_name)))
             (method_name)))
         (procedure_statement
           (procedure_kind)

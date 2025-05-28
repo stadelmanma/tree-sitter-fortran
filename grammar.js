@@ -403,7 +403,7 @@ module.exports = grammar({
     },
 
     assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
-    operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
+    operator: $ => seq(caseInsensitive('operator'), '(', alias(/[^()]+/, $.operator_name), ')'),
     defined_io_procedure: $ => seq(
       choice(caseInsensitive('read'), caseInsensitive('write')),
       '(',

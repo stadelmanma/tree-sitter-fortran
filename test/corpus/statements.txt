@@ -224,8 +224,10 @@ END MODULE
     (private_statement
       (identifier)
       (identifier)
-      (operator)
-      (operator))
+      (operator
+        (operator_name))
+      (operator
+        (operator_name)))
     (end_module_statement)))
 
 ================================================================================
@@ -247,8 +249,10 @@ END MODULE
     (public_statement
       (identifier)
       (identifier)
-      (operator)
-      (operator))
+      (operator
+        (operator_name))
+      (operator
+        (operator_name)))
     (end_module_statement)))
 
 ================================================================================
@@ -2261,7 +2265,8 @@ end program
       (name))
     (interface
       (interface_statement
-        (operator))
+        (operator
+          (operator_name)))
       (function
         (function_statement
           (intrinsic_type)
@@ -2277,7 +2282,8 @@ end program
       (end_interface_statement))
     (interface
       (interface_statement
-        (operator))
+        (operator
+          (operator_name)))
       (function
         (function_statement
           (intrinsic_type)
