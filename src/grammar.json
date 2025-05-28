@@ -19371,31 +19371,11 @@
                     "members": [
                       {
                         "type": "SYMBOL",
-                        "name": "keyword_argument"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "extent_specifier"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "assumed_size"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "assumed_rank"
-                      },
-                      {
-                        "type": "SYMBOL",
                         "name": "_expression"
                       },
                       {
                         "type": "SYMBOL",
-                        "name": "multiple_subscript"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "multiple_subscript_triplet"
+                        "name": "_argument_item"
                       }
                     ]
                   },
@@ -19413,31 +19393,11 @@
                           "members": [
                             {
                               "type": "SYMBOL",
-                              "name": "keyword_argument"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "extent_specifier"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "assumed_size"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "assumed_rank"
-                            },
-                            {
-                              "type": "SYMBOL",
                               "name": "_expression"
                             },
                             {
                               "type": "SYMBOL",
-                              "name": "multiple_subscript"
-                            },
-                            {
-                              "type": "SYMBOL",
-                              "name": "multiple_subscript_triplet"
+                              "name": "_argument_item"
                             }
                           ]
                         }
@@ -19457,6 +19417,35 @@
           }
         ]
       }
+    },
+    "_argument_item": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "keyword_argument"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "extent_specifier"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assumed_size"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "assumed_rank"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "multiple_subscript"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "multiple_subscript_triplet"
+        }
+      ]
     },
     "argument_list": {
       "type": "SYMBOL",
@@ -21571,7 +21560,8 @@
   ],
   "supertypes": [
     "_expression",
-    "_statements"
+    "_statements",
+    "_argument_item"
   ],
   "reserved": {}
 }

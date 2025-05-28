@@ -106,6 +106,7 @@ module.exports = grammar({
   supertypes: $ => [
     $._expression,
     $._statements,
+    $._argument_item,
   ],
 
   rules: {
@@ -1984,21 +1985,16 @@ module.exports = grammar({
     // Unnamed node so we can reuse it for e.g. kind
     _argument_list: $ => prec.dynamic(
       1,
-      seq(
-        '(',
-        commaSep(choice(
-          $.keyword_argument,
-          $.extent_specifier,
-          $.assumed_size,
-          $.assumed_rank,
-          $._expression,
-          $.multiple_subscript,
-          $.multiple_subscript_triplet,
-        )),
-        ')'
-      )
+      seq('(', commaSep(choice($._expression, $._argument_item)), ')')
     ),
-
+    _argument_item: $ => choice(
+      $.keyword_argument,
+      $.extent_specifier,
+      $.assumed_size,
+      $.assumed_rank,
+      $.multiple_subscript,
+      $.multiple_subscript_triplet,
+    ),
     argument_list: $ => $._argument_list,
 
     // precedence is used to prevent conflict with assignment expression
