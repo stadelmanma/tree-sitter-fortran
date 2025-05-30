@@ -104,6 +104,7 @@ module.exports = grammar({
   ],
 
   supertypes: $ => [
+    $._specification_parts,
     $._expression,
     $._statements,
     $._argument_item,
@@ -534,27 +535,13 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => prec(1, choice(
-      $.include_statement,
-      seq($.use_statement, $._end_of_statement),
-      seq($.implicit_statement, $._end_of_statement),
-      seq($.save_statement, $._end_of_statement),
-      seq($.import_statement, $._end_of_statement),
-      $.public_statement,
-      $.private_statement,
-      $.enum,
-      $.enumeration_type,
-      $.interface,
-      $.derived_type_definition,
-      seq($.namelist_statement, $._end_of_statement),
-      seq($.common_statement, $._end_of_statement),
-      seq($.variable_declaration, $._end_of_statement),
-      seq($.variable_modification, $._end_of_statement),
-      seq($.parameter_statement, $._end_of_statement),
-      seq($.equivalence_statement, $._end_of_statement),
-      seq($.data_statement, $._end_of_statement),
+      // Split out so it can be used as a supertype
+      $._specification_parts,
+      // This catches statement functions, which are completely ambiguous
       seq($.assignment_statement, $._end_of_statement),
+      // This allows format statements in the specification part,
+      // without making the statements rule particularly awkward
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
-      $.cray_pointer_declaration,
       $.preproc_include,
       $.preproc_def,
       $.preproc_function_def,
@@ -562,6 +549,28 @@ module.exports = grammar({
       alias($.preproc_if_in_specification_part, $.preproc_if),
       alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef),
       ';',
+    )),
+
+    _specification_parts: $ => prec(1, choice(
+      $.include_statement,
+      $.use_statement,
+      $.implicit_statement,
+      $.save_statement,
+      $.import_statement,
+      $.public_statement,
+      $.private_statement,
+      $.enum,
+      $.enumeration_type,
+      $.interface,
+      $.derived_type_definition,
+      $.namelist_statement,
+      $.common_statement,
+      $.variable_declaration,
+      $.variable_modification,
+      $.parameter_statement,
+      $.equivalence_statement,
+      $.data_statement,
+      $.cray_pointer_declaration,
     )),
 
     use_statement: $ => seq(
@@ -578,7 +587,8 @@ module.exports = grammar({
           seq(',', commaSep1($.use_alias)),
           $.included_items
         )
-      )
+      ),
+      $._end_of_statement,
     ),
 
     included_items: $ => seq(
@@ -619,7 +629,8 @@ module.exports = grammar({
             ')'
           ))
         )
-      )
+      ),
+      $._end_of_statement
     ),
 
     save_statement: $ => prec(1, seq(
@@ -630,7 +641,8 @@ module.exports = grammar({
           $.identifier,
           seq('/', $.identifier, '/'),
         )),
-      ))
+      )),
+      $._end_of_statement,
     )),
 
     private_statement: $ => prec.right(1, seq(
@@ -653,7 +665,8 @@ module.exports = grammar({
 
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),
-      repeat1($.variable_group)
+      repeat1($.variable_group),
+      $._end_of_statement
     ),
 
     common_statement: $ => seq(
@@ -661,7 +674,8 @@ module.exports = grammar({
       repeat1(choice(
         $.variable_group,
         commaSep1($._variable_declarator)
-      ))
+      )),
+      $._end_of_statement
     ),
 
     variable_group: $ => seq(
@@ -678,7 +692,8 @@ module.exports = grammar({
 
     import_statement: $ => prec.left(seq(
       caseInsensitive('import'),
-      optional($._import_names)
+      optional($._import_names),
+      $._end_of_statement
     )),
     _import_names: $ => choice(
       seq(optional('::'), commaSep1($.identifier)),
@@ -701,7 +716,7 @@ module.exports = grammar({
             $._end_of_statement
         ),
         $.include_statement,
-        seq($.variable_declaration, $._end_of_statement),
+        $.variable_declaration,
         $.preproc_include,
         $.preproc_def,
         $.preproc_function_def,
@@ -825,7 +840,8 @@ module.exports = grammar({
         )
       )),
       optional('::'),
-      $._declaration_targets
+      $._declaration_targets,
+      $._end_of_statement
     ),
 
     procedure_declaration: $ => seq(
@@ -844,6 +860,7 @@ module.exports = grammar({
       )),
       optional('::'),
       commaSep1(field('declarator', $._variable_declarator)),
+      $._end_of_statement,
     ),
 
     variable_attributes: $ => seq(
@@ -1024,14 +1041,16 @@ module.exports = grammar({
       caseInsensitive('parameter'),
       '(',
       commaSep1($.parameter_assignment),
-      ')'
+      ')',
+      $._end_of_statement
     )),
 
     parameter_assignment: $ => seq($.identifier, '=', $._expression),
 
     equivalence_statement: $ => seq(
       caseInsensitive('equivalence'),
-      commaSep1($.equivalence_set)
+      commaSep1($.equivalence_set),
+      $._end_of_statement,
     ),
 
     equivalence_set: $ => seq(
@@ -1189,7 +1208,8 @@ module.exports = grammar({
 
     data_statement: $ => seq(
       caseInsensitive('data'),
-      sep1($.data_set, optional(','))
+      sep1($.data_set, optional(',')),
+      $._end_of_statement,
     ),
     data_set: $ => prec(1, seq(
       commaSep1(

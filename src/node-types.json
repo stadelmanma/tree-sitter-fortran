@@ -108,6 +108,88 @@
     ]
   },
   {
+    "type": "_specification_parts",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "common_statement",
+        "named": true
+      },
+      {
+        "type": "cray_pointer_declaration",
+        "named": true
+      },
+      {
+        "type": "data_statement",
+        "named": true
+      },
+      {
+        "type": "derived_type_definition",
+        "named": true
+      },
+      {
+        "type": "enum",
+        "named": true
+      },
+      {
+        "type": "enumeration_type",
+        "named": true
+      },
+      {
+        "type": "equivalence_statement",
+        "named": true
+      },
+      {
+        "type": "implicit_statement",
+        "named": true
+      },
+      {
+        "type": "import_statement",
+        "named": true
+      },
+      {
+        "type": "include_statement",
+        "named": true
+      },
+      {
+        "type": "interface",
+        "named": true
+      },
+      {
+        "type": "namelist_statement",
+        "named": true
+      },
+      {
+        "type": "parameter_statement",
+        "named": true
+      },
+      {
+        "type": "private_statement",
+        "named": true
+      },
+      {
+        "type": "public_statement",
+        "named": true
+      },
+      {
+        "type": "save_statement",
+        "named": true
+      },
+      {
+        "type": "use_statement",
+        "named": true
+      },
+      {
+        "type": "variable_declaration",
+        "named": true
+      },
+      {
+        "type": "variable_modification",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "_statements",
     "named": true,
     "subtypes": [
@@ -775,6 +857,10 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -783,59 +869,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
           "type": "end_block_construct_statement",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -863,31 +897,7 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -902,6 +912,10 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "assignment_statement",
           "named": true
         },
@@ -910,63 +924,11 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
           "type": "end_block_data_statement",
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "format_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -994,31 +956,7 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -3104,23 +3042,11 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
-          "named": true
-        },
-        {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -3128,47 +3054,11 @@
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function_statement",
           "named": true
         },
         {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
           "type": "internal_procedures",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -3196,31 +3086,7 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -3981,23 +3847,11 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "assignment_statement",
-          "named": true
-        },
-        {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -4005,35 +3859,7 @@
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "format_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -4042,14 +3868,6 @@
         },
         {
           "type": "module_statement",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -4077,31 +3895,7 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -4131,55 +3925,15 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
           "type": "end_module_procedure_statement",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -4188,14 +3942,6 @@
         },
         {
           "type": "module_procedure_statement",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -4223,31 +3969,7 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -4722,6 +4444,10 @@
       "required": false,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -4734,51 +4460,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -4791,14 +4473,6 @@
         },
         {
           "type": "module_procedure",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -4830,10 +4504,6 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "procedure_statement",
           "named": true
         },
@@ -4842,15 +4512,7 @@
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
           "type": "rank_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
           "named": true
         },
         {
@@ -4867,18 +4529,6 @@
         },
         {
           "type": "type_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -4922,6 +4572,10 @@
       "required": false,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -4934,51 +4588,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -4991,14 +4601,6 @@
         },
         {
           "type": "module_procedure",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -5030,10 +4632,6 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "procedure_statement",
           "named": true
         },
@@ -5042,15 +4640,7 @@
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
           "type": "rank_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
           "named": true
         },
         {
@@ -5067,18 +4657,6 @@
         },
         {
           "type": "type_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -5093,6 +4671,10 @@
       "required": false,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -5105,51 +4687,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -5162,14 +4700,6 @@
         },
         {
           "type": "module_procedure",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -5201,10 +4731,6 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "procedure_statement",
           "named": true
         },
@@ -5213,15 +4739,7 @@
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
           "type": "rank_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
           "named": true
         },
         {
@@ -5238,18 +4756,6 @@
         },
         {
           "type": "type_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -5357,6 +4863,10 @@
       "required": false,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -5369,51 +4879,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -5426,14 +4892,6 @@
         },
         {
           "type": "module_procedure",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -5465,10 +4923,6 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "procedure_statement",
           "named": true
         },
@@ -5477,15 +4931,7 @@
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
           "type": "rank_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
           "named": true
         },
         {
@@ -5502,18 +4948,6 @@
         },
         {
           "type": "type_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -5557,6 +4991,10 @@
       "required": false,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
           "named": true
         },
@@ -5569,51 +5007,7 @@
           "named": true
         },
         {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
-          "named": true
-        },
-        {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
           "named": true
         },
         {
@@ -5626,14 +5020,6 @@
         },
         {
           "type": "module_procedure",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -5665,10 +5051,6 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "procedure_statement",
           "named": true
         },
@@ -5677,15 +5059,7 @@
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
           "type": "rank_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
           "named": true
         },
         {
@@ -5702,18 +5076,6 @@
         },
         {
           "type": "type_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -5909,23 +5271,11 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
-          "named": true
-        },
-        {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -5933,43 +5283,7 @@
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
           "type": "internal_procedures",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -5997,35 +5311,11 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
           "type": "program_statement",
           "named": true
         },
         {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -6549,23 +5839,11 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "assignment_statement",
-          "named": true
-        },
-        {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -6573,47 +5851,11 @@
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
           "type": "format_statement",
           "named": true
         },
         {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
           "type": "internal_procedures",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -6641,35 +5883,11 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
           "named": true
         },
         {
           "type": "submodule_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
@@ -6720,23 +5938,11 @@
       "required": true,
       "types": [
         {
+          "type": "_specification_parts",
+          "named": true
+        },
+        {
           "type": "_statements",
-          "named": true
-        },
-        {
-          "type": "common_statement",
-          "named": true
-        },
-        {
-          "type": "cray_pointer_declaration",
-          "named": true
-        },
-        {
-          "type": "data_statement",
-          "named": true
-        },
-        {
-          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -6744,43 +5950,7 @@
           "named": true
         },
         {
-          "type": "enum",
-          "named": true
-        },
-        {
-          "type": "enumeration_type",
-          "named": true
-        },
-        {
-          "type": "equivalence_statement",
-          "named": true
-        },
-        {
-          "type": "implicit_statement",
-          "named": true
-        },
-        {
-          "type": "import_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
-          "named": true
-        },
-        {
-          "type": "interface",
-          "named": true
-        },
-        {
           "type": "internal_procedures",
-          "named": true
-        },
-        {
-          "type": "namelist_statement",
-          "named": true
-        },
-        {
-          "type": "parameter_statement",
           "named": true
         },
         {
@@ -6808,35 +5978,11 @@
           "named": true
         },
         {
-          "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "public_statement",
-          "named": true
-        },
-        {
-          "type": "save_statement",
-          "named": true
-        },
-        {
           "type": "statement_label",
           "named": true
         },
         {
           "type": "subroutine_statement",
-          "named": true
-        },
-        {
-          "type": "use_statement",
-          "named": true
-        },
-        {
-          "type": "variable_declaration",
-          "named": true
-        },
-        {
-          "type": "variable_modification",
           "named": true
         }
       ]
