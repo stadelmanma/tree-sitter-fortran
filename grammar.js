@@ -99,6 +99,7 @@ module.exports = grammar({
     [$.coarray_critical_statement, $.identifier],
     [$.format_statement, $.identifier],
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
+    [$.file_position_statement, $.identifier],
   ],
 
   rules: {
@@ -1720,9 +1721,19 @@ module.exports = grammar({
     ),
 
     file_position_statement: $ => choice(
-      seq(caseInsensitive('backspace'), $._file_position_spec),
-      seq(caseInsensitive('endfile'), $._file_position_spec),
-      seq(caseInsensitive('rewind'), $._file_position_spec),
+      seq(
+        choice(
+          caseInsensitive('backspace'),
+          caseInsensitive('endfile'),
+          caseInsensitive('flush'),
+          caseInsensitive('rewind'),
+          // Technically not quite right, but will accept valid code,
+          // and too rare to bother being stricter
+          caseInsensitive('wait'),
+        ),
+        $._file_position_spec,
+      ),
+
       // Deleted feature -- not quite file position statement
       seq(caseInsensitive('pause'), optional($.string_literal)),
     ),
@@ -2219,6 +2230,7 @@ module.exports = grammar({
       caseInsensitive('exit'),
       caseInsensitive('external'),
       caseInsensitive('fail'),
+      caseInsensitive('flush'),
       caseInsensitive('form'),
       caseInsensitive('format'),
       caseInsensitive('go'),
@@ -2252,6 +2264,7 @@ module.exports = grammar({
       prec(-1, caseInsensitive('type')),
       caseInsensitive('unlock'),
       caseInsensitive('value'),
+      caseInsensitive('wait'),
       prec(-1, caseInsensitive('where')),
       caseInsensitive('write'),
     ),
