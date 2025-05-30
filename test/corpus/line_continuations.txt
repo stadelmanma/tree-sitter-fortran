@@ -273,3 +273,32 @@ end program
         (edit_descriptor)
         (hollerith_constant)))
     (end_program_statement)))
+
+================================================================================
+Line continuation immediately after number literal
+================================================================================
+program test
+  integer :: b(3) = (/&
+  1, &
+  2, &
+  3&
+  /)
+end program test
+--------------------------------------------------------------------------------
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (variable_declaration
+      (intrinsic_type)
+      (init_declarator
+        (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        (array_literal
+          (number_literal)
+          (number_literal)
+          (number_literal))))
+    (end_program_statement
+      (name))))

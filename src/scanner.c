@@ -62,23 +62,23 @@ static bool scan_int(TSLexer *lexer) {
     while (iswdigit(lexer->lookahead)) {
         advance(lexer); // store all digits
     }
+    lexer->mark_end(lexer);
 
     // handle line continuations
     if (lexer->lookahead == '&') {
-      skip(lexer);
+      advance(lexer);
       while (iswspace(lexer->lookahead)) {
-        skip(lexer);
+        advance(lexer);
       }
       // second '&' required to continue the literal
       if (lexer->lookahead == '&') {
-        skip(lexer);
+        advance(lexer);
         // don't return here, as we may have finished literal on first
         // line but still have second '&'
         scan_int(lexer);
       }
     }
 
-    lexer->mark_end(lexer);
     return true;
 }
 
@@ -106,11 +106,11 @@ static bool scan_number(TSLexer *lexer) {
             advance(lexer);
             if (lexer->lookahead == '+' || lexer->lookahead == '-') {
                 advance(lexer);
+                lexer->mark_end(lexer);
             }
             if (!scan_int(lexer)) {
                 return true; // valid number token with junk after it
             }
-            lexer->mark_end(lexer);
             lexer->result_symbol = FLOAT_LITERAL;
         }
     }
