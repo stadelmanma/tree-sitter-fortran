@@ -100,6 +100,14 @@ module.exports = grammar({
     [$.format_statement, $.identifier],
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
     [$.file_position_statement, $.identifier],
+    [$.cray_pointer_declaration, $.identifier],
+  ],
+
+  supertypes: $ => [
+    $._specification_parts,
+    $._expression,
+    $._statements,
+    $._argument_item,
   ],
 
   rules: {
@@ -403,7 +411,7 @@ module.exports = grammar({
     },
 
     assignment: $ => seq(caseInsensitive('assignment'), '(', '=', ')'),
-    operator: $ => seq(caseInsensitive('operator'), '(', /[^()]+/, ')'),
+    operator: $ => seq(caseInsensitive('operator'), '(', alias(/[^()]+/, $.operator_name), ')'),
     defined_io_procedure: $ => seq(
       choice(caseInsensitive('read'), caseInsensitive('write')),
       '(',
@@ -527,25 +535,14 @@ module.exports = grammar({
     // Variable Declarations
 
     _specification_part: $ => prec(1, choice(
-      $.include_statement,
-      seq($.use_statement, $._end_of_statement),
-      seq($.implicit_statement, $._end_of_statement),
-      seq($.save_statement, $._end_of_statement),
-      seq($.import_statement, $._end_of_statement),
-      $.public_statement,
-      $.private_statement,
-      $.enum,
-      $.enumeration_type,
+      // Split out so it can be used as a supertype
+      seq($._specification_parts, $._end_of_statement),
+      // These two can't be included in the above because or we
+      // duplicate the end_of_statement in the end block rule
       $.interface,
       $.derived_type_definition,
-      seq($.namelist_statement, $._end_of_statement),
-      seq($.common_statement, $._end_of_statement),
-      seq($.variable_declaration, $._end_of_statement),
-      seq($.variable_modification, $._end_of_statement),
-      seq($.parameter_statement, $._end_of_statement),
-      seq($.equivalence_statement, $._end_of_statement),
-      seq($.data_statement, $._end_of_statement),
-      seq($.assignment_statement, $._end_of_statement),
+      // This allows format statements in the specification part,
+      // without making the statements rule particularly awkward
       prec(1, seq($.statement_label, $.format_statement, $._end_of_statement)),
       $.preproc_include,
       $.preproc_def,
@@ -554,6 +551,28 @@ module.exports = grammar({
       alias($.preproc_if_in_specification_part, $.preproc_if),
       alias($.preproc_ifdef_in_specification_part, $.preproc_ifdef),
       ';',
+    )),
+
+    _specification_parts: $ => prec(1, choice(
+      $.include_statement,
+      $.use_statement,
+      $.implicit_statement,
+      $.save_statement,
+      $.import_statement,
+      $.public_statement,
+      $.private_statement,
+      $.enum,
+      $.enumeration_type,
+      $.namelist_statement,
+      $.common_statement,
+      $.variable_declaration,
+      $.variable_modification,
+      $.parameter_statement,
+      $.equivalence_statement,
+      $.data_statement,
+      $.cray_pointer_declaration,
+      // This catches statement functions, which are completely ambiguous
+      $.assignment_statement,
     )),
 
     use_statement: $ => seq(
@@ -570,7 +589,7 @@ module.exports = grammar({
           seq(',', commaSep1($.use_alias)),
           $.included_items
         )
-      )
+      ),
     ),
 
     included_items: $ => seq(
@@ -611,7 +630,7 @@ module.exports = grammar({
             ')'
           ))
         )
-      )
+      ),
     ),
 
     save_statement: $ => prec(1, seq(
@@ -622,7 +641,7 @@ module.exports = grammar({
           $.identifier,
           seq('/', $.identifier, '/'),
         )),
-      ))
+      )),
     )),
 
     private_statement: $ => prec.right(1, seq(
@@ -631,7 +650,6 @@ module.exports = grammar({
         optional('::'),
         commaSep1(choice($.identifier, $._generic_procedure))
       )),
-      $._end_of_statement,
     )),
 
     public_statement: $ => prec.right(1, seq(
@@ -640,12 +658,11 @@ module.exports = grammar({
         optional('::'),
         commaSep1(choice($.identifier, $._generic_procedure))
       )),
-      $._end_of_statement,
     )),
 
     namelist_statement: $ => seq(
       caseInsensitive('namelist'),
-      repeat1($.variable_group)
+      repeat1($.variable_group),
     ),
 
     common_statement: $ => seq(
@@ -653,7 +670,7 @@ module.exports = grammar({
       repeat1(choice(
         $.variable_group,
         commaSep1($._variable_declarator)
-      ))
+      )),
     ),
 
     variable_group: $ => seq(
@@ -670,7 +687,7 @@ module.exports = grammar({
 
     import_statement: $ => prec.left(seq(
       caseInsensitive('import'),
-      optional($._import_names)
+      optional($._import_names),
     )),
     _import_names: $ => choice(
       seq(optional('::'), commaSep1($.identifier)),
@@ -686,14 +703,16 @@ module.exports = grammar({
     derived_type_definition: $ => seq(
       $.derived_type_statement,
       repeat(choice(
-        $.public_statement,
-        $.private_statement,
         seq(
+          choice(
+            $.public_statement,
+            $.private_statement,
             alias(caseInsensitive('sequence'), $.sequence_statement),
-            $._end_of_statement
+            $.include_statement,
+          ),
+          $._end_of_statement
         ),
-        $.include_statement,
-        seq($.variable_declaration, $._end_of_statement),
+        $.variable_declaration,
         $.preproc_include,
         $.preproc_def,
         $.preproc_function_def,
@@ -734,7 +753,6 @@ module.exports = grammar({
         seq(',', commaSep1($._derived_type_qualifier), '::', $._type_name)
       ),
       optional(alias($.argument_list, $.derived_type_parameter_list)),
-      $._end_of_statement
     ),
 
     end_type_statement: $ => blockStructureEnding($, 'type'),
@@ -767,7 +785,6 @@ module.exports = grammar({
         $.method_name,
         $.binding,
       ))),
-      $._end_of_statement,
     ),
     binding: $ => seq($.binding_name, '=>', $.method_name),
     binding_name: $ => choice(
@@ -817,7 +834,7 @@ module.exports = grammar({
         )
       )),
       optional('::'),
-      $._declaration_targets
+      $._declaration_targets,
     ),
 
     procedure_declaration: $ => seq(
@@ -1016,14 +1033,14 @@ module.exports = grammar({
       caseInsensitive('parameter'),
       '(',
       commaSep1($.parameter_assignment),
-      ')'
+      ')',
     )),
 
     parameter_assignment: $ => seq($.identifier, '=', $._expression),
 
     equivalence_statement: $ => seq(
       caseInsensitive('equivalence'),
-      commaSep1($.equivalence_set)
+      commaSep1($.equivalence_set),
     ),
 
     equivalence_set: $ => seq(
@@ -1032,6 +1049,18 @@ module.exports = grammar({
       ',',
       commaSep1(choice($.identifier, $.call_expression)),
       ')'
+    ),
+
+    cray_pointer_declaration: $ => seq(
+      caseInsensitive('pointer'),
+      commaSep1($.cray_pointer_pair),
+    ),
+    cray_pointer_pair: $ => seq(
+      '(',
+      field('pointer', $.identifier),
+      ',',
+      field('target', $._variable_declarator),
+      ')',
     ),
 
     // Statements
@@ -1048,7 +1077,6 @@ module.exports = grammar({
         $._statements,
         $._end_of_statement
       ),
-      $.include_statement,
       ';'
     ),
 
@@ -1088,6 +1116,7 @@ module.exports = grammar({
       $.coarray_critical_statement,
       // Not strictly valid, but can catch extensions and preprocessor macros
       $.call_expression,
+      $.include_statement,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1163,12 +1192,11 @@ module.exports = grammar({
     include_statement: $ => prec(1, seq(
       caseInsensitive('include'),
       field("path", alias($.string_literal, $.filename)),
-      $._end_of_statement,
     )),
 
     data_statement: $ => seq(
       caseInsensitive('data'),
-      sep1($.data_set, optional(','))
+      sep1($.data_set, optional(',')),
     ),
     data_set: $ => prec(1, seq(
       commaSep1(
@@ -1663,7 +1691,6 @@ module.exports = grammar({
       $.enum_statement,
       repeat($.enumerator_statement),
       $.end_enum_statement,
-      $._end_of_statement
     ),
 
     enum_statement: $ => seq(
@@ -1677,7 +1704,6 @@ module.exports = grammar({
       $.enumeration_type_statement,
       repeat($.enumerator_statement),
       $.end_enumeration_type_statement,
-      $._end_of_statement
     ),
 
     enumeration_type_statement: $ => seq(
@@ -1964,21 +1990,16 @@ module.exports = grammar({
     // Unnamed node so we can reuse it for e.g. kind
     _argument_list: $ => prec.dynamic(
       1,
-      seq(
-        '(',
-        commaSep(choice(
-          $.keyword_argument,
-          $.extent_specifier,
-          $.assumed_size,
-          $.assumed_rank,
-          $._expression,
-          $.multiple_subscript,
-          $.multiple_subscript_triplet,
-        )),
-        ')'
-      )
+      seq('(', commaSep(choice($._expression, $._argument_item)), ')')
     ),
-
+    _argument_item: $ => choice(
+      $.keyword_argument,
+      $.extent_specifier,
+      $.assumed_size,
+      $.assumed_rank,
+      $.multiple_subscript,
+      $.multiple_subscript_triplet,
+    ),
     argument_list: $ => $._argument_list,
 
     // precedence is used to prevent conflict with assignment expression
