@@ -112,6 +112,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "assignment_statement",
+        "named": true
+      },
+      {
         "type": "common_statement",
         "named": true
       },
@@ -121,10 +125,6 @@
       },
       {
         "type": "data_statement",
-        "named": true
-      },
-      {
-        "type": "derived_type_definition",
         "named": true
       },
       {
@@ -149,10 +149,6 @@
       },
       {
         "type": "include_statement",
-        "named": true
-      },
-      {
-        "type": "interface",
         "named": true
       },
       {
@@ -271,6 +267,10 @@
       },
       {
         "type": "if_statement",
+        "named": true
+      },
+      {
+        "type": "include_statement",
         "named": true
       },
       {
@@ -549,10 +549,6 @@
         },
         {
           "type": "end_associate_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -869,7 +865,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "end_block_construct_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -916,11 +920,11 @@
           "named": true
         },
         {
-          "type": "assignment_statement",
+          "type": "block_data_statement",
           "named": true
         },
         {
-          "type": "block_data_statement",
+          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -929,6 +933,10 @@
         },
         {
           "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -1072,10 +1080,6 @@
           "named": true
         },
         {
-          "type": "include_statement",
-          "named": true
-        },
-        {
           "type": "preproc_call",
           "named": true
         },
@@ -1194,10 +1198,6 @@
         },
         {
           "type": "end_coarray_critical_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -1356,10 +1356,6 @@
         },
         {
           "type": "end_coarray_team_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -2139,10 +2135,6 @@
           "named": true
         },
         {
-          "type": "include_statement",
-          "named": true
-        },
-        {
           "type": "loop_control_expression",
           "named": true
         },
@@ -2203,10 +2195,6 @@
           "named": true
         },
         {
-          "type": "include_statement",
-          "named": true
-        },
-        {
           "type": "preproc_call",
           "named": true
         },
@@ -2251,10 +2239,6 @@
         },
         {
           "type": "block_label",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -2306,10 +2290,6 @@
         },
         {
           "type": "block_label",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -2929,10 +2909,6 @@
           "named": true
         },
         {
-          "type": "include_statement",
-          "named": true
-        },
-        {
           "type": "logical_expression",
           "named": true
         },
@@ -3050,11 +3026,19 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "end_function_statement",
           "named": true
         },
         {
           "type": "function_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -3212,10 +3196,6 @@
         },
         {
           "type": "end_if_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -3851,7 +3831,7 @@
           "named": true
         },
         {
-          "type": "assignment_statement",
+          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -3860,6 +3840,10 @@
         },
         {
           "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -3933,7 +3917,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "end_module_procedure_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -4460,7 +4452,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -4588,7 +4588,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -4687,7 +4695,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -4879,7 +4895,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -5007,7 +5031,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -5279,7 +5311,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "end_program_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -5385,10 +5425,6 @@
         },
         {
           "type": "default",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -5843,7 +5879,7 @@
           "named": true
         },
         {
-          "type": "assignment_statement",
+          "type": "derived_type_definition",
           "named": true
         },
         {
@@ -5852,6 +5888,10 @@
         },
         {
           "type": "format_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -5946,7 +5986,15 @@
           "named": true
         },
         {
+          "type": "derived_type_definition",
+          "named": true
+        },
+        {
           "type": "end_subroutine_statement",
+          "named": true
+        },
+        {
+          "type": "interface",
           "named": true
         },
         {
@@ -6267,10 +6315,6 @@
         },
         {
           "type": "default",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
@@ -6605,10 +6649,6 @@
         },
         {
           "type": "end_where_statement",
-          "named": true
-        },
-        {
-          "type": "include_statement",
           "named": true
         },
         {
