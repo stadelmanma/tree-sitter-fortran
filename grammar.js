@@ -1720,9 +1720,19 @@ module.exports = grammar({
     ),
 
     file_position_statement: $ => choice(
-      seq(caseInsensitive('backspace'), $._file_position_spec),
-      seq(caseInsensitive('endfile'), $._file_position_spec),
-      seq(caseInsensitive('rewind'), $._file_position_spec),
+      seq(
+        choice(
+          caseInsensitive('backspace'),
+          caseInsensitive('endfile'),
+          caseInsensitive('flush'),
+          caseInsensitive('rewind'),
+          // Technically not quite right, but will accept valid code,
+          // and too rare to bother being stricter
+          caseInsensitive('wait'),
+        ),
+        $._file_position_spec,
+      ),
+
       // Deleted feature -- not quite file position statement
       seq(caseInsensitive('pause'), optional($.string_literal)),
     ),
