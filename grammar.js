@@ -97,6 +97,9 @@ module.exports = grammar({
     [$.preproc_ifdef_in_specification_part, $.program],
     [$.preproc_else_in_specification_part, $.program],
     [$.coarray_critical_statement, $.identifier],
+    [$.format_statement, $.identifier],
+    [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
+    [$.file_position_statement, $.identifier],
   ],
 
   rules: {
@@ -1052,7 +1055,6 @@ module.exports = grammar({
     _statements: $ => choice(
       $.assignment_statement,
       $.pointer_association_statement,
-      $.call_expression,
       $.subroutine_call,
       $.keyword_statement,
       $.if_statement,
@@ -1077,11 +1079,15 @@ module.exports = grammar({
       $.associate_statement,
       $.file_position_statement,
       $.allocate_statement,
+      $.deallocate_statement,
+      $.nullify_statement,
       $.entry_statement,
       $.assign_statement,
       $.coarray_statement,
       $.coarray_team_statement,
       $.coarray_critical_statement,
+      // Not strictly valid, but can catch extensions and preprocessor macros
+      $.call_expression,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1289,11 +1295,11 @@ module.exports = grammar({
       $._block_if_statement
     ),
 
-    _inline_if_statement: $ => prec.right(2, seq(
+    _inline_if_statement: $ => seq(
       caseInsensitive('if'),
       $.parenthesized_expression,
       $._statements
-    )),
+    ),
 
     arithmetic_if_statement: $ => prec.right(seq(
       caseInsensitive('if'),
@@ -1565,7 +1571,7 @@ module.exports = grammar({
       optional($._block_label)
     ),
 
-    format_statement: $ => prec(1, seq(
+    format_statement: $ => prec.dynamic(PREC.CALL, seq(
       caseInsensitive('format'),
       '(',
       alias($._transfer_items, $.transfer_items),
@@ -1717,9 +1723,19 @@ module.exports = grammar({
     ),
 
     file_position_statement: $ => choice(
-      seq(caseInsensitive('backspace'), $._file_position_spec),
-      seq(caseInsensitive('endfile'), $._file_position_spec),
-      seq(caseInsensitive('rewind'), $._file_position_spec),
+      seq(
+        choice(
+          caseInsensitive('backspace'),
+          caseInsensitive('endfile'),
+          caseInsensitive('flush'),
+          caseInsensitive('rewind'),
+          // Technically not quite right, but will accept valid code,
+          // and too rare to bother being stricter
+          caseInsensitive('wait'),
+        ),
+        $._file_position_spec,
+      ),
+
       // Deleted feature -- not quite file position statement
       seq(caseInsensitive('pause'), optional($.string_literal)),
     ),
@@ -1773,6 +1789,21 @@ module.exports = grammar({
         $.sized_allocation,
       ),
       alias($.coarray_index, $.coarray_size),
+    ),
+
+    deallocate_statement: $ => seq(
+      caseInsensitive('deallocate'),
+      '(',
+      commaSep1(choice($.identifier, $.derived_type_member_expression)),
+      optional(seq(',', commaSep1($.keyword_argument))),
+      ')',
+    ),
+
+    nullify_statement: $ => seq(
+      caseInsensitive('nullify'),
+      '(',
+      commaSep1(choice($.identifier, $.derived_type_member_expression)),
+      ')',
     ),
 
     // Obsolescent feature
@@ -2191,6 +2222,7 @@ module.exports = grammar({
       caseInsensitive('device'),
       prec(-1, caseInsensitive('dimension')),
       caseInsensitive('double'),
+      caseInsensitive('else'),
       caseInsensitive('elseif'),
       caseInsensitive('end'),
       caseInsensitive('endif'),
@@ -2200,6 +2232,7 @@ module.exports = grammar({
       caseInsensitive('exit'),
       caseInsensitive('external'),
       caseInsensitive('fail'),
+      caseInsensitive('flush'),
       caseInsensitive('form'),
       caseInsensitive('format'),
       caseInsensitive('go'),
@@ -2233,6 +2266,7 @@ module.exports = grammar({
       prec(-1, caseInsensitive('type')),
       caseInsensitive('unlock'),
       caseInsensitive('value'),
+      caseInsensitive('wait'),
       prec(-1, caseInsensitive('where')),
       caseInsensitive('write'),
     ),
