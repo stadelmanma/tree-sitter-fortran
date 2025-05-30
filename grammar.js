@@ -1078,6 +1078,8 @@ module.exports = grammar({
       $.associate_statement,
       $.file_position_statement,
       $.allocate_statement,
+      $.deallocate_statement,
+      $.nullify_statement,
       $.entry_statement,
       $.assign_statement,
       $.coarray_statement,
@@ -1774,6 +1776,21 @@ module.exports = grammar({
         $.sized_allocation,
       ),
       alias($.coarray_index, $.coarray_size),
+    ),
+
+    deallocate_statement: $ => seq(
+      caseInsensitive('deallocate'),
+      '(',
+      commaSep1(choice($.identifier, $.derived_type_member_expression)),
+      optional(seq(',', commaSep1($.keyword_argument))),
+      ')',
+    ),
+
+    nullify_statement: $ => seq(
+      caseInsensitive('nullify'),
+      '(',
+      commaSep1(choice($.identifier, $.derived_type_member_expression)),
+      ')',
     ),
 
     // Obsolescent feature

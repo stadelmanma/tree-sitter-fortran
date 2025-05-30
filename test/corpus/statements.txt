@@ -2647,6 +2647,13 @@ program test
     allocate(double precision::foo)
     allocate(my_type::bar(1), foo, parent%child%grandchild(1, 2), errmsg=msg)
     allocate(parent(n)%child(x, y))
+    deallocate(my_int)
+    deallocate(foo, bar)
+    deallocate(parent%child)
+    deallocate(foo, stat=stat, errmsg=msg)
+    nullify(my_int)
+    nullify(foo, bar)
+    nullify(parent%child)
 end program test
 
 --------------------------------------------------------------------------------
@@ -2703,6 +2710,32 @@ end program test
         (size
           (identifier)
           (identifier))))
+    (deallocate_statement
+      (identifier))
+    (deallocate_statement
+      (identifier)
+      (identifier))
+    (deallocate_statement
+      (derived_type_member_expression
+        (identifier)
+        (type_member)))
+    (deallocate_statement
+      (identifier)
+      (keyword_argument
+        name: (identifier)
+        value: (identifier))
+      (keyword_argument
+        name: (identifier)
+        value: (identifier)))
+    (nullify_statement
+      (identifier))
+    (nullify_statement
+      (identifier)
+      (identifier))
+    (nullify_statement
+      (derived_type_member_expression
+        (identifier)
+        (type_member)))
     (end_program_statement
       (name))))
 
