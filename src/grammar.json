@@ -13152,6 +13152,10 @@
         {
           "type": "SYMBOL",
           "name": "coarray_critical_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
         }
       ]
     },
@@ -16474,35 +16478,39 @@
       ]
     },
     "format_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[fF][oO][rR][mM][aA][tT]"
+      "type": "PREC_DYNAMIC",
+      "value": 80,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[fF][oO][rR][mM][aA][tT]"
+            },
+            "named": false,
+            "value": "format"
           },
-          "named": false,
-          "value": "format"
-        },
-        {
-          "type": "STRING",
-          "value": "("
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_transfer_items"
+          {
+            "type": "STRING",
+            "value": "("
           },
-          "named": true,
-          "value": "transfer_items"
-        },
-        {
-          "type": "STRING",
-          "value": ")"
-        }
-      ]
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_transfer_items"
+            },
+            "named": true,
+            "value": "transfer_items"
+          },
+          {
+            "type": "STRING",
+            "value": ")"
+          }
+        ]
+      }
     },
     "_transfer_item": {
       "type": "CHOICE",
@@ -20938,6 +20946,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[fF][lL][uU][sS][hH]"
+          },
+          "named": false,
+          "value": "flush"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[fF][oO][rR][mM]"
           },
           "named": false,
@@ -21252,6 +21269,15 @@
           "value": "value"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[wW][aA][iI][tT]"
+          },
+          "named": false,
+          "value": "wait"
+        },
+        {
           "type": "PREC",
           "value": -1,
           "content": {
@@ -21404,6 +21430,10 @@
       "_inline_if_statement",
       "arithmetic_if_statement",
       "_block_if_statement",
+      "identifier"
+    ],
+    [
+      "file_position_statement",
       "identifier"
     ]
   ],

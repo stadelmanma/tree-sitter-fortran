@@ -1086,6 +1086,8 @@ module.exports = grammar({
       $.coarray_statement,
       $.coarray_team_statement,
       $.coarray_critical_statement,
+      // Not strictly valid, but can catch extensions and preprocessor macros
+      $.call_expression,
     ),
 
     statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
@@ -1569,12 +1571,12 @@ module.exports = grammar({
       optional($._block_label)
     ),
 
-    format_statement: $ => seq(
+    format_statement: $ => prec.dynamic(PREC.CALL, seq(
       caseInsensitive('format'),
       '(',
       alias($._transfer_items, $.transfer_items),
       ')'
-    ),
+    )),
 
     _transfer_item: $ => choice(
       $.string_literal,

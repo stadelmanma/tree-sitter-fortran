@@ -528,6 +528,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -1038,6 +1042,10 @@
         },
         {
           "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -1572,6 +1580,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "case_value_range_list",
           "named": true
         },
@@ -1962,6 +1974,10 @@
         },
         {
           "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -2456,6 +2472,10 @@
         },
         {
           "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -4165,6 +4185,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -4365,6 +4389,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -4541,6 +4569,10 @@
         },
         {
           "type": "block_label",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -4724,6 +4756,10 @@
         },
         {
           "type": "block_label",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -5539,6 +5575,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -5785,6 +5825,10 @@
         },
         {
           "type": "block_construct",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -6138,6 +6182,10 @@
         },
         {
           "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -7899,6 +7947,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -9084,6 +9136,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "case_statement",
           "named": true
         },
@@ -9408,6 +9464,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "case_statement",
           "named": true
         },
@@ -9700,6 +9760,10 @@
         },
         {
           "type": "block_data",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -10091,6 +10155,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "case_statement",
           "named": true
         },
@@ -10412,6 +10480,10 @@
         },
         {
           "type": "block_data",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -10887,6 +10959,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -11185,6 +11261,10 @@
         },
         {
           "type": "block_label",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
@@ -12374,6 +12454,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -13030,6 +13114,10 @@
           "named": true
         },
         {
+          "type": "call_expression",
+          "named": true
+        },
+        {
           "type": "close_statement",
           "named": true
         },
@@ -13557,6 +13645,10 @@
         },
         {
           "type": "block_label_start_expression",
+          "named": true
+        },
+        {
+          "type": "call_expression",
           "named": true
         },
         {
