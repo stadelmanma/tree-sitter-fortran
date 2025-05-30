@@ -7949,21 +7949,26 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "ALIAS",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SEQ",
-                  "members": [
-                    {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
                       "type": "PATTERN",
                       "value": "[eE][nN][dD]"
                     },
-                    {
-                      "type": "CHOICE",
-                      "members": [
-                        {
+                    "named": false,
+                    "value": "end"
+                  },
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "ALIAS",
+                        "content": {
                           "type": "CHOICE",
                           "members": [
                             {
@@ -7985,21 +7990,26 @@
                             }
                           ]
                         },
-                        {
-                          "type": "BLANK"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
+                        "named": false,
+                        "value": "blockdata"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "PATTERN",
                   "value": "[eE][nN][dD][[oO][bB][jJ][eE][cC][tT] O[bB][jJ][eE][cC][tT]]"
-                }
-              ]
-            },
-            "named": false,
-            "value": "end[object Object]"
+                },
+                "named": false,
+                "value": "endblockdata"
+              }
+            ]
           },
           {
             "type": "CHOICE",
@@ -21248,5 +21258,6 @@
     "_top_level_item",
     "_statement"
   ],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

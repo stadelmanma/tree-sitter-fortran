@@ -153,13 +153,13 @@ static bool skip_literal_continuation_sequence(TSLexer *lexer) {
         return true;
     }
 
-    skip(lexer);
+    advance(lexer);
     while (iswspace(lexer->lookahead)) {
-        skip(lexer);
+        advance(lexer);
     }
-    // second '&' required to continue the literal
+    // second '&' technically required to continue the literal
     if (lexer->lookahead == '&') {
-        skip(lexer);
+        advance(lexer);
         return true;
     }
     return false;
@@ -197,7 +197,7 @@ static bool scan_hollerith_constant(TSLexer *lexer) {
     advance(lexer);
 
     // Read exactly 'n' characters
-    for (int i = 0; i < length; i++) {
+    for (unsigned i = 0; i < length; i++) {
         if (!lexer->lookahead || lexer->eof(lexer)) {
             return false;
         }
@@ -365,6 +365,7 @@ static bool scan_string_literal(TSLexer *lexer) {
             // the end of the literal. We also need to check that an
             // escaped quote isn't split in half by a line
             // continuation -- people do this!
+            lexer->mark_end(lexer);
             skip_literal_continuation_sequence(lexer);
             if (lexer->lookahead != opening_quote) {
                 return true;
