@@ -155,6 +155,7 @@ PROGRAM TEST
   IMPLICIT INTEGER(i - n), REAL(8)(r-z),  COMPLEX*8(a - c, d, e-h)
   IMPLICIT NONE
   implicit none (type, external)
+  implicit type(foo)(f), class(bar)(C)
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -180,6 +181,13 @@ END PROGRAM
       (none))
     (implicit_statement
       (none))
+    (implicit_statement
+      (derived_type
+        (type_name))
+      (implicit_range)
+      (derived_type
+        (type_name))
+      (implicit_range))
     (end_program_statement)))
 
 ================================================================================

@@ -3285,6 +3285,10 @@
       "required": true,
       "types": [
         {
+          "type": "derived_type",
+          "named": true
+        },
+        {
           "type": "implicit_range",
           "named": true
         },

@@ -616,7 +616,10 @@ module.exports = grammar({
       caseInsensitive('implicit'),
       choice(
         commaSep1(seq(
-          $.intrinsic_type,
+          choice(
+            $.intrinsic_type,
+            $.derived_type
+          ),
           '(',
           commaSep1($.implicit_range),
           ')'
@@ -842,7 +845,10 @@ module.exports = grammar({
     procedure_declaration: $ => seq(
       caseInsensitive('procedure'),
       optional(seq(
-        '(', optional(alias($.identifier, $.procedure_interface)), ')'
+        '(',
+        optional(
+          alias($.identifier, $.procedure_interface)),
+        ')'
       )),
       optional(seq(',', commaSep1($.procedure_attribute))),
     ),

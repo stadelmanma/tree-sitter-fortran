@@ -9645,8 +9645,17 @@
                   "type": "SEQ",
                   "members": [
                     {
-                      "type": "SYMBOL",
-                      "name": "intrinsic_type"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "intrinsic_type"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "derived_type"
+                        }
+                      ]
                     },
                     {
                       "type": "STRING",
@@ -9696,8 +9705,17 @@
                         "type": "SEQ",
                         "members": [
                           {
-                            "type": "SYMBOL",
-                            "name": "intrinsic_type"
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "intrinsic_type"
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "derived_type"
+                              }
+                            ]
                           },
                           {
                             "type": "STRING",
