@@ -969,6 +969,7 @@ module.exports = grammar({
     _standalone_type_qualifier: $ => choice(
       caseInsensitive('abstract'),
       caseInsensitive('allocatable'),
+      caseInsensitive('asynchronous'),
       caseInsensitive('automatic'),
       prec.right(seq(
         caseInsensitive('codimension'),
@@ -2239,6 +2240,7 @@ module.exports = grammar({
     identifier: $ => choice(
       /[a-zA-Z_$][\w$]*/,
       caseInsensitive('allocatable'),
+      caseInsensitive('asynchronous'),
       caseInsensitive('automatic'),
       caseInsensitive('block'),
       caseInsensitive('byte'),

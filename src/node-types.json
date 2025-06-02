@@ -7063,6 +7063,10 @@
     "named": true
   },
   {
+    "type": "asynchronous",
+    "named": false
+  },
+  {
     "type": "attributes",
     "named": false
   },

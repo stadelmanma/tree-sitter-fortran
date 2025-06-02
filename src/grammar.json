@@ -12251,6 +12251,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[aA][sS][yY][nN][cC][hH][rR][oO][nN][oO][uU][sS]"
+          },
+          "named": false,
+          "value": "asynchronous"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[aA][uU][tT][oO][mM][aA][tT][iI][cC]"
           },
           "named": false,
@@ -20732,6 +20741,15 @@
           },
           "named": false,
           "value": "allocatable"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[aA][sS][yY][nN][cC][hH][rR][oO][nN][oO][uU][sS]"
+          },
+          "named": false,
+          "value": "asynchronous"
         },
         {
           "type": "ALIAS",
