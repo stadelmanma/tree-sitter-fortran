@@ -647,9 +647,9 @@ END PROGRAM
     (save_statement
       (identifier)
       (identifier)
-      (identifier)
+      (common_block)
       (identifier))
-    (variable_modification
+    (bind_statement
       (language_binding
         (identifier))
       (identifier))
@@ -3507,3 +3507,33 @@ end program
             (number_literal)
             (number_literal)))))
     (end_program_statement)))
+
+================================================================================
+Standalone Bind(C) Statement
+================================================================================
+
+program test
+  common /foo/ foo
+  integer :: foo
+  bind(C) :: /foo/
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (common_statement
+      (variable_group
+        (name)
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (bind_statement
+      (language_binding
+        (identifier))
+      (common_block))
+    (end_program_statement
+      (name))))

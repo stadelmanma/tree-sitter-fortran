@@ -561,6 +561,7 @@ module.exports = grammar({
       $.import_statement,
       $.public_statement,
       $.private_statement,
+      $.bind_statement,
       $.enum,
       $.enumeration_type,
       $.namelist_statement,
@@ -640,14 +641,21 @@ module.exports = grammar({
 
     save_statement: $ => prec(1, seq(
       caseInsensitive('save'),
-      optional(seq(
-        optional('::'),
-        commaSep1(choice(
-          $.identifier,
-          seq('/', $.identifier, '/'),
-        )),
-      )),
+      optional($._identifier_or_common_block),
     )),
+
+    bind_statement: $ => seq(
+      $.language_binding,
+      $._identifier_or_common_block,
+    ),
+
+    _identifier_or_common_block: $ => seq(
+      optional('::'),
+      commaSep1(choice(
+        $.identifier,
+        seq('/', alias($.identifier, $.common_block), '/'),
+      )),
+    ),
 
     private_statement: $ => prec.right(1, seq(
       caseInsensitive('private'),
@@ -863,7 +871,6 @@ module.exports = grammar({
       repeat1(choice(
         alias($._standalone_type_qualifier, $.type_qualifier),
         $.variable_attributes,
-        $.language_binding,
       )),
       optional('::'),
       commaSep1(field('declarator', $._variable_declarator)),

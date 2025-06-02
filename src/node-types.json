@@ -116,6 +116,10 @@
         "named": true
       },
       {
+        "type": "bind_statement",
+        "named": true
+      },
+      {
         "type": "common_statement",
         "named": true
       },
@@ -803,6 +807,29 @@
     "fields": {}
   },
   {
+    "type": "bind_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "common_block",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "language_binding",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binding",
     "named": true,
     "fields": {},
@@ -1392,6 +1419,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "common_block",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "common_statement",
@@ -5650,6 +5682,10 @@
       "required": false,
       "types": [
         {
+          "type": "common_block",
+          "named": true
+        },
+        {
           "type": "identifier",
           "named": true
         }
@@ -6692,10 +6728,6 @@
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "language_binding",
-          "named": true
-        },
         {
           "type": "type_qualifier",
           "named": true
