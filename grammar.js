@@ -573,6 +573,8 @@ module.exports = grammar({
       $.cray_pointer_declaration,
       // This catches statement functions, which are completely ambiguous
       $.assignment_statement,
+      // This can appear immediately after procedure statement, or after `return`
+      $.entry_statement,
     )),
 
     use_statement: $ => seq(

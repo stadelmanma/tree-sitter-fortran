@@ -2856,6 +2856,11 @@ Entry statement (Obsolescent)
        RETURN
        END
 
+       subroutine foo(i)
+       entry      bar(i)
+       integer i
+       end subroutine foo
+
 --------------------------------------------------------------------------------
 
 (translation_unit
@@ -2886,7 +2891,21 @@ Entry statement (Obsolescent)
     (entry_statement
       (name))
     (keyword_statement)
-    (end_subroutine_statement)))
+    (end_subroutine_statement))
+  (subroutine
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)))
+    (entry_statement
+      (name)
+      (parameters
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (end_subroutine_statement
+      (name))))
 
 ================================================================================
 Coarray declarations

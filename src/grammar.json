@@ -9377,6 +9377,10 @@
           {
             "type": "SYMBOL",
             "name": "assignment_statement"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "entry_statement"
           }
         ]
       }
