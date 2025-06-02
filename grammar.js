@@ -895,11 +895,16 @@ module.exports = grammar({
       '=>',
       field('right', $._expression)
     ),
+    data_declarator: $ => seq(
+      field('left', $._variable_declarator),
+      field('right', $.data_value),
+    ),
 
     _declaration_targets: $ => commaSep1(field('declarator', choice(
       $._variable_declarator,
       alias($._declaration_assignment, $.init_declarator),
       alias($._declaration_pointer_association, $.pointer_init_declarator),
+      $.data_declarator,
     ))),
 
     _intrinsic_type: $ => choice(

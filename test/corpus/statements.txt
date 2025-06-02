@@ -3419,3 +3419,56 @@ end subroutine pointer_name_clash
       right: (number_literal))
     (end_subroutine_statement
       (name))))
+
+================================================================================
+Data declarators (extension)
+================================================================================
+
+program test
+  implicit none
+  real a(100)/100*1.0/
+  integer(kind=4)::i/1/,j/2/
+  complex x/(1.0, 2.0)/
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (implicit_statement
+      (none))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (data_declarator
+        left: (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        right: (data_value
+          repeat: (number_literal)
+          (number_literal))))
+    (variable_declaration
+      type: (intrinsic_type
+        kind: (kind
+          (keyword_argument
+            name: (identifier)
+            value: (number_literal))))
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (number_literal)))
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (number_literal))))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (complex_literal
+            (number_literal)
+            (number_literal)))))
+    (end_program_statement)))

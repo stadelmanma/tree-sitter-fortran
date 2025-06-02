@@ -11707,6 +11707,27 @@
         }
       ]
     },
+    "data_declarator": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "left",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_variable_declarator"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "right",
+          "content": {
+            "type": "SYMBOL",
+            "name": "data_value"
+          }
+        }
+      ]
+    },
     "_declaration_targets": {
       "type": "SEQ",
       "members": [
@@ -11737,6 +11758,10 @@
                 },
                 "named": true,
                 "value": "pointer_init_declarator"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "data_declarator"
               }
             ]
           }
@@ -11777,6 +11802,10 @@
                       },
                       "named": true,
                       "value": "pointer_init_declarator"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "data_declarator"
                     }
                   ]
                 }
