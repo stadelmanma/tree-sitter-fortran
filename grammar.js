@@ -717,7 +717,7 @@ module.exports = grammar({
           ),
           $._end_of_statement
         ),
-        $.variable_declaration,
+        seq($.variable_declaration, $._end_of_statement),
         $.preproc_include,
         $.preproc_def,
         $.preproc_function_def,
@@ -758,6 +758,7 @@ module.exports = grammar({
         seq(',', commaSep1($._derived_type_qualifier), '::', $._type_name)
       ),
       optional(alias($.argument_list, $.derived_type_parameter_list)),
+      $._end_of_statement,
     ),
 
     end_type_statement: $ => blockStructureEnding($, 'type'),

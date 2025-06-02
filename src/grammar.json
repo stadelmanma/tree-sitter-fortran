@@ -10492,8 +10492,17 @@
                 ]
               },
               {
-                "type": "SYMBOL",
-                "name": "variable_declaration"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "variable_declaration"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_end_of_statement"
+                  }
+                ]
               },
               {
                 "type": "SYMBOL",
@@ -10745,6 +10754,10 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
         }
       ]
     },
