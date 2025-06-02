@@ -20049,13 +20049,27 @@
                   "type": "FIELD",
                   "name": "kind",
                   "content": {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_string_literal_kind"
-                    },
-                    "named": true,
-                    "value": "identifier"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "_string_literal_kind"
+                        },
+                        "named": true,
+                        "value": "identifier"
+                      },
+                      {
+                        "type": "ALIAS",
+                        "content": {
+                          "type": "SYMBOL",
+                          "name": "_integer_literal"
+                        },
+                        "named": true,
+                        "value": "number_literal"
+                      }
+                    ]
                   }
                 },
                 {

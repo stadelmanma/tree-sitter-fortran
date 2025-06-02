@@ -151,6 +151,7 @@ PROGRAM TEST
     val = "one"//'two'//sngl_qt//dble_qt
 
     with_kind = ck_"string with kind"
+    with_numeral_kind = 4_"string with kind"
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -196,6 +197,10 @@ END PROGRAM
       left: (identifier)
       right: (string_literal
         kind: (identifier)))
+    (assignment_statement
+      left: (identifier)
+      right: (string_literal
+        kind: (number_literal)))
     (end_program_statement)))
 
 ================================================================================

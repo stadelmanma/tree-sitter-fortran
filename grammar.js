@@ -2139,7 +2139,10 @@ module.exports = grammar({
       // is _really_ hard to parse without breaking other things, so
       // we have to rely on an external scanner
       optional(seq(
-        field('kind', alias($._string_literal_kind, $.identifier)),
+        field('kind', choice(
+          alias($._string_literal_kind, $.identifier),
+          alias($._integer_literal, $.number_literal)
+        )),
         // Although external scanner enforces trailing underscore, we
         // also need to *capture* it here
         token.immediate('_'),
