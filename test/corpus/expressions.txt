@@ -942,7 +942,7 @@ Array Constructors
 program array_constructors
   implicit none
   integer :: i
-  integer, dimension(3) :: array1 = (/ (i, i=1, 3) /)
+  integer, dimension(3) :: array1 = (/ (i, i=1, 3) /), array2 = [(j, integer(kind=8)::j=1,64)]
   real, dimension(10) :: array2
 
   array2 = [((real(i - 1) / 10.), i=1, 10)]
@@ -974,6 +974,20 @@ end program array_constructors
         (array_literal
           (implied_do_loop_expression
             (identifier)
+            (loop_control_expression
+              (identifier)
+              (number_literal)
+              (number_literal)))))
+      (init_declarator
+        (identifier)
+        (array_literal
+          (implied_do_loop_expression
+            (identifier)
+            (intrinsic_type
+              (kind
+                (keyword_argument
+                  (identifier)
+                  (number_literal))))
             (loop_control_expression
               (identifier)
               (number_literal)

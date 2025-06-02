@@ -1988,6 +1988,10 @@ module.exports = grammar({
       '(',
       commaSep1($._expression),
       ',',
+      // This should really be _inside_ loop_control_expression, but
+      // type-spec only valid here, and not other places that use
+      // loop_control_expression
+      optional(seq(field('type', $.intrinsic_type), '::')),
       $.loop_control_expression,
       ')'
     ),
