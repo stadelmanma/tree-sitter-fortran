@@ -847,7 +847,12 @@ module.exports = grammar({
       optional(seq(
         '(',
         optional(
-          alias($.identifier, $.procedure_interface)),
+          choice(
+            alias($.identifier, $.procedure_interface),
+            $.intrinsic_type,
+            $.derived_type,
+          )
+        ),
         ')'
       )),
       optional(seq(',', commaSep1($.procedure_attribute))),

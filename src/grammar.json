@@ -11390,13 +11390,26 @@
                   "type": "CHOICE",
                   "members": [
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "identifier"
-                      },
-                      "named": true,
-                      "value": "procedure_interface"
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "identifier"
+                          },
+                          "named": true,
+                          "value": "procedure_interface"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "intrinsic_type"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "derived_type"
+                        }
+                      ]
                     },
                     {
                       "type": "BLANK"

@@ -1250,9 +1250,10 @@ module test
     end subroutine do_nothing
   end interface
 contains
-  subroutine apply(f, g)
+  subroutine apply(f, g, h)
     procedure(do_nothing) :: f
     procedure(do_nothing), optional :: g
+    procedure(real(kind=real64)), optional :: h
     call f()
   end subroutine apply
 end module test
@@ -1279,6 +1280,7 @@ end module test
           (name)
           (parameters
             (identifier)
+            (identifier)
             (identifier)))
         (variable_declaration
           (procedure
@@ -1287,6 +1289,15 @@ end module test
         (variable_declaration
           (procedure
             (procedure_interface))
+          (type_qualifier)
+          (identifier))
+        (variable_declaration
+          (procedure
+            (intrinsic_type
+              (kind
+                (keyword_argument
+                  (identifier)
+                  (identifier)))))
           (type_qualifier)
           (identifier))
         (subroutine_call

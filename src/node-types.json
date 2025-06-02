@@ -5279,6 +5279,14 @@
       "required": false,
       "types": [
         {
+          "type": "derived_type",
+          "named": true
+        },
+        {
+          "type": "intrinsic_type",
+          "named": true
+        },
+        {
           "type": "procedure_attribute",
           "named": true
         },
