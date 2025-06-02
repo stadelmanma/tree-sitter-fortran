@@ -101,6 +101,7 @@ module.exports = grammar({
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
     [$.file_position_statement, $.identifier],
     [$.cray_pointer_declaration, $.identifier],
+    [$.unit_identifier, $.identifier],
   ],
 
   supertypes: $ => [
@@ -1759,14 +1760,20 @@ module.exports = grammar({
     ),
 
     // precedence is used to override a conflict with the complex literal
-    unit_identifier: $ => prec(1, choice(
-      $.number_literal,
-      $._io_expressions
-    )),
+    unit_identifier: $ => seq(
+      optional(seq(caseInsensitive('unit'), '=')),
+      prec(1, choice(
+        $.number_literal,
+        $._io_expressions
+      ))
+    ),
 
-    format_identifier: $ => choice(
-      $.statement_label_reference,
-      $._io_expressions
+    format_identifier: $ => seq(
+      optional(seq(caseInsensitive('fmt'), '=')),
+      choice(
+        $.statement_label_reference,
+        $._io_expressions
+      )
     ),
 
     _file_position_spec: $ => choice(
@@ -2326,6 +2333,7 @@ module.exports = grammar({
       caseInsensitive('target'),
       caseInsensitive('texture'),
       prec(-1, caseInsensitive('type')),
+      caseInsensitive('unit'),
       caseInsensitive('unlock'),
       caseInsensitive('value'),
       caseInsensitive('wait'),
