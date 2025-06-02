@@ -1465,7 +1465,7 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'case'),
       $.selector,
       $._end_of_statement,
-      repeat1(choice(
+      repeat(choice(
         $.case_statement,
         $.preproc_include,
         $.preproc_def,
@@ -1483,7 +1483,7 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'type'),
       $.selector,
       $._end_of_statement,
-      repeat1(choice(
+      repeat(choice(
         $.type_statement,
         $.preproc_include,
         $.preproc_def,
@@ -1501,7 +1501,7 @@ module.exports = grammar({
       whiteSpacedKeyword('select', 'rank'),
       $.selector,
       $._end_of_statement,
-      repeat1(choice(
+      repeat(choice(
         $.rank_statement,
         $.preproc_include,
         $.preproc_def,

@@ -15468,7 +15468,7 @@
           "name": "_end_of_statement"
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "CHOICE",
             "members": [
@@ -15592,7 +15592,7 @@
           "name": "_end_of_statement"
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "CHOICE",
             "members": [
@@ -15716,7 +15716,7 @@
           "name": "_end_of_statement"
         },
         {
-          "type": "REPEAT1",
+          "type": "REPEAT",
           "content": {
             "type": "CHOICE",
             "members": [
