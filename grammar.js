@@ -2104,7 +2104,13 @@ module.exports = grammar({
     ),
 
     null_literal: $ => prec(1, seq(
-      caseInsensitive('null'), '(', ')'
+      caseInsensitive('null'),
+      '(',
+      optional(field('mold', choice(
+        $.identifier,
+        $.derived_type_member_expression,
+      ))),
+      ')',
     )),
 
     string_literal: $ => seq(

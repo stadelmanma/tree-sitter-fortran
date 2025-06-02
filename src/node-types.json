@@ -4133,7 +4133,22 @@
   {
     "type": "null_literal",
     "named": true,
-    "fields": {}
+    "fields": {
+      "mold": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "derived_type_member_expression",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "nullify_statement",

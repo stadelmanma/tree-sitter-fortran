@@ -1091,7 +1091,7 @@ Derived Type Procedure Pointer Components
 
 program test
   type foo
-    procedure(some_interface), pointer :: bar => null()
+    procedure(some_interface), pointer :: bar => null(), jaff => null(bar)
     procedure(some_interface), pointer, nopass :: quux
   end type foo
 end program test
@@ -1111,7 +1111,11 @@ end program test
           (procedure_attribute))
         (pointer_init_declarator
           (identifier)
-          (null_literal)))
+          (null_literal))
+        (pointer_init_declarator
+          (identifier)
+          (null_literal
+            (identifier))))
       (variable_declaration
         (procedure
           (procedure_interface)
