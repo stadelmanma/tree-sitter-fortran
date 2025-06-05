@@ -150,7 +150,7 @@ module.exports = grammar({
       preprocessor('define'),
       field('name', $.identifier),
       field('value', optional($.preproc_arg)),
-      token.immediate(/\r?\n/),
+      token(prec(1, /\r?\n/)), // force newline to win over preproc_arg
     ),
 
     preproc_function_def: $ => seq(
