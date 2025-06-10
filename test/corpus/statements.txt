@@ -155,6 +155,7 @@ PROGRAM TEST
   IMPLICIT INTEGER(i - n), REAL(8)(r-z),  COMPLEX*8(a - c, d, e-h)
   IMPLICIT NONE
   implicit none (type, external)
+  implicit type(foo)(f), class(bar)(C)
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -180,6 +181,13 @@ END PROGRAM
       (none))
     (implicit_statement
       (none))
+    (implicit_statement
+      (derived_type
+        (type_name))
+      (implicit_range)
+      (derived_type
+        (type_name))
+      (implicit_range))
     (end_program_statement)))
 
 ================================================================================
@@ -639,9 +647,9 @@ END PROGRAM
     (save_statement
       (identifier)
       (identifier)
-      (identifier)
+      (common_block)
       (identifier))
-    (variable_modification
+    (bind_statement
       (language_binding
         (identifier))
       (identifier))
@@ -1427,6 +1435,10 @@ PROGRAM TEST
   CASE DEFAULT
     WRITE(*,*)  'Other characters, which may not be letters'
   END SELECT
+
+  select case (empty)
+  end select
+
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1507,6 +1519,10 @@ END PROGRAM
           (format_identifier)
           (output_item_list
             (string_literal))))
+      (end_select_statement))
+    (select_case_statement
+      (selector
+        (identifier))
       (end_select_statement))
     (end_program_statement)))
 
@@ -1647,8 +1663,7 @@ END PROGRAM
     (read_statement
       (unit_identifier
         (identifier))
-      (keyword_argument
-        (identifier)
+      (format_identifier
         (string_literal))
       (input_item_list
         (call_expression
@@ -1720,6 +1735,8 @@ PROGRAM TEST
   WRITE(IOUNIT, "(FORMAT STRING)", IOSTAT=IOS)
   WRITE(IOUNIT, FMT="(FORMAT STRING)") flags(:)
   WRITE(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
+  write(unit=77, '(a)') "unusual"
+  write(unit=77, *) "but valid"
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1755,8 +1772,7 @@ END PROGRAM
     (write_statement
       (unit_identifier
         (identifier))
-      (keyword_argument
-        (identifier)
+      (format_identifier
         (string_literal))
       (output_item_list
         (call_expression
@@ -1778,6 +1794,19 @@ END PROGRAM
         (string_literal))
       (output_item_list
         (identifier)))
+    (write_statement
+      (unit_identifier
+        (number_literal))
+      (format_identifier
+        (string_literal))
+      (output_item_list
+        (string_literal)))
+    (write_statement
+      (unit_identifier
+        (number_literal))
+      (format_identifier)
+      (output_item_list
+        (string_literal)))
     (end_program_statement)))
 
 ================================================================================
@@ -2106,8 +2135,7 @@ end program test
         (identifier)
         (string_literal)))
     (close_statement
-      (keyword_argument
-        (identifier)
+      (unit_identifier
         (identifier))
       (keyword_argument
         (identifier)
@@ -2573,8 +2601,7 @@ end program
       (unit_identifier
         (identifier)))
     (file_position_statement
-      (keyword_argument
-        (identifier)
+      (unit_identifier
         (derived_type_member_expression
           (identifier)
           (type_member)))
@@ -2624,8 +2651,7 @@ end program test
               (number_literal)
               (identifier))))))
     (inquire_statement
-      (keyword_argument
-        (identifier)
+      (unit_identifier
         (identifier))
       (keyword_argument
         (identifier)
@@ -2856,6 +2882,11 @@ Entry statement (Obsolescent)
        RETURN
        END
 
+       subroutine foo(i)
+       entry      bar(i)
+       integer i
+       end subroutine foo
+
 --------------------------------------------------------------------------------
 
 (translation_unit
@@ -2886,7 +2917,21 @@ Entry statement (Obsolescent)
     (entry_statement
       (name))
     (keyword_statement)
-    (end_subroutine_statement)))
+    (end_subroutine_statement))
+  (subroutine
+    (subroutine_statement
+      (name)
+      (parameters
+        (identifier)))
+    (entry_statement
+      (name)
+      (parameters
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (end_subroutine_statement
+      (name))))
 
 ================================================================================
 Coarray declarations
@@ -3418,4 +3463,87 @@ end subroutine pointer_name_clash
           (number_literal)))
       right: (number_literal))
     (end_subroutine_statement
+      (name))))
+
+================================================================================
+Data declarators (extension)
+================================================================================
+
+program test
+  implicit none
+  real a(100)/100*1.0/
+  integer(kind=4)::i/1/,j/2/
+  complex x/(1.0, 2.0)/
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (implicit_statement
+      (none))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (data_declarator
+        left: (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        right: (data_value
+          repeat: (number_literal)
+          (number_literal))))
+    (variable_declaration
+      type: (intrinsic_type
+        kind: (kind
+          (keyword_argument
+            name: (identifier)
+            value: (number_literal))))
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (number_literal)))
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (number_literal))))
+    (variable_declaration
+      type: (intrinsic_type)
+      declarator: (data_declarator
+        left: (identifier)
+        right: (data_value
+          (complex_literal
+            (number_literal)
+            (number_literal)))))
+    (end_program_statement)))
+
+================================================================================
+Standalone Bind(C) Statement
+================================================================================
+
+program test
+  common /foo/ foo
+  integer :: foo
+  bind(C) :: /foo/
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (common_statement
+      (variable_group
+        (name)
+        (identifier)))
+    (variable_declaration
+      (intrinsic_type)
+      (identifier))
+    (bind_statement
+      (language_binding
+        (identifier))
+      (common_block))
+    (end_program_statement
       (name))))
