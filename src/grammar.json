@@ -21143,13 +21143,17 @@
           "value": "fail"
         },
         {
-          "type": "ALIAS",
+          "type": "PREC",
+          "value": -1,
           "content": {
-            "type": "PATTERN",
-            "value": "[fF][lL][uU][sS][hH]"
-          },
-          "named": false,
-          "value": "flush"
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[fF][lL][uU][sS][hH]"
+            },
+            "named": false,
+            "value": "flush"
+          }
         },
         {
           "type": "ALIAS",
@@ -21478,13 +21482,17 @@
           "value": "value"
         },
         {
-          "type": "ALIAS",
+          "type": "PREC",
+          "value": -1,
           "content": {
-            "type": "PATTERN",
-            "value": "[wW][aA][iI][tT]"
-          },
-          "named": false,
-          "value": "wait"
+            "type": "ALIAS",
+            "content": {
+              "type": "PATTERN",
+              "value": "[wW][aA][iI][tT]"
+            },
+            "named": false,
+            "value": "wait"
+          }
         },
         {
           "type": "PREC",
@@ -21639,10 +21647,6 @@
       "_inline_if_statement",
       "arithmetic_if_statement",
       "_block_if_statement",
-      "identifier"
-    ],
-    [
-      "file_position_statement",
       "identifier"
     ],
     [
