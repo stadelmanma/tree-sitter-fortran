@@ -2579,6 +2579,11 @@ program test
   rewind(11)
   rewind(lu_prof(N))
 
+  flush 10
+  flush (10, iostat=ios)
+
+  wait(10)
+
   pause 'this is deleted'
 end program
 
@@ -2619,6 +2624,19 @@ end program
             (identifier)
             (argument_list
               (identifier))))))
+    (file_position_statement
+      (unit_identifier
+        (number_literal)))
+    (file_position_statement
+      (unit_identifier
+        (number_literal))
+      (keyword_argument
+        (identifier)
+        (identifier)))
+    (file_position_statement
+      (unit_identifier
+        (parenthesized_expression
+          (number_literal))))
     (file_position_statement
       (string_literal))
     (end_program_statement)))
@@ -2794,7 +2812,7 @@ end
 Statement Functions (Obsolescent)
 ================================================================================
 
-      SUBROUTINE CEBCHVXX( THRESH, PATH )      
+      SUBROUTINE CEBCHVXX( THRESH, PATH )
       COMPLEX            ZDUM
 !     .. Statement Functions ..
       REAL               CABS1
