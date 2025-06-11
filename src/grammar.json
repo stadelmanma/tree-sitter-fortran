@@ -176,10 +176,14 @@
           }
         },
         {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "TOKEN",
           "content": {
-            "type": "PATTERN",
-            "value": "\\r?\\n"
+            "type": "PREC",
+            "value": 1,
+            "content": {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            }
           }
         }
       ]

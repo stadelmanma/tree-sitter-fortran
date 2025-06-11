@@ -50,10 +50,10 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "prebuildify": "^6.0.0",
-    "tree-sitter-cli": "^0.25.4"
+    "tree-sitter-cli": "==0.25.6"
   },
   "peerDependencies": {
-    "tree-sitter": "^0.25.4"
+    "tree-sitter": "==0.25.0"
   },
   "peerDependenciesMeta": {
     "tree_sitter": {
