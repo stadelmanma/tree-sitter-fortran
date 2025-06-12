@@ -176,10 +176,14 @@
           }
         },
         {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "TOKEN",
           "content": {
-            "type": "PATTERN",
-            "value": "\\r?\\n"
+            "type": "PREC",
+            "value": 1,
+            "content": {
+              "type": "PATTERN",
+              "value": "\\r?\\n"
+            }
           }
         }
       ]
@@ -13956,8 +13960,13 @@
                       "name": "boolean_literal"
                     },
                     {
-                      "type": "SYMBOL",
-                      "name": "unary_expression"
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "_signed_literal"
+                      },
+                      "named": true,
+                      "value": "unary_expression"
                     },
                     {
                       "type": "SYMBOL",
@@ -14036,8 +14045,13 @@
                             "name": "boolean_literal"
                           },
                           {
-                            "type": "SYMBOL",
-                            "name": "unary_expression"
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "SYMBOL",
+                              "name": "_signed_literal"
+                            },
+                            "named": true,
+                            "value": "unary_expression"
                           },
                           {
                             "type": "SYMBOL",
@@ -14065,6 +14079,32 @@
           "value": "/"
         }
       ]
+    },
+    "_signed_literal": {
+      "type": "PREC_RIGHT",
+      "value": 55,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "-"
+              },
+              {
+                "type": "STRING",
+                "value": "+"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "number_literal"
+          }
+        ]
+      }
     },
     "do_loop_statement": {
       "type": "SEQ",
@@ -19279,8 +19319,8 @@
       ]
     },
     "unary_expression": {
-      "type": "PREC_LEFT",
-      "value": 90,
+      "type": "PREC_RIGHT",
+      "value": 55,
       "content": {
         "type": "SEQ",
         "members": [

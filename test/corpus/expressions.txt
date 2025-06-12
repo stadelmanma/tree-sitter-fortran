@@ -487,6 +487,7 @@ PROGRAM TEST
     val = +x
     val = r**j / k**(-2) * 7
     val = 14 + (i - j)**3
+    val = -1 ** 2
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -550,6 +551,12 @@ END PROGRAM
             (math_expression
               (identifier)
               (identifier)))
+          (number_literal))))
+    (assignment_statement
+      (identifier)
+      (unary_expression
+        (math_expression
+          (number_literal)
           (number_literal))))
     (end_program_statement)))
 
