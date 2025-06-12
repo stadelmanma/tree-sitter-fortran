@@ -24,10 +24,10 @@ const PREC = {
   LOGICAL_NOT: 30,
   RELATIONAL: 40,
   ADDITIVE: 50,
+  UNARY: 55,
   MULTIPLICATIVE: 60,
   EXPONENT: 70,
   CALL: 80,
-  UNARY: 90,
   TYPE_MEMBER: 100
 }
 
@@ -1245,7 +1245,8 @@ module.exports = grammar({
           $.complex_literal,
           $.string_literal,
           $.boolean_literal,
-          $.unary_expression,
+          // Only constants allowed here, so can't have general expression as child
+          alias($._signed_literal, $.unary_expression),
           $.null_literal,
           $.identifier,
           $.call_expression
@@ -1253,6 +1254,7 @@ module.exports = grammar({
       )),
       '/'
     ),
+    _signed_literal: $ => prec.right(PREC.UNARY, seq(choice('-', '+'), $.number_literal)),
 
     do_loop_statement: $ => seq(
       optional($.block_label_start_expression),
@@ -1988,7 +1990,7 @@ module.exports = grammar({
       }))
     },
 
-    unary_expression: $ => prec.left(PREC.UNARY, seq(
+    unary_expression: $ => prec.right(PREC.UNARY, seq(
       field('operator', choice('-', '+', $.user_defined_operator)),
       field('argument', $._expression)
     )),
