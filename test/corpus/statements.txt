@@ -2445,6 +2445,7 @@ program test
   DATA array(:, N) / &
     54.45_fp, 200.01_fp /
   DATA complex_array / ( 0, 1 ), ( 1, 0 ) /
+  DATA foo / 3 * 0.0, 4 * bar, 1.0, 2.0 /
   data params/ param1, param2/
 
   ! This is awful, but this makes sure the specification part has
@@ -2543,6 +2544,16 @@ end program test
           (complex_literal
             (number_literal)
             (number_literal)))))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value
+          (number_literal)
+          (number_literal)
+          (number_literal)
+          (identifier)
+          (number_literal)
+          (number_literal))))
     (data_statement
       (data_set
         (identifier)

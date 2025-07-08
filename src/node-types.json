@@ -1827,6 +1827,10 @@
         "required": false,
         "types": [
           {
+            "type": "identifier",
+            "named": true
+          },
+          {
             "type": "number_literal",
             "named": true
           }

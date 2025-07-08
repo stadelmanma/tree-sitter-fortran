@@ -1239,7 +1239,9 @@ module.exports = grammar({
     data_value: $ => seq(
       '/',
       commaSep1(seq(
-        optional(prec(1, seq(field('repeat', $.number_literal), '*'))),
+        optional(prec(1,
+          seq(field('repeat', choice($.number_literal, $.identifier)), '*')
+        )),
         choice(
           $.number_literal,
           $.complex_literal,
