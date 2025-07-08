@@ -240,7 +240,7 @@ module.exports = grammar({
       ')',
     ),
 
-    preproc_comment: $ => /\/\*.*\*\//,
+    preproc_comment: $ => choice(/\/\*.*\*\//, /\/\/.*/),
 
     preproc_binary_expression: $ => {
       const table = [

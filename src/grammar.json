@@ -6500,8 +6500,17 @@
       ]
     },
     "preproc_comment": {
-      "type": "PATTERN",
-      "value": "\\/\\*.*\\*\\/"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "\\/\\*.*\\*\\/"
+        },
+        {
+          "type": "PATTERN",
+          "value": "\\/\\/.*"
+        }
+      ]
     },
     "preproc_binary_expression": {
       "type": "CHOICE",
