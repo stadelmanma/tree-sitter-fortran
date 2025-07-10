@@ -1827,6 +1827,10 @@
         "required": false,
         "types": [
           {
+            "type": "identifier",
+            "named": true
+          },
+          {
             "type": "number_literal",
             "named": true
           }
@@ -4564,6 +4568,10 @@
           "named": true
         },
         {
+          "type": "inline_preproc_comment",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -4580,11 +4588,11 @@
           "named": true
         },
         {
-          "type": "preproc_call",
+          "type": "multiline_preproc_comment",
           "named": true
         },
         {
-          "type": "preproc_comment",
+          "type": "preproc_call",
           "named": true
         },
         {
@@ -4700,6 +4708,10 @@
           "named": true
         },
         {
+          "type": "inline_preproc_comment",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -4716,11 +4728,11 @@
           "named": true
         },
         {
-          "type": "preproc_call",
+          "type": "multiline_preproc_comment",
           "named": true
         },
         {
-          "type": "preproc_comment",
+          "type": "preproc_call",
           "named": true
         },
         {
@@ -4807,6 +4819,10 @@
           "named": true
         },
         {
+          "type": "inline_preproc_comment",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -4823,11 +4839,11 @@
           "named": true
         },
         {
-          "type": "preproc_call",
+          "type": "multiline_preproc_comment",
           "named": true
         },
         {
-          "type": "preproc_comment",
+          "type": "preproc_call",
           "named": true
         },
         {
@@ -5007,6 +5023,10 @@
           "named": true
         },
         {
+          "type": "inline_preproc_comment",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -5023,11 +5043,11 @@
           "named": true
         },
         {
-          "type": "preproc_call",
+          "type": "multiline_preproc_comment",
           "named": true
         },
         {
-          "type": "preproc_comment",
+          "type": "preproc_call",
           "named": true
         },
         {
@@ -5143,6 +5163,10 @@
           "named": true
         },
         {
+          "type": "inline_preproc_comment",
+          "named": true
+        },
+        {
           "type": "interface",
           "named": true
         },
@@ -5159,11 +5183,11 @@
           "named": true
         },
         {
-          "type": "preproc_call",
+          "type": "multiline_preproc_comment",
           "named": true
         },
         {
-          "type": "preproc_comment",
+          "type": "preproc_call",
           "named": true
         },
         {
@@ -7541,6 +7565,10 @@
     "named": false
   },
   {
+    "type": "inline_preproc_comment",
+    "named": true
+  },
+  {
     "type": "inout",
     "named": false
   },
@@ -7603,6 +7631,11 @@
   {
     "type": "module",
     "named": false
+  },
+  {
+    "type": "multiline_preproc_comment",
+    "named": true,
+    "extra": true
   },
   {
     "type": "namelist",
@@ -7694,10 +7727,6 @@
   },
   {
     "type": "preproc_arg",
-    "named": true
-  },
-  {
-    "type": "preproc_comment",
     "named": true
   },
   {
