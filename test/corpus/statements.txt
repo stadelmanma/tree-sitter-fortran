@@ -1729,6 +1729,7 @@ Write Statements
 ================================================================================
 
 PROGRAM TEST
+  character(len=*), parameter :: fmt = '(a)'
   WRITE(*)
   WRITE(*, *) ''
   WRITE(10, 100) x, y, z
@@ -1737,6 +1738,7 @@ PROGRAM TEST
   WRITE(UNIT=IOUNIT, FMT="(FORMAT STRING)", IOSTAT=IOS, ADVANCE='NO') X
   write(unit=77, '(a)') "unusual"
   write(unit=77, *) "but valid"
+  write(unit, fmt) "Test"
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1745,6 +1747,16 @@ END PROGRAM
   (program
     (program_statement
       (name))
+    (variable_declaration
+      (intrinsic_type
+        (kind
+          (keyword_argument
+            (identifier)
+            (assumed_size))))
+      (type_qualifier)
+      (init_declarator
+        (identifier)
+        (string_literal)))
     (write_statement
       (unit_identifier))
     (write_statement
@@ -1805,6 +1817,13 @@ END PROGRAM
       (unit_identifier
         (number_literal))
       (format_identifier)
+      (output_item_list
+        (string_literal)))
+    (write_statement
+      (unit_identifier
+        (identifier))
+      (format_identifier
+        (identifier))
       (output_item_list
         (string_literal)))
     (end_program_statement)))

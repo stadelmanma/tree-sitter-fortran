@@ -21199,6 +21199,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[fF][mM][tT]"
+          },
+          "named": false,
+          "value": "fmt"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[fF][oO][rR][mM]"
           },
           "named": false,
@@ -21695,6 +21704,10 @@
     ],
     [
       "unit_identifier",
+      "identifier"
+    ],
+    [
+      "format_identifier",
       "identifier"
     ]
   ],

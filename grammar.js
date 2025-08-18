@@ -101,6 +101,7 @@ module.exports = grammar({
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
     [$.cray_pointer_declaration, $.identifier],
     [$.unit_identifier, $.identifier],
+    [$.format_identifier, $.identifier],
   ],
 
   supertypes: $ => [
@@ -2303,6 +2304,7 @@ module.exports = grammar({
       caseInsensitive('external'),
       caseInsensitive('fail'),
       prec(-1, caseInsensitive('flush')),
+      caseInsensitive('fmt'),
       caseInsensitive('form'),
       caseInsensitive('format'),
       caseInsensitive('go'),
