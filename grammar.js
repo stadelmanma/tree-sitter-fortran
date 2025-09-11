@@ -1120,7 +1120,7 @@ module.exports = grammar({
       $.select_case_statement,
       $.select_type_statement,
       $.select_rank_statement,
-      $.do_loop_statement,
+      $.do_loop,
       $.do_label_statement,
       $.end_do_label_statement,
       $.format_statement,
@@ -1257,8 +1257,16 @@ module.exports = grammar({
     ),
     _signed_literal: $ => prec.right(PREC.UNARY, seq(choice('-', '+'), $.number_literal)),
 
-    do_loop_statement: $ => seq(
+    do_loop: $ => seq(
       optional($.block_label_start_expression),
+      $.do_statement,
+      $._end_of_statement,
+      repeat($._statement),
+      optional($.statement_label),
+      $.end_do_loop_statement
+    ),
+
+    do_statement: $ => seq(
       caseInsensitive('do'),
       optional(','),
       optional(choice(
@@ -1266,10 +1274,6 @@ module.exports = grammar({
         $.loop_control_expression,
         $.concurrent_statement
       )),
-      $._end_of_statement,
-      repeat($._statement),
-      optional($.statement_label),
-      $.end_do_loop_statement
     ),
 
     end_do_loop_statement: $ => seq(

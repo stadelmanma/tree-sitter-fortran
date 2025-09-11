@@ -250,7 +250,7 @@
         "named": true
       },
       {
-        "type": "do_loop_statement",
+        "type": "do_loop",
         "named": true
       },
       {
@@ -2181,7 +2181,7 @@
     }
   },
   {
-    "type": "do_loop_statement",
+    "type": "do_loop",
     "named": true,
     "fields": {},
     "children": {
@@ -2197,15 +2197,11 @@
           "named": true
         },
         {
-          "type": "concurrent_statement",
+          "type": "do_statement",
           "named": true
         },
         {
           "type": "end_do_loop_statement",
-          "named": true
-        },
-        {
-          "type": "loop_control_expression",
           "named": true
         },
         {
@@ -2234,6 +2230,25 @@
         },
         {
           "type": "statement_label",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "do_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "concurrent_statement",
+          "named": true
+        },
+        {
+          "type": "loop_control_expression",
           "named": true
         },
         {

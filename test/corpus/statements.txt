@@ -693,11 +693,12 @@ END PROGRAM
   (program
     (program_statement
       (name))
-    (do_loop_statement
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (number_literal))
+    (do_loop
+      (do_statement
+        (loop_control_expression
+          (identifier)
+          (number_literal)
+          (number_literal)))
       (assignment_statement
         (identifier)
         (math_expression
@@ -717,58 +718,63 @@ END PROGRAM
             (identifier)
             (boolean_literal))))
       (end_do_loop_statement))
-    (do_loop_statement
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (call_expression
+    (do_loop
+      (do_statement
+        (loop_control_expression
           (identifier)
-          (argument_list
-            (identifier)))
-        (identifier))
+          (number_literal)
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)))
+          (identifier)))
       (keyword_statement)
       (keyword_statement
         (statement_label_reference))
       (end_do_loop_statement))
-    (do_loop_statement
+    (do_loop
       (block_label_start_expression)
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (call_expression
-          (identifier)
-          (argument_list
-            (call_expression
-              (identifier)
-              (argument_list
-                (math_expression
-                  (number_literal)
-                  (identifier)))))))
-      (do_loop_statement
+      (do_statement
         (loop_control_expression
           (identifier)
           (number_literal)
-          (number_literal)
-          (unary_expression
-            (number_literal)))
+          (call_expression
+            (identifier)
+            (argument_list
+              (call_expression
+                (identifier)
+                (argument_list
+                  (math_expression
+                    (number_literal)
+                    (identifier))))))))
+      (do_loop
+        (do_statement
+          (loop_control_expression
+            (identifier)
+            (number_literal)
+            (number_literal)
+            (unary_expression
+              (number_literal))))
         (keyword_statement
           (identifier))
         (end_do_loop_statement))
       (end_do_loop_statement
         (block_label)))
-    (do_loop_statement
-      (while_statement
-        (parenthesized_expression
-          (identifier)))
+    (do_loop
+      (do_statement
+        (while_statement
+          (parenthesized_expression
+            (identifier))))
       (assignment_statement
         (identifier)
         (number_literal))
       (end_do_loop_statement))
-    (do_loop_statement
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (number_literal))
+    (do_loop
+      (do_statement
+        (loop_control_expression
+          (identifier)
+          (number_literal)
+          (number_literal)))
       (if_statement
         (parenthesized_expression
           (identifier))
@@ -817,32 +823,33 @@ END PROGRAM TEST
     (assignment_statement
       left: (identifier)
       right: (number_literal))
-    (do_loop_statement
-      (concurrent_statement
-        (concurrent_header
-          (concurrent_control
+    (do_loop
+      (do_statement
+        (concurrent_statement
+          (concurrent_header
+            (concurrent_control
+              (identifier)
+              initial: (number_literal)
+              final: (identifier))
+            (concurrent_mask
+              (relational_expression
+                left: (call_expression
+                  (identifier)
+                  (argument_list
+                    (identifier)))
+                right: (number_literal))))
+          (concurrent_locality
+            (identifier))
+          (concurrent_locality
             (identifier)
-            initial: (number_literal)
-            final: (identifier))
-          (concurrent_mask
-            (relational_expression
-              left: (call_expression
-                (identifier)
-                (argument_list
-                  (identifier)))
-              right: (number_literal))))
-        (concurrent_locality
-          (identifier))
-        (concurrent_locality
-          (identifier)
-          (identifier))
-        (concurrent_locality
-          (binary_op)
-          (identifier)
-          (identifier))
-        (concurrent_locality
-          (binary_op)
-          (identifier)))
+            (identifier))
+          (concurrent_locality
+            (binary_op)
+            (identifier)
+            (identifier))
+          (concurrent_locality
+            (binary_op)
+            (identifier))))
       (assignment_statement
         left: (identifier)
         right: (call_expression
