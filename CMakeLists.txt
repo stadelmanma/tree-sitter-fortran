@@ -9,6 +9,15 @@ project(tree-sitter-fortran
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(TREE_SITTER_REUSE_ALLOCATOR "Reuse the library allocator" OFF)
 
+# Ensure wide character functions (iswblank, iswxdigit, etc.) are visible
+# when compiling in strict C11 mode on POSIX systems
+if(UNIX)
+    add_compile_definitions(_XOPEN_SOURCE=700)
+    if(CMAKE_SYSTEM_NAME MATCHES "FreeBSD|NetBSD|DragonFly|OpenBSD")
+        add_compile_definitions(_BSD_VISIBLE)
+    endif()
+endif()
+
 set(TREE_SITTER_ABI_VERSION 14 CACHE STRING "Tree-sitter ABI version")
 if(NOT ${TREE_SITTER_ABI_VERSION} MATCHES "^[0-9]+$")
     unset(TREE_SITTER_ABI_VERSION CACHE)
