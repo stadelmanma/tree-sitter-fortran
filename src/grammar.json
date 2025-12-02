@@ -21096,6 +21096,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "do"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[dD][oO][uU][bB][lL][eE]"
           },
           "named": false,

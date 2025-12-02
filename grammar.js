@@ -2296,6 +2296,7 @@ module.exports = grammar({
       caseInsensitive('data'),
       caseInsensitive('device'),
       prec(-1, caseInsensitive('dimension')),
+      caseInsensitive('do'),
       caseInsensitive('double'),
       caseInsensitive('else'),
       caseInsensitive('elseif'),
