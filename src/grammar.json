@@ -13155,7 +13155,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "do_loop_statement"
+          "name": "do_loop"
         },
         {
           "type": "SYMBOL",
@@ -14106,7 +14106,7 @@
         ]
       }
     },
-    "do_loop_statement": {
+    "do_loop": {
       "type": "SEQ",
       "members": [
         {
@@ -14121,6 +14121,42 @@
             }
           ]
         },
+        {
+          "type": "SYMBOL",
+          "name": "do_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "statement_label"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_do_loop_statement"
+        }
+      ]
+    },
+    "do_statement": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "ALIAS",
           "content": {
@@ -14166,33 +14202,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_end_of_statement"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_statement"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "statement_label"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "end_do_loop_statement"
         }
       ]
     },
@@ -21087,6 +21096,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "do"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[dD][oO][uU][bB][lL][eE]"
           },
           "named": false,
@@ -21194,6 +21212,15 @@
             "named": false,
             "value": "flush"
           }
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[fF][mM][tT]"
+          },
+          "named": false,
+          "value": "fmt"
         },
         {
           "type": "ALIAS",
@@ -21695,6 +21722,10 @@
     ],
     [
       "unit_identifier",
+      "identifier"
+    ],
+    [
+      "format_identifier",
       "identifier"
     ]
   ],

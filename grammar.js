@@ -101,6 +101,7 @@ module.exports = grammar({
     [$._inline_if_statement, $.arithmetic_if_statement, $._block_if_statement, $.identifier],
     [$.cray_pointer_declaration, $.identifier],
     [$.unit_identifier, $.identifier],
+    [$.format_identifier, $.identifier],
   ],
 
   supertypes: $ => [
@@ -1119,7 +1120,7 @@ module.exports = grammar({
       $.select_case_statement,
       $.select_type_statement,
       $.select_rank_statement,
-      $.do_loop_statement,
+      $.do_loop,
       $.do_label_statement,
       $.end_do_label_statement,
       $.format_statement,
@@ -1256,8 +1257,16 @@ module.exports = grammar({
     ),
     _signed_literal: $ => prec.right(PREC.UNARY, seq(choice('-', '+'), $.number_literal)),
 
-    do_loop_statement: $ => seq(
+    do_loop: $ => seq(
       optional($.block_label_start_expression),
+      $.do_statement,
+      $._end_of_statement,
+      repeat($._statement),
+      optional($.statement_label),
+      $.end_do_loop_statement
+    ),
+
+    do_statement: $ => seq(
       caseInsensitive('do'),
       optional(','),
       optional(choice(
@@ -1265,10 +1274,6 @@ module.exports = grammar({
         $.loop_control_expression,
         $.concurrent_statement
       )),
-      $._end_of_statement,
-      repeat($._statement),
-      optional($.statement_label),
-      $.end_do_loop_statement
     ),
 
     end_do_loop_statement: $ => seq(
@@ -2291,6 +2296,7 @@ module.exports = grammar({
       caseInsensitive('data'),
       caseInsensitive('device'),
       prec(-1, caseInsensitive('dimension')),
+      caseInsensitive('do'),
       caseInsensitive('double'),
       caseInsensitive('else'),
       caseInsensitive('elseif'),
@@ -2303,6 +2309,7 @@ module.exports = grammar({
       caseInsensitive('external'),
       caseInsensitive('fail'),
       prec(-1, caseInsensitive('flush')),
+      caseInsensitive('fmt'),
       caseInsensitive('form'),
       caseInsensitive('format'),
       caseInsensitive('go'),
