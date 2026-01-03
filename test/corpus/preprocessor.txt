@@ -508,8 +508,7 @@ end module foo
         (contains_statement)
         (preproc_if
           (identifier)
-          (procedure_statement
-            (procedure_kind)
+          (final_statement
             (method_name))))
       (end_type_statement
         (name)))

@@ -194,7 +194,7 @@ module.exports = grammar({
     ...preprocIf('_in_internal_procedures', $ => repeat($._internal_procedures)),
     ...preprocIf('_in_interface', $ => repeat($._interface_items)),
     ...preprocIf('_in_derived_type', $ => repeat($.variable_declaration)),
-    ...preprocIf('_in_bound_procedures', $ => repeat($.procedure_statement)),
+    ...preprocIf('_in_bound_procedures', $ => repeat($._procedure_binding)),
     ...preprocIf('_in_select_case', $ => $.case_statement),
     ...preprocIf('_in_select_type', $ => $.type_statement),
     ...preprocIf('_in_select_rank', $ => $.rank_statement),
@@ -780,11 +780,17 @@ module.exports = grammar({
       $.contains_statement,
       repeat(choice(
         alias('private', $.private_statement),
-        $.procedure_statement,
+        $._procedure_binding,
         $.include_statement,
         alias($.preproc_if_in_bound_procedures, $.preproc_if),
         alias($.preproc_ifdef_in_bound_procedures, $.preproc_ifdef),
       )),
+    ),
+
+    _procedure_binding: $ => choice(
+      $.procedure_statement,
+      $.generic_statement,
+      $.final_statement
     ),
 
     procedure_statement: $ => seq(
@@ -802,20 +808,45 @@ module.exports = grammar({
         $.binding,
       ))),
     ),
-    binding: $ => seq($.binding_name, '=>', $._method_name),
+
+    generic_statement: $ => seq(
+      caseInsensitive('generic'),
+      optional(seq(
+        ',',
+        prec.left($.access_specifier)
+      )),
+      '::',
+      field('declarator', $.binding_list)
+    ),
+
+    final_statement: $ => seq(
+      caseInsensitive('final'),
+      '::',
+      commaSep1(field('declarator', $._method_name))
+    ),
+
+    binding: $ => seq(
+      $.binding_name,
+      '=>',
+      $._method_name
+    ),
     binding_name: $ => choice(
       $.identifier,
       $._generic_procedure
     ),
+    binding_list: $ => seq(
+      $.binding_name,
+      '=>',
+      commaSep1($._method_name)
+    ),
+
     _method_name: $ => alias($.identifier, $.method_name),
 
     procedure_kind: $ => choice(
-      caseInsensitive('generic'),
       caseInsensitive('initial'),
       caseInsensitive('procedure'),
       seq(caseInsensitive('module'), caseInsensitive('procedure')),
       caseInsensitive('property'),
-      caseInsensitive('final')
     ),
 
     procedure_attribute: $ => prec.left(choice(

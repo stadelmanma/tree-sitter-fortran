@@ -4983,7 +4983,7 @@
             "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
-              "name": "procedure_statement"
+              "name": "_procedure_binding"
             }
           },
           {
@@ -5125,7 +5125,7 @@
             "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
-              "name": "procedure_statement"
+              "name": "_procedure_binding"
             }
           },
           {
@@ -5245,7 +5245,7 @@
             "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
-              "name": "procedure_statement"
+              "name": "_procedure_binding"
             }
           }
         ]
@@ -5303,7 +5303,7 @@
             "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
-              "name": "procedure_statement"
+              "name": "_procedure_binding"
             }
           },
           {
@@ -5415,7 +5415,7 @@
             "type": "REPEAT",
             "content": {
               "type": "SYMBOL",
-              "name": "procedure_statement"
+              "name": "_procedure_binding"
             }
           },
           {
@@ -11658,7 +11658,7 @@
               },
               {
                 "type": "SYMBOL",
-                "name": "procedure_statement"
+                "name": "_procedure_binding"
               },
               {
                 "type": "SYMBOL",
@@ -11684,6 +11684,23 @@
               }
             ]
           }
+        }
+      ]
+    },
+    "_procedure_binding": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "procedure_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "generic_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "final_statement"
         }
       ]
     },
@@ -11831,6 +11848,108 @@
         }
       ]
     },
+    "generic_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[gG][eE][nN][eE][rR][iI][cC]"
+          },
+          "named": false,
+          "value": "generic"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "PREC_LEFT",
+                  "value": 0,
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "access_specifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "FIELD",
+          "name": "declarator",
+          "content": {
+            "type": "SYMBOL",
+            "name": "binding_list"
+          }
+        }
+      ]
+    },
+    "final_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[fF][iI][nN][aA][lL]"
+          },
+          "named": false,
+          "value": "final"
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "declarator",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_method_name"
+              }
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "declarator",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_method_name"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
     "binding": {
       "type": "SEQ",
       "members": [
@@ -11861,6 +11980,44 @@
         }
       ]
     },
+    "binding_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "binding_name"
+        },
+        {
+          "type": "STRING",
+          "value": "=>"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_method_name"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_method_name"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
     "_method_name": {
       "type": "ALIAS",
       "content": {
@@ -11873,15 +12030,6 @@
     "procedure_kind": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[gG][eE][nN][eE][rR][iI][cC]"
-          },
-          "named": false,
-          "value": "generic"
-        },
         {
           "type": "ALIAS",
           "content": {
@@ -11931,15 +12079,6 @@
           },
           "named": false,
           "value": "property"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[fF][iI][nN][aA][lL]"
-          },
-          "named": false,
-          "value": "final"
         }
       ]
     },

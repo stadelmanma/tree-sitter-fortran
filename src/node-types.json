@@ -864,6 +864,25 @@
     }
   },
   {
+    "type": "binding_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "binding_name",
+          "named": true
+        },
+        {
+          "type": "method_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binding_name",
     "named": true,
     "fields": {},
@@ -2097,6 +2116,14 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
+          "named": true
+        },
+        {
           "type": "include_statement",
           "named": true
         },
@@ -2988,6 +3015,22 @@
     }
   },
   {
+    "type": "final_statement",
+    "named": true,
+    "fields": {
+      "declarator": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "method_name",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "forall_statement",
     "named": true,
     "fields": {},
@@ -3255,6 +3298,32 @@
         },
         {
           "type": "procedure_qualifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "generic_statement",
+    "named": true,
+    "fields": {
+      "declarator": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "binding_list",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "access_specifier",
           "named": true
         }
       ]
@@ -4585,7 +4654,15 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
           "named": true
         },
         {
@@ -4725,7 +4802,15 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
           "named": true
         },
         {
@@ -4836,7 +4921,15 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
           "named": true
         },
         {
@@ -5040,7 +5133,15 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
           "named": true
         },
         {
@@ -5180,7 +5281,15 @@
           "named": true
         },
         {
+          "type": "final_statement",
+          "named": true
+        },
+        {
           "type": "function",
+          "named": true
+        },
+        {
+          "type": "generic_statement",
           "named": true
         },
         {
