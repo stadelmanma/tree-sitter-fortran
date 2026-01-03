@@ -2263,21 +2263,23 @@ end program
     (program_statement
       (name))
     (associate_statement
-      (association
-        (identifier)
-        (identifier))
-      (association
-        (identifier)
-        (identifier))
-      (associate_statement
-        (block_label_start_expression)
+      (association_list
         (association
           (identifier)
-          (call_expression
-            (derived_type_member_expression
-              (identifier)
-              (type_member))
-            (argument_list)))
+          (identifier))
+        (association
+          (identifier)
+          (identifier)))
+      (associate_statement
+        (block_label_start_expression)
+        (association_list
+          (association
+            (identifier)
+            (call_expression
+              (derived_type_member_expression
+                (identifier)
+                (type_member))
+              (argument_list))))
         (assignment_statement
           (identifier)
           (math_expression

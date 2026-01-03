@@ -1617,12 +1617,16 @@ module.exports = grammar({
     associate_statement: $ => seq(
       optional($.block_label_start_expression),
       caseInsensitive('associate'),
-      '(',
-      commaSep1($.association),
-      ')',
+      $.association_list,
       $._end_of_statement,
       repeat($._statement),
       $.end_associate_statement
+    ),
+
+    association_list: $ => seq(
+      '(',
+      commaSep1($.association),
+      ')'
     ),
 
     association: $ => seq(
