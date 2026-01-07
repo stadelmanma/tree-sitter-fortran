@@ -11789,7 +11789,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "method_name"
+                    "name": "_method_name"
                   },
                   {
                     "type": "SYMBOL",
@@ -11815,7 +11815,7 @@
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "method_name"
+                          "name": "_method_name"
                         },
                         {
                           "type": "SYMBOL",
@@ -11844,7 +11844,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "method_name"
+          "name": "_method_name"
         }
       ]
     },
@@ -11861,13 +11861,13 @@
         }
       ]
     },
-    "method_name": {
+    "_method_name": {
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
         "name": "identifier"
       },
-      "named": false,
+      "named": true,
       "value": "method_name"
     },
     "procedure_kind": {

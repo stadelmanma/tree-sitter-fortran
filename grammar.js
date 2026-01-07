@@ -798,16 +798,16 @@ module.exports = grammar({
       )),
       optional('::'),
       commaSep1(field('declarator', choice(
-        $.method_name,
+        $._method_name,
         $.binding,
       ))),
     ),
-    binding: $ => seq($.binding_name, '=>', $.method_name),
+    binding: $ => seq($.binding_name, '=>', $._method_name),
     binding_name: $ => choice(
       $.identifier,
       $._generic_procedure
     ),
-    method_name: $ => alias($.identifier, 'method_name'),
+    _method_name: $ => alias($.identifier, $.method_name),
 
     procedure_kind: $ => choice(
       caseInsensitive('generic'),
