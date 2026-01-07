@@ -12,3 +12,5 @@ globals:
   seq: false
   token: false
   word: false
+
+comma-dangle: always
