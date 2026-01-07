@@ -302,3 +302,14 @@ end program test
           (number_literal))))
     (end_program_statement
       (name))))
+
+================================================================================
+Line continuation as part of string
+:error
+================================================================================
+program main
+  ! This should print "I like fish&chips"
+  print *, "I like fish&&
+    &chips"
+end program main
+--------------------------------------------------------------------------------
