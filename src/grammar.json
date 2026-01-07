@@ -12283,25 +12283,22 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT1",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_standalone_type_qualifier"
-                },
-                "named": true,
-                "value": "type_qualifier"
-              },
-              {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
                 "type": "SYMBOL",
-                "name": "variable_attributes"
-              }
-            ]
-          }
+                "name": "_standalone_type_qualifier"
+              },
+              "named": true,
+              "value": "type_qualifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "variable_attributes"
+            }
+          ]
         },
         {
           "type": "CHOICE",

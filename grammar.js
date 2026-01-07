@@ -871,10 +871,10 @@ module.exports = grammar({
     ),
 
     variable_modification: $ => seq(
-      repeat1(choice(
+      choice(
         alias($._standalone_type_qualifier, $.type_qualifier),
         $.variable_attributes,
-      )),
+      ),
       optional('::'),
       commaSep1(field('declarator', $._variable_declarator)),
     ),
