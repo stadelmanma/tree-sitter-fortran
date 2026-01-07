@@ -16954,13 +16954,32 @@
               ]
             },
             {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_class_default"
-              },
-              "named": true,
-              "value": "default"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "PATTERN",
+                    "value": "[cC][lL][aA][sS][sS]"
+                  },
+                  "named": false,
+                  "value": "class"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[dD][eE][fF][aA][uU][lL][tT]"
+                    },
+                    "named": false,
+                    "value": "default"
+                  },
+                  "named": true,
+                  "value": "default"
+                }
+              ]
             }
           ]
         },

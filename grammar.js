@@ -1574,7 +1574,10 @@ module.exports = grammar({
             seq('(', field('type', choice($.intrinsic_type, $.identifier)), ')'),
           ),
         ),
-        alias($._class_default, $.default)
+        seq(
+          caseInsensitive('class'),
+          alias(caseInsensitive('default'), $.default)
+        ),
       ),
       optional($._block_label),
       $._end_of_statement,

@@ -1935,11 +1935,6 @@
     }
   },
   {
-    "type": "default",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "defined_io_procedure",
     "named": true,
     "fields": {}
@@ -7309,6 +7304,10 @@
   {
     "type": "deallocate",
     "named": false
+  },
+  {
+    "type": "default",
+    "named": true
   },
   {
     "type": "default",
