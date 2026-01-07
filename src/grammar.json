@@ -11648,12 +11648,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "public_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "private_statement"
+                "type": "ALIAS",
+                "content": {
+                  "type": "STRING",
+                  "value": "private"
+                },
+                "named": true,
+                "value": "private_statement"
               },
               {
                 "type": "SYMBOL",

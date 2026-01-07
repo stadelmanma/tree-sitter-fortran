@@ -779,8 +779,7 @@ module.exports = grammar({
     derived_type_procedures: $ => seq(
       $.contains_statement,
       repeat(choice(
-        $.public_statement,
-        $.private_statement,
+        alias('private', $.private_statement),
         $.procedure_statement,
         $.include_statement,
         alias($.preproc_if_in_bound_procedures, $.preproc_if),
