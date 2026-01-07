@@ -11648,12 +11648,13 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "public_statement"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "private_statement"
+                "type": "ALIAS",
+                "content": {
+                  "type": "STRING",
+                  "value": "private"
+                },
+                "named": true,
+                "value": "private_statement"
               },
               {
                 "type": "SYMBOL",
@@ -12283,25 +12284,22 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT1",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_standalone_type_qualifier"
-                },
-                "named": true,
-                "value": "type_qualifier"
-              },
-              {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
                 "type": "SYMBOL",
-                "name": "variable_attributes"
-              }
-            ]
-          }
+                "name": "_standalone_type_qualifier"
+              },
+              "named": true,
+              "value": "type_qualifier"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "variable_attributes"
+            }
+          ]
         },
         {
           "type": "CHOICE",

@@ -779,8 +779,7 @@ module.exports = grammar({
     derived_type_procedures: $ => seq(
       $.contains_statement,
       repeat(choice(
-        $.public_statement,
-        $.private_statement,
+        alias('private', $.private_statement),
         $.procedure_statement,
         $.include_statement,
         alias($.preproc_if_in_bound_procedures, $.preproc_if),
@@ -871,10 +870,10 @@ module.exports = grammar({
     ),
 
     variable_modification: $ => seq(
-      repeat1(choice(
+      choice(
         alias($._standalone_type_qualifier, $.type_qualifier),
         $.variable_attributes,
-      )),
+      ),
       optional('::'),
       commaSep1(field('declarator', $._variable_declarator)),
     ),
