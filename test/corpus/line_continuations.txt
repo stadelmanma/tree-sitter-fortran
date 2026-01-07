@@ -302,3 +302,25 @@ end program test
           (number_literal))))
     (end_program_statement
       (name))))
+
+================================================================================
+Line continuation as part of string
+================================================================================
+program main
+  ! This should print "I like fish&chips"
+  print *, "I like fish&&
+    &chips"
+end program main
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (comment)
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal)))
+    (end_program_statement
+      (name))))
