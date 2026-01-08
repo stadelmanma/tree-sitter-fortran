@@ -17008,28 +17008,6 @@
         }
       ]
     },
-    "_class_default": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[cC][lL][aA][sS][sS]"
-            },
-            {
-              "type": "PATTERN",
-              "value": "[dD][eE][fF][aA][uU][lL][tT]"
-            }
-          ]
-        },
-        {
-          "type": "PATTERN",
-          "value": "[cC][lL][aA][sS][sS][dD][eE][fF][aA][uU][lL][tT]"
-        }
-      ]
-    },
     "case_value_range_list": {
       "type": "SEQ",
       "members": [
