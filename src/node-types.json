@@ -548,7 +548,7 @@
           "named": true
         },
         {
-          "type": "association",
+          "type": "association_list",
           "named": true
         },
         {
@@ -614,6 +614,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "association_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "association",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -7662,11 +7677,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",

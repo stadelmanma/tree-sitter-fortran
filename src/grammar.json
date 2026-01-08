@@ -17258,6 +17258,30 @@
           "value": "associate"
         },
         {
+          "type": "SYMBOL",
+          "name": "association_list"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_end_of_statement"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "end_associate_statement"
+        }
+      ]
+    },
+    "association_list": {
+      "type": "SEQ",
+      "members": [
+        {
           "type": "STRING",
           "value": "("
         },
@@ -17289,21 +17313,6 @@
         {
           "type": "STRING",
           "value": ")"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_end_of_statement"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_statement"
-          }
-        },
-        {
-          "type": "SYMBOL",
-          "name": "end_associate_statement"
         }
       ]
     },
