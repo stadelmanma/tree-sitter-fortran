@@ -110,6 +110,7 @@ module.exports = grammar({
     $._expression,
     $._statements,
     $._argument_item,
+    $._procedure_binding,
   ],
 
   rules: {

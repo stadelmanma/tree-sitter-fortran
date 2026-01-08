@@ -108,6 +108,24 @@
     ]
   },
   {
+    "type": "_procedure_binding",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "final_statement",
+        "named": true
+      },
+      {
+        "type": "generic_statement",
+        "named": true
+      },
+      {
+        "type": "procedure_statement",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "_specification_parts",
     "named": true,
     "subtypes": [
@@ -2112,15 +2130,11 @@
       "required": true,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "contains_statement",
-          "named": true
-        },
-        {
-          "type": "final_statement",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -2137,10 +2151,6 @@
         },
         {
           "type": "private_statement",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         }
       ]
@@ -4634,6 +4644,10 @@
       "required": false,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "_specification_parts",
           "named": true
         },
@@ -4654,15 +4668,7 @@
           "named": true
         },
         {
-          "type": "final_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -4711,10 +4717,6 @@
         },
         {
           "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         },
         {
@@ -4782,6 +4784,10 @@
       "required": false,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "_specification_parts",
           "named": true
         },
@@ -4802,15 +4808,7 @@
           "named": true
         },
         {
-          "type": "final_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -4859,10 +4857,6 @@
         },
         {
           "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         },
         {
@@ -4901,6 +4895,10 @@
       "required": false,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "_specification_parts",
           "named": true
         },
@@ -4921,15 +4919,7 @@
           "named": true
         },
         {
-          "type": "final_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -4978,10 +4968,6 @@
         },
         {
           "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         },
         {
@@ -5113,6 +5099,10 @@
       "required": false,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "_specification_parts",
           "named": true
         },
@@ -5133,15 +5123,7 @@
           "named": true
         },
         {
-          "type": "final_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -5190,10 +5172,6 @@
         },
         {
           "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         },
         {
@@ -5261,6 +5239,10 @@
       "required": false,
       "types": [
         {
+          "type": "_procedure_binding",
+          "named": true
+        },
+        {
           "type": "_specification_parts",
           "named": true
         },
@@ -5281,15 +5263,7 @@
           "named": true
         },
         {
-          "type": "final_statement",
-          "named": true
-        },
-        {
           "type": "function",
-          "named": true
-        },
-        {
-          "type": "generic_statement",
           "named": true
         },
         {
@@ -5338,10 +5312,6 @@
         },
         {
           "type": "preproc_include",
-          "named": true
-        },
-        {
-          "type": "procedure_statement",
           "named": true
         },
         {

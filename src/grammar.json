@@ -22701,7 +22701,8 @@
     "_specification_parts",
     "_expression",
     "_statements",
-    "_argument_item"
+    "_argument_item",
+    "_procedure_binding"
   ],
   "reserved": {}
 }
