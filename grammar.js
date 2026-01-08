@@ -1574,15 +1574,15 @@ module.exports = grammar({
             seq('(', field('type', choice($.intrinsic_type, $.identifier)), ')'),
           ),
         ),
-        alias($._class_default, $.default)
+        seq(
+          caseInsensitive('class'),
+          alias(caseInsensitive('default'), $.default)
+        ),
       ),
       optional($._block_label),
       $._end_of_statement,
       repeat($._statement)
     ),
-
-    // Standalone rule otherwise it gets aliased as '(default) (default)'
-    _class_default: $ => whiteSpacedKeyword('class', 'default', false),
 
     case_value_range_list: $ => commaSep1(choice(
       $._expression,
