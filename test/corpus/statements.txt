@@ -2440,10 +2440,9 @@ end module
       (derived_type_procedures
         (contains_statement)
         (comment)
-        (procedure_statement
-          (procedure_kind)
-          (procedure_attribute)
-          (binding
+        (generic_statement
+          (access_specifier)
+          (binding_list
             (binding_name
               (defined_io_procedure))
             (method_name)))

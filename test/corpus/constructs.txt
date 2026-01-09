@@ -821,7 +821,7 @@ program test
        procedure, nopass, non_overridable :: static_method ! static method
        procedure instance_method ! instance method
        procedure, public, pass(self) :: pass_method
-       generic, pass :: binding_name => method_name, method_name2
+       generic :: binding_name => method_name, method_name2
        generic, private :: assignment(=) => assign_method
        generic, private :: operator(+) => add_method
        procedure :: one, two => three
@@ -900,25 +900,21 @@ end program
           (procedure_attribute
             (identifier))
           (method_name))
-        (procedure_statement
-          (procedure_kind)
-          (procedure_attribute)
-          (binding
+        (generic_statement
+          (binding_list
             (binding_name
               (identifier))
-            (method_name))
-          (method_name))
-        (procedure_statement
-          (procedure_kind)
-          (procedure_attribute)
-          (binding
+            (method_name)
+            (method_name)))
+        (generic_statement
+          (access_specifier)
+          (binding_list
             (binding_name
               (assignment))
             (method_name)))
-        (procedure_statement
-          (procedure_kind)
-          (procedure_attribute)
-          (binding
+        (generic_statement
+          (access_specifier)
+          (binding_list
             (binding_name
               (operator
                 (operator_name)))
@@ -930,8 +926,7 @@ end program
             (binding_name
               (identifier))
             (method_name)))
-        (procedure_statement
-          (procedure_kind)
+        (final_statement
           (method_name)))
       (end_type_statement
         (name)))
