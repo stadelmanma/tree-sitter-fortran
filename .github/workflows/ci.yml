@@ -33,9 +33,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Set up tree-sitter
-        uses: tree-sitter/setup-action/cli@v1
+        uses: tree-sitter/setup-action@v2
         with:
-          tree-sitter-ref: v0.25.6
+          tree-sitter-ref: v0.26.3
       - name: Run tests
         uses: tree-sitter/parser-test-action@v2
         with:
