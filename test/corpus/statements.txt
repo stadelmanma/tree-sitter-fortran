@@ -904,43 +904,48 @@ end program test
   (program
     (program_statement
       (name))
-    (do_label_statement
-      (statement_label_reference)
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (number_literal)))
-    (do_label_statement
-      (statement_label_reference)
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (number_literal)))
-    (assignment_statement
-      (call_expression
-        (identifier)
-        (argument_list
+    (do_loop
+      (do_statement
+        (do_label)
+        (loop_control_expression
           (identifier)
-          (identifier)))
-      (math_expression
-        (identifier)
-        (identifier)))
-    (statement_label)
-    (keyword_statement)
-    (do_label_statement
-      (statement_label_reference)
-      (loop_control_expression
-        (identifier)
-        (number_literal)
-        (number_literal)))
-    (assignment_statement
-      (call_expression
-        (identifier)
-        (argument_list
-          (identifier)))
-      (identifier))
-    (end_do_label_statement
-      (statement_label))
+          (number_literal)
+          (number_literal)))
+      (do_loop
+        (do_statement
+          (do_label)
+          (loop_control_expression
+            (identifier)
+            (number_literal)
+            (number_literal)))
+        (assignment_statement
+          (call_expression
+            (identifier)
+            (argument_list
+              (identifier)
+              (identifier)))
+          (math_expression
+            (identifier)
+            (identifier)))
+        (end_do_label_loop_statement
+          (do_label_virtual)))
+      (end_do_label_loop_statement
+        (do_label_continue)))
+    (do_loop
+      (do_statement
+        (do_label)
+        (loop_control_expression
+          (identifier)
+          (number_literal)
+          (number_literal)))
+      (assignment_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (identifier)))
+        (identifier))
+      (end_do_label_loop_statement
+        (do_label_continue)))
     (end_program_statement
       (name))))
 

@@ -2,6 +2,7 @@
 #include "tree_sitter/parser.h"
 #include <ctype.h>
 #include <wctype.h>
+#include <string.h>
 
 enum TokenType {
     LINE_CONTINUATION,
@@ -13,10 +14,26 @@ enum TokenType {
     END_OF_STATEMENT,
     PREPROC_UNARY_OPERATOR,
     HOLLERITH_CONSTANT,
+    DO_LABEL,
+    DO_LABEL_VIRTUAL,
+    DO_LABEL_CONTINUE,
 };
+
+// at most 100 nested labeled do loops, should be sufficient
+#define MAX_LABEL_STACK 100
 
 typedef struct {
     bool in_line_continuation;
+
+    // stack for tracking active DO labels and their counts
+    int32_t depth;
+    int32_t labels[MAX_LABEL_STACK];
+    int32_t counts[MAX_LABEL_STACK];
+
+    // counter for emitting virtual label token for closing labeled do statements
+    int32_t pending_label_virtual;
+    // flag for emitting eos tokens right after a virtual label token
+    bool is_pending_eos_virtual;
 } Scanner;
 
 
@@ -438,7 +455,138 @@ static bool scan_preproc_unary_operator(TSLexer *lexer) {
     return false;
 }
 
+
+static void track_labeled_do(Scanner *scanner, int32_t label) {
+    // check if label already exists
+    int i = scanner->depth - 1;
+    if (scanner->labels[i] == label) {
+        scanner->counts[i]++;
+        return;
+    }
+
+    // not at top of stack, assume new label, add it to stack
+    if (scanner->depth < MAX_LABEL_STACK) {
+        scanner->labels[scanner->depth] = label;
+        scanner->counts[scanner->depth] = 1;
+        scanner->depth++;
+    } else {
+        // should we properly abort here?
+    }
+}
+
+// check whether an end of statement token for virtual do labels is pending,
+// emit END_OF_STATEMENT and update internal state accordingly
+static inline bool scan_do_label_eos(Scanner *scanner, TSLexer *lexer) {
+    if (scanner->is_pending_eos_virtual) {
+        scanner->is_pending_eos_virtual = false;
+        lexer->result_symbol = END_OF_STATEMENT;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// check whether do labels are pending, emit DO_LABEL_VIRTUAL or DO_LABEL_CONTINUE
+// and update internal state accordingly
+static inline bool scan_do_label_pending(Scanner *scanner, TSLexer *lexer) {
+    if (scanner->pending_label_virtual > 0) {
+        if (scanner->pending_label_virtual > 1) {
+            scanner->pending_label_virtual--;
+            // schedule an eos for the next token to finish the virtual statement
+            scanner->is_pending_eos_virtual = true;
+            lexer->result_symbol = DO_LABEL_VIRTUAL;
+        } else {
+            // emit last termination symbol which is do_label_continue
+            scanner->pending_label_virtual = 0;
+            lexer->result_symbol = DO_LABEL_CONTINUE;
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// only invoked after parser has found a "do" (and thus DO_LABEL is a valid
+// token) and the scan has consumed a proper integer value provided as label
+static void scan_do_label(Scanner *scanner, TSLexer *lexer, int32_t label) {
+    track_labeled_do(scanner, label);
+    lexer->result_symbol = DO_LABEL;
+}
+
+static bool scan_do_label_continue(Scanner *scanner, TSLexer *lexer, int32_t label) {
+    // determine whether this label belongs to the last labeled do,
+    // if it does, remove it from stack and determine how many loops it closes
+    int32_t loops_to_close = 0;
+    if (scanner->depth > 0) {
+        int i = scanner->depth - 1;
+        if (scanner->labels[i] == label) {
+            loops_to_close = scanner->counts[i];
+            // remove from stack
+            scanner->depth--;
+        }
+    }
+
+    // scanner->counts[i] is always greater than zero, if the label is on the stack,
+    // hence loops_to_close == 0 means depth=0 or label is not at top of stack
+    if (loops_to_close == 0) {
+        // label not on stack, hence this does not close a labeled do
+        return false;
+    }
+
+    scanner->pending_label_virtual = loops_to_close;
+    scanner->is_pending_eos_virtual = false;
+    scan_do_label_pending(scanner, lexer);
+    return true;
+}
+
+// check for label, number of boz token
+static bool scan_label_number_boz(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+    // extract out root number from expression (without kind if present)
+    NumberResult result = scan_number(lexer);
+
+    // check for a do-label, should have at most 5 digits and DO_LABEL
+    // or DO_LABEL_CONTINUE are valid symbols
+    if (result.type == NUMBER_INTEGER && result.digit_count < 6) {
+        if (valid_symbols[DO_LABEL]) {
+            scan_do_label(scanner, lexer, result.value);
+            return true;
+        }
+        if (valid_symbols[DO_LABEL_CONTINUE] &&
+            scan_do_label_continue(scanner, lexer, result.value)) {
+            return true;
+        }
+    }
+
+    // not a label
+    if (result.type == NUMBER_INTEGER) {
+        lexer->result_symbol = INTEGER_LITERAL;
+        return true;
+    } else if (result.type == NUMBER_FLOAT) {
+        lexer->result_symbol = FLOAT_LITERAL;
+        return true;
+    }
+
+    if (scan_boz(lexer)) {
+        return true;
+    }
+
+    return false;
+}
+
 static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
+    // handle pending virtual labels and eos first
+    if (valid_symbols[END_OF_STATEMENT]) {
+        if (scan_do_label_eos(scanner, lexer)) {
+            return true;
+        }
+    }
+
+    if(valid_symbols[DO_LABEL_CONTINUE] || valid_symbols[DO_LABEL_VIRTUAL]) {
+        if (scan_do_label_pending(scanner, lexer)) {
+            return true;
+        }
+    }
+
     // Consume any leading whitespace except newlines
     while (iswblank(lexer->lookahead)) {
         skip(lexer);
@@ -474,19 +622,12 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         }
     }
 
-
-    if (valid_symbols[INTEGER_LITERAL] || valid_symbols[FLOAT_LITERAL] ||
-        valid_symbols[BOZ_LITERAL]) {
-        // extract out root number from expression (without kind if present)
-        NumberResult val = scan_number(lexer);
-        if (val.type == NUMBER_INTEGER) {
-            lexer->result_symbol = INTEGER_LITERAL;
-            return true;
-        } else if (val.type == NUMBER_FLOAT) {
-            lexer->result_symbol = FLOAT_LITERAL;
-            return true;
-        }
-        if (scan_boz(lexer)) {
+    if (valid_symbols[INTEGER_LITERAL] ||
+        valid_symbols[FLOAT_LITERAL] ||
+        valid_symbols[BOZ_LITERAL] ||
+        valid_symbols[DO_LABEL] ||
+        valid_symbols[DO_LABEL_CONTINUE]) {
+        if (scan_label_number_boz(scanner, lexer, valid_symbols)) {
             return true;
         }
     }
@@ -513,7 +654,12 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
 }
 
 void *tree_sitter_fortran_external_scanner_create() {
-    return ts_calloc(1, sizeof(bool));
+    Scanner *scanner = ts_calloc(1, sizeof(Scanner));
+    scanner->in_line_continuation = false;
+    scanner->depth = 0;
+    scanner->pending_label_virtual = 0;
+    scanner->is_pending_eos_virtual = false;
+    return scanner;
 }
 
 bool tree_sitter_fortran_external_scanner_scan(void *payload, TSLexer *lexer,
@@ -525,17 +671,71 @@ bool tree_sitter_fortran_external_scanner_scan(void *payload, TSLexer *lexer,
 unsigned tree_sitter_fortran_external_scanner_serialize(void *payload,
                                                         char *buffer) {
     Scanner *scanner = (Scanner *)payload;
-    buffer[0] = (char)scanner->in_line_continuation;
-    return 1;
+
+    if (scanner->depth > MAX_LABEL_STACK) return 0;
+
+    size_t size = 0;
+
+    buffer[size] = (char)scanner->in_line_continuation;
+    size += 1;
+
+    memcpy(&buffer[size], &scanner->depth, sizeof(int32_t));
+    size += sizeof(int32_t);
+
+    memcpy(&buffer[size], scanner->labels, scanner->depth * sizeof(int32_t));
+    size += scanner->depth * sizeof(int32_t);
+
+    memcpy(&buffer[size], scanner->counts, scanner->depth * sizeof(int32_t));
+    size += scanner->depth * sizeof(int32_t);
+
+    memcpy(&buffer[size], &scanner->pending_label_virtual, sizeof(int32_t));
+    size += sizeof(int32_t);
+
+    buffer[size] = (char)scanner->is_pending_eos_virtual;
+    size += 1;
+
+    return size;
 }
 
 void tree_sitter_fortran_external_scanner_deserialize(void *payload,
                                                       const char *buffer,
                                                       unsigned length) {
     Scanner *scanner = (Scanner *)payload;
-    if (length > 0) {
-        scanner->in_line_continuation = buffer[0];
+
+    if (length == 0) {
+        scanner->in_line_continuation = false;
+        scanner->depth = 0;
+        scanner->pending_label_virtual = 0;
+        scanner->is_pending_eos_virtual = false;
+        return;
     }
+
+    size_t size = 0;
+
+    scanner->in_line_continuation = buffer[size];
+    size += 1;
+
+    memcpy(&scanner->depth, &buffer[size], sizeof(int32_t));
+    size += sizeof(int32_t);
+
+    if (scanner->depth > MAX_LABEL_STACK) {
+        scanner->depth = 0;
+        scanner->pending_label_virtual = 0;
+        scanner->is_pending_eos_virtual = false;
+        return;
+    }
+
+    memcpy(scanner->labels, &buffer[size], scanner->depth * sizeof(int32_t));
+    size += scanner->depth * sizeof(int32_t);
+
+    memcpy(scanner->counts, &buffer[size], scanner->depth * sizeof(int32_t));
+    size += scanner->depth * sizeof(int32_t);
+
+    memcpy(&scanner->pending_label_virtual, &buffer[size], sizeof(int32_t));
+    size += sizeof(int32_t);
+
+    scanner->is_pending_eos_virtual = buffer[size];
+    size += 1;
 }
 
 void tree_sitter_fortran_external_scanner_destroy(void *payload) {
