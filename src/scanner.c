@@ -30,29 +30,29 @@ static bool is_identifier_char(char chr) { return iswalnum(chr) || chr == '_'; }
 
 static bool is_boz_sentinel(char chr) {
     switch (chr) {
-        case 'B':
-        case 'b':
-        case 'O':
-        case 'o':
-        case 'Z':
-        case 'z':
-            return true;
-        default:
-            return false;
+    case 'B':
+    case 'b':
+    case 'O':
+    case 'o':
+    case 'Z':
+    case 'z':
+        return true;
+    default:
+        return false;
     }
 }
 
 static bool is_exp_sentinel(char chr) {
     switch (chr) {
-        case 'D':
-        case 'd':
-        case 'E':
-        case 'e':
-        case 'Q':
-        case 'q':
-            return true;
-        default:
-            return false;
+    case 'D':
+    case 'd':
+    case 'E':
+    case 'e':
+    case 'Q':
+    case 'q':
+        return true;
+    default:
+        return false;
     }
 }
 
@@ -68,17 +68,17 @@ static bool scan_int(TSLexer *lexer) {
 
     // handle line continuations
     if (lexer->lookahead == '&') {
-      advance(lexer);
-      while (iswspace(lexer->lookahead)) {
         advance(lexer);
-      }
-      // second '&' required to continue the literal
-      if (lexer->lookahead == '&') {
-        advance(lexer);
-        // don't return here, as we may have finished literal on first
-        // line but still have second '&'
-        scan_int(lexer);
-      }
+        while (iswspace(lexer->lookahead)) {
+            advance(lexer);
+        }
+        // second '&' required to continue the literal
+        if (lexer->lookahead == '&') {
+            advance(lexer);
+            // don't return here, as we may have finished literal on first
+            // line but still have second '&'
+            scan_int(lexer);
+        }
     }
 
     return true;
@@ -290,31 +290,31 @@ static bool scan_end_line_continuation(Scanner *scanner, TSLexer *lexer) {
 }
 
 static bool scan_string_literal_kind(TSLexer *lexer) {
-  // Strictly, it's allowed for the kind to be an integer literal, in
-  // practice I've not seen it
-  if (!iswalpha(lexer->lookahead)) {
-    return false;
-  }
+    // Strictly, it's allowed for the kind to be an integer literal, in
+    // practice I've not seen it
+    if (!iswalpha(lexer->lookahead)) {
+        return false;
+    }
 
-  lexer->result_symbol = STRING_LITERAL_KIND;
+    lexer->result_symbol = STRING_LITERAL_KIND;
 
-  // We need two characters of lookahead to see `_"`
-  char current_char = '\0';
+    // We need two characters of lookahead to see `_"`
+    char current_char = '\0';
 
-  while (is_identifier_char(lexer->lookahead) && !lexer->eof(lexer)) {
-      current_char = lexer->lookahead;
-      // Don't capture the trailing underscore as part of the kind identifier
-      if (lexer->lookahead == '_') {
-          lexer->mark_end(lexer);
-      }
-      advance(lexer);
-  }
+    while (is_identifier_char(lexer->lookahead) && !lexer->eof(lexer)) {
+        current_char = lexer->lookahead;
+        // Don't capture the trailing underscore as part of the kind identifier
+        if (lexer->lookahead == '_') {
+            lexer->mark_end(lexer);
+        }
+        advance(lexer);
+    }
 
-  if ((current_char != '_') || (lexer->lookahead != '"' && lexer->lookahead != '\'')) {
-    return false;
-  }
+    if ((current_char != '_') || (lexer->lookahead != '"' && lexer->lookahead != '\'')) {
+        return false;
+    }
 
-  return true;
+    return true;
 }
 
 static bool scan_string_literal(TSLexer *lexer) {
@@ -384,13 +384,13 @@ static bool scan_string_literal(TSLexer *lexer) {
 
 /// Need an external scanner to catch '!' before its parsed as a comment
 static bool scan_preproc_unary_operator(TSLexer *lexer) {
-  const char next_char = lexer->lookahead;
-  if (next_char == '!' || next_char == '~' || next_char == '-' || next_char == '+') {
-    advance(lexer);
-    lexer->result_symbol = PREPROC_UNARY_OPERATOR;
-    return true;
-  }
-  return false;
+    const char next_char = lexer->lookahead;
+    if (next_char == '!' || next_char == '~' || next_char == '-' || next_char == '+') {
+        advance(lexer);
+        lexer->result_symbol = PREPROC_UNARY_OPERATOR;
+        return true;
+    }
+    return false;
 }
 
 static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
@@ -442,9 +442,9 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     }
 
     if (valid_symbols[PREPROC_UNARY_OPERATOR]) {
-      if (scan_preproc_unary_operator(lexer)) {
-        return true;
-      }
+        if (scan_preproc_unary_operator(lexer)) {
+            return true;
+        }
     }
 
     if (scan_start_line_continuation(scanner, lexer)) {
@@ -452,11 +452,11 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     }
 
     if (valid_symbols[STRING_LITERAL_KIND]) {
-      // This may need a lot of lookahead, so should (probably) always
-      // be the last token to look for
-      if (scan_string_literal_kind(lexer)) {
-        return true;
-      }
+        // This may need a lot of lookahead, so should (probably) always
+        // be the last token to look for
+        if (scan_string_literal_kind(lexer)) {
+            return true;
+        }
     }
 
     return false;
