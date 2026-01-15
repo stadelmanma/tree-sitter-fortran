@@ -56,29 +56,47 @@ static bool is_exp_sentinel(char chr) {
     }
 }
 
+// If in the middle of a literal, '&' is required in both lines
+static bool skip_literal_continuation_sequence(TSLexer *lexer) {
+    if (lexer->lookahead != '&') {
+        return true;
+    }
+
+    advance(lexer);
+    while (iswspace(lexer->lookahead)) {
+        advance(lexer);
+    }
+    // second '&' technically required to continue the literal
+    if (lexer->lookahead == '&') {
+        advance(lexer);
+        return true;
+    }
+    return false;
+}
+
 static bool scan_int(TSLexer *lexer) {
     if (!iswdigit(lexer->lookahead)) {
         return false;
     }
-    // consume digits
-    while (iswdigit(lexer->lookahead)) {
-        advance(lexer); // store all digits
-    }
-    lexer->mark_end(lexer);
 
-    // handle line continuations
-    if (lexer->lookahead == '&') {
-        advance(lexer);
-        while (iswspace(lexer->lookahead)) {
-            advance(lexer);
+    // outer loop for handling line continuations
+    while (true) {
+        // consume digits
+        while (iswdigit(lexer->lookahead)) {
+            advance(lexer); // store all digits
         }
-        // second '&' required to continue the literal
+        lexer->mark_end(lexer);
+
         if (lexer->lookahead == '&') {
-            advance(lexer);
-            // don't return here, as we may have finished literal on first
-            // line but still have second '&'
-            scan_int(lexer);
+            // with the lookahead check above, it returns true if in a continuation
+            // line and consumes both & and whitespace characters inbetween
+            if (skip_literal_continuation_sequence(lexer)) {
+                continue;
+            }
         }
+
+        // no digits and no continuation found
+        break;
     }
 
     return true;
@@ -144,24 +162,6 @@ static bool scan_boz(TSLexer *lexer) {
             return false; // no boz suffix or prefix provided
         }
         lexer->mark_end(lexer);
-        return true;
-    }
-    return false;
-}
-
-// If in the middle of a literal, '&' is required in both lines
-static bool skip_literal_continuation_sequence(TSLexer *lexer) {
-    if (lexer->lookahead != '&') {
-        return true;
-    }
-
-    advance(lexer);
-    while (iswspace(lexer->lookahead)) {
-        advance(lexer);
-    }
-    // second '&' technically required to continue the literal
-    if (lexer->lookahead == '&') {
-        advance(lexer);
         return true;
     }
     return false;
