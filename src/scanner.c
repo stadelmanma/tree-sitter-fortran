@@ -19,6 +19,26 @@ typedef struct {
     bool in_line_continuation;
 } Scanner;
 
+
+// first parse number and only then decide what kind of token to emit,
+// for example: we need to check label stack first before we can decide whether
+// we have a do-label or an integer literal
+typedef enum {
+    NUMBER_NONE,
+    NUMBER_INTEGER,
+    NUMBER_FLOAT
+} NumberType;
+
+typedef struct {
+    // type of number
+    NumberType type;
+    // value in case it turns out to be a label
+    int32_t value;
+    // count digits to abort value computation after 5 digits
+    // (maximal number for labels)
+    int digit_count;
+} NumberResult;
+
 //  consume current character into current token and advance
 static inline void advance(TSLexer *lexer) { lexer->advance(lexer, false); }
 
@@ -74,16 +94,26 @@ static bool skip_literal_continuation_sequence(TSLexer *lexer) {
     return false;
 }
 
-static bool scan_int(TSLexer *lexer) {
+// consume digits and compute value if requested
+static bool scan_int(TSLexer *lexer, int32_t *value, int *count) {
     if (!iswdigit(lexer->lookahead)) {
         return false;
+    }
+
+    if (value && count) {
+        *value = 0;
+        *count = 0;
     }
 
     // outer loop for handling line continuations
     while (true) {
         // consume digits
         while (iswdigit(lexer->lookahead)) {
-            advance(lexer); // store all digits
+            if (value && count && *count < 7) {
+                *value = *value * 10 + (lexer->lookahead - '0');
+                (*count)++;
+            }
+            advance(lexer);
         }
         lexer->mark_end(lexer);
 
@@ -102,10 +132,17 @@ static bool scan_int(TSLexer *lexer) {
     return true;
 }
 
-/// Scan a number of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, etc.
-static bool scan_number(TSLexer *lexer) {
-    lexer->result_symbol = INTEGER_LITERAL;
-    bool digits = scan_int(lexer);
+/// Scan integer or float of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, .1X etc.
+static NumberResult scan_number(TSLexer *lexer) {
+    NumberResult result = {NUMBER_NONE, 0, 0};
+
+    // assume integer, but if no proper digits are found, reset to NUMBER_NONE
+    result.type = NUMBER_INTEGER;
+
+    // collect initial digits and compute value (specifically required to
+    // determine label value)
+    bool digits = scan_int(lexer, &result.value, &result.digit_count);
+
     if (lexer->lookahead == '.') {
         advance(lexer);
         // exclude decimal if followed by any letter other than d/D and e/E
@@ -114,12 +151,15 @@ static bool scan_number(TSLexer *lexer) {
         if (digits && !iswalnum(lexer->lookahead)) {
             lexer->mark_end(lexer); // add decimal to token
         }
-        lexer->result_symbol = FLOAT_LITERAL;
+        // this is not yet decided, we still need to find some digits
+        result.type = NUMBER_FLOAT;
     }
+
     // if next char isn't number return since we handle exp
     // notation and precision identifiers separately. If there are
     // no leading digit it's a nonmatch.
-    digits = scan_int(lexer) || digits;
+    digits = scan_int(lexer, NULL, NULL) || digits;
+
     if (digits) {
         // process exp notation
         if (is_exp_sentinel(lexer->lookahead)) {
@@ -128,13 +168,18 @@ static bool scan_number(TSLexer *lexer) {
                 advance(lexer);
                 lexer->mark_end(lexer);
             }
-            if (!scan_int(lexer)) {
-                return true; // valid number token with junk after it
+            if (!scan_int(lexer, NULL, NULL)) {
+                result.type = NUMBER_INTEGER;
+                return result; // valid number token with junk after it
             }
-            lexer->result_symbol = FLOAT_LITERAL;
+            result.type = NUMBER_FLOAT;
         }
     }
-    return digits;
+
+    if (!digits) {
+        result.type = NUMBER_NONE;
+    }
+    return result;
 }
 
 static bool scan_boz(TSLexer *lexer) {
@@ -432,8 +477,13 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
 
     if (valid_symbols[INTEGER_LITERAL] || valid_symbols[FLOAT_LITERAL] ||
         valid_symbols[BOZ_LITERAL]) {
-        // extract out root number from expression
-        if (scan_number(lexer)) {
+        // extract out root number from expression (without kind if present)
+        NumberResult val = scan_number(lexer);
+        if (val.type == NUMBER_INTEGER) {
+            lexer->result_symbol = INTEGER_LITERAL;
+            return true;
+        } else if (val.type == NUMBER_FLOAT) {
+            lexer->result_symbol = FLOAT_LITERAL;
             return true;
         }
         if (scan_boz(lexer)) {
