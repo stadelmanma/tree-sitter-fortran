@@ -13917,14 +13917,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "do_label_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "end_do_label_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "format_statement"
         },
         {
@@ -14886,20 +14878,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "block_label_start_expression"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "SYMBOL",
-          "name": "do_statement"
+          "name": "_do_stmt"
         },
         {
           "type": "SYMBOL",
@@ -14913,24 +14893,44 @@
           }
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "statement_label"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "SYMBOL",
-          "name": "end_do_loop_statement"
+          "name": "_end_do_loop"
         }
       ]
     },
-    "do_statement": {
+    "_do_stmt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "do_stmt_label"
+          },
+          "named": true,
+          "value": "do_statement"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "block_label_start_expression"
+            },
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "do_stmt_nonlabel"
+              },
+              "named": true,
+              "value": "do_statement"
+            }
+          ]
+        }
+      ]
+    },
+    "do_stmt_label": {
       "type": "SEQ",
       "members": [
         {
@@ -14942,6 +14942,65 @@
           "named": false,
           "value": "do"
         },
+        {
+          "type": "FIELD",
+          "name": "do_label",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "do_label"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_do_stmt_control"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "do_stmt_nonlabel": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "[dD][oO]"
+          },
+          "named": false,
+          "value": "do"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_do_stmt_control"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "_do_stmt_control": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "CHOICE",
           "members": [
@@ -14958,24 +15017,118 @@
           "type": "CHOICE",
           "members": [
             {
+              "type": "SYMBOL",
+              "name": "while_statement"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "loop_control_expression"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "concurrent_statement"
+            }
+          ]
+        }
+      ]
+    },
+    "_end_do_loop": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "end_do_label_loop_statement"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
               "type": "CHOICE",
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "while_statement"
+                  "name": "statement_label"
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "loop_control_expression"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "concurrent_statement"
+                  "type": "BLANK"
                 }
               ]
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "end_do_loop_statement"
+            }
+          ]
+        }
+      ]
+    },
+    "end_do_label_loop_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "do_label",
+          "content": {
+            "type": "SYMBOL",
+            "name": "do_label_virtual"
+          }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "do_label",
+              "content": {
+                "type": "SYMBOL",
+                "name": "do_label_continue"
+              }
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "continue"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "PATTERN",
+                            "value": "[eE][nN][dD]"
+                          },
+                          "named": false,
+                          "value": "end"
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "PATTERN",
+                            "value": "[dD][oO]"
+                          },
+                          "named": false,
+                          "value": "do"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ALIAS",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "[eE][nN][dD][dD][oO]"
+                      },
+                      "named": false,
+                      "value": "enddo"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
@@ -15034,90 +15187,6 @@
           ]
         }
       ]
-    },
-    "do_label_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "[dD][oO]"
-          },
-          "named": false,
-          "value": "do"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "statement_label_reference"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "loop_control_expression"
-        }
-      ]
-    },
-    "end_do_label_statement": {
-      "type": "PREC",
-      "value": -1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "statement_label"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "PATTERN",
-                      "value": "[eE][nN][dD]"
-                    },
-                    "named": false,
-                    "value": "end"
-                  },
-                  {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "PATTERN",
-                      "value": "[dD][oO]"
-                    },
-                    "named": false,
-                    "value": "do"
-                  }
-                ]
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "[eE][nN][dD][dD][oO]"
-                },
-                "named": false,
-                "value": "enddo"
-              }
-            ]
-          }
-        ]
-      }
     },
     "while_statement": {
       "type": "SEQ",
@@ -22552,6 +22621,18 @@
     {
       "type": "SYMBOL",
       "name": "hollerith_constant"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "do_label"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "do_label_virtual"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "do_label_continue"
     }
   ],
   "inline": [

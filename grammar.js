@@ -61,6 +61,9 @@ module.exports = grammar({
     $._external_end_of_statement,
     $._preproc_unary_operator,
     $.hollerith_constant,
+    $.do_label,
+    $.do_label_virtual,
+    $.do_label_continue,
   ],
 
   extras: $ => [
@@ -1122,8 +1125,6 @@ module.exports = grammar({
       $.select_type_statement,
       $.select_rank_statement,
       $.do_loop,
-      $.do_label_statement,
-      $.end_do_label_statement,
       $.format_statement,
       $.open_statement,
       $.close_statement,
@@ -1260,47 +1261,80 @@ module.exports = grammar({
     ),
     _signed_literal: $ => prec.right(PREC.UNARY, seq(choice('-', '+'), $.number_literal)),
 
+    // old-style labeled do loop does not allow a block label, however, the rule
+    // accepts a labeled do with an additional block label,
+    // hence three structures to match:
+    // *              do label     (labeled loop, old style)
+    // * block_label: do           (nonlabeled loop)
+    // *              do           (nonlabeled loop)
+
     do_loop: $ => seq(
-      optional($.block_label_start_expression),
-      $.do_statement,
+      $._do_stmt,
       $._end_of_statement,
       repeat($._statement),
-      optional($.statement_label),
-      $.end_do_loop_statement
+      $._end_do_loop
     ),
 
-    do_statement: $ => seq(
+    // choice between labeled and nonlabeled do
+    _do_stmt: $ => choice(
+      alias($.do_stmt_label, $.do_statement),
+      seq(
+        $.block_label_start_expression,
+        alias($.do_stmt_nonlabel, $.do_statement)
+      )
+    ),
+
+    // old style labeled loop
+    do_stmt_label: $ => seq(
       caseInsensitive('do'),
+      field('do_label', optional($.do_label)),
+      optional($._do_stmt_control)
+    ),
+
+    // new style loop (the optional block name is matched outside, as
+    // it should not be part of this node)
+    do_stmt_nonlabel: $ => seq(
+      caseInsensitive('do'),
+      optional($._do_stmt_control)
+    ),
+
+    // control part of the do statement (after [name:] do [label])
+    // (corresponds to "loop-control" in the F23 standard)
+    _do_stmt_control: $ => seq(
       optional(','),
-      optional(choice(
+      choice(
         $.while_statement,
         $.loop_control_expression,
         $.concurrent_statement
-      )),
+      ),
     ),
 
+    _end_do_loop: $ => choice(
+      $.end_do_label_loop_statement,
+      seq(
+        optional($.statement_label),
+        $.end_do_loop_statement
+      )
+    ),
+
+    // end statement for old style do loop, there is one continue
+    // statement which might close several loops, the last one has a
+    // do_label_continue, the inner loops get a do_label_virtual, the
+    // innermost loop consumes the label at the start of the line, the
+    // outermost loop gets "continue" or "end do" keywords
+    end_do_label_loop_statement: $ => choice(
+      field('do_label', $.do_label_virtual),
+      seq(
+        field('do_label', $.do_label_continue),
+        choice('continue', whiteSpacedKeyword('end', 'do'))
+      )
+    ),
+
+    // new style do loop, allows statement label as well as block label
     end_do_loop_statement: $ => seq(
       whiteSpacedKeyword('end', 'do'),
       optional($._block_label)
     ),
-
-    // Deleted feature: non-block `do`. Actually, labelled-do is still
-    // valid (but obsolescent), but we need to capture them separately
-    // because otherwise it's too had to capture them at all
-    do_label_statement: $ => seq(
-      caseInsensitive('do'),
-      $.statement_label_reference,
-      optional(','),
-      $.loop_control_expression
-    ),
-
-    // Because we've lumped together labelled-do and non-block-do in
-    // `do_label_statement`, we also need to be able to capture `end
-    // do` for a labelled-do
-    end_do_label_statement: $ => prec(-1, seq(
-      $.statement_label,
-      whiteSpacedKeyword('end', 'do'),
-    )),
 
     while_statement: $ => seq(caseInsensitive('while'),
       $.parenthesized_expression),
