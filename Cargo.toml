@@ -19,6 +19,7 @@ tree-sitter-language = "0.1.0"
 
 [build-dependencies]
 cc = "1.0"
+serde_json = { version = "1.0.113" }
 
 [dev-dependencies]
 tree-sitter = "0.26.3"
