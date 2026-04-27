@@ -7782,12 +7782,16 @@
     "named": false
   },
   {
-    "type": "none",
-    "named": true
+    "type": "non_recursive",
+    "named": false
   },
   {
     "type": "none",
     "named": false
+  },
+  {
+    "type": "none",
+    "named": true
   },
   {
     "type": "nopass",
