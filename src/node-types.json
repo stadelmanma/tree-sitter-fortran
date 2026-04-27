@@ -7778,6 +7778,10 @@
     "named": false
   },
   {
+    "type": "non_recursive",
+    "named": false
+  },
+  {
     "type": "none",
     "named": false
   },
