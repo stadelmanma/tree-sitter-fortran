@@ -1356,7 +1356,8 @@ end program block_demo
         (identifier)
         (identifier))
       (block_construct
-        (block_label_start_expression)
+        (block_label_start_expression
+          (block_label))
         (variable_declaration
           (intrinsic_type)
           (init_declarator

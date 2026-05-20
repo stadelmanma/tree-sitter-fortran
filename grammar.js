@@ -2130,7 +2130,7 @@ module.exports = grammar({
 
     assumed_rank: $ => '..',
 
-    block_label_start_expression: $ => seq(alias($.identifier, 'label'), ':'),
+    block_label_start_expression: $ => seq($._block_label, ':'),
     _block_label: $ => alias($.identifier, $.block_label),
 
     loop_control_expression: $ => seq(

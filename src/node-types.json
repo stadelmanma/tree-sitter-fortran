@@ -1068,7 +1068,17 @@
   {
     "type": "block_label_start_expression",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "block_label",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "boolean_literal",
@@ -3854,11 +3864,6 @@
         }
       ]
     }
-  },
-  {
-    "type": "label",
-    "named": false,
-    "fields": {}
   },
   {
     "type": "language_binding",
