@@ -118,7 +118,8 @@ end module
             (identifier)
             (argument_list
               (number_literal)))
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (comment)
     (variable_declaration
       (intrinsic_type
@@ -131,7 +132,8 @@ end module
             (identifier)
             (argument_list
               (number_literal)))
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (comment)
     (variable_declaration
       (intrinsic_type
@@ -144,7 +146,8 @@ end module
             (identifier)
             (argument_list
               (number_literal)))
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (comment)
     (public_statement
       (identifier))
@@ -539,7 +542,8 @@ END SUBROUTINE
         (identifier)
         (keyword_argument
           (identifier)
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (end_subroutine_statement))
   (subroutine
     (subroutine_statement
@@ -550,7 +554,8 @@ END SUBROUTINE
     (subroutine_call
       (identifier)
       (argument_list
-        (string_literal)
+        (string_literal
+          (string_literal_part))
         (identifier)))
     (internal_procedures
       (contains_statement)
@@ -677,7 +682,8 @@ end function
         (identifier)
         (keyword_argument
           (identifier)
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (end_function_statement))
   (function
     (function_statement
@@ -688,7 +694,8 @@ end function
         (identifier)
         (keyword_argument
           (identifier)
-          (string_literal))))
+          (string_literal
+            (string_literal_part)))))
     (end_function_statement))
   (function
     (function_statement
@@ -697,7 +704,8 @@ end function
         (identifier)
         (keyword_argument
           (identifier)
-          (string_literal)))
+          (string_literal
+            (string_literal_part))))
       (function_result
         (identifier)))
     (end_function_statement)))
