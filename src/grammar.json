@@ -20002,7 +20002,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[oO][rR]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[oO](?:&[ \\t]*\\r?\\n[ \\t]*&)?[rR](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".or."
@@ -20040,7 +20040,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[aA][nN][dD]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[aA](?:&[ \\t]*\\r?\\n[ \\t]*&)?[nN](?:&[ \\t]*\\r?\\n[ \\t]*&)?[dD](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".and."
@@ -20078,7 +20078,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[eE][qQ][vV]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?[qQ](?:&[ \\t]*\\r?\\n[ \\t]*&)?[vV](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".eqv."
@@ -20116,7 +20116,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[nN][eE][qQ][vV]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[nN](?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?[qQ](?:&[ \\t]*\\r?\\n[ \\t]*&)?[vV](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".neqv."
@@ -20146,7 +20146,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[nN][oO][tT]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[nN](?:&[ \\t]*\\r?\\n[ \\t]*&)?[oO](?:&[ \\t]*\\r?\\n[ \\t]*&)?[tT](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".not."
@@ -20222,7 +20222,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[lL][tT]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[lL](?:&[ \\t]*\\r?\\n[ \\t]*&)?[tT](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".lt."
@@ -20293,7 +20293,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[gG][tT]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[gG](?:&[ \\t]*\\r?\\n[ \\t]*&)?[tT](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".gt."
@@ -20364,7 +20364,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[lL][eE]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[lL](?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".le."
@@ -20435,7 +20435,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[gG][eE]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[gG](?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".ge."
@@ -20506,7 +20506,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[eE][qQ]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?[qQ](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".eq."
@@ -20577,7 +20577,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "PATTERN",
-                    "value": "\\.[nN][eE]\\."
+                    "value": "\\.(?:&[ \\t]*\\r?\\n[ \\t]*&)?[nN](?:&[ \\t]*\\r?\\n[ \\t]*&)?[eE](?:&[ \\t]*\\r?\\n[ \\t]*&)?\\."
                   },
                   "named": false,
                   "value": ".ne."

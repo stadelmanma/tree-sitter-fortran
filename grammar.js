@@ -1985,10 +1985,10 @@ module.exports = grammar({
 
     logical_expression: $ => {
       const table = [
-        [caseInsensitive('.or.'), PREC.LOGICAL_OR],
-        [caseInsensitive('.and.'), PREC.LOGICAL_AND],
-        [caseInsensitive('.eqv.'), PREC.LOGICAL_EQUIV],
-        [caseInsensitive('.neqv.'), PREC.LOGICAL_EQUIV]
+        [caseInsensitiveSpliced('.or.'), PREC.LOGICAL_OR],
+        [caseInsensitiveSpliced('.and.'), PREC.LOGICAL_AND],
+        [caseInsensitiveSpliced('.eqv.'), PREC.LOGICAL_EQUIV],
+        [caseInsensitiveSpliced('.neqv.'), PREC.LOGICAL_EQUIV]
       ]
 
       return choice(...table.map(([operator, precedence]) => {
@@ -1999,7 +1999,7 @@ module.exports = grammar({
         ))
       }).concat(
         [prec.left(PREC.LOGICAL_NOT, seq(
-          field('operator', caseInsensitive('.not.')),
+          field('operator', caseInsensitiveSpliced('.not.')),
           field('argument', $._expression)))])
       )
     },
@@ -2007,17 +2007,17 @@ module.exports = grammar({
     relational_expression: $ => {
       const operators = [
         '<',
-        caseInsensitive('.lt.'),
+        caseInsensitiveSpliced('.lt.'),
         '>',
-        caseInsensitive('.gt.'),
+        caseInsensitiveSpliced('.gt.'),
         '<=',
-        caseInsensitive('.le.'),
+        caseInsensitiveSpliced('.le.'),
         '>=',
-        caseInsensitive('.ge.'),
+        caseInsensitiveSpliced('.ge.'),
         '==',
-        caseInsensitive('.eq.'),
+        caseInsensitiveSpliced('.eq.'),
         '/=',
-        caseInsensitive('.ne.')
+        caseInsensitiveSpliced('.ne.')
       ]
 
       return choice(...operators.map((operator) => {
@@ -2421,6 +2421,32 @@ module.exports.PREC = PREC
 // always use alias, as a regexp is used to compare case-insensitively,
 // default is to use the keyword itself, but a rule/named node $.my_name
 // can be provided optionally
+// Like caseInsensitive, but additionally allows a free-form line
+// continuation ("&" newline "&") between any two characters of the
+// keyword. The standard (F2018 6.3.2.4) allows splitting any lexical
+// token this way; in legacy code it shows up mainly in spliced dotted
+// operators, e.g.:
+//
+//     if (i .ne. 30000.&
+//          &and. j .lt. 5) ...
+//
+// where the leading '.' of `.and.` ends the first line.
+function caseInsensitiveSpliced (keyword, aliasValue = keyword) {
+  const continuation = '(?:&[ \\t]*\\r?\\n[ \\t]*&)?'
+  const pattern = keyword
+    .split('')
+    .map(l => {
+      if (l.match(/[a-zA-Z]/)) return `[${l.toLowerCase()}${l.toUpperCase()}]`
+      if (l.match(/[0-9_]/))   return l
+      if (l === '.')           return '\\.'
+      throw new Error(`caseInsensitiveSpliced: unhandled character '${l}' in keyword '${keyword}'`)
+    })
+    .join(continuation)
+
+  // default: aliasValue = keyword
+  return alias(new RegExp(pattern), aliasValue)
+}
+
 function caseInsensitive (keyword, aliasValue = keyword) {
   const pattern = keyword
     .split('')
