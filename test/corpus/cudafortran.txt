@@ -45,7 +45,8 @@ end function
       (procedure_attributes)
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (name))
     (comment)
     (use_statement
@@ -79,14 +80,16 @@ end program
     (subroutine_call
       (identifier)
       (cuda_kernel_argument_list
-        (number_literal)
+        (number_literal
+          (number_literal_part))
         (identifier))
       (argument_list
         (identifier)))
     (subroutine_call
       (identifier)
       (cuda_kernel_argument_list
-        (number_literal)
+        (number_literal
+          (number_literal_part))
         (identifier)
         (identifier)
         (call_expression
@@ -98,7 +101,8 @@ end program
     (subroutine_call
       (identifier)
       (cuda_kernel_argument_list
-        (number_literal)
+        (number_literal
+          (number_literal_part))
         (identifier)
         (identifier)
         (call_expression

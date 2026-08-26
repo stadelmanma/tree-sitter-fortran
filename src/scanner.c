@@ -17,6 +17,7 @@ enum TokenType {
     DO_LABEL,
     DO_LABEL_VIRTUAL,
     DO_LABEL_CONTINUE,
+    NUMBER_LITERAL_PART,
 };
 
 // at most 100 nested labeled do loops, should be sufficient
@@ -34,6 +35,19 @@ typedef struct {
     int32_t pending_label_virtual;
     // flag for emitting eos tokens right after a virtual label token
     bool is_pending_eos_virtual;
+
+    // true while resuming a number literal whose scan was interrupted by
+    // a line continuation (see the "number literals split across line
+    // continuations" section below)
+    bool in_number;
+    // whether a decimal point / exponent sentinel has already been
+    // consumed by an earlier part of the number being resumed
+    bool number_seen_dot;
+    bool number_seen_exp;
+    // whether the (optional) sign right after the exponent sentinel has
+    // already been resolved (present or confirmed absent) by an earlier
+    // part - only meaningful once number_seen_exp is true
+    bool number_exp_sign_done;
 } Scanner;
 
 
@@ -54,6 +68,17 @@ typedef struct {
     // count digits to abort value computation after 5 digits
     // (maximal number for labels)
     int digit_count;
+    // true if scanning was interrupted by a line continuation, meaning
+    // only part of the number was committed to this token and the rest
+    // will follow as separate NUMBER_LITERAL_PART tokens; value/digit_count
+    // are not meaningful in that case (a split number is never a do-label)
+    bool frozen;
+    // how far into the number's grammar we got before freezing, so a
+    // later NUMBER_LITERAL_PART call can resume correctly (only
+    // meaningful when frozen is true)
+    bool seen_dot;
+    bool seen_exp;
+    bool exp_sign_done;
 } NumberResult;
 
 //  consume current character into current token and advance
@@ -121,8 +146,30 @@ static bool skip_literal_continuation_sequence(TSLexer *lexer) {
     return false;
 }
 
-// consume digits and compute value if requested
-static bool scan_int(TSLexer *lexer, int32_t *value, int *count) {
+// Like skip_literal_continuation_sequence, but the token boundary is
+// frozen (via mark_end) right before the '&' the first time this is
+// called with *frozen == false. Used within a number literal: once a
+// continuation has been found, the rest of the number is only scanned
+// ahead (never committed) purely to resolve its final type (integer vs.
+// float) - the actual token ends at the freeze point, and the remaining
+// pieces are picked up later as separate NUMBER_LITERAL_PART tokens.
+static bool skip_literal_continuation_sequence_freezing(TSLexer *lexer, bool *frozen) {
+    if (lexer->lookahead != '&') {
+        return true;
+    }
+    if (!*frozen) {
+        lexer->mark_end(lexer);
+        *frozen = true;
+    }
+    return skip_literal_continuation_sequence(lexer);
+}
+
+// consume digits and compute value if requested; *frozen tracks whether
+// the token boundary has already been frozen by an earlier continuation
+// in this number (see skip_literal_continuation_sequence_freezing) - once
+// frozen, mark_end is no longer called, but scanning keeps going (without
+// committing) so the caller can still resolve the number's final type
+static bool scan_int(TSLexer *lexer, int32_t *value, int *count, bool *frozen) {
     if (!iswdigit(lexer->lookahead)) {
         return false;
     }
@@ -142,12 +189,14 @@ static bool scan_int(TSLexer *lexer, int32_t *value, int *count) {
             }
             advance(lexer);
         }
-        lexer->mark_end(lexer);
+        if (!*frozen) {
+            lexer->mark_end(lexer);
+        }
 
         if (lexer->lookahead == '&') {
             // with the lookahead check above, it returns true if in a continuation
             // line and consumes both & and whitespace characters inbetween
-            if (skip_literal_continuation_sequence(lexer)) {
+            if (skip_literal_continuation_sequence_freezing(lexer, frozen)) {
                 continue;
             }
         }
@@ -160,58 +209,99 @@ static bool scan_int(TSLexer *lexer, int32_t *value, int *count) {
 }
 
 /// Scan integer or float of the forms 1XXX, 1.0XXX, 0.1XXX, 1.XDX, .1X etc.
+//
+// If the number is interrupted by a line continuation, only the part up
+// to (not including) the first continuation is committed as this token
+// (result.frozen is set); the type is still fully resolved by continuing
+// to scan ahead across the whole literal without committing further.
 static NumberResult scan_number(TSLexer *lexer) {
-    NumberResult result = {NUMBER_NONE, 0, 0};
+    NumberResult result = {NUMBER_NONE, 0, 0, false, false, false, false};
+    bool frozen = false;
 
     // assume integer, but if no proper digits are found, reset to NUMBER_NONE
     result.type = NUMBER_INTEGER;
 
     // collect initial digits and compute value (specifically required to
-    // determine label value)
-    bool digits = scan_int(lexer, &result.value, &result.digit_count);
+    // determine label value); value/digit_count stop being meaningful
+    // once frozen, but that's fine since a split number is never a label
+    bool digits = scan_int(lexer, &result.value, &result.digit_count, &frozen);
+
+    // Whether the '.'/exponent are recorded as "seen" for a resumed part
+    // to skip past on a later call depends on whether they are actually
+    // committed into THIS token, not just peeked at: once frozen is
+    // already true when we reach one of these decision points, the rest
+    // of this function is peeking ahead only (to resolve the overall
+    // type) and commits nothing further, so the character in question
+    // has not really been consumed yet - a later NUMBER_LITERAL_PART
+    // call will encounter it fresh and must be allowed to handle it.
 
     if (lexer->lookahead == '.') {
+        bool was_frozen = frozen;
         advance(lexer);
         // A line continuation directly after the '.' can split a token in
         // two: either this real literal (`1.&\n&5`, or `.&\n&5` with no
         // leading digits) or a spliced dotted operator (`30000.&\n&AND.`).
-        // Cross it first so the checks below see the first character after
-        // the splice.
+        // Peek across WITHOUT freezing yet: only a digit on the other
+        // side confirms the '.' belongs here at all - anything else
+        // (typically a letter) means it doesn't, and this whole '.'
+        // (and whatever the peek crossed) must be left uncommitted, as
+        // if this block had never run, so the dotted-operator grammar
+        // can claim the '.' instead.
         if (lexer->lookahead == '&') {
-            skip_literal_continuation_sequence(lexer);
-            // a digit after the splice continues this real literal
-            if (iswdigit(lexer->lookahead)) {
-                lexer->mark_end(lexer);
+            if (skip_literal_continuation_sequence(lexer) && iswdigit(lexer->lookahead)) {
+                if (!frozen) {
+                    lexer->mark_end(lexer);
+                    frozen = true;
+                }
+                result.seen_dot = !was_frozen;
+                result.type = NUMBER_FLOAT;
             }
+            // else: doesn't belong - frozen/result are left exactly as
+            // they were on entry to this '.' check
+        } else {
+            // exclude decimal if followed by any letter other than d/D and e/E
+            // if no leading digits are present and a non-digit follows
+            // the decimal it's a nonmatch.
+            if (digits && !iswalnum(lexer->lookahead) && !frozen) {
+                lexer->mark_end(lexer); // add decimal to token
+            }
+            result.seen_dot = !was_frozen;
+            // this is not yet decided, we still need to find some digits
+            result.type = NUMBER_FLOAT;
         }
-        // exclude decimal if followed by any letter other than d/D and e/E
-        // if no leading digits are present and a non-digit follows
-        // the decimal it's a nonmatch.
-        if (digits && !iswalnum(lexer->lookahead)) {
-            lexer->mark_end(lexer); // add decimal to token
-        }
-        // this is not yet decided, we still need to find some digits
-        result.type = NUMBER_FLOAT;
     }
 
     // if next char isn't number return since we handle exp
     // notation and precision identifiers separately. If there are
     // no leading digit it's a nonmatch.
-    digits = scan_int(lexer, NULL, NULL) || digits;
+    digits = scan_int(lexer, NULL, NULL, &frozen) || digits;
 
     if (digits) {
         // process exp notation
         if (is_exp_sentinel(lexer->lookahead)) {
+            bool was_frozen_before_exp = frozen;
             advance(lexer);
+            // Do NOT mark_end here: whether the sentinel belongs isn't
+            // known until we've confirmed valid exponent digits exist
+            // (see the `!exp_digits` fallback below, e.g. `1.eq.0` where
+            // 'e' is not actually an exponent) - inclusion happens
+            // implicitly, either via the freezing wrapper below (if a
+            // continuation is found right after the sentinel/sign) or
+            // via the final scan_int's own mark_end (once digits are
+            // actually found).
+            //
             // the exponent may be split across a line continuation right
             // after the sentinel or the sign, e.g. `1.2067492D&\n&0`
-            skip_literal_continuation_sequence(lexer);
+            skip_literal_continuation_sequence_freezing(lexer, &frozen);
+            bool was_frozen_before_sign = frozen;
             if (lexer->lookahead == '+' || lexer->lookahead == '-') {
                 advance(lexer);
-                lexer->mark_end(lexer);
-                skip_literal_continuation_sequence(lexer);
+                skip_literal_continuation_sequence_freezing(lexer, &frozen);
             }
-            if (!scan_int(lexer, NULL, NULL)) {
+            result.seen_exp = !was_frozen_before_exp;
+            result.exp_sign_done = !was_frozen_before_sign;
+            bool exp_digits = scan_int(lexer, NULL, NULL, &frozen);
+            if (!exp_digits && !frozen) {
                 result.type = NUMBER_INTEGER;
                 return result; // valid number token with junk after it
             }
@@ -222,7 +312,114 @@ static NumberResult scan_number(TSLexer *lexer) {
     if (!digits) {
         result.type = NUMBER_NONE;
     }
+    result.frozen = frozen;
     return result;
+}
+
+// Resumes a number literal previously interrupted by a line continuation
+// (scanner->in_number). The overall type (integer vs. float) was already
+// resolved by the initial scan_number() call, but a '.' can still turn
+// out to not belong here (e.g. `12&\n&3.and.`, where the leading digits
+// were split but the '.' - reached fresh on this call - starts a spliced
+// dotted operator, not a continued fraction), so the same digit-vs-not
+// disambiguation as scan_number() applies. An exponent sentinel has no
+// such ambiguity once reached.
+static bool scan_number_literal_part(Scanner *scanner, TSLexer *lexer) {
+    bool frozen = false;
+    bool any = false;
+
+    if (scan_int(lexer, NULL, NULL, &frozen)) {
+        any = true;
+    }
+
+    if (!scanner->number_seen_dot && lexer->lookahead == '.') {
+        bool was_frozen = frozen;
+        advance(lexer);
+        if (lexer->lookahead == '&') {
+            // Peek across without freezing yet - only a digit on the
+            // other side confirms the '.' belongs (a continued
+            // fraction); anything else (typically a letter) means it
+            // doesn't (e.g. a spliced dotted operator), and everything
+            // here - the '.' and whatever the peek crossed - is left
+            // uncommitted.
+            if (skip_literal_continuation_sequence(lexer) && iswdigit(lexer->lookahead)) {
+                if (!frozen) {
+                    lexer->mark_end(lexer);
+                    frozen = true;
+                }
+                any = true;
+                scanner->number_seen_dot = !was_frozen;
+            }
+        } else if (iswdigit(lexer->lookahead)) {
+            // belongs; the scan_int call below extends the boundary
+            // through the digits (and implicitly the '.') itself
+            any = true;
+            scanner->number_seen_dot = !was_frozen;
+        } else if (!iswalnum(lexer->lookahead)) {
+            // bare trailing dot, e.g. `12&\n&3.` - belongs, and nothing
+            // else will extend the boundary for us, so commit it now
+            if (!frozen) {
+                lexer->mark_end(lexer);
+            }
+            any = true;
+            scanner->number_seen_dot = !was_frozen;
+        }
+        // else: a letter that isn't part of a continuation, e.g. the
+        // 'd'/'e' of an exponent sentinel directly following (`3.d0`) -
+        // leave it to the exponent handling below, or a letter starting
+        // a dotted operator (`3.and.`), which correctly leaves this '.'
+        // uncommitted
+        if (scan_int(lexer, NULL, NULL, &frozen)) {
+            any = true;
+        }
+    }
+
+    if (!scanner->number_seen_exp && is_exp_sentinel(lexer->lookahead)) {
+        // As in scan_number(): don't commit the sentinel/sign until
+        // digits actually confirm it's a real exponent - e.g. resuming
+        // `123&\n&.eq.0` (split leading digits, unsplit ".eq.0") must
+        // NOT swallow the 'e' of `.eq.` as an exponent sentinel.
+        bool was_frozen_before_exp = frozen;
+        advance(lexer);
+        skip_literal_continuation_sequence_freezing(lexer, &frozen);
+        bool was_frozen_before_sign = frozen;
+        if (lexer->lookahead == '+' || lexer->lookahead == '-') {
+            advance(lexer);
+            skip_literal_continuation_sequence_freezing(lexer, &frozen);
+        }
+        bool exp_digits = scan_int(lexer, NULL, NULL, &frozen);
+        if (exp_digits || frozen) {
+            any = true;
+            scanner->number_seen_exp = !was_frozen_before_exp;
+            scanner->number_exp_sign_done = !was_frozen_before_sign;
+        }
+        // else: not a real exponent (e.g. the 'e' of `.eq.`) - nothing
+        // was committed here, so it's simply left for other tokens
+    } else if (scanner->number_seen_exp && !scanner->number_exp_sign_done) {
+        bool was_frozen_before_sign = frozen;
+        if (lexer->lookahead == '+' || lexer->lookahead == '-') {
+            advance(lexer);
+            any = true;
+        }
+        scanner->number_exp_sign_done = !was_frozen_before_sign;
+        if (scan_int(lexer, NULL, NULL, &frozen)) {
+            any = true;
+        }
+    }
+
+    if (!any) {
+        // Called right at the '&' itself, before the continuation has
+        // been crossed (this token is also tried at that position, since
+        // NUMBER_LITERAL_PART is valid there alongside the plain '&'
+        // extras token) - decline and leave in_number untouched so the
+        // ordinary line-continuation handling can cross it, and the next
+        // attempt (once past it) can pick the number back up.
+        return false;
+    }
+
+    lexer->result_symbol = NUMBER_LITERAL_PART;
+    scanner->in_number = frozen;
+    return true;
 }
 
 static bool scan_boz(TSLexer *lexer) {
@@ -573,8 +770,10 @@ static bool scan_label_number_boz(Scanner *scanner, TSLexer *lexer, const bool *
     NumberResult result = scan_number(lexer);
 
     // check for a do-label, should have at most 5 digits and DO_LABEL
-    // or DO_LABEL_CONTINUE are valid symbols
-    if (result.type == NUMBER_INTEGER && result.digit_count < 6) {
+    // or DO_LABEL_CONTINUE are valid symbols; a number split across a
+    // line continuation is never a do-label (unrealistic in practice,
+    // and result.value/digit_count aren't tracked once frozen)
+    if (!result.frozen && result.type == NUMBER_INTEGER && result.digit_count < 6) {
         if (valid_symbols[DO_LABEL]) {
             scan_do_label(scanner, lexer, result.value);
             return true;
@@ -583,6 +782,13 @@ static bool scan_label_number_boz(Scanner *scanner, TSLexer *lexer, const bool *
             scan_do_label_continue(scanner, lexer, result.value)) {
             return true;
         }
+    }
+
+    if (result.frozen) {
+        scanner->in_number = true;
+        scanner->number_seen_dot = result.seen_dot;
+        scanner->number_seen_exp = result.seen_exp;
+        scanner->number_exp_sign_done = result.exp_sign_done;
     }
 
     // not a label
@@ -650,6 +856,12 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         }
     }
 
+    if (scanner->in_number && valid_symbols[NUMBER_LITERAL_PART]) {
+        if (scan_number_literal_part(scanner, lexer)) {
+            return true;
+        }
+    }
+
     if (valid_symbols[INTEGER_LITERAL] ||
         valid_symbols[FLOAT_LITERAL] ||
         valid_symbols[BOZ_LITERAL] ||
@@ -687,6 +899,10 @@ void *tree_sitter_fortran_external_scanner_create() {
     scanner->depth = 0;
     scanner->pending_label_virtual = 0;
     scanner->is_pending_eos_virtual = false;
+    scanner->in_number = false;
+    scanner->number_seen_dot = false;
+    scanner->number_seen_exp = false;
+    scanner->number_exp_sign_done = false;
     return scanner;
 }
 
@@ -722,6 +938,18 @@ unsigned tree_sitter_fortran_external_scanner_serialize(void *payload,
     buffer[size] = (char)scanner->is_pending_eos_virtual;
     size += 1;
 
+    buffer[size] = (char)scanner->in_number;
+    size += 1;
+
+    buffer[size] = (char)scanner->number_seen_dot;
+    size += 1;
+
+    buffer[size] = (char)scanner->number_seen_exp;
+    size += 1;
+
+    buffer[size] = (char)scanner->number_exp_sign_done;
+    size += 1;
+
     return size;
 }
 
@@ -735,6 +963,10 @@ void tree_sitter_fortran_external_scanner_deserialize(void *payload,
         scanner->depth = 0;
         scanner->pending_label_virtual = 0;
         scanner->is_pending_eos_virtual = false;
+        scanner->in_number = false;
+        scanner->number_seen_dot = false;
+        scanner->number_seen_exp = false;
+        scanner->number_exp_sign_done = false;
         return;
     }
 
@@ -763,6 +995,18 @@ void tree_sitter_fortran_external_scanner_deserialize(void *payload,
     size += sizeof(int32_t);
 
     scanner->is_pending_eos_virtual = buffer[size];
+    size += 1;
+
+    scanner->in_number = buffer[size];
+    size += 1;
+
+    scanner->number_seen_dot = buffer[size];
+    size += 1;
+
+    scanner->number_seen_exp = buffer[size];
+    size += 1;
+
+    scanner->number_exp_sign_done = buffer[size];
     size += 1;
 }
 

@@ -89,7 +89,8 @@ end module
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (type_qualifier)
       (init_declarator
         (identifier)
@@ -97,11 +98,13 @@ end module
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (call_expression
             (identifier)
             (argument_list
-              (number_literal))))))
+              (number_literal
+                (number_literal_part)))))))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
@@ -110,40 +113,46 @@ end module
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (init_declarator
         (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (string_literal))))
     (comment)
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (init_declarator
         (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (string_literal))))
     (comment)
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (init_declarator
         (identifier)
         (concatenation_expression
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (string_literal))))
     (comment)
     (public_statement
@@ -163,7 +172,8 @@ end module
         (variable_declaration
           (intrinsic_type
             (kind
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (identifier)
           (identifier))
         (end_function_statement))
@@ -219,8 +229,10 @@ end interface
         (sized_declarator
           (identifier)
           (size
-            (number_literal)
-            (number_literal))))
+            (number_literal
+              (number_literal_part))
+            (number_literal
+              (number_literal_part)))))
       (variable_declaration
         (intrinsic_type)
         (identifier))
@@ -284,8 +296,10 @@ end interface
         (sized_declarator
           (identifier)
           (size
-            (number_literal)
-            (number_literal))))
+            (number_literal
+              (number_literal_part))
+            (number_literal
+              (number_literal_part)))))
       (variable_declaration
         (intrinsic_type)
         (identifier))
@@ -509,7 +523,8 @@ END SUBROUTINE
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (type_qualifier)
       (identifier))
     (assignment_statement
@@ -625,7 +640,8 @@ end function
     (function_statement
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (name))
     (comment)
     (use_statement
@@ -650,7 +666,8 @@ end function
       (derived_type_member_expression
         (identifier)
         (type_member))
-      (number_literal))
+      (number_literal
+        (number_literal_part)))
     (assignment_statement
       (identifier)
       (identifier))
@@ -659,7 +676,8 @@ end function
     (function_statement
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (name)
       (parameters
         (identifier)
@@ -671,7 +689,8 @@ end function
     (function_statement
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (name)
       (language_binding
         (identifier)
@@ -744,7 +763,8 @@ end function test
     (variable_declaration
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (identifier)
       (identifier))
     (variable_declaration
@@ -767,10 +787,12 @@ end function test
         (variable_declaration
           (intrinsic_type
             (kind
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (init_declarator
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_literal_part))))
         (end_function_statement))
       (subroutine
         (subroutine_statement
@@ -784,7 +806,8 @@ end function test
           (identifier)
           (math_expression
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_literal_part))))
         (end_subroutine_statement))
       (function
         (function_statement
@@ -855,7 +878,8 @@ end program
       (variable_declaration
         (intrinsic_type
           (kind
-            (number_literal)))
+            (number_literal
+              (number_literal_part))))
         (identifier)
         (identifier)
         (identifier))
@@ -945,14 +969,16 @@ end program
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))))
+              (number_literal
+                (number_literal_part))))))
       (variable_declaration
         (intrinsic_type
           (kind
             (call_expression
               (identifier)
               (argument_list
-                (number_literal)))))
+                (number_literal
+                  (number_literal_part))))))
         (type_qualifier)
         (identifier))
       (variable_declaration
@@ -1337,7 +1363,8 @@ end program block_demo
       (intrinsic_type)
       (init_declarator
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_literal_part))))
     (print_statement
       (format_identifier)
       (output_item_list
@@ -1347,7 +1374,8 @@ end program block_demo
         (intrinsic_type)
         (init_declarator
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_literal_part))))
       (print_statement
         (format_identifier)
         (output_item_list
@@ -1361,7 +1389,8 @@ end program block_demo
           (intrinsic_type)
           (init_declarator
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_literal_part))))
         (print_statement
           (format_identifier)
           (output_item_list
@@ -1451,7 +1480,8 @@ Block Data (Obsolescent)
       (data_set
         (identifier)
         (data_value
-          (number_literal))))
+          (number_literal
+            (number_literal_part)))))
     (end_block_data_statement))
   (block_data
     (block_data_statement
@@ -1489,7 +1519,8 @@ contains
       (subroutine
         (subroutine_statement
           (name))
-        (statement_label)
+        (statement_label
+          (number_literal_part))
         (end_subroutine_statement
           (name)))
       (function
@@ -1498,10 +1529,13 @@ contains
           (name))
         (assignment_statement
           (identifier)
-          (number_literal))
-        (statement_label)
+          (number_literal
+            (number_literal_part)))
+        (statement_label
+          (number_literal_part))
         (end_function_statement
           (name))))
-    (statement_label)
+    (statement_label
+      (number_literal_part))
     (end_program_statement
       (name))))

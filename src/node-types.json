@@ -4346,6 +4346,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "number_literal_part",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -6083,7 +6093,17 @@
   {
     "type": "statement_label",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "number_literal_part",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "statement_label_reference",
@@ -7806,6 +7826,10 @@
     "named": false
   },
   {
+    "type": "number_literal_part",
+    "named": true
+  },
+  {
     "type": "only",
     "named": false
   },
@@ -7967,10 +7991,6 @@
   },
   {
     "type": "simple",
-    "named": false
-  },
-  {
-    "type": "statement_label",
     "named": false
   },
   {

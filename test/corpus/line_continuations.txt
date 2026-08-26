@@ -141,8 +141,10 @@ end program
     (write_statement
       (unit_identifier)
       (format_identifier
-        (statement_label_reference)))
-    (statement_label)
+        (statement_label_reference
+          (number_literal_part))))
+    (statement_label
+      (number_literal_part))
     (format_statement
       (transfer_items
         (string_literal)))
@@ -171,11 +173,13 @@ end program ! comment
       (name))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_literal_part)))
     (comment)
     (assignment_statement
       (identifier)
       (number_literal
+        (number_literal_part)
         (identifier)))
     (comment)
     (internal_procedures
@@ -257,17 +261,20 @@ end program
   (program
     (program_statement
       (name))
-    (statement_label)
+    (statement_label
+      (number_literal_part))
     (format_statement
       (transfer_items
         (edit_descriptor)
         (hollerith_constant)))
-    (statement_label)
+    (statement_label
+      (number_literal_part))
     (format_statement
       (transfer_items
         (edit_descriptor)
         (hollerith_constant)))
-    (statement_label)
+    (statement_label
+      (number_literal_part))
     (format_statement
       (transfer_items
         (edit_descriptor)
@@ -285,6 +292,7 @@ program test
   /)
 end program test
 --------------------------------------------------------------------------------
+
 (translation_unit
   (program
     (program_statement
@@ -295,11 +303,15 @@ end program test
         (sized_declarator
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_literal_part))))
         (array_literal
-          (number_literal)
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_literal_part))
+          (number_literal
+            (number_literal_part))
+          (number_literal
+            (number_literal_part)))))
     (end_program_statement
       (name))))
 
@@ -347,18 +359,22 @@ end program test
           (logical_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_literal_part)))
             (relational_expression
               (identifier)
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (relational_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_literal_part)))
             (identifier))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_literal_part))))
     (end_program_statement
       (name))))
 
@@ -384,11 +400,16 @@ end program test
         (identifier)
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_literal_part))
+          (number_literal
+            (number_literal_part)
+            (number_literal_part)))))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_literal_part)
+        (number_literal_part)))
     (end_program_statement
       (name))))
 
@@ -409,7 +430,9 @@ end program test
       (name))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_literal_part)
+        (number_literal_part)))
     (end_program_statement
       (name))))
 
@@ -435,16 +458,20 @@ end program test
           (logical_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_literal_part)))
             (relational_expression
               (identifier)
-              (number_literal)))
+              (number_literal
+                (number_literal_part))))
           (relational_expression
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_literal_part)))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_literal_part))))
     (end_program_statement
       (name))))
 
@@ -468,6 +495,85 @@ end program test
       (data_set
         (identifier)
         (data_value
-          (number_literal))))
+          (number_literal
+            (number_literal_part)
+            (comment)
+            (number_literal_part)))))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Digit run split across line continuation
+================================================================================
+
+program test
+  x = 12&
+       &34
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (number_literal
+        (number_literal_part)
+        (number_literal_part)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Real literal with no leading digits split right after the decimal point
+================================================================================
+
+program test
+  x = .&
+       &5
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (number_literal
+        (number_literal_part)
+        (number_literal_part)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Dotted operator directly adjacent to an integer split earlier in its digits
+================================================================================
+
+program test
+  if (12&
+       &3.eq.0) i = 2
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (if_statement
+      (parenthesized_expression
+        (relational_expression
+          (number_literal
+            (number_literal_part)
+            (number_literal_part))
+          (number_literal
+            (number_literal_part))))
+      (assignment_statement
+        (identifier)
+        (number_literal
+          (number_literal_part))))
     (end_program_statement
       (name))))

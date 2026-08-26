@@ -64,6 +64,7 @@ module.exports = grammar({
     $._do_label,
     $.do_label_virtual,
     $._do_label_continue,
+    $.number_literal_part,
   ],
 
   extras: $ => [
@@ -1179,7 +1180,7 @@ module.exports = grammar({
       $.include_statement,
     ),
 
-    statement_label: $ => prec(1, alias($._integer_literal, 'statement_label')),
+    statement_label: $ => prec(1, alias($._integer_number, 'statement_label')),
 
     statement_label_reference: $ => alias($.statement_label, 'statement_label_reference'),
 
@@ -2168,10 +2169,20 @@ module.exports = grammar({
       ')'
     ),
 
+    // An integer/float literal is a sequence of one or more parts: just
+    // one for the (overwhelmingly common) case where it isn't split by a
+    // line continuation, or several - with the ordinary '&'/comment
+    // extras bridging the gaps - when it is (F2018 6.3.2.4 allows
+    // splitting any lexical token this way). The first part's underlying
+    // token (_integer_literal/_float_literal) is what tells the grammar
+    // which of the two this is; from then on all parts look the same.
+    _integer_number: $ => seq(alias($._integer_literal, $.number_literal_part), repeat($.number_literal_part)),
+    _float_number: $ => seq(alias($._float_literal, $.number_literal_part), repeat($.number_literal_part)),
+
     number_literal: $ => seq(
       choice(
-        $._integer_literal,
-        $._float_literal,
+        $._integer_number,
+        $._float_number,
         $._boz_literal
       ),
       optional($._kind)
@@ -2213,7 +2224,7 @@ module.exports = grammar({
       optional(seq(
         field('kind', choice(
           alias($._string_literal_kind, $.identifier),
-          alias($._integer_literal, $.number_literal)
+          alias($._integer_number, $.number_literal)
         )),
         // Although external scanner enforces trailing underscore, we
         // also need to *capture* it here

@@ -52,7 +52,8 @@ end program example_padl
           (identifier)
           (argument_list
             (identifier)
-            (number_literal)
+            (number_literal
+              (number_literal_part))
             (string_literal)))))
     (comment)
     (assignment_statement
@@ -61,7 +62,8 @@ end program example_padl
         (identifier)
         (argument_list
           (identifier)
-          (number_literal))))
+          (number_literal
+            (number_literal_part)))))
     (comment)
     (end_program_statement
       (name))))
@@ -151,7 +153,8 @@ end program test
       (identifier))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_literal_part)))
     (end_program_statement
       (name))))
 
@@ -173,13 +176,17 @@ end program
       left: (call_expression
         (identifier)
         (argument_list
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_literal_part))
+          (number_literal
+            (number_literal_part))))
       right: (call_expression
         (identifier)
         (argument_list
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_literal_part))
+          (number_literal
+            (number_literal_part)))))
     (end_program_statement)))
 
 ================================================================================
@@ -220,12 +227,14 @@ Multiple array assignments
         (kind
           (keyword_argument
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_literal_part)))))
       (sized_declarator
         (identifier)
         (size
           (extent_specifier
-            (number_literal)
+            (number_literal
+              (number_literal_part))
             (identifier)))))
     (assignment_statement
       (call_expression

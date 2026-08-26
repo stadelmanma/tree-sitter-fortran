@@ -14385,7 +14385,7 @@
         "type": "ALIAS",
         "content": {
           "type": "SYMBOL",
-          "name": "_integer_literal"
+          "name": "_integer_number"
         },
         "named": false,
         "value": "statement_label"
@@ -21482,6 +21482,48 @@
         }
       ]
     },
+    "_integer_number": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_integer_literal"
+          },
+          "named": true,
+          "value": "number_literal_part"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "number_literal_part"
+          }
+        }
+      ]
+    },
+    "_float_number": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_float_literal"
+          },
+          "named": true,
+          "value": "number_literal_part"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "number_literal_part"
+          }
+        }
+      ]
+    },
     "number_literal": {
       "type": "SEQ",
       "members": [
@@ -21490,11 +21532,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_integer_literal"
+              "name": "_integer_number"
             },
             {
               "type": "SYMBOL",
-              "name": "_float_literal"
+              "name": "_float_number"
             },
             {
               "type": "SYMBOL",
@@ -21680,7 +21722,7 @@
                         "type": "ALIAS",
                         "content": {
                           "type": "SYMBOL",
-                          "name": "_integer_literal"
+                          "name": "_integer_number"
                         },
                         "named": true,
                         "value": "number_literal"
@@ -23354,6 +23396,10 @@
     {
       "type": "SYMBOL",
       "name": "_do_label_continue"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "number_literal_part"
     }
   ],
   "inline": [
