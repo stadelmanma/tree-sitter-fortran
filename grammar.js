@@ -2430,9 +2430,10 @@ module.exports.PREC = PREC
 //     if (i .ne. 30000.&
 //          &and. j .lt. 5) ...
 //
-// where the leading '.' of `.and.` ends the first line.
+// where the leading '.' of `.and.` ends the first line. Comment lines are
+// also allowed between the two continuation markers, e.g. `.&\n!comment\n&and.`.
 function caseInsensitiveSpliced (keyword, aliasValue = keyword) {
-  const continuation = '(?:&[ \\t]*\\r?\\n[ \\t]*&)?'
+  const continuation = '(?:&[ \\t]*\\r?\\n(?:[ \\t]*![^\\r\\n]*\\r?\\n)*[ \\t]*&)?'
   const pattern = keyword
     .split('')
     .map(l => {
