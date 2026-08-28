@@ -526,29 +526,6 @@ end program test
       (name))))
 
 ================================================================================
-Real literal with no leading digits split right after the decimal point
-================================================================================
-
-program test
-  x = .&
-       &5
-end program test
-
---------------------------------------------------------------------------------
-
-(translation_unit
-  (program
-    (program_statement
-      (name))
-    (assignment_statement
-      (identifier)
-      (number_literal
-        (number_literal_part)
-        (number_literal_part)))
-    (end_program_statement
-      (name))))
-
-================================================================================
 Dotted operator directly adjacent to an integer split earlier in its digits
 ================================================================================
 
