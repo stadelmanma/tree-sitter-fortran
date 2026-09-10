@@ -194,6 +194,9 @@
 (end_module_procedure_statement
   (name) @function)
 
+(end_type_statement
+  (name) @type)
+
 (subroutine_call
   (identifier) @function)
 
