@@ -2226,7 +2226,8 @@ end subroutine print_decorated_numbers
           (output_item_list
             (identifier))))
       (type_statement
-        (identifier)
+        (derived_type
+          (type_name))
         (write_statement
           (unit_identifier)
           (format_identifier
@@ -2910,7 +2911,8 @@ end program test
       type: (intrinsic_type)
       allocation: (identifier))
     (allocate_statement
-      type: (identifier)
+      type: (derived_type
+        name: (type_name))
       allocation: (identifier)
       (keyword_argument
         name: (identifier)
@@ -2919,7 +2921,8 @@ end program test
       type: (intrinsic_type)
       allocation: (identifier))
     (allocate_statement
-      type: (identifier)
+      type: (derived_type
+        name: (type_name))
       allocation: (sized_allocation
         (identifier)
         (size
@@ -3752,4 +3755,80 @@ end program test
         (identifier))
       (common_block))
     (end_program_statement
+      (name))))
+
+================================================================================
+Parameterised Derived Types
+================================================================================
+
+module test
+  use iso_fortran_env, only: real64
+  type thing(size, len)
+    integer, kind :: size
+    integer, len :: len
+    real(kind=size) :: number
+    character(len=len) name
+  end type
+
+  type(thing(real64, 12)) :: a(0) = [thing(real64, 12)::]
+
+end module test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (module
+    (module_statement
+      (name))
+    (use_statement
+      (module_name)
+      (included_items
+        (identifier)))
+    (derived_type_definition
+      (derived_type_statement
+        (type_name)
+        (derived_type_parameter_list
+          (identifier)
+          (identifier)))
+      (variable_declaration
+        type: (intrinsic_type)
+        attribute: (type_qualifier)
+        declarator: (identifier))
+      (variable_declaration
+        type: (intrinsic_type)
+        attribute: (type_qualifier)
+        declarator: (identifier))
+      (variable_declaration
+        type: (intrinsic_type
+          kind: (kind
+            (keyword_argument
+              name: (identifier)
+              value: (identifier))))
+        declarator: (identifier))
+      (variable_declaration
+        type: (intrinsic_type
+          kind: (kind
+            (keyword_argument
+              name: (identifier)
+              value: (identifier))))
+        declarator: (identifier))
+      (end_type_statement))
+    (variable_declaration
+      type: (derived_type
+        name: (type_name)
+        kind: (kind
+          (identifier)
+          (number_literal)))
+      declarator: (init_declarator
+        left: (sized_declarator
+          (identifier)
+          (size
+            (number_literal)))
+        right: (array_literal
+          type: (derived_type
+            name: (type_name)
+            kind: (kind
+              (identifier)
+              (number_literal))))))
+    (end_module_statement
       (name))))
