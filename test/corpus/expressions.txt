@@ -163,77 +163,132 @@ END PROGRAM
     (program_statement
       (name))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal))
+      left: (identifier)
+      right: (string_literal))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
+      left: (identifier)
+      right: (string_literal
         (string_literal_part)
         (string_literal_part)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (concatenation_expression
-        (string_literal
+      left: (identifier)
+      right: (concatenation_expression
+        left: (string_literal
           (string_literal_part))
-        (concatenation_expression
-          (string_literal
+        right: (concatenation_expression
+          left: (string_literal
             (string_literal_part))
-          (concatenation_expression
-            (identifier)
-            (identifier)))))
+          right: (concatenation_expression
+            left: (identifier)
+            right: (identifier)))))
     (assignment_statement
-      (identifier)
-      (string_literal
-        (identifier)
+      left: (identifier)
+      right: (string_literal
+        kind: (identifier)
         (string_literal_part)))
     (assignment_statement
-      (identifier)
-      (string_literal
-        (number_literal)
+      left: (identifier)
+      right: (string_literal
+        kind: (number_literal)
         (string_literal_part)))
     (end_program_statement)))
+
+================================================================================
+String Literal delimiters, escaped quotes and continuation (CST)
+:cst
+================================================================================
+
+program test
+  dble_qt = "abc""def"
+  sngl_qt = 'ghi''jkl'
+  cont_qt = "mno&
+             ! comment
+             &pqr"
+end program
+
+--------------------------------------------------------------------------------
+
+1:0  - 8:0    translation_unit
+1:0  - 8:0      program
+1:0  - 2:0        program_statement
+1:0  - 1:7          "program"
+1:8  - 1:12         name `test`
+2:2  - 2:22       assignment_statement
+2:2  - 2:9          left: identifier `dble_qt`
+2:10 - 2:11         "="
+2:12 - 2:22         right: string_literal
+2:12 - 2:13           "\""
+2:13 - 2:16           string_literal_part `abc`
+2:16 - 2:17           "\\"
+2:17 - 2:18           string_literal_part `\"`
+2:18 - 2:21           string_literal_part `def`
+2:21 - 2:22           "\""
+3:2  - 3:22       assignment_statement
+3:2  - 3:9          left: identifier `sngl_qt`
+3:10 - 3:11         "="
+3:12 - 3:22         right: string_literal
+3:12 - 3:13           "\""
+3:13 - 3:16           string_literal_part `ghi`
+3:16 - 3:17           "\\"
+3:17 - 3:18           string_literal_part `'`
+3:18 - 3:21           string_literal_part `jkl`
+3:21 - 3:22           "\""
+4:2  - 6:18       assignment_statement
+4:2  - 4:9          left: identifier `cont_qt`
+4:10 - 4:11         "="
+4:12 - 6:18         right: string_literal
+4:12 - 4:13           "\""
+4:13 - 4:16           string_literal_part `mno`
+4:16 - 4:17           "&"
+5:13 - 5:22           comment `! comment`
+6:13 - 6:14           "&"
+6:14 - 6:17           string_literal_part `pqr`
+6:17 - 6:18           "\""
+7:0  - 7:11       end_program_statement
+7:0  - 7:3          "end"
+7:4  - 7:11         "program"
 
 ================================================================================
 Boolean Literals
