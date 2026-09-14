@@ -227,8 +227,6 @@ program test
          &xyz"
   str4 = "with trailing blanks: 987&    
          &654"
-  str5 = "with trailing comment: ijk&  ! comment
-         &lmn"
   str6 = "with comment: !@#&
          ! comment
          &$%^"
@@ -330,12 +328,6 @@ end program
       (identifier)
       (string_literal
         (string_literal_part)
-        (string_literal_part)))
-    (assignment_statement
-      (identifier)
-      (string_literal
-        (string_literal_part)
-        (comment)
         (string_literal_part)))
     (assignment_statement
       (identifier)
@@ -466,5 +458,55 @@ end program main
         (string_literal
           (string_literal_part)
           (string_literal_part))))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Ampersand followed by exclamation mark inside string
+================================================================================
+
+program main
+  s = "a & !b"
+  s = "a &  ! not a comment"
+  s = 'a &!b'
+  s = "ijk&  ! not a continuation" // &  ! a continuation
+      "lmn"
+  s = "abc"&  ! a continuation of a doubled quote
+      &"def"
+end program main
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (concatenation_expression
+        (string_literal
+          (string_literal_part))
+        (comment)
+        (string_literal
+          (string_literal_part))))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (comment)
+        (string_literal_part)
+        (string_literal_part)))
     (end_program_statement
       (name))))

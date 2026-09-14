@@ -423,12 +423,19 @@ typedef enum {
 // It consumes any trailing blanks and decides whether the '&' is a line
 // continuation marker or ordinary string content.
 // It does not set and advance the end marker.
+// In a character context the '&' must be the last nonblank character of the
+// line and must not be followed by commentary, so a '!' after the '&' is
+// string content and not a comment. The exception is the '&' after the first
+// quote of a doubled quote split across lines, where scan_string_quote_ampersand
+// has already found the second quote on a later line.
 static bool string_ampersand_is_continuation(Scanner *scanner, TSLexer *lexer) {
     while (iswblank(lexer->lookahead)) {
         advance(lexer);
     }
-    return (lexer->lookahead == '\n' || lexer->lookahead == '\r' ||
-            lexer->lookahead == '!'  || lexer->eof(lexer));
+    if (lexer->lookahead == '!' && scanner->in_string == IN_STRING_QUOTE_QUOTE) {
+        return true;
+    }
+    return (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer));
 }
 
 // Handles an '&' encountered while scanning string content (lexer->lookahead == '&').
