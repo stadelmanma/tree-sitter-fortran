@@ -349,6 +349,41 @@ end program
 7:4  - 7:11         "program"
 
 ================================================================================
+Unterminated string literal ends with the line
+================================================================================
+
+program test
+  x = "abc
+  y = 1
+  z = "
+  w = 2
+  print *, "ok"
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      left: (identifier)
+      (ERROR
+        (string_literal_part))
+      right: (number_literal))
+    (assignment_statement
+      left: (identifier)
+      (ERROR
+        (string_literal_part))
+      right: (number_literal))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal
+          (string_literal_part))))
+    (end_program_statement)))
+
+================================================================================
 Boolean Literals
 ================================================================================
 

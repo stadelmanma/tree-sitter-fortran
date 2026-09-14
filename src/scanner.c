@@ -575,11 +575,8 @@ static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
 
     while (!lexer->eof(lexer)) {
         if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
-            // unterminated string line: only valid if we have accumulated
-            // content, the grammar will hopefully close the string via error
-            // recovery
-            lexer->result_symbol = STRING_LITERAL_PART;
-            return has_content;
+            // unterminated string line
+            break;
         } else if (lexer->lookahead == scanner->string_quote) {
             if (has_content) {
                 // emit what we have so far and let the next call handle the quote
@@ -605,9 +602,17 @@ static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
         }
     }
 
-    // EOF inside string: emit whatever we have.
+    // unterminated string (newline or EOF): a character context can only be
+    // continued with an '&', so the string ends here. Leave the string state,
+    // so that the following lines are not scanned as string content and the
+    // parser can recover at the newline, and emit whatever we have. Without
+    // content the part is empty, but the token is still needed, as the
+    // scanner state is only stored along with a token.
+    scanner->in_string = IN_STRING_NONE;
+    scanner->string_quote = '\0';
+    lexer->mark_end(lexer);
     lexer->result_symbol = STRING_LITERAL_PART;
-    return has_content;
+    return true;
 }
 
 /// Need an external scanner to catch '!' before its parsed as a comment
@@ -894,6 +899,8 @@ void tree_sitter_fortran_external_scanner_deserialize(void *payload,
 
     if (length == 0) {
         scanner->in_line_continuation = false;
+        scanner->in_string = IN_STRING_NONE;
+        scanner->string_quote = '\0';
         scanner->depth = 0;
         scanner->pending_label_virtual = 0;
         scanner->is_pending_eos_virtual = false;
