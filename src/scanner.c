@@ -755,6 +755,18 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         }
     }
 
+    // Inside a string literal (and not on a continuation line) everything up
+    // to the closing quote is content, including leading blanks, so scan the
+    // content before any whitespace is skipped
+    if (!scanner->in_line_continuation &&
+        (scanner->in_string == IN_STRING_NORMAL || scanner->in_string == IN_STRING_QUOTE_QUOTE)) {
+        if (valid_symbols[STRING_LITERAL_PART] || valid_symbols[STRING_LITERAL_QUOTE]) {
+            if (scan_string_literal_content(scanner, lexer)) {
+                return true;
+            }
+        }
+    }
+
     // Consume any leading whitespace except newlines
     while (iswblank(lexer->lookahead)) {
         skip(lexer);
@@ -779,14 +791,8 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     }
 
     // skip string parsing if we are in a line continuation state
-    if (!scanner->in_line_continuation) {
-        if (scanner->in_string == IN_STRING_NORMAL || scanner->in_string == IN_STRING_QUOTE_QUOTE) {
-            if (valid_symbols[STRING_LITERAL_PART] || valid_symbols[STRING_LITERAL_QUOTE]) {
-                if (scan_string_literal_content(scanner, lexer)) {
-                    return true;
-                }
-            }
-        } else if (valid_symbols[STRING_LITERAL_START]) {
+    if (!scanner->in_line_continuation && scanner->in_string == IN_STRING_NONE) {
+        if (valid_symbols[STRING_LITERAL_START]) {
             if (scan_string_literal_start(scanner, lexer)) {
                 return true;
             }
