@@ -291,6 +291,64 @@ end program
 7:4  - 7:11         "program"
 
 ================================================================================
+String Literal blanks at token boundaries (CST)
+:cst
+================================================================================
+
+program test
+  lead_qt = "  abc"
+  cont_qt = "abc &
+             & def"
+  quot_qt = "a"" b"
+  blank_qt = "   "
+end program
+
+--------------------------------------------------------------------------------
+
+1:0  - 8:0    translation_unit
+1:0  - 8:0      program
+1:0  - 2:0        program_statement
+1:0  - 1:7          "program"
+1:8  - 1:12         name `test`
+2:2  - 2:19       assignment_statement
+2:2  - 2:9          left: identifier `lead_qt`
+2:10 - 2:11         "="
+2:12 - 2:19         right: string_literal
+2:12 - 2:13           "\""
+2:13 - 2:18           string_literal_part `  abc`
+2:18 - 2:19           "\""
+3:2  - 4:19       assignment_statement
+3:2  - 3:9          left: identifier `cont_qt`
+3:10 - 3:11         "="
+3:12 - 4:19         right: string_literal
+3:12 - 3:13           "\""
+3:13 - 3:17           string_literal_part `abc `
+3:17 - 3:18           "&"
+4:13 - 4:14           "&"
+4:14 - 4:18           string_literal_part ` def`
+4:18 - 4:19           "\""
+5:2  - 5:19       assignment_statement
+5:2  - 5:9          left: identifier `quot_qt`
+5:10 - 5:11         "="
+5:12 - 5:19         right: string_literal
+5:12 - 5:13           "\""
+5:13 - 5:14           string_literal_part `a`
+5:14 - 5:15           "\\"
+5:15 - 5:16           string_literal_part `\"`
+5:16 - 5:18           string_literal_part ` b`
+5:18 - 5:19           "\""
+6:2  - 6:18       assignment_statement
+6:2  - 6:10         left: identifier `blank_qt`
+6:11 - 6:12         "="
+6:13 - 6:18         right: string_literal
+6:13 - 6:14           "\""
+6:14 - 6:17           string_literal_part `   `
+6:17 - 6:18           "\""
+7:0  - 7:11       end_program_statement
+7:0  - 7:3          "end"
+7:4  - 7:11         "program"
+
+================================================================================
 Boolean Literals
 ================================================================================
 
