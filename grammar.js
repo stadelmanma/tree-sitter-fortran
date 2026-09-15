@@ -83,6 +83,7 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$._expression, $.complex_literal],
+    [$._expression, $._type_name],
     [$._argument_list, $.parenthesized_expression],
     [$.case_statement],
     [$.data_set, $._expression],
@@ -478,8 +479,7 @@ module.exports = grammar({
       prec.right(1, choice(
         $.procedure_attributes,
         $.procedure_qualifier,
-        field('type', $.intrinsic_type),
-        field('type', $.derived_type)
+        field('type', $._decl_type_spec),
       ))),
 
     procedure_attributes: $ => prec(1, seq(
@@ -621,10 +621,7 @@ module.exports = grammar({
       caseInsensitive('implicit'),
       choice(
         commaSep1(seq(
-          choice(
-            $.intrinsic_type,
-            $.derived_type
-          ),
+          $._decl_type_spec,
           '(',
           commaSep1($.implicit_range),
           ')'
@@ -776,8 +773,6 @@ module.exports = grammar({
 
     end_type_statement: $ => blockStructureEnding1($, 'type', $._name),
 
-    _type_name: $ => alias($.identifier, $.type_name),
-
     derived_type_procedures: $ => seq(
       $.contains_statement,
       repeat(choice(
@@ -867,8 +862,7 @@ module.exports = grammar({
 
     variable_declaration: $ => seq(
       field('type', choice(
-        $.intrinsic_type,
-        $.derived_type,
+        $._decl_type_spec,
         alias($.procedure_declaration, $.procedure),
         $.declared_type,
       )),
@@ -893,8 +887,7 @@ module.exports = grammar({
         optional(
           choice(
             alias($.identifier, $.procedure_interface),
-            $.intrinsic_type,
-            $.derived_type,
+            $._decl_type_spec,
           )
         ),
         ')'
@@ -979,12 +972,31 @@ module.exports = grammar({
       optional(field('kind', $.kind)),
     ),
 
+    _type_name: $ => alias($.identifier, $.type_name),
+
+    // These next few nodes are very similar, the difference is whether or not
+    // derived types require the `type(..)` keyword or not. There are a couple
+    // of contexts where it's not used, because Fortran.
+
+    _derived_type: $ => seq(
+      field('name', $._type_name),
+      optional(field('kind', $.kind))
+    ),
+
+    // Derived type doesn't use `type(..)`
+    _non_decl_type_spec: $ => choice(
+      $.intrinsic_type,
+      alias($._derived_type, $.derived_type),
+    ),
+
     derived_type: $ => seq(
       choice(caseInsensitive('type'), caseInsensitive('class')),
       '(',
       // Strictly, only `class` can be unlimited polymorphic
       choice(
         seq(
+          // We don't use one of the type-spec nodes here so that we get the
+          // `kind` node as a _sibling_ rather than a child
           field('name', choice(
             prec.dynamic(1, alias($._intrinsic_type, $.intrinsic_type)),
             $._type_name,
@@ -994,6 +1006,12 @@ module.exports = grammar({
         $.unlimited_polymorphic
       ),
       ')'
+    ),
+
+    // Derive type requirs `type(..)`
+    _decl_type_spec: $ => choice(
+      $.intrinsic_type,
+      $.derived_type,
     ),
 
     declared_type: $ => seq(
@@ -1630,7 +1648,7 @@ module.exports = grammar({
             whiteSpacedKeyword('class', 'is')
           ),
           choice(
-            seq('(', field('type', choice($.intrinsic_type, $.identifier)), ')'),
+            seq('(', field('type', $._non_decl_type_spec), ')'),
           ),
         ),
         seq(
@@ -1883,13 +1901,7 @@ module.exports = grammar({
     allocate_statement: $ => seq(
       caseInsensitive('allocate'),
       '(',
-      optional(field('type', seq(
-        choice(
-          $.intrinsic_type,
-          $.identifier,
-        ),
-        '::'
-      ))),
+      optional(field('type', seq($._non_decl_type_spec, '::'))),
       commaSep1(field('allocation', choice(
         $.identifier,
         $.derived_type_member_expression,
@@ -2150,12 +2162,10 @@ module.exports = grammar({
 
     _array_constructor_f2003: $ => seq('[', $._ac_value_list, ']'),
 
-    _type_spec: $ => seq(choice($.intrinsic_type, $.derived_type), '::'),
-
     _ac_value_list: $ => choice(
-      field('type', $._type_spec),
+      seq(field('type', $._non_decl_type_spec), '::'),
       seq(
-        optional(field('type', $._type_spec)),
+        optional(seq(field('type', $._non_decl_type_spec), '::')),
         commaSep1($._expression)
       )
     ),

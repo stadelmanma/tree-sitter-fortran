@@ -394,7 +394,7 @@
             "named": false
           },
           {
-            "type": "identifier",
+            "type": "derived_type",
             "named": true
           },
           {
@@ -466,13 +466,9 @@
     "named": true,
     "fields": {
       "type": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": "::",
-            "named": false
-          },
           {
             "type": "derived_type",
             "named": true
@@ -6550,7 +6546,7 @@
         "required": false,
         "types": [
           {
-            "type": "identifier",
+            "type": "derived_type",
             "named": true
           },
           {
@@ -7783,11 +7779,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
