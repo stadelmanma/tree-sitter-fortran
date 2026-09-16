@@ -23378,14 +23378,6 @@
     },
     {
       "type": "SYMBOL",
-      "name": "_string_literal"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "_string_literal_kind"
-    },
-    {
-      "type": "SYMBOL",
       "name": "_external_end_of_statement"
     },
     {
@@ -23407,6 +23399,10 @@
     {
       "type": "SYMBOL",
       "name": "_do_label_continue"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_literal_kind"
     },
     {
       "type": "SYMBOL",
