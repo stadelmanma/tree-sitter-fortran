@@ -9,21 +9,43 @@ enum TokenType {
     INTEGER_LITERAL,
     FLOAT_LITERAL,
     BOZ_LITERAL,
-    STRING_LITERAL,
-    STRING_LITERAL_KIND,
     END_OF_STATEMENT,
     PREPROC_UNARY_OPERATOR,
     HOLLERITH_CONSTANT,
     DO_LABEL,
     DO_LABEL_VIRTUAL,
     DO_LABEL_CONTINUE,
+    STRING_LITERAL_KIND,
+    STRING_LITERAL_START,
+    STRING_LITERAL_PART,
+    STRING_LITERAL_QUOTE,
+    STRING_LITERAL_END
 };
 
 // at most 100 nested labeled do loops, should be sufficient
 #define MAX_LABEL_STACK 100
 
+// states for parsing strings, which can be continued and spread over several lines,
+// with comments in between,
+// state IN_STRING_QUOTE_CONT is required to handle a double double/single quote
+// with ampersand in between:
+//   s = "abc"&
+//       &"def"
+// corresponding to string "abc""def" and content abc"def
+typedef enum {
+    IN_STRING_NONE = 0,
+    IN_STRING_NORMAL = 1,
+    IN_STRING_QUOTE_QUOTE = 2,
+} InStringState;
+
+
 typedef struct {
     bool in_line_continuation;
+
+    // scanner state for remembering that scanner is within a (possibly continued) string
+    InStringState in_string;
+    // opening quote to match the closing quote, both ' and " are possible
+    char string_quote;
 
     // stack for tracking active DO labels and their counts
     int32_t depth;
@@ -379,69 +401,217 @@ static bool scan_string_literal_kind(TSLexer *lexer) {
     return true;
 }
 
-static bool scan_string_literal(TSLexer *lexer) {
-    const char opening_quote = lexer->lookahead;
-
-    if (opening_quote != '"' && opening_quote != '\'') {
+static bool scan_string_literal_start(Scanner *scanner, TSLexer *lexer) {
+    if (lexer->lookahead != '"' && lexer->lookahead != '\'') {
         return false;
     }
-
+    scanner->string_quote = lexer->lookahead;
     advance(lexer);
-    lexer->result_symbol = STRING_LITERAL;
+    lexer->mark_end(lexer);
+    scanner->in_string = IN_STRING_NORMAL;
+    lexer->result_symbol = STRING_LITERAL_START;
+    return true;
+}
 
-    while (lexer->lookahead != '\n' && !lexer->eof(lexer)) {
-        // Handle line continuations: strictly speaking, we MUST have
-        // both trailing '&' on first line AND leading '&' on second
-        // line, though most compilers do accept string literals
-        // missing the second '&'. In practice, everyone does seem to
-        // include it.
+typedef enum {
+    AMPERSAND_CONTINUATION, // ampersand is a LINE_CONTINUATION
+    AMPERSAND_CONTENT       // ampersand is part of the string content
+} AmpersandKind;
 
-        // We need to handle this here because sometimes '&' is part
-        // of the literal and not a continuation marker, and otherwise
-        // the parser gets confused, especially if there's no
-        // whitespace before the '&' in the string
-
-        // The literal token will end up containing the line
-        // continuation as well as any blank or comment lines inside
-        // the quotes (yes, you can have comments _inside_ string
-        // literals if they contain a line continuation)
-        if (lexer->lookahead == '&') {
-            advance(lexer);
-            // Consume blanks up to the end of the line or non-blank
-            while (iswblank(lexer->lookahead)) {
-                advance(lexer);
-            }
-            // If we hit the end of the line, consume all whitespace,
-            // including new lines
-            if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
-                while (iswspace(lexer->lookahead)) {
-                    advance(lexer);
-                }
-            }
-            continue;
-        }
-
-        // If we hit the same kind of quote that opened this literal,
-        // check to see if there's two in a row, and if so, consume
-        // both of them
-        if (lexer->lookahead == opening_quote) {
-            advance(lexer);
-            // It was just one quote, so we've successfully reached
-            // the end of the literal. We also need to check that an
-            // escaped quote isn't split in half by a line
-            // continuation -- people do this!
-            lexer->mark_end(lexer);
-            skip_literal_continuation_sequence(lexer);
-            if (lexer->lookahead != opening_quote) {
-                return true;
-            }
-        }
+// Called after advancing past an '&' inside a string literal.
+// It consumes any trailing blanks and decides whether the '&' is a line
+// continuation marker or ordinary string content.
+// It does not set and advance the end marker.
+// In a character context the '&' must be the last nonblank character of the
+// line and must not be followed by commentary, so a '!' after the '&' is
+// string content and not a comment. The exception is the '&' after the first
+// quote of a doubled quote split across lines, where scan_string_quote_ampersand
+// has already found the second quote on a later line.
+static bool string_ampersand_is_continuation(Scanner *scanner, TSLexer *lexer) {
+    while (iswblank(lexer->lookahead)) {
         advance(lexer);
     }
+    if (lexer->lookahead == '!' && scanner->in_string == IN_STRING_QUOTE_QUOTE) {
+        return true;
+    }
+    return (lexer->lookahead == '\n' || lexer->lookahead == '\r' || lexer->eof(lexer));
+}
 
-    // We hit the end of the line without an '&', so this is an
-    // unclosed string literal (an error)
-    return false;
+// Handles an '&' encountered while scanning string content (lexer->lookahead == '&').
+// Decides whether it is a line continuation or ordinary content and sets
+// scanner state and lexer->result_symbol accordingly.
+static AmpersandKind scan_string_ampersand(Scanner *scanner, TSLexer *lexer, bool has_content) {
+    if (has_content) {
+        // preserve what we have accumulated in case this '&' is a continuation
+        lexer->mark_end(lexer);
+    }
+    // speculatively consume '&' and go on peeking ahead to make a decision
+    advance(lexer);
+    if (!has_content) {
+        // either line continuation or a string part starting with &,
+        // in both cases we want to capture the ampersand, and we must do it
+        // before string_ampersand_is_continuation, which advances the lexer
+        lexer->mark_end(lexer);
+    }
+
+    if (string_ampersand_is_continuation(scanner, lexer)) {
+        if (has_content) {
+            // PART ends right before the '&' (already marked above);
+            // the continuation itself is picked up on the next call
+            lexer->result_symbol = STRING_LITERAL_PART;
+        } else {
+            // nothing accumulated yet, this is a continuation symbol,
+            // where we stopped scanning in the last iteration,
+            // emit LINE_CONTINUATION
+            scanner->in_line_continuation = true;
+            lexer->result_symbol = LINE_CONTINUATION;
+        }
+        return AMPERSAND_CONTINUATION;
+    }
+
+    // not a continuation: put '&' and any consumed blanks into content
+    lexer->mark_end(lexer);
+    return AMPERSAND_CONTENT;
+}
+
+static void scan_string_quote_ampersand(Scanner *scanner, TSLexer *lexer) {
+    // lock the token boundary right here (after the current quote)
+    lexer->mark_end(lexer);
+
+    // speculatively advance past the initial '&'
+    advance(lexer);
+
+    // skip whitespace, newlines, and comments on intermediate lines
+    while (true) {
+        if (iswblank(lexer->lookahead)) {
+            advance(lexer);
+        } else if (lexer->lookahead == '\r' || lexer->lookahead == '\n') {
+            advance(lexer);
+        } else if (lexer->lookahead == '!') {
+            while (lexer->lookahead != '\n' && lexer->lookahead != '\r' && !lexer->eof(lexer)) {
+                advance(lexer);
+            }
+        } else {
+            break;
+        }
+    }
+
+    // check for the optional matching ampersand on the continuation line
+    if (lexer->lookahead == '&') {
+        advance(lexer);
+        while (iswblank(lexer->lookahead)) {
+            advance(lexer);
+        }
+    }
+
+    // finally examine the lookahead target character after ampersand
+    // (or first non-blank character on line)
+    if (lexer->lookahead == scanner->string_quote) {
+        // it is an escaped quote split across line continuations.
+        // set to IN_STRING_QUOTE_QUOTE so the second quote emits as STRING_LITERAL_PART,
+        // we need to wait for the parser to consume the continued lines separately
+        scanner->in_string = IN_STRING_QUOTE_QUOTE;
+        lexer->result_symbol = STRING_LITERAL_QUOTE;
+    } else {
+        // it is an ordinary statement continuation following a closed string
+        scanner->in_string = IN_STRING_NONE;
+        scanner->string_quote = '\0';
+        lexer->result_symbol = STRING_LITERAL_END;
+    }
+    return;
+}
+
+// Called after looking ahead at a string_quote character and without any
+// content yet.
+// It always emits a token and succeeds, thus no explicit true/false
+// return value.
+// It resolve the four cases:
+// (1) doubled quote, scan second quote,
+// (2) doubled quote, scan first quote,
+// (3) ambiguous quote+& (needs extensive look ahead)
+// (4) unambiguous closing quote.
+static void scan_string_quote(Scanner *scanner, TSLexer *lexer) {
+    // Consume the quote character
+    advance(lexer);
+
+    if (scanner->in_string == IN_STRING_QUOTE_QUOTE) {
+        // we just consumed the second quote of a doubled quote (same-line or split)
+        lexer->mark_end(lexer);
+        scanner->in_string = IN_STRING_NORMAL;
+        lexer->result_symbol = STRING_LITERAL_PART;
+        return;
+    }
+
+    // doubled quote on the same line ("")
+    if (lexer->lookahead == scanner->string_quote) {
+        lexer->mark_end(lexer);
+        scanner->in_string = IN_STRING_QUOTE_QUOTE;
+        lexer->result_symbol = STRING_LITERAL_QUOTE;
+        return;
+    }
+
+    // quote followed by '&'
+    if (lexer->lookahead == '&') {
+        scan_string_quote_ampersand(scanner, lexer);
+        return;
+    }
+
+    // unambiguous closing quote
+    lexer->mark_end(lexer);
+    scanner->in_string = IN_STRING_NONE;
+    scanner->string_quote = '\0';
+    lexer->result_symbol = STRING_LITERAL_END;
+    return;
+}
+
+
+static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
+    // precondition:
+    //    in_string == IN_STRING_NORMAL || in_string == IN_STRING_QUOTE_QUOTE,
+    //    valid_symbols[STRING_LITERAL_PART] and valid_symbols[STRING_LITERAL_QUOTE]
+
+    bool has_content = false;
+
+    while (!lexer->eof(lexer)) {
+        if (lexer->lookahead == '\n' || lexer->lookahead == '\r') {
+            // unterminated string line
+            break;
+        } else if (lexer->lookahead == scanner->string_quote) {
+            if (has_content) {
+                // emit what we have so far and let the next call handle the quote
+                lexer->result_symbol = STRING_LITERAL_PART;
+                return true;
+            } else {
+                // nothing accumulated yet (has_content is false), advance past quote
+               // and then decide which case we have, but we always succeed
+               scan_string_quote(scanner, lexer);
+               return true;
+            }
+        } else if (lexer->lookahead == '&') {
+            if (scan_string_ampersand(scanner, lexer, has_content) == AMPERSAND_CONTINUATION) {
+                return true;
+            } else {
+                // return value was AMPERSAND_CONTENT
+                has_content = true;
+            }
+        } else {
+            advance(lexer);
+            lexer->mark_end(lexer);
+            has_content = true;
+        }
+    }
+
+    // unterminated string (newline or EOF): a character context can only be
+    // continued with an '&', so the string ends here. Leave the string state,
+    // so that the following lines are not scanned as string content and the
+    // parser can recover at the newline, and emit whatever we have. Without
+    // content the part is empty, but the token is still needed, as the
+    // scanner state is only stored along with a token.
+    scanner->in_string = IN_STRING_NONE;
+    scanner->string_quote = '\0';
+    lexer->mark_end(lexer);
+    lexer->result_symbol = STRING_LITERAL_PART;
+    return true;
 }
 
 /// Need an external scanner to catch '!' before its parsed as a comment
@@ -589,6 +759,18 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         }
     }
 
+    // Inside a string literal (and not on a continuation line) everything up
+    // to the closing quote is content, including leading blanks, so scan the
+    // content before any whitespace is skipped
+    if (!scanner->in_line_continuation &&
+        (scanner->in_string == IN_STRING_NORMAL || scanner->in_string == IN_STRING_QUOTE_QUOTE)) {
+        if (valid_symbols[STRING_LITERAL_PART] || valid_symbols[STRING_LITERAL_QUOTE]) {
+            if (scan_string_literal_content(scanner, lexer)) {
+                return true;
+            }
+        }
+    }
+
     // Consume any leading whitespace except newlines
     while (iswblank(lexer->lookahead)) {
         skip(lexer);
@@ -612,9 +794,12 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
         return true;
     }
 
-    if (valid_symbols[STRING_LITERAL]) {
-        if (scan_string_literal(lexer)) {
-            return true;
+    // skip string parsing if we are in a line continuation state
+    if (!scanner->in_line_continuation && scanner->in_string == IN_STRING_NONE) {
+        if (valid_symbols[STRING_LITERAL_START]) {
+            if (scan_string_literal_start(scanner, lexer)) {
+                return true;
+            }
         }
     }
 
@@ -658,7 +843,8 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
 void *tree_sitter_fortran_external_scanner_create() {
     Scanner *scanner = ts_calloc(1, sizeof(Scanner));
     scanner->in_line_continuation = false;
-    scanner->depth = 0;
+    scanner->in_string = IN_STRING_NONE;
+    scanner->string_quote = '\0';
     scanner->pending_label_virtual = 0;
     scanner->is_pending_eos_virtual = false;
     return scanner;
@@ -679,6 +865,12 @@ unsigned tree_sitter_fortran_external_scanner_serialize(void *payload,
     size_t size = 0;
 
     buffer[size] = (char)scanner->in_line_continuation;
+    size += 1;
+
+    buffer[size] = (char)scanner->in_string;
+    size += 1;
+
+    buffer[size] = scanner->string_quote;
     size += 1;
 
     memcpy(&buffer[size], &scanner->depth, sizeof(int32_t));
@@ -706,6 +898,8 @@ void tree_sitter_fortran_external_scanner_deserialize(void *payload,
 
     if (length == 0) {
         scanner->in_line_continuation = false;
+        scanner->in_string = IN_STRING_NONE;
+        scanner->string_quote = '\0';
         scanner->depth = 0;
         scanner->pending_label_virtual = 0;
         scanner->is_pending_eos_virtual = false;
@@ -715,6 +909,12 @@ void tree_sitter_fortran_external_scanner_deserialize(void *payload,
     size_t size = 0;
 
     scanner->in_line_continuation = buffer[size];
+    size += 1;
+
+    scanner->in_string = (InStringState)buffer[size];
+    size += 1;
+
+    scanner->string_quote = buffer[size];
     size += 1;
 
     memcpy(&scanner->depth, &buffer[size], sizeof(int32_t));

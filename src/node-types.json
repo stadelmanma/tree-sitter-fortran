@@ -3029,6 +3029,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal_part",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -6123,6 +6133,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "string_literal_part",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -7006,6 +7026,10 @@
     "named": false
   },
   {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#define",
     "named": false
   },
@@ -7236,6 +7260,10 @@
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "\\",
     "named": false
   },
   {
@@ -7783,11 +7811,11 @@
   },
   {
     "type": "none",
-    "named": true
+    "named": false
   },
   {
     "type": "none",
-    "named": false
+    "named": true
   },
   {
     "type": "nopass",
@@ -7980,6 +8008,10 @@
   {
     "type": "stop",
     "named": false
+  },
+  {
+    "type": "string_literal_part",
+    "named": true
   },
   {
     "type": "submodule",

@@ -56,14 +56,17 @@ module.exports = grammar({
     $._integer_literal,
     $._float_literal,
     $._boz_literal,
-    $._string_literal,
-    $._string_literal_kind,
     $._external_end_of_statement,
     $._preproc_unary_operator,
     $.hollerith_constant,
     $._do_label,
     $.do_label_virtual,
     $._do_label_continue,
+    $._string_literal_kind,
+    $.string_literal_start,
+    $.string_literal_part,
+    $.string_literal_quote,
+    $.string_literal_end,
   ],
 
   extras: $ => [
@@ -107,6 +110,7 @@ module.exports = grammar({
     [$.cray_pointer_declaration, $.identifier],
     [$.unit_identifier, $.identifier],
     [$.format_identifier, $.identifier],
+    [$._string_literal_content],
   ],
 
   supertypes: $ => [
@@ -2219,7 +2223,14 @@ module.exports = grammar({
         // also need to *capture* it here
         token.immediate('_'),
       )),
-      $._string_literal,
+      alias($.string_literal_start, '"'),
+      repeat($._string_literal_content),
+      alias($.string_literal_end, '"'),
+    ),
+
+    _string_literal_content: $ => seq(
+      optional(alias($.string_literal_quote, '\\')),
+      repeat1($.string_literal_part),
     ),
 
     // Coarrays

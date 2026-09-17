@@ -17,10 +17,12 @@ end program
     (write_statement
       (unit_identifier)
       (format_identifier
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (keyword_argument
         (identifier)
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (comment)
       (keyword_argument
         (identifier)
@@ -52,11 +54,13 @@ end program
     (write_statement
       (unit_identifier)
       (format_identifier
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (comment)
       (keyword_argument
         (identifier)
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (keyword_argument
         (identifier)
         (identifier)))
@@ -145,7 +149,8 @@ end program
     (statement_label)
     (format_statement
       (transfer_items
-        (string_literal)))
+        (string_literal
+          (string_literal_part))))
     (end_program_statement)))
 
 ================================================================================
@@ -202,10 +207,50 @@ program test
     &hello"
   print*, "this is "&
     &"one string"
+  print*, "this is"&
+    "one string"
   print*, "this is "&
     & // "two strings"
   print*, "this is "&
     , "two strings"
+
+  print*, "this is"&
+    &""
+  print*, "this is"&
+    ""
+
+  str1 = "123&456"
+  str2 = "abc&
+         &def"
+  str3 = "with empty line: uvw&
+
+         &xyz"
+  str4 = "with trailing blanks: 987&    
+         &654"
+  str6 = "with comment: !@#&
+         ! comment
+         &$%^"
+  str6 = "with comments and empty lines: ###&
+
+         ! comment
+         ! comment
+
+         &***"
+  str7 = "without second amp: def&
+         ghi"
+  str8 = "&
+         &"
+  str9 = "&
+         ! comment
+         &"
+  strA = "&
+         &9"
+  strB = "0&
+         &"
+  strC = "&&
+         &"
+  strD = "&
+         &&"
 end program
 
 --------------------------------------------------------------------------------
@@ -217,26 +262,114 @@ end program
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)))
+        (string_literal
+          (string_literal_part))))
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)))
+        (string_literal
+          (string_literal_part))))
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)))
+        (string_literal
+          (string_literal_part)
+          (string_literal_part)
+          (string_literal_part))))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal
+          (string_literal_part)
+          (string_literal_part)
+          (string_literal_part))))
     (print_statement
       (format_identifier)
       (output_item_list
         (concatenation_expression
-          (string_literal)
-          (string_literal))))
+          (string_literal
+            (string_literal_part))
+          (string_literal
+            (string_literal_part)))))
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)
-        (string_literal)))
+        (string_literal
+          (string_literal_part))
+        (string_literal
+          (string_literal_part))))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal
+          (string_literal_part)
+          (string_literal_part))))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal
+          (string_literal_part)
+          (string_literal_part))))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (comment)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (comment)
+        (comment)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (comment)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
     (end_program_statement)))
 
 ================================================================================
@@ -285,6 +418,7 @@ program test
   /)
 end program test
 --------------------------------------------------------------------------------
+
 (translation_unit
   (program
     (program_statement
@@ -321,6 +455,58 @@ end program main
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)))
+        (string_literal
+          (string_literal_part)
+          (string_literal_part))))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Ampersand followed by exclamation mark inside string
+================================================================================
+
+program main
+  s = "a & !b"
+  s = "a &  ! not a comment"
+  s = 'a &!b'
+  s = "ijk&  ! not a continuation" // &  ! a continuation
+      "lmn"
+  s = "abc"&  ! a continuation of a doubled quote
+      &"def"
+end program main
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      (identifier)
+      (concatenation_expression
+        (string_literal
+          (string_literal_part))
+        (comment)
+        (string_literal
+          (string_literal_part))))
+    (assignment_statement
+      (identifier)
+      (string_literal
+        (string_literal_part)
+        (comment)
+        (string_literal_part)
+        (string_literal_part)))
     (end_program_statement
       (name))))

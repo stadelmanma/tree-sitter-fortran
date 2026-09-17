@@ -11,7 +11,8 @@ Include directives
 
 (translation_unit
   (preproc_include
-    path: (string_literal))
+    path: (string_literal
+      (string_literal_part)))
   (preproc_include
     path: (system_lib_string))
   (preproc_include
@@ -495,7 +496,8 @@ end module foo
       (derived_type_statement
         (type_name))
       (preproc_include
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (variable_declaration
         (intrinsic_type)
         (identifier))
@@ -726,7 +728,8 @@ end program
       (identifier))
     (assignment_statement
       (identifier)
-      (string_literal))
+      (string_literal
+        (string_literal_part)))
     (select_case_statement
       (selector
         (identifier))
@@ -734,7 +737,8 @@ end program
         (identifier)
         (case_statement
           (case_value_range_list
-            (string_literal))
+            (string_literal
+              (string_literal_part)))
           (assignment_statement
             (identifier)
             (number_literal))))
@@ -744,7 +748,8 @@ end program
           (number_literal))
         (case_statement
           (case_value_range_list
-            (string_literal))
+            (string_literal
+              (string_literal_part)))
           (assignment_statement
             (identifier)
             (number_literal))))

@@ -147,6 +147,8 @@ PROGRAM TEST
     sngl_qt = '''double single quotes'''
     dble_qt = "'single in double quotes'"
     sngl_qt = '"double in single quotes"'
+    three_dble_qt = """"""""
+    three_sngl_qt = ''''''''
 
     val = "one"//'two'//sngl_qt//dble_qt
 
@@ -165,42 +167,220 @@ END PROGRAM
       right: (string_literal))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
       right: (string_literal))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
-      right: (string_literal))
+      right: (string_literal
+        (string_literal_part)))
+    (assignment_statement
+      left: (identifier)
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
+    (assignment_statement
+      left: (identifier)
+      right: (string_literal
+        (string_literal_part)
+        (string_literal_part)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
       right: (concatenation_expression
-        left: (string_literal)
+        left: (string_literal
+          (string_literal_part))
         right: (concatenation_expression
-          left: (string_literal)
+          left: (string_literal
+            (string_literal_part))
           right: (concatenation_expression
             left: (identifier)
             right: (identifier)))))
     (assignment_statement
       left: (identifier)
       right: (string_literal
-        kind: (identifier)))
+        kind: (identifier)
+        (string_literal_part)))
     (assignment_statement
       left: (identifier)
       right: (string_literal
-        kind: (number_literal)))
+        kind: (number_literal)
+        (string_literal_part)))
+    (end_program_statement)))
+
+================================================================================
+String Literal delimiters, escaped quotes and continuation (CST)
+:cst
+================================================================================
+
+program test
+  dble_qt = "abc""def"
+  sngl_qt = 'ghi''jkl'
+  cont_qt = "mno&
+             ! comment
+             &pqr"
+end program
+
+--------------------------------------------------------------------------------
+
+1:0  - 8:0    translation_unit
+1:0  - 8:0      program
+1:0  - 2:0        program_statement
+1:0  - 1:7          "program"
+1:8  - 1:12         name `test`
+2:2  - 2:22       assignment_statement
+2:2  - 2:9          left: identifier `dble_qt`
+2:10 - 2:11         "="
+2:12 - 2:22         right: string_literal
+2:12 - 2:13           "\""
+2:13 - 2:16           string_literal_part `abc`
+2:16 - 2:17           "\\"
+2:17 - 2:18           string_literal_part `\"`
+2:18 - 2:21           string_literal_part `def`
+2:21 - 2:22           "\""
+3:2  - 3:22       assignment_statement
+3:2  - 3:9          left: identifier `sngl_qt`
+3:10 - 3:11         "="
+3:12 - 3:22         right: string_literal
+3:12 - 3:13           "\""
+3:13 - 3:16           string_literal_part `ghi`
+3:16 - 3:17           "\\"
+3:17 - 3:18           string_literal_part `'`
+3:18 - 3:21           string_literal_part `jkl`
+3:21 - 3:22           "\""
+4:2  - 6:18       assignment_statement
+4:2  - 4:9          left: identifier `cont_qt`
+4:10 - 4:11         "="
+4:12 - 6:18         right: string_literal
+4:12 - 4:13           "\""
+4:13 - 4:16           string_literal_part `mno`
+4:16 - 4:17           "&"
+5:13 - 5:22           comment `! comment`
+6:13 - 6:14           "&"
+6:14 - 6:17           string_literal_part `pqr`
+6:17 - 6:18           "\""
+7:0  - 7:11       end_program_statement
+7:0  - 7:3          "end"
+7:4  - 7:11         "program"
+
+================================================================================
+String Literal blanks at token boundaries (CST)
+:cst
+================================================================================
+
+program test
+  lead_qt = "  abc"
+  cont_qt = "abc &
+             & def"
+  quot_qt = "a"" b"
+  blank_qt = "   "
+end program
+
+--------------------------------------------------------------------------------
+
+1:0  - 8:0    translation_unit
+1:0  - 8:0      program
+1:0  - 2:0        program_statement
+1:0  - 1:7          "program"
+1:8  - 1:12         name `test`
+2:2  - 2:19       assignment_statement
+2:2  - 2:9          left: identifier `lead_qt`
+2:10 - 2:11         "="
+2:12 - 2:19         right: string_literal
+2:12 - 2:13           "\""
+2:13 - 2:18           string_literal_part `  abc`
+2:18 - 2:19           "\""
+3:2  - 4:19       assignment_statement
+3:2  - 3:9          left: identifier `cont_qt`
+3:10 - 3:11         "="
+3:12 - 4:19         right: string_literal
+3:12 - 3:13           "\""
+3:13 - 3:17           string_literal_part `abc `
+3:17 - 3:18           "&"
+4:13 - 4:14           "&"
+4:14 - 4:18           string_literal_part ` def`
+4:18 - 4:19           "\""
+5:2  - 5:19       assignment_statement
+5:2  - 5:9          left: identifier `quot_qt`
+5:10 - 5:11         "="
+5:12 - 5:19         right: string_literal
+5:12 - 5:13           "\""
+5:13 - 5:14           string_literal_part `a`
+5:14 - 5:15           "\\"
+5:15 - 5:16           string_literal_part `\"`
+5:16 - 5:18           string_literal_part ` b`
+5:18 - 5:19           "\""
+6:2  - 6:18       assignment_statement
+6:2  - 6:10         left: identifier `blank_qt`
+6:11 - 6:12         "="
+6:13 - 6:18         right: string_literal
+6:13 - 6:14           "\""
+6:14 - 6:17           string_literal_part `   `
+6:17 - 6:18           "\""
+7:0  - 7:11       end_program_statement
+7:0  - 7:3          "end"
+7:4  - 7:11         "program"
+
+================================================================================
+Unterminated string literal ends with the line
+================================================================================
+
+program test
+  x = "abc
+  y = 1
+  z = "
+  w = 2
+  print *, "ok"
+end program
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      left: (identifier)
+      (ERROR
+        (string_literal_part))
+      right: (number_literal))
+    (assignment_statement
+      left: (identifier)
+      (ERROR
+        (string_literal_part))
+      right: (number_literal))
+    (print_statement
+      (format_identifier)
+      (output_item_list
+        (string_literal
+          (string_literal_part))))
     (end_program_statement)))
 
 ================================================================================
@@ -768,7 +948,8 @@ END PROGRAM
         (number_literal))
       (keyword_argument
         name: (identifier)
-        value: (string_literal)))
+        value: (string_literal
+          (string_literal_part))))
     (assignment_statement
       left: (derived_type_member_expression
         (identifier)
@@ -859,10 +1040,12 @@ end program
     (write_statement
       (unit_identifier)
       (format_identifier
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (keyword_argument
         (identifier)
-        (string_literal))
+        (string_literal
+          (string_literal_part)))
       (comment)
       (keyword_argument
         (identifier)
@@ -893,7 +1076,9 @@ end program test
     (print_statement
       (format_identifier)
       (output_item_list
-        (string_literal)))
+        (string_literal
+          (string_literal_part)
+          (string_literal_part))))
     (end_program_statement
       (name))))
 
@@ -1065,9 +1250,12 @@ end program array_constructors
               (keyword_argument
                 (identifier)
                 (number_literal))))
-          (string_literal)
-          (string_literal)
-          (string_literal))))
+          (string_literal
+            (string_literal_part))
+          (string_literal
+            (string_literal_part))
+          (string_literal
+            (string_literal_part)))))
     (end_program_statement
       (name))))
 
@@ -1200,7 +1388,8 @@ end subroutine foo
       (concatenation_expression
         (identifier)
         (concatenation_expression
-          (string_literal)
+          (string_literal
+            (string_literal_part))
           (identifier))))
     (assignment_statement
       (call_expression
