@@ -22,6 +22,12 @@
 
 use tree_sitter_language::LanguageFn;
 
+mod keywords {
+    include!(concat!(env!("OUT_DIR"), "/keywords.rs"));
+}
+
+pub use keywords::KEYWORDS;
+
 extern "C" {
     fn tree_sitter_fortran() -> *const ();
 }
