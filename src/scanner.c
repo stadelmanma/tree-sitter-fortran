@@ -103,6 +103,16 @@ static bool skip_literal_continuation_sequence(TSLexer *lexer) {
     while (iswspace(lexer->lookahead)) {
         advance(lexer);
     }
+    // Comment lines are allowed between the two continuation markers,
+    // e.g. `1.206D&\n!comment\n&0`.
+    while (lexer->lookahead == '!' && !lexer->eof(lexer)) {
+        while (lexer->lookahead != '\n' && lexer->lookahead != '\r' && !lexer->eof(lexer)) {
+            advance(lexer);
+        }
+        while (iswspace(lexer->lookahead)) {
+            advance(lexer);
+        }
+    }
     // second '&' technically required to continue the literal
     if (lexer->lookahead == '&') {
         advance(lexer);
@@ -162,6 +172,18 @@ static NumberResult scan_number(TSLexer *lexer) {
 
     if (lexer->lookahead == '.') {
         advance(lexer);
+        // A line continuation directly after the '.' can split a token in
+        // two: either this real literal (`1.&\n&5`, or `.&\n&5` with no
+        // leading digits) or a spliced dotted operator (`30000.&\n&AND.`).
+        // Cross it first so the checks below see the first character after
+        // the splice.
+        if (lexer->lookahead == '&') {
+            skip_literal_continuation_sequence(lexer);
+            // a digit after the splice continues this real literal
+            if (iswdigit(lexer->lookahead)) {
+                lexer->mark_end(lexer);
+            }
+        }
         // exclude decimal if followed by any letter other than d/D and e/E
         // if no leading digits are present and a non-digit follows
         // the decimal it's a nonmatch.
@@ -181,9 +203,13 @@ static NumberResult scan_number(TSLexer *lexer) {
         // process exp notation
         if (is_exp_sentinel(lexer->lookahead)) {
             advance(lexer);
+            // the exponent may be split across a line continuation right
+            // after the sentinel or the sign, e.g. `1.2067492D&\n&0`
+            skip_literal_continuation_sequence(lexer);
             if (lexer->lookahead == '+' || lexer->lookahead == '-') {
                 advance(lexer);
                 lexer->mark_end(lexer);
+                skip_literal_continuation_sequence(lexer);
             }
             if (!scan_int(lexer, NULL, NULL)) {
                 result.type = NUMBER_INTEGER;
