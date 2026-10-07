@@ -739,7 +739,8 @@ END PROGRAM
         (statement_label_reference))
       (end_do_loop_statement))
     (do_loop
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (do_statement
         (loop_control_expression
           (identifier)
@@ -1051,7 +1052,8 @@ end program test
               (identifier)))
           (identifier))))
     (do_loop
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (do_statement
         (statement_label_reference)
         (loop_control_expression
@@ -1059,7 +1061,8 @@ end program test
           (number_literal)
           (number_literal)))
       (do_loop
-        (block_label_start_expression)
+        (block_label_start_expression
+          (block_label))
         (do_statement
           (statement_label_reference)
           (loop_control_expression
@@ -1219,7 +1222,8 @@ END PROGRAM
           (number_literal)))
       (end_if_statement))
     (if_statement
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (parenthesized_expression
         (relational_expression
           (identifier)
@@ -1335,7 +1339,8 @@ end program
           (boolean_literal)))
       (end_where_statement))
     (where_statement
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (parenthesized_expression
         (relational_expression
           (identifier)
@@ -1586,7 +1591,8 @@ END PROGRAM
     (program_statement
       (name))
     (select_case_statement
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (selector
         (identifier))
       (case_statement
@@ -2378,7 +2384,8 @@ end subroutine assumed_rank
           (string_literal)))
       (end_select_statement))
     (select_rank_statement
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (selector
         (identifier))
       (rank_statement
@@ -2421,7 +2428,8 @@ end program
           (identifier)
           (identifier)))
       (associate_statement
-        (block_label_start_expression)
+        (block_label_start_expression
+          (block_label))
         (association_list
           (association
             (identifier)
@@ -3369,7 +3377,8 @@ end program test
           (identifier)
           (identifier)))
       (coarray_team_statement
-        (block_label_start_expression)
+        (block_label_start_expression
+          (block_label))
         (argument_list
           (identifier))
         (print_statement

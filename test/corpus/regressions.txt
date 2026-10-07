@@ -87,7 +87,8 @@ end program foo
     (program_statement
       (name))
     (if_statement
-      (block_label_start_expression)
+      (block_label_start_expression
+        (block_label))
       (parenthesized_expression
         (boolean_literal))
       (subroutine_call

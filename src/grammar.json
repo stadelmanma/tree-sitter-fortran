@@ -13896,6 +13896,15 @@
           "type": "ALIAS",
           "content": {
             "type": "PATTERN",
+            "value": "[nN][oO][nN]_[rR][eE][cC][uU][rR][sS][iI][vV][eE]"
+          },
+          "named": false,
+          "value": "non_recursive"
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
             "value": "[pP][uU][rR][eE]"
           },
           "named": false,
@@ -21234,13 +21243,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          },
-          "named": false,
-          "value": "label"
+          "type": "SYMBOL",
+          "name": "_block_label"
         },
         {
           "type": "STRING",
