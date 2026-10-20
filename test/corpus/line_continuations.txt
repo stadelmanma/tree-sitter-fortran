@@ -324,3 +324,150 @@ end program main
         (string_literal)))
     (end_program_statement
       (name))))
+
+================================================================================
+Operator split across line continuation
+================================================================================
+
+program test
+  if (i .gt. 0 .and. i .ne. 30000.&
+       &and. j .ge. 5.&
+       &lt.k) i = 2
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (if_statement
+      (parenthesized_expression
+        (logical_expression
+          (logical_expression
+            (relational_expression
+              (identifier)
+              (number_literal))
+            (relational_expression
+              (identifier)
+              (number_literal)))
+          (relational_expression
+            (relational_expression
+              (identifier)
+              (number_literal))
+            (identifier))))
+      (assignment_statement
+        (identifier)
+        (number_literal)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Real literal exponent split across line continuation
+================================================================================
+
+program test
+  data p1,p2/1.0d0,1.2067492d&
+       &0/
+  x = 4.5d-&
+       &2
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (data_statement
+      (data_set
+        (identifier)
+        (identifier)
+        (data_value
+          (number_literal)
+          (number_literal))))
+    (assignment_statement
+      (identifier)
+      (number_literal))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Real literal with no leading digits split right after decimal point
+================================================================================
+
+program test
+  x = .&
+       &5
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (assignment_statement
+      (identifier)
+      (number_literal))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Operator split across line continuation with a comment line in between
+================================================================================
+
+program test
+  if (i .gt. 0 .and. i .ne. 30000.&
+       ! comment
+       &and. j .ge. 5) i = 2
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (if_statement
+      (parenthesized_expression
+        (logical_expression
+          (logical_expression
+            (relational_expression
+              (identifier)
+              (number_literal))
+            (relational_expression
+              (identifier)
+              (number_literal)))
+          (relational_expression
+            (identifier)
+            (number_literal))))
+      (assignment_statement
+        (identifier)
+        (number_literal)))
+    (end_program_statement
+      (name))))
+
+================================================================================
+Real literal exponent split across line continuation with a comment line in between
+================================================================================
+
+program test
+  data p1/1.2067492d&
+       ! comment
+       &0/
+end program test
+
+--------------------------------------------------------------------------------
+
+(translation_unit
+  (program
+    (program_statement
+      (name))
+    (data_statement
+      (data_set
+        (identifier)
+        (data_value
+          (number_literal))))
+    (end_program_statement
+      (name))))
