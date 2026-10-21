@@ -1677,6 +1677,7 @@ PROGRAM TEST
 6 FORMAT(3(1H-), 2HOK, 10H SOLUTION // 5D15.7)
 7 FORMAT(6x, 10Hv=1, w=x/2)
 8 FORMAT(/5hhello)
+9 FORMAT("text", -2PF5.2, -3P, F6.2)
 END PROGRAM
 
 --------------------------------------------------------------------------------
@@ -1745,6 +1746,13 @@ END PROGRAM
       (transfer_items
         (edit_descriptor)
         (hollerith_constant)))
+    (statement_label)
+    (format_statement
+      (transfer_items
+        (string_literal)
+        (edit_descriptor)
+        (edit_descriptor)
+        (edit_descriptor)))
     (end_program_statement)))
 
 ================================================================================
