@@ -10,7 +10,7 @@ program block_demo
   !       ^ variable
   print *, y
   ! <- keyword
-  !        ^ !variable
+  !        ^ variable
   block
     ! <- keyword
     real :: x = 3.142

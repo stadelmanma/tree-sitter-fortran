@@ -11,7 +11,7 @@ PROGRAM TEST
   !     ^ operator
   !        ^ punctuation.bracket
   !          ^ variable
-  !               ^ number
+  !              ^ number
 
   if(x > 1 .and. 2 <= x) x = 4
   ! <- keyword
@@ -30,7 +30,7 @@ PROGRAM TEST
     ! <- keyword
     !  ^ keyword
     !                ^ operator
-    !                               ^ keyword
+    !                             ^ keyword
     x = 2
   elseif (arg(1:1) /= "x") then
     ! <- keyword

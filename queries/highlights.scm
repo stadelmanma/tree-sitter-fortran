@@ -95,13 +95,13 @@
 (do_statement "do" @keyword)
 (while_statement "while" @keyword)
 (if_statement ["if" "then"] @keyword)
-(elseif_clause ["else" "if" "elseif"] @keyword)
+(elseif_clause ["else" "if" "elseif" "then"] @keyword)
 (else_clause "else" @keyword)
 (open_statement "open" @keyword)
 (write_statement "write" @keyword)
 (private_statement "private" @keyword)
 (public_statement "public" @keyword)
-
+(data_statement "data" @keyword)
 
 (select_case_statement "select" @keyword "case" @keyword)
 (select_type_statement "select" @keyword "type" @keyword)
@@ -202,6 +202,9 @@
 
 (keyword_argument
   name: (identifier) @keyword)
+
+(keyword_statement
+  (identifier) @attribute)
 
 (derived_type_member_expression
   (type_member) @property)
