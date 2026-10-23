@@ -1774,7 +1774,8 @@ END PROGRAM
     (statement_label)
     (format_statement
       (transfer_items
-        (string_literal)
+        (string_literal
+          (string_content))
         (edit_descriptor)
         (edit_descriptor)
         (edit_descriptor)))
