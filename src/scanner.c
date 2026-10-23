@@ -17,7 +17,7 @@ enum TokenType {
     DO_LABEL_CONTINUE,
     STRING_LITERAL_KIND,
     STRING_LITERAL_START,
-    STRING_LITERAL_PART,
+    STRING_CONTENT,
     STRING_LITERAL_QUOTE,
     STRING_LITERAL_END
 };
@@ -484,7 +484,7 @@ static AmpersandKind scan_string_ampersand(Scanner *scanner, TSLexer *lexer, boo
         if (has_content) {
             // PART ends right before the '&' (already marked above);
             // the continuation itself is picked up on the next call
-            lexer->result_symbol = STRING_LITERAL_PART;
+            lexer->result_symbol = STRING_CONTENT;
         } else {
             // nothing accumulated yet, this is a continuation symbol,
             // where we stopped scanning in the last iteration,
@@ -534,7 +534,7 @@ static void scan_string_quote_ampersand(Scanner *scanner, TSLexer *lexer) {
     // (or first non-blank character on line)
     if (lexer->lookahead == scanner->string_quote) {
         // it is an escaped quote split across line continuations.
-        // set to IN_STRING_QUOTE_QUOTE so the second quote emits as STRING_LITERAL_PART,
+        // set to IN_STRING_QUOTE_QUOTE so the second quote emits as STRING_CONTENT,
         // we need to wait for the parser to consume the continued lines separately
         scanner->in_string = IN_STRING_QUOTE_QUOTE;
         lexer->result_symbol = STRING_LITERAL_QUOTE;
@@ -564,7 +564,7 @@ static void scan_string_quote(Scanner *scanner, TSLexer *lexer) {
         // we just consumed the second quote of a doubled quote (same-line or split)
         lexer->mark_end(lexer);
         scanner->in_string = IN_STRING_NORMAL;
-        lexer->result_symbol = STRING_LITERAL_PART;
+        lexer->result_symbol = STRING_CONTENT;
         return;
     }
 
@@ -594,7 +594,7 @@ static void scan_string_quote(Scanner *scanner, TSLexer *lexer) {
 static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
     // precondition:
     //    in_string == IN_STRING_NORMAL || in_string == IN_STRING_QUOTE_QUOTE,
-    //    valid_symbols[STRING_LITERAL_PART] and valid_symbols[STRING_LITERAL_QUOTE]
+    //    valid_symbols[STRING_CONTENT] and valid_symbols[STRING_LITERAL_QUOTE]
 
     bool has_content = false;
 
@@ -605,7 +605,7 @@ static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
         } else if (lexer->lookahead == scanner->string_quote) {
             if (has_content) {
                 // emit what we have so far and let the next call handle the quote
-                lexer->result_symbol = STRING_LITERAL_PART;
+                lexer->result_symbol = STRING_CONTENT;
                 return true;
             } else {
                 // nothing accumulated yet (has_content is false), advance past quote
@@ -636,7 +636,7 @@ static bool scan_string_literal_content(Scanner *scanner, TSLexer *lexer) {
     scanner->in_string = IN_STRING_NONE;
     scanner->string_quote = '\0';
     lexer->mark_end(lexer);
-    lexer->result_symbol = STRING_LITERAL_PART;
+    lexer->result_symbol = STRING_CONTENT;
     return true;
 }
 
@@ -790,7 +790,7 @@ static bool scan(Scanner *scanner, TSLexer *lexer, const bool *valid_symbols) {
     // content before any whitespace is skipped
     if (!scanner->in_line_continuation &&
         (scanner->in_string == IN_STRING_NORMAL || scanner->in_string == IN_STRING_QUOTE_QUOTE)) {
-        if (valid_symbols[STRING_LITERAL_PART] || valid_symbols[STRING_LITERAL_QUOTE]) {
+        if (valid_symbols[STRING_CONTENT] || valid_symbols[STRING_LITERAL_QUOTE]) {
             if (scan_string_literal_content(scanner, lexer)) {
                 return true;
             }

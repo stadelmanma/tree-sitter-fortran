@@ -43,12 +43,12 @@ end program example_padl
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (comment)
     (print_statement
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (output_item_list
         (call_expression
           (identifier)
@@ -56,7 +56,7 @@ end program example_padl
             (identifier)
             (number_literal)
             (string_literal
-              (string_literal_part))))))
+              (string_content))))))
     (comment)
     (assignment_statement
       (identifier)
@@ -236,56 +236,56 @@ Multiple array assignments
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (print_statement
       (format_identifier)
       (output_item_list

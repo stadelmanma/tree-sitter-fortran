@@ -64,7 +64,7 @@ module.exports = grammar({
     $._do_label_continue,
     $._string_literal_kind,
     $.string_literal_start,
-    $.string_literal_part,
+    $.string_content,
     $.string_literal_quote,
     $.string_literal_end,
   ],
@@ -2241,7 +2241,7 @@ module.exports = grammar({
 
     _string_literal_content: $ => seq(
       optional(alias($.string_literal_quote, '\\')),
-      repeat1($.string_literal_part),
+      repeat1($.string_content),
     ),
 
     // Coarrays

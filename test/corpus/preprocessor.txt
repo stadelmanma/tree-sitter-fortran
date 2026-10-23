@@ -12,7 +12,7 @@ Include directives
 (translation_unit
   (preproc_include
     path: (string_literal
-      (string_literal_part)))
+      (string_content)))
   (preproc_include
     path: (system_lib_string))
   (preproc_include
@@ -497,7 +497,7 @@ end module foo
         (type_name))
       (preproc_include
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (variable_declaration
         (intrinsic_type)
         (identifier))
@@ -729,7 +729,7 @@ end program
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (select_case_statement
       (selector
         (identifier))
@@ -738,7 +738,7 @@ end program
         (case_statement
           (case_value_range_list
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (assignment_statement
             (identifier)
             (number_literal))))
@@ -749,7 +749,7 @@ end program
         (case_statement
           (case_value_range_list
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (assignment_statement
             (identifier)
             (number_literal))))

@@ -38,40 +38,40 @@ end subroutine foo
   (comment)
   (include_statement
     (filename
-      (string_literal_part)))
+      (string_content)))
   (program
     (program_statement
       (name))
     (include_statement
       (filename
-        (string_literal_part)))
+        (string_content)))
     (comment)
     (include_statement
       (filename
-        (string_literal_part)))
+        (string_content)))
     (interface
       (interface_statement)
       (include_statement
         (filename
-          (string_literal_part)))
+          (string_content)))
       (end_interface_statement))
     (assignment_statement
       (identifier)
       (number_literal))
     (include_statement
       (filename
-        (string_literal_part)))
+        (string_content)))
     (internal_procedures
       (contains_statement)
       (include_statement
         (filename
-          (string_literal_part)))
+          (string_content)))
       (subroutine
         (subroutine_statement
           (name))
         (include_statement
           (filename
-            (string_literal_part)))
+            (string_content)))
         (end_subroutine_statement
           (name))))
     (end_program_statement))
@@ -86,7 +86,7 @@ end subroutine foo
       (name))
     (include_statement
       (filename
-        (string_literal_part)))
+        (string_content)))
     (comment)
     (variable_declaration
       (intrinsic_type)
@@ -422,7 +422,7 @@ END PROGRAM
         (keyword_argument
           name: (identifier)
           value: (string_literal
-            (string_literal_part))))
+            (string_content))))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
@@ -725,7 +725,7 @@ END PROGRAM
         (keyword_argument
           (identifier)
           (string_literal
-            (string_literal_part))))
+            (string_content))))
       (subroutine_call
         (identifier)
         (argument_list
@@ -1185,7 +1185,7 @@ END PROGRAM
             (identifier)
             (argument_list
               (string_literal
-                (string_literal_part))))))
+                (string_content))))))
       (assignment_statement
         (identifier)
         (number_literal))
@@ -1634,33 +1634,33 @@ END PROGRAM
         (case_value_range_list
           (extent_specifier
             (string_literal
-              (string_literal_part))
+              (string_content))
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (extent_specifier
             (string_literal
-              (string_literal_part))
+              (string_content))
             (string_literal
-              (string_literal_part))))
+              (string_content))))
         (write_statement
           (unit_identifier)
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (case_statement
         (case_value_range_list
           (extent_specifier
             (string_literal
-              (string_literal_part))
+              (string_content))
             (string_literal
-              (string_literal_part))))
+              (string_content))))
         (write_statement
           (unit_identifier)
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (case_statement
         (case_value_range_list
           (identifier))
@@ -1669,7 +1669,7 @@ END PROGRAM
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (case_statement
         (default)
         (write_statement
@@ -1677,7 +1677,7 @@ END PROGRAM
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (end_select_statement))
     (select_case_statement
       (selector
@@ -1710,7 +1710,7 @@ END PROGRAM
     (format_statement
       (transfer_items
         (string_literal
-          (string_literal_part))
+          (string_content))
         (edit_descriptor)
         (edit_descriptor)))
     (statement_label)
@@ -1729,7 +1729,7 @@ END PROGRAM
         (edit_descriptor)
         (edit_descriptor)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (statement_label)
     (format_statement
       (transfer_items
@@ -1737,14 +1737,14 @@ END PROGRAM
         (edit_descriptor)
         (edit_descriptor)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (statement_label)
     (format_statement
       (transfer_items
         (edit_descriptor)
         (edit_descriptor)
         (string_literal
-          (string_literal_part))
+          (string_content))
         (edit_descriptor)
         (edit_descriptor)
         (edit_descriptor)
@@ -1828,7 +1828,7 @@ END PROGRAM
         (identifier))
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (input_item_list
         (call_expression
           (identifier)
@@ -1841,14 +1841,14 @@ END PROGRAM
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (keyword_argument
         (identifier)
         (identifier))
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (input_item_list
         (identifier)))
     (end_program_statement)))
@@ -1876,7 +1876,7 @@ END PROGRAM
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (print_statement
       (format_identifier
         (identifier))
@@ -1887,10 +1887,10 @@ END PROGRAM
     (print_statement
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (end_program_statement)))
 
 ================================================================================
@@ -1926,7 +1926,7 @@ END PROGRAM
       (init_declarator
         (identifier)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (write_statement
       (unit_identifier))
     (write_statement
@@ -1948,7 +1948,7 @@ END PROGRAM
         (identifier))
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (keyword_argument
         (identifier)
         (identifier)))
@@ -1957,7 +1957,7 @@ END PROGRAM
         (identifier))
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (output_item_list
         (call_expression
           (identifier)
@@ -1970,14 +1970,14 @@ END PROGRAM
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (keyword_argument
         (identifier)
         (identifier))
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (output_item_list
         (identifier)))
     (write_statement
@@ -1985,17 +1985,17 @@ END PROGRAM
         (number_literal))
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (write_statement
       (unit_identifier
         (number_literal))
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (write_statement
       (unit_identifier
         (identifier))
@@ -2003,7 +2003,7 @@ END PROGRAM
         (identifier))
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (end_program_statement)))
 
 ================================================================================
@@ -2229,7 +2229,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (output_item_list
             (identifier))))
       (type_statement
@@ -2243,7 +2243,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (output_item_list
             (identifier))))
       (type_statement
@@ -2257,7 +2257,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (output_item_list
             (identifier))))
       (type_statement
@@ -2266,7 +2266,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (output_item_list
             (identifier))))
       (type_statement
@@ -2276,7 +2276,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))
+              (string_content)))
           (output_item_list
             (derived_type_member_expression
               (identifier)
@@ -2287,7 +2287,7 @@ end subroutine print_decorated_numbers
           (unit_identifier)
           (format_identifier
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (end_select_statement))
     (end_subroutine_statement
       (name))))
@@ -2325,14 +2325,14 @@ end program test
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (close_statement
       (unit_identifier
         (identifier))
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (open_statement
       (keyword_argument
         (identifier)
@@ -2340,14 +2340,14 @@ end program test
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (close_statement
       (unit_identifier
         (identifier))
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (open_statement
       (unit_identifier
         (number_literal)))
@@ -2407,7 +2407,7 @@ end subroutine assumed_rank
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (rank_statement
         (case_value_range_list
           (number_literal))
@@ -2416,7 +2416,7 @@ end subroutine assumed_rank
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (rank_statement
         (case_value_range_list
           (number_literal))
@@ -2425,12 +2425,12 @@ end subroutine assumed_rank
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (rank_statement
         (default)
         (stop_statement
           (string_literal
-            (string_literal_part))))
+            (string_content))))
       (end_select_statement))
     (select_rank_statement
       (block_label_start_expression)
@@ -2444,7 +2444,7 @@ end subroutine assumed_rank
           (format_identifier)
           (output_item_list
             (string_literal
-              (string_literal_part)))))
+              (string_content)))))
       (end_select_statement
         (block_label)))
     (end_subroutine_statement
@@ -2730,7 +2730,7 @@ end program test
           (type_member))
         (data_value
           (string_literal
-            (string_literal_part)))))
+            (string_content)))))
     (data_statement
       (data_set
         (identifier)
@@ -2740,7 +2740,7 @@ end program test
             (argument_list
               (number_literal)
               (string_literal
-                (string_literal_part)))))))
+                (string_content)))))))
     (data_statement
       (data_set
         (implied_do_loop_expression
@@ -2885,7 +2885,7 @@ end program
           (number_literal))))
     (file_position_statement
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (end_program_statement)))
 
 ================================================================================
@@ -3129,7 +3129,7 @@ Statement Functions (Obsolescent)
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (end_subroutine_statement
       (name))))
 

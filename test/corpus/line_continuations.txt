@@ -18,11 +18,11 @@ end program
       (unit_identifier)
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (comment)
       (keyword_argument
         (identifier)
@@ -55,12 +55,12 @@ end program
       (unit_identifier)
       (format_identifier
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (comment)
       (keyword_argument
         (identifier)
         (string_literal
-          (string_literal_part)))
+          (string_content)))
       (keyword_argument
         (identifier)
         (identifier)))
@@ -150,7 +150,7 @@ end program
     (format_statement
       (transfer_items
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (end_program_statement)))
 
 ================================================================================
@@ -263,90 +263,90 @@ end program
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part)
-          (string_literal_part)
-          (string_literal_part))))
+          (string_content)
+          (string_content)
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part)
-          (string_literal_part)
-          (string_literal_part))))
+          (string_content)
+          (string_content)
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (concatenation_expression
           (string_literal
-            (string_literal_part))
+            (string_content))
           (string_literal
-            (string_literal_part)))))
+            (string_content)))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part))
+          (string_content))
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part)
-          (string_literal_part))))
+          (string_content)
+          (string_content))))
     (print_statement
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part)
-          (string_literal_part))))
+          (string_content)
+          (string_content))))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
-        (string_literal_part)))
+        (string_content)
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
-        (string_literal_part)))
+        (string_content)
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
-        (string_literal_part)))
+        (string_content)
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
+        (string_content)
         (comment)
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
+        (string_content)
         (comment)
         (comment)
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
-        (string_literal_part)))
+        (string_content)
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal))
@@ -357,19 +357,19 @@ end program
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (end_program_statement)))
 
 ================================================================================
@@ -456,8 +456,8 @@ end program main
       (format_identifier)
       (output_item_list
         (string_literal
-          (string_literal_part)
-          (string_literal_part))))
+          (string_content)
+          (string_content))))
     (end_program_statement
       (name))))
 
@@ -631,29 +631,29 @@ end program main
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)))
+        (string_content)))
     (assignment_statement
       (identifier)
       (concatenation_expression
         (string_literal
-          (string_literal_part))
+          (string_content))
         (comment)
         (string_literal
-          (string_literal_part))))
+          (string_content))))
     (assignment_statement
       (identifier)
       (string_literal
-        (string_literal_part)
+        (string_content)
         (comment)
-        (string_literal_part)
-        (string_literal_part)))
+        (string_content)
+        (string_content)))
     (end_program_statement
       (name))))

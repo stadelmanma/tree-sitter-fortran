@@ -21716,8 +21716,58 @@
           ]
         },
         {
-          "type": "SYMBOL",
-          "name": "_string_literal"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_literal_start"
+          },
+          "named": false,
+          "value": "\""
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string_literal_content"
+          }
+        },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_literal_end"
+          },
+          "named": false,
+          "value": "\""
+        }
+      ]
+    },
+    "_string_literal_content": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string_literal_quote"
+              },
+              "named": false,
+              "value": "\\"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string_content"
+          }
         }
       ]
     },
@@ -23320,6 +23370,9 @@
     [
       "format_identifier",
       "identifier"
+    ],
+    [
+      "_string_literal_content"
     ]
   ],
   "precedences": [],
@@ -23339,14 +23392,6 @@
     {
       "type": "SYMBOL",
       "name": "_boz_literal"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "_string_literal"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "_string_literal_kind"
     },
     {
       "type": "SYMBOL",
@@ -23371,6 +23416,26 @@
     {
       "type": "SYMBOL",
       "name": "_do_label_continue"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_string_literal_kind"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_literal_start"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_content"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_literal_quote"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "string_literal_end"
     }
   ],
   "inline": [
