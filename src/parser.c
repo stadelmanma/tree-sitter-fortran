@@ -21701,7 +21701,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
           lookahead == ' ') SKIP(396);
       if (lookahead == '$' ||
           lookahead == '*' ||
-          ('.' <= lookahead && lookahead <= ':') ||
+          ('-' <= lookahead && lookahead <= ':') ||
           ('A' <= lookahead && lookahead <= 'G') ||
           ('I' <= lookahead && lookahead <= 'Z') ||
           ('a' <= lookahead && lookahead <= 'g') ||
@@ -30712,6 +30712,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(aux_sym_edit_descriptor_token1);
       if (lookahead == '$' ||
           lookahead == '*' ||
+          lookahead == '-' ||
           lookahead == '.' ||
           ('0' <= lookahead && lookahead <= ':') ||
           ('A' <= lookahead && lookahead <= 'G') ||

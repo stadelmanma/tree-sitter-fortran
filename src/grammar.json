@@ -18189,7 +18189,7 @@
         },
         {
           "type": "PATTERN",
-          "value": "[a-gi-zA-GI-Z0-9:.*$]+"
+          "value": "[-a-gi-zA-GI-Z0-9:.*$]+"
         }
       ]
     },

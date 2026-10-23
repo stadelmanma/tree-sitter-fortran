@@ -1732,7 +1732,7 @@ module.exports = grammar({
     _transfer_items: $ => sep1($._transfer_item, optional(',')),
 
     // H is not a valid edit descriptor because it clashes with Hollerith constants
-    edit_descriptor: $ => choice('/', /[a-gi-zA-GI-Z0-9:.*$]+/),
+    edit_descriptor: $ => choice('/', /[-a-gi-zA-GI-Z0-9:.*$]+/),
 
     _io_arguments: $ => seq(
       '(',
