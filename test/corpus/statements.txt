@@ -57,7 +57,8 @@ end subroutine foo
       (end_interface_statement))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (include_statement
       (filename
         (string_content)))
@@ -96,7 +97,8 @@ end subroutine foo
       (type_qualifier)
       (init_declarator
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (end_subroutine_statement
       (name))))
 
@@ -183,7 +185,8 @@ END PROGRAM
       (implicit_range)
       (intrinsic_type
         (kind
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (implicit_range)
       (intrinsic_type
         (kind
@@ -309,10 +312,12 @@ END PROGRAM
       attribute: (type_qualifier)
       declarator: (init_declarator
         left: (identifier)
-        right: (number_literal))
+        right: (number_literal
+          (number_value)))
       declarator: (init_declarator
         left: (identifier)
-        right: (number_literal)))
+        right: (number_literal
+          (number_value))))
     (variable_declaration
       type: (intrinsic_type)
       declarator: (identifier)
@@ -325,15 +330,18 @@ END PROGRAM
     (variable_declaration
       type: (intrinsic_type
         kind: (kind
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (sized_declarator
         (identifier)
         (size
           (extent_specifier
-            (number_literal)
+            (number_literal
+              (number_value))
             (math_expression
               left: (identifier)
-              right: (number_literal)))))
+              right: (number_literal
+                (number_value))))))
       declarator: (sized_declarator
         (identifier)
         (size
@@ -342,7 +350,8 @@ END PROGRAM
         (identifier)
         (size
           (extent_specifier
-            (number_literal)
+            (number_literal
+              (number_value))
             (assumed_size)))))
     (variable_declaration
       type: (intrinsic_type
@@ -355,7 +364,8 @@ END PROGRAM
         kind: (kind
           (keyword_argument
             name: (identifier)
-            value: (number_literal))))
+            value: (number_literal
+              (number_value)))))
       attribute: (type_qualifier)
       attribute: (type_qualifier)
       declarator: (pointer_init_declarator
@@ -404,13 +414,15 @@ END PROGRAM
       declarator: (sized_declarator
         (identifier)
         (size
-          (number_literal))
+          (number_literal
+            (number_value)))
         (character_length)))
     (variable_declaration
       type: (intrinsic_type)
       declarator: (init_declarator
         left: (identifier)
-        right: (number_literal)))
+        right: (number_literal
+          (number_value))))
     (variable_declaration
       type: (intrinsic_type
         kind: (kind
@@ -477,14 +489,17 @@ END PROGRAM
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)))))
+              (number_literal
+                (number_value))))))
       (identifier))
     (variable_declaration
       (derived_type
         (type_name)
         (kind
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (identifier))
     (variable_declaration
       (derived_type
@@ -586,7 +601,8 @@ end module foo
               (call_expression
                 (identifier)
                 (argument_list
-                  (number_literal)))))
+                  (number_literal
+                    (number_value))))))
           (type_qualifier)
           (identifier))
         (end_subroutine_statement
@@ -627,24 +643,28 @@ END PROGRAM
       (sized_declarator
         (identifier)
         (size
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (variable_modification
       (type_qualifier)
       (identifier))
     (parameter_statement
       (parameter_assignment
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (parameter_assignment
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (parameter_assignment
         (identifier)
         (call_expression
           (identifier)
           (argument_list
             (math_expression
-              (number_literal)
+              (number_literal
+                (number_value))
               (identifier))))))
     (equivalence_statement
       (equivalence_set
@@ -658,7 +678,8 @@ END PROGRAM
         (call_expression
           (identifier)
           (argument_list
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (save_statement
       (identifier)
       (identifier)
@@ -712,12 +733,15 @@ END PROGRAM
       (do_statement
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
         (math_expression
-          (number_literal)
+          (number_literal
+            (number_value))
           (identifier)))
       (open_statement
         (unit_identifier
@@ -738,7 +762,8 @@ END PROGRAM
       (do_statement
         (loop_control_expression
           (identifier)
-          (number_literal)
+          (number_literal
+            (number_value))
           (call_expression
             (identifier)
             (argument_list
@@ -753,7 +778,8 @@ END PROGRAM
       (do_statement
         (loop_control_expression
           (identifier)
-          (number_literal)
+          (number_literal
+            (number_value))
           (call_expression
             (identifier)
             (argument_list
@@ -761,16 +787,20 @@ END PROGRAM
                 (identifier)
                 (argument_list
                   (math_expression
-                    (number_literal)
+                    (number_literal
+                      (number_value))
                     (identifier))))))))
       (do_loop
         (do_statement
           (loop_control_expression
             (identifier)
-            (number_literal)
-            (number_literal)
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))
             (unary_expression
-              (number_literal))))
+              (number_literal
+                (number_value)))))
         (keyword_statement
           (identifier))
         (end_do_loop_statement))
@@ -783,14 +813,17 @@ END PROGRAM
             (identifier))))
       (assignment_statement
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (end_do_loop_statement))
     (do_loop
       (do_statement
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (if_statement
         (parenthesized_expression
           (identifier))
@@ -835,17 +868,20 @@ END PROGRAM TEST
       declarator: (identifier))
     (assignment_statement
       left: (identifier)
-      right: (number_literal))
+      right: (number_literal
+        (number_value)))
     (assignment_statement
       left: (identifier)
-      right: (number_literal))
+      right: (number_literal
+        (number_value)))
     (do_loop
       (do_statement
         (concurrent_statement
           (concurrent_header
             (concurrent_control
               (identifier)
-              initial: (number_literal)
+              initial: (number_literal
+                (number_value))
               final: (identifier))
             (concurrent_mask
               (relational_expression
@@ -853,7 +889,8 @@ END PROGRAM TEST
                   (identifier)
                   (argument_list
                     (identifier)))
-                right: (number_literal))))
+                right: (number_literal
+                  (number_value)))))
           (concurrent_locality
             (identifier))
           (concurrent_locality
@@ -943,15 +980,19 @@ end program test
         (statement_label_reference)
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (do_loop
         (do_statement
           (statement_label_reference)
           (loop_control_expression
             (identifier)
-            (number_literal)
-            (number_literal)))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))
         (assignment_statement
           (call_expression
             (identifier)
@@ -971,8 +1012,10 @@ end program test
         (statement_label_reference)
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (call_expression
           (identifier)
@@ -986,36 +1029,46 @@ end program test
         (statement_label_reference)
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (do_loop
         (do_statement
           (statement_label_reference)
           (loop_control_expression
             (identifier)
-            (number_literal)
-            (number_literal)))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))
         (do_loop
           (do_statement
             (statement_label_reference)
             (loop_control_expression
               (identifier)
-              (number_literal)
-              (number_literal)))
+              (number_literal
+                (number_value))
+              (number_literal
+                (number_value))))
           (do_loop
             (do_statement
               (statement_label_reference)
               (loop_control_expression
                 (identifier)
-                (number_literal)
-                (number_literal)))
+                (number_literal
+                  (number_value))
+                (number_literal
+                  (number_value))))
             (do_loop
               (do_statement
                 (statement_label_reference)
                 (loop_control_expression
                   (identifier)
-                  (number_literal)
-                  (number_literal)))
+                  (number_literal
+                    (number_value))
+                  (number_literal
+                    (number_value))))
               (assignment_statement
                 (call_expression
                   (identifier)
@@ -1050,8 +1103,10 @@ end program test
         (statement_label_reference)
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (end_do_label_loop_statement
         (statement_label)
         (assignment_statement
@@ -1066,16 +1121,20 @@ end program test
         (statement_label_reference)
         (loop_control_expression
           (identifier)
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (do_loop
         (block_label_start_expression)
         (do_statement
           (statement_label_reference)
           (loop_control_expression
             (identifier)
-            (number_literal)
-            (number_literal)))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))
         (end_do_label_loop_statement
           (statement_label)
           (block_label)))
@@ -1112,7 +1171,8 @@ end program
       (call_expression
         (identifier)
         (argument_list
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (end_program_statement)))
 
 ================================================================================
@@ -1156,22 +1216,27 @@ END PROGRAM
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (if_statement
       (parenthesized_expression
         (logical_expression
           (relational_expression
             (identifier)
-            (number_literal))
+            (number_literal
+              (number_value)))
           (relational_expression
-            (number_literal)
+            (number_literal
+              (number_value))
             (identifier))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (if_statement
       (parenthesized_expression
         (relational_expression
@@ -1179,8 +1244,10 @@ END PROGRAM
             (identifier)
             (argument_list
               (extent_specifier
-                (number_literal)
-                (number_literal))))
+                (number_literal
+                  (number_value))
+                (number_literal
+                  (number_value)))))
           (call_expression
             (identifier)
             (argument_list
@@ -1188,7 +1255,8 @@ END PROGRAM
                 (string_content))))))
       (assignment_statement
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (elseif_clause
         (parenthesized_expression
           (relational_expression
@@ -1196,18 +1264,22 @@ END PROGRAM
               (identifier)
               (argument_list
                 (extent_specifier
-                  (number_literal)
-                  (number_literal))))
+                  (number_literal
+                    (number_value))
+                  (number_literal
+                    (number_value)))))
             (call_expression
               (identifier)
               (argument_list
                 (call_expression
                   (identifier)
                   (argument_list
-                    (number_literal)))))))
+                    (number_literal
+                      (number_value))))))))
         (assignment_statement
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (elseif_clause
         (parenthesized_expression
           (relational_expression
@@ -1215,59 +1287,72 @@ END PROGRAM
               (identifier)
               (argument_list
                 (extent_specifier
-                  (number_literal)
-                  (number_literal))))
+                  (number_literal
+                    (number_value))
+                  (number_literal
+                    (number_value)))))
             (call_expression
               (identifier)
               (argument_list
                 (call_expression
                   (identifier)
                   (argument_list
-                    (number_literal))))))))
+                    (number_literal
+                      (number_value)))))))))
       (else_clause
         (assignment_statement
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (end_if_statement))
     (if_statement
       (block_label_start_expression)
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (elseif_clause
         (parenthesized_expression
           (relational_expression
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (block_label)
         (assignment_statement
           (identifier)
-          (number_literal))
+          (number_literal
+            (number_value)))
         (if_statement
           (parenthesized_expression
             (call_expression
               (identifier)
               (argument_list
                 (extent_specifier
-                  (number_literal)
-                  (number_literal)))))
+                  (number_literal
+                    (number_value))
+                  (number_literal
+                    (number_value))))))
           (assignment_statement
             (identifier)
-            (number_literal))
+            (number_literal
+              (number_value)))
           (else_clause
             (assignment_statement
               (identifier)
-              (number_literal)))
+              (number_literal
+                (number_value))))
           (end_if_statement)))
       (else_clause
         (block_label)
         (assignment_statement
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (end_if_statement
         (block_label)))
     (end_program_statement)))
@@ -1309,7 +1394,8 @@ end program
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
         (math_expression
@@ -1319,27 +1405,32 @@ end program
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
         (math_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
         (math_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (elsewhere_clause
         (parenthesized_expression
           (relational_expression
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (assignment_statement
           (identifier)
           (math_expression
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (elsewhere_clause
         (assignment_statement
           (identifier)
@@ -1350,23 +1441,27 @@ end program
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (identifier)
         (math_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (elsewhere_clause
         (parenthesized_expression
           (relational_expression
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (block_label)
         (assignment_statement
           (identifier)
           (math_expression
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (elsewhere_clause
         (block_label)
         (assignment_statement
@@ -1407,11 +1502,13 @@ END PROGRAM
     (forall_statement
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (identifier))
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (identifier))
       (relational_expression
         (call_expression
@@ -1419,7 +1516,8 @@ END PROGRAM
           (argument_list
             (identifier)
             (identifier)))
-        (number_literal))
+        (number_literal
+          (number_value)))
       (assignment_statement
         (call_expression
           (identifier)
@@ -1427,7 +1525,8 @@ END PROGRAM
             (identifier)
             (identifier)))
         (math_expression
-          (number_literal)
+          (number_literal
+            (number_value))
           (call_expression
             (identifier)
             (argument_list
@@ -1436,8 +1535,10 @@ END PROGRAM
     (forall_statement
       (triplet_spec
         (identifier)
-        (number_literal)
-        (number_literal))
+        (number_literal
+          (number_value))
+        (number_literal
+          (number_value)))
       (pointer_association_statement
         (derived_type_member_expression
           (call_expression
@@ -1449,22 +1550,27 @@ END PROGRAM
           (identifier)
           (argument_list
             (math_expression
-              (number_literal)
+              (number_literal
+                (number_value))
               (call_expression
                 (identifier)
                 (argument_list
                   (math_expression
                     (identifier)
-                    (number_literal))
-                  (number_literal))))))))
+                    (number_literal
+                      (number_value)))
+                  (number_literal
+                    (number_value)))))))))
     (forall_statement
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (identifier))
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (identifier))
       (where_statement
         (parenthesized_expression
@@ -1474,7 +1580,8 @@ END PROGRAM
               (argument_list
                 (identifier)
                 (identifier)))
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (assignment_statement
           (call_expression
             (identifier)
@@ -1482,7 +1589,8 @@ END PROGRAM
               (identifier)
               (identifier)))
           (math_expression
-            (number_literal)
+            (number_literal
+              (number_value))
             (call_expression
               (identifier)
               (argument_list
@@ -1492,23 +1600,28 @@ END PROGRAM
     (forall_statement
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (math_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (triplet_spec
         (identifier)
-        (number_literal)
+        (number_literal
+          (number_value))
         (math_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (relational_expression
         (call_expression
           (identifier)
           (argument_list
             (identifier)
             (identifier)))
-        (number_literal))
+        (number_literal
+          (number_value)))
       (assignment_statement
         (call_expression
           (identifier)
@@ -1524,27 +1637,31 @@ END PROGRAM
                   (identifier)
                   (math_expression
                     (identifier)
-                    (number_literal))))
+                    (number_literal
+                      (number_value)))))
               (call_expression
                 (identifier)
                 (argument_list
                   (identifier)
                   (math_expression
                     (identifier)
-                    (number_literal)))))
+                    (number_literal
+                      (number_value))))))
             (call_expression
               (identifier)
               (argument_list
                 (math_expression
                   (identifier)
-                  (number_literal))
+                  (number_literal
+                    (number_value)))
                 (identifier))))
           (call_expression
             (identifier)
             (argument_list
               (math_expression
                 (identifier)
-                (number_literal))
+                (number_literal
+                  (number_value)))
               (identifier)))))
       (assignment_statement
         (call_expression
@@ -1604,27 +1721,33 @@ END PROGRAM
         (case_value_range_list
           (extent_specifier
             (unary_expression
-              (number_literal))))
+              (number_literal
+                (number_value)))))
         (block_label)
         (assignment_statement
           (identifier)
           (unary_expression
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (case_statement
         (case_value_range_list
-          (number_literal))
+          (number_literal
+            (number_value)))
         (block_label)
         (assignment_statement
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (case_statement
         (case_value_range_list
           (extent_specifier
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (block_label)
         (assignment_statement
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (end_select_statement
         (block_label)))
     (select_case_statement
@@ -1818,7 +1941,8 @@ END PROGRAM
       (format_identifier))
     (read_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (format_identifier
         (statement_label_reference))
       (input_item_list
@@ -1827,7 +1951,8 @@ END PROGRAM
         (identifier)))
     (read_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (format_identifier)
       (keyword_argument
         (identifier)
@@ -1945,7 +2070,8 @@ END PROGRAM
         (string_literal)))
     (write_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (format_identifier
         (statement_label_reference))
       (output_item_list
@@ -1991,7 +2117,8 @@ END PROGRAM
         (identifier)))
     (write_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (format_identifier
         (string_literal
           (string_content)))
@@ -2000,7 +2127,8 @@ END PROGRAM
           (string_content))))
     (write_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (format_identifier)
       (output_item_list
         (string_literal
@@ -2103,12 +2231,15 @@ END PROGRAM
         (sized_declarator
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (sized_declarator
           (identifier)
           (size
-            (number_literal)
-            (number_literal)))))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))))
     (common_statement
       (identifier))
     (end_program_statement)))
@@ -2175,7 +2306,8 @@ END PROGRAM test
       (enumerator_statement
         declarator: (init_declarator
           left: (identifier)
-          right: (number_literal)))
+          right: (number_literal
+            (number_value))))
       (enumerator_statement
         declarator: (identifier)
         declarator: (identifier))
@@ -2188,7 +2320,8 @@ END PROGRAM test
         declarator: (init_declarator
           left: (identifier)
           right: (unary_expression
-            argument: (number_literal))))
+            argument: (number_literal
+              (number_value)))))
       (end_enum_statement))
     (end_program_statement
       (name))))
@@ -2247,7 +2380,8 @@ end subroutine print_decorated_numbers
             (call_expression
               (identifier)
               (argument_list
-                (number_literal)))))
+                (number_literal
+                  (number_value))))))
         (write_statement
           (unit_identifier)
           (format_identifier
@@ -2261,7 +2395,8 @@ end subroutine print_decorated_numbers
             (call_expression
               (identifier)
               (argument_list
-                (number_literal)))))
+                (number_literal
+                  (number_value))))))
         (write_statement
           (unit_identifier)
           (format_identifier
@@ -2359,10 +2494,12 @@ end program test
           (string_content))))
     (open_statement
       (unit_identifier
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (close_statement
       (unit_identifier
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (end_program_statement
       (name))))
 
@@ -2410,7 +2547,8 @@ end subroutine assumed_rank
         (identifier))
       (rank_statement
         (case_value_range_list
-          (number_literal))
+          (number_literal
+            (number_value)))
         (write_statement
           (unit_identifier)
           (format_identifier)
@@ -2419,7 +2557,8 @@ end subroutine assumed_rank
               (string_content)))))
       (rank_statement
         (case_value_range_list
-          (number_literal))
+          (number_literal
+            (number_value)))
         (write_statement
           (unit_identifier)
           (format_identifier)
@@ -2428,7 +2567,8 @@ end subroutine assumed_rank
               (string_content)))))
       (rank_statement
         (case_value_range_list
-          (number_literal))
+          (number_literal
+            (number_value)))
         (write_statement
           (unit_identifier)
           (format_identifier)
@@ -2499,7 +2639,8 @@ end program
           (identifier)
           (math_expression
             (identifier)
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (end_associate_statement
           (block_label)))
       (end_associate_statement))
@@ -2710,18 +2851,24 @@ end program test
         (identifier)
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (data_set
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (data_set
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (data_statement
       (data_set
         (identifier)
@@ -2747,7 +2894,8 @@ end program test
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)
+              (number_literal
+                (number_value))
               (string_literal
                 (string_content)))))))
     (data_statement
@@ -2756,16 +2904,20 @@ end program test
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)
+              (number_literal
+                (number_value))
               (identifier)))
           (loop_control_expression
             (identifier)
-            (number_literal)
+            (number_literal
+              (number_value))
             (identifier)))
         (data_value
-          (number_literal)
+          (number_literal
+            (number_value))
           (unary_expression
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (data_statement
       (data_set
         (call_expression
@@ -2775,29 +2927,40 @@ end program test
             (identifier)))
         (data_value
           (number_literal
+            (number_value)
             (identifier))
           (number_literal
+            (number_value)
             (identifier)))))
     (data_statement
       (data_set
         (identifier)
         (data_value
           (complex_literal
-            (number_literal)
-            (number_literal))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value)))
           (complex_literal
-            (number_literal)
-            (number_literal)))))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))))
     (data_statement
       (data_set
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal)
-          (number_literal)
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))
           (identifier)
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (data_statement
       (data_set
         (identifier)
@@ -2809,14 +2972,16 @@ end program test
     (comment)
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (comment)
     (assignment_statement
       (call_expression
         (identifier)
         (argument_list
           (identifier)))
-      (number_literal))
+      (number_literal
+        (number_value)))
     (end_program_statement
       (name))))
 
@@ -2850,10 +3015,12 @@ end program
       (name))
     (file_position_statement
       (unit_identifier
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (file_position_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (keyword_argument
         (identifier)
         (identifier)))
@@ -2871,7 +3038,8 @@ end program
     (file_position_statement
       (unit_identifier
         (parenthesized_expression
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (file_position_statement
       (unit_identifier
         (parenthesized_expression
@@ -2881,17 +3049,20 @@ end program
               (identifier))))))
     (file_position_statement
       (unit_identifier
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (file_position_statement
       (unit_identifier
-        (number_literal))
+        (number_literal
+          (number_value)))
       (keyword_argument
         (identifier)
         (identifier)))
     (file_position_statement
       (unit_identifier
         (parenthesized_expression
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (file_position_statement
       (string_literal
         (string_content)))
@@ -2922,7 +3093,8 @@ end program test
           (identifier)
           (argument_list
             (extent_specifier
-              (number_literal)
+              (number_literal
+                (number_value))
               (identifier))))))
     (inquire_statement
       (unit_identifier
@@ -2972,8 +3144,10 @@ end program test
       allocation: (sized_allocation
         (identifier)
         (size
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (allocate_statement
       type: (intrinsic_type)
       allocation: (identifier))
@@ -2993,7 +3167,8 @@ end program test
       allocation: (sized_allocation
         (identifier)
         (size
-          (number_literal)))
+          (number_literal
+            (number_value))))
       allocation: (identifier)
       allocation: (sized_allocation
         (derived_type_member_expression
@@ -3002,8 +3177,10 @@ end program test
             (type_member))
           (type_member))
         (size
-          (number_literal)
-          (number_literal)))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
       (keyword_argument
         name: (identifier)
         value: (identifier)))
@@ -3131,10 +3308,12 @@ Statement Functions (Obsolescent)
     (parameter_statement
       (parameter_assignment
         (identifier)
-        (number_literal))
+        (number_literal
+          (number_value)))
       (parameter_assignment
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (assignment_statement
       (identifier)
       (string_literal
@@ -3239,11 +3418,15 @@ end program test
         (coarray_size
           (extent_specifier
             (unary_expression
-              (number_literal))
-            (number_literal))
-          (number_literal)
+              (number_literal
+                (number_value)))
+            (number_literal
+              (number_value)))
+          (number_literal
+            (number_value))
           (extent_specifier
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (variable_declaration
       (intrinsic_type)
       (type_qualifier)
@@ -3296,12 +3479,14 @@ end program test
         (coarray_expression
           (identifier)
           (coarray_index
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (assignment_statement
       (coarray_expression
         (identifier)
         (coarray_index
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (boolean_literal))
     (assignment_statement
       (coarray_expression
@@ -3324,12 +3509,14 @@ end program test
       (parenthesized_expression
         (relational_expression
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       (assignment_statement
         (coarray_expression
           (identifier)
           (coarray_index
-            (number_literal)
+            (number_literal
+              (number_value))
             (keyword_argument
               (identifier)
               (identifier))))
@@ -3339,7 +3526,8 @@ end program test
         (sized_allocation
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (coarray_size)))
     (end_program_statement
       (name))))
@@ -3367,16 +3555,20 @@ end program test
       (name))
     (coarray_statement
       (argument_list
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (coarray_statement
       (argument_list
         (array_literal
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (coarray_statement)
     (coarray_statement
       (argument_list
-        (number_literal)
+        (number_literal
+          (number_value))
         (call_expression
           (identifier)
           (argument_list
@@ -3392,19 +3584,22 @@ end program test
         (coarray_expression
           (identifier)
           (coarray_index
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (coarray_statement
       (argument_list
         (coarray_expression
           (identifier)
           (coarray_index
-            (number_literal)))))
+            (number_literal
+              (number_value))))))
     (coarray_statement
       (argument_list
         (identifier)
         (keyword_argument
           (identifier)
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (end_program_statement
       (name))))
 
@@ -3487,7 +3682,8 @@ end program test
         (coarray_expression
           (identifier)
           (coarray_index
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (boolean_literal))
       (end_coarray_critical_statement))
     (end_program_statement
@@ -3516,7 +3712,8 @@ end program test;
       (identifier))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (end_program_statement
       (name))))
 
@@ -3539,7 +3736,8 @@ end program test
       (type_qualifier)
       (init_declarator
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (end_program_statement
       (name))))
 
@@ -3605,7 +3803,8 @@ end
 (translation_unit
   (program
     (assign_statement
-      (number_literal)
+      (number_literal
+        (number_value))
       (identifier))
     (end_program_statement)))
 
@@ -3621,7 +3820,8 @@ end
 (translation_unit
   (program
     (keyword_statement
-      (number_literal))
+      (number_literal
+        (number_value)))
     (end_program_statement)))
 
 ================================================================================
@@ -3674,20 +3874,23 @@ end subroutine pointer_name_clash
       (sized_declarator
         (identifier)
         (size
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (variable_declaration
       type: (intrinsic_type)
       declarator: (sized_declarator
         (identifier)
         (size
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (identifier))
     (variable_declaration
       type: (intrinsic_type)
       declarator: (sized_declarator
         (identifier)
         (size
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (sized_declarator
         (identifier)
         (size
@@ -3697,9 +3900,11 @@ end subroutine pointer_name_clash
         (size
           (math_expression
             left: (math_expression
-              left: (number_literal)
+              left: (number_literal
+                (number_value))
               right: (identifier))
-            right: (number_literal)))))
+            right: (number_literal
+              (number_value))))))
     (cray_pointer_declaration
       (cray_pointer_pair
         pointer: (identifier)
@@ -3710,8 +3915,10 @@ end subroutine pointer_name_clash
           (identifier)
           (size
             (extent_specifier
-              (number_literal)
-              (number_literal)))))
+              (number_literal
+                (number_value))
+              (number_literal
+                (number_value))))))
       (cray_pointer_pair
         pointer: (identifier)
         target: (identifier))
@@ -3730,15 +3937,19 @@ end subroutine pointer_name_clash
       type: (intrinsic_type)
       attribute: (type_qualifier
         (argument_list
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (identifier))
     (assignment_statement
       left: (call_expression
         (identifier)
         (argument_list
-          (number_literal)
-          (number_literal)))
-      right: (number_literal))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))))
+      right: (number_literal
+        (number_value)))
     (end_subroutine_statement
       (name))))
 
@@ -3767,32 +3978,40 @@ end program
         left: (sized_declarator
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_value))))
         right: (data_value
-          repeat: (number_literal)
-          (number_literal))))
+          repeat: (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (variable_declaration
       type: (intrinsic_type
         kind: (kind
           (keyword_argument
             name: (identifier)
-            value: (number_literal))))
+            value: (number_literal
+              (number_value)))))
       declarator: (data_declarator
         left: (identifier)
         right: (data_value
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (data_declarator
         left: (identifier)
         right: (data_value
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (variable_declaration
       type: (intrinsic_type)
       declarator: (data_declarator
         left: (identifier)
         right: (data_value
           (complex_literal
-            (number_literal)
-            (number_literal)))))
+            (number_literal
+              (number_value))
+            (number_literal
+              (number_value))))))
     (end_program_statement)))
 
 ================================================================================
@@ -3886,17 +4105,20 @@ end module test
         name: (type_name)
         kind: (kind
           (identifier)
-          (number_literal)))
+          (number_literal
+            (number_value))))
       declarator: (init_declarator
         left: (sized_declarator
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_value))))
         right: (array_literal
           type: (derived_type
             name: (type_name)
             kind: (kind
               (identifier)
-              (number_literal))))))
+              (number_literal
+                (number_value)))))))
     (end_module_statement
       (name))))

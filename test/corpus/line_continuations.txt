@@ -176,11 +176,13 @@ end program ! comment
       (name))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (comment)
     (assignment_statement
       (identifier)
       (number_literal
+        (number_value)
         (identifier)))
     (comment)
     (internal_procedures
@@ -429,11 +431,15 @@ end program test
         (sized_declarator
           (identifier)
           (size
-            (number_literal)))
+            (number_literal
+              (number_value))))
         (array_literal
-          (number_literal)
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (end_program_statement
       (name))))
 
@@ -483,18 +489,22 @@ end program test
           (logical_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_value)))
             (relational_expression
               (identifier)
-              (number_literal)))
+              (number_literal
+                (number_value))))
           (relational_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_value)))
             (identifier))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (end_program_statement
       (name))))
 
@@ -520,11 +530,14 @@ end program test
         (identifier)
         (identifier)
         (data_value
-          (number_literal)
-          (number_literal))))
+          (number_literal
+            (number_value))
+          (number_literal
+            (number_value)))))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (end_program_statement
       (name))))
 
@@ -545,7 +558,8 @@ end program test
       (name))
     (assignment_statement
       (identifier)
-      (number_literal))
+      (number_literal
+        (number_value)))
     (end_program_statement
       (name))))
 
@@ -571,16 +585,20 @@ end program test
           (logical_expression
             (relational_expression
               (identifier)
-              (number_literal))
+              (number_literal
+                (number_value)))
             (relational_expression
               (identifier)
-              (number_literal)))
+              (number_literal
+                (number_value))))
           (relational_expression
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (assignment_statement
         (identifier)
-        (number_literal)))
+        (number_literal
+          (number_value))))
     (end_program_statement
       (name))))
 
@@ -604,7 +622,8 @@ end program test
       (data_set
         (identifier)
         (data_value
-          (number_literal))))
+          (number_literal
+            (number_value)))))
     (end_program_statement
       (name))))
 
