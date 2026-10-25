@@ -112,6 +112,7 @@ module.exports = grammar({
     [$.unit_identifier, $.identifier],
     [$.format_identifier, $.identifier],
     [$._string_literal_content],
+    [$.string_literal, $.number_value]
   ],
 
   supertypes: $ => [
@@ -2184,12 +2185,14 @@ module.exports = grammar({
     ),
 
     number_literal: $ => seq(
-      choice(
+      $.number_value,
+      optional($._kind)
+    ),
+
+    number_value: $ => choice(
         $._integer_literal,
         $._float_literal,
         $._boz_literal
-      ),
-      optional($._kind)
     ),
 
     boolean_literal: $ => seq(

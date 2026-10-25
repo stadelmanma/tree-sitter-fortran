@@ -21499,21 +21499,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_integer_literal"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_float_literal"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_boz_literal"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "number_value"
         },
         {
           "type": "CHOICE",
@@ -21526,6 +21513,23 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "number_value": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_integer_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_float_literal"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_boz_literal"
         }
       ]
     },
@@ -23373,6 +23377,10 @@
     ],
     [
       "_string_literal_content"
+    ],
+    [
+      "string_literal",
+      "number_value"
     ]
   ],
   "precedences": [],

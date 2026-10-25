@@ -463,7 +463,8 @@ end program
     (preproc_if
       condition: (binary_expression
         left: (identifier)
-        right: (number_literal))
+        right: (number_literal
+          (number_value)))
       (use_statement
         (module_name)))
     (end_program_statement)))
@@ -610,12 +611,14 @@ end module foo
             left: (identifier)
             right: (math_expression
               left: (identifier)
-              right: (number_literal))))
+              right: (number_literal
+                (number_value)))))
         (assignment_statement
           left: (identifier)
           right: (math_expression
             left: (identifier)
-            right: (number_literal)))
+            right: (number_literal
+              (number_value))))
         (end_subroutine_statement
           (name)))
       (subroutine
@@ -664,12 +667,14 @@ end module foo
         (assignment_statement
           left: (identifier)
           right: (number_literal
+            (number_value)
             kind: (identifier)))
         (preproc_ifdef
           name: (identifier)
           (assignment_statement
             left: (identifier)
             right: (number_literal
+              (number_value)
               kind: (identifier))))
         (end_subroutine_statement
           (name)))
@@ -721,7 +726,8 @@ end program
         (kind
           (keyword_argument
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (identifier))
     (variable_declaration
       (intrinsic_type)
@@ -741,25 +747,29 @@ end program
               (string_content)))
           (assignment_statement
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (preproc_if
         (binary_expression
           (identifier)
-          (number_literal))
+          (number_literal
+            (number_value)))
         (case_statement
           (case_value_range_list
             (string_literal
               (string_content)))
           (assignment_statement
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (case_statement
         (default)
         (preproc_ifdef
           (identifier)
           (assignment_statement
             (identifier)
-            (number_literal))))
+            (number_literal
+              (number_value)))))
       (end_select_statement))
     (end_program_statement)))
 
@@ -839,25 +849,29 @@ Preprocessor in specification part
               (kind
                 (keyword_argument
                   (identifier)
-                  (number_literal))))
+                  (number_literal
+                    (number_value)))))
             (identifier))
           (variable_declaration
             (intrinsic_type
               (kind
                 (keyword_argument
                   (identifier)
-                  (number_literal))))
+                  (number_literal
+                    (number_value)))))
             (identifier))
           (variable_declaration
             (intrinsic_type
               (kind
                 (keyword_argument
                   (identifier)
-                  (number_literal))))
+                  (number_literal
+                    (number_value)))))
             (init_declarator
               (identifier)
               (unary_expression
-                (number_literal))))
+                (number_literal
+                  (number_value)))))
           (preproc_else
             (variable_declaration
               (intrinsic_type)
@@ -870,13 +884,15 @@ Preprocessor in specification part
               (init_declarator
                 (identifier)
                 (unary_expression
-                  (number_literal))))))
+                  (number_literal
+                    (number_value)))))))
         (assignment_statement
           (identifier)
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)
+              (number_literal
+                (number_value))
               (identifier)
               (identifier))))
         (assignment_statement
@@ -884,7 +900,8 @@ Preprocessor in specification part
           (call_expression
             (identifier)
             (argument_list
-              (number_literal)
+              (number_literal
+                (number_value))
               (identifier)
               (identifier))))))
     (end_subroutine_statement

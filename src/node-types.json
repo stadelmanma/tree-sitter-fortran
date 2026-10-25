@@ -4352,7 +4352,22 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "number_value",
+          "named": true
+        }
+      ]
     }
+  },
+  {
+    "type": "number_value",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "open_statement",
