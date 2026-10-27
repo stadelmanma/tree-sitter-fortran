@@ -21251,13 +21251,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "identifier"
-          },
-          "named": false,
-          "value": "label"
+          "type": "SYMBOL",
+          "name": "_block_label"
         },
         {
           "type": "STRING",
