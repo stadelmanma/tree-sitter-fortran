@@ -2044,7 +2044,8 @@ end function test4
 (translation_unit
   (function
     (function_statement
-      (name))
+      (name)
+      (parameters))
     (import_statement
       (identifier)
       (identifier))
@@ -2052,7 +2053,8 @@ end function test4
       (name)))
   (function
     (function_statement
-      (name))
+      (name)
+      (parameters))
     (import_statement
       (identifier)
       (identifier))
@@ -2073,7 +2075,8 @@ end function test4
       (name)))
   (function
     (function_statement
-      (name))
+      (name)
+      (parameters))
     (import_statement
       (identifier))
     (end_function_statement

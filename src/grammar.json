@@ -9239,7 +9239,7 @@
               "name": "parameters",
               "content": {
                 "type": "SYMBOL",
-                "name": "_parameters"
+                "name": "parameters"
               }
             },
             {
@@ -9709,7 +9709,7 @@
               "name": "parameters",
               "content": {
                 "type": "SYMBOL",
-                "name": "_parameters"
+                "name": "parameters"
               }
             },
             {
@@ -10057,28 +10057,6 @@
       "named": true,
       "value": "name"
     },
-    "_parameters": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "parameters"
-        }
-      ]
-    },
     "parameters": {
       "type": "SEQ",
       "members": [
@@ -10087,27 +10065,35 @@
           "value": "("
         },
         {
-          "type": "SEQ",
+          "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "identifier"
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SEQ",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": ","
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "identifier"
+                      }
+                    ]
+                  }
+                }
+              ]
             },
             {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                ]
-              }
+              "type": "BLANK"
             }
           ]
         },
@@ -19810,7 +19796,7 @@
               "name": "parameters",
               "content": {
                 "type": "SYMBOL",
-                "name": "_parameters"
+                "name": "parameters"
               }
             },
             {

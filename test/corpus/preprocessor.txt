@@ -825,7 +825,8 @@ Preprocessor in specification part
 (translation_unit
   (subroutine
     (subroutine_statement
-      (name))
+      (name)
+      (parameters))
     (implicit_statement
       (none))
     (preproc_ifdef
