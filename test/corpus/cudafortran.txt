@@ -46,7 +46,8 @@ end function
       (intrinsic_type
         (kind
           (number_literal)))
-      (name))
+      (name)
+      (parameters))
     (comment)
     (use_statement
       (module_name))

@@ -524,7 +524,8 @@ END SUBROUTINE
       (name)))
   (subroutine
     (subroutine_statement
-      (name))
+      (name)
+      (parameters))
     (end_subroutine_statement))
   (subroutine
     (subroutine_statement
@@ -538,6 +539,7 @@ END SUBROUTINE
   (subroutine
     (subroutine_statement
       (name)
+      (parameters)
       (language_binding
         (identifier)
         (keyword_argument
@@ -631,7 +633,8 @@ end function
       (intrinsic_type
         (kind
           (number_literal)))
-      (name))
+      (name)
+      (parameters))
     (comment)
     (use_statement
       (module_name))
@@ -678,6 +681,7 @@ end function
         (kind
           (number_literal)))
       (name)
+      (parameters)
       (language_binding
         (identifier)
         (keyword_argument
@@ -688,6 +692,7 @@ end function
   (function
     (function_statement
       (name)
+      (parameters)
       (function_result
         (identifier))
       (language_binding
@@ -700,6 +705,7 @@ end function
   (function
     (function_statement
       (name)
+      (parameters)
       (language_binding
         (identifier)
         (keyword_argument

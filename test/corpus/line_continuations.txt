@@ -188,7 +188,8 @@ end program ! comment
       (comment)
       (subroutine
         (subroutine_statement
-          (name))
+          (name)
+          (parameters))
         (comment)
         (end_subroutine_statement
           (name))))

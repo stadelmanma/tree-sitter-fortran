@@ -439,7 +439,7 @@ module.exports = grammar({
       optional($._callable_interface_qualifers),
       caseInsensitive('subroutine'),
       field('name', $._name),
-      optional(field('parameters',$._parameters)),
+      optional(field('parameters',$.parameters)),
       optional($.language_binding),
       $._end_of_statement,
     ),
@@ -463,7 +463,7 @@ module.exports = grammar({
       optional($._callable_interface_qualifers),
       caseInsensitive('function'),
       field('name', $._name),
-      optional(field('parameters',$._parameters)),
+      optional(field('parameters',$.parameters)),
       optional(repeat(choice(
         $.language_binding,
         $.function_result
@@ -508,14 +508,9 @@ module.exports = grammar({
 
     _name: $ => alias($.identifier, $.name),
 
-    _parameters: $ => choice(
-      seq('(', ')'),
-      $.parameters
-    ),
-
     parameters: $ => seq(
       '(',
-      commaSep1($.identifier),
+      commaSep($.identifier),
       ')'
     ),
 
@@ -1950,7 +1945,7 @@ module.exports = grammar({
     entry_statement: $ => seq(
       caseInsensitive('entry'),
       field('name', $._name),
-      optional(field('parameters',$._parameters)),
+      optional(field('parameters',$.parameters)),
       optional(repeat(choice(
         $.language_binding,
         $.function_result
